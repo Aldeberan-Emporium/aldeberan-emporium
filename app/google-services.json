@@ -31,6 +31,14 @@
           }
         },
         {
+          "client_id": "905429185029-e8ep6no1vfcqsqfk535n4k0ln3qmt9se.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.aldeberan",
+            "certificate_hash": "cffbc47d1160b932034fd84d94ea9e95c570daf3"
+          }
+        },
+        {
           "client_id": "905429185029-hv1q91m67mcsbpp9uu6bld3pu1b58ibf.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
