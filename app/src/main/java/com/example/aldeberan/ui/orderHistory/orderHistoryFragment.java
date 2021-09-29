@@ -27,7 +27,6 @@ public class orderHistoryFragment extends Fragment {
         binding = FragmentOrderHistoryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        /*
         final TextView textView = binding.textGallery;
         orderHistoryViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
@@ -35,8 +34,6 @@ public class orderHistoryFragment extends Fragment {
                 textView.setText(s);
             }
         });
-
-         */
         return root;
     }
 
