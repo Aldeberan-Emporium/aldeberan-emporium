@@ -215,6 +215,7 @@ public class MainActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         // [START initialize_auth]
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
@@ -292,6 +293,7 @@ public class MainActivity extends Activity {
     // [END auth_with_facebook]
 
     private void updateUI(FirebaseUser user) {
-
+        TextView txtv = findViewById(R.id.loginStatus);
+        txtv.setText("User ID: " + user.getUid());
     }
 }
