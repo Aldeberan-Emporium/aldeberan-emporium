@@ -13,13 +13,13 @@
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.example.aldeberan.ui.orderHistory.orderHistoryFragment"
+        android:name="com.example.aldeberan.ui.gallery.GalleryFragment"
         android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_order_history" />
+        tools:layout="@layout/fragment_gallery" />
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="com.example.aldeberan.ui.userSetting.userSettingFragment"
+        android:name="com.example.aldeberan.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_user_setting" />
+        tools:layout="@layout/fragment_slideshow" />
 </navigation>

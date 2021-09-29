@@ -1,16 +1,16 @@
-package com.example.aldeberan.ui.orderHistory;
+package com.example.aldeberan.ui.slideshow;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class orderHistoryViewModel extends ViewModel {
+public class SlideshowViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public orderHistoryViewModel() {
+    public SlideshowViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is orderHistory fragment");
+        mText.setValue("This is slideshow fragment");
     }
 
     public LiveData<String> getText() {

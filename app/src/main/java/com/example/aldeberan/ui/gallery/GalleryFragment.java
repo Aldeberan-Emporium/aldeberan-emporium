@@ -1,4 +1,4 @@
-package com.example.aldeberan.ui.orderHistory;
+package com.example.aldeberan.ui.gallery;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,23 +12,24 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.aldeberan.databinding.FragmentOrderHistoryBinding;
+import com.example.aldeberan.R;
+import com.example.aldeberan.databinding.FragmentGalleryBinding;
 
-public class orderHistoryFragment extends Fragment {
+public class GalleryFragment extends Fragment {
 
-    private orderHistoryViewModel orderHistoryViewModel;
-    private FragmentOrderHistoryBinding binding;
+    private GalleryViewModel galleryViewModel;
+    private FragmentGalleryBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        orderHistoryViewModel =
-                new ViewModelProvider(this).get(orderHistoryViewModel.class);
+        galleryViewModel =
+                new ViewModelProvider(this).get(GalleryViewModel.class);
 
-        binding = FragmentOrderHistoryBinding.inflate(inflater, container, false);
+        binding = FragmentGalleryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textGallery;
-        orderHistoryViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        galleryViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
