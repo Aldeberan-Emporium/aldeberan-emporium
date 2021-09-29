@@ -23,9 +23,7 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="def_log_id">905429185029-lsmfp6vf9rghu1bdjkt8r1mvkhvlq813.apps.googleusercontent.com</string>
-
-
     <string name="admin_product_btn">Submit</string>
     <string name="admin_product_imagebtn">Pick Image from Gallery</string>
-
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
