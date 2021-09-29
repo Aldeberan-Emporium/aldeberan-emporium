@@ -1,4 +1,4 @@
-package com.example.aldeberan.ui.slideshow;
+package com.example.aldeberan.ui.userSetting;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,24 +12,23 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.aldeberan.R;
-import com.example.aldeberan.databinding.FragmentSlideshowBinding;
+import com.example.aldeberan.databinding.FragmentUserSettingBinding;
 
-public class SlideshowFragment extends Fragment {
+public class userSettingFragment extends Fragment {
 
-    private SlideshowViewModel slideshowViewModel;
-    private FragmentSlideshowBinding binding;
+    private userSettingViewModel userSettingViewModel;
+    private FragmentUserSettingBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        slideshowViewModel =
-                new ViewModelProvider(this).get(SlideshowViewModel.class);
+        userSettingViewModel =
+                new ViewModelProvider(this).get(userSettingViewModel.class);
 
-        binding = FragmentSlideshowBinding.inflate(inflater, container, false);
+        binding = FragmentUserSettingBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textSlideshow;
-        slideshowViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        userSettingViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
