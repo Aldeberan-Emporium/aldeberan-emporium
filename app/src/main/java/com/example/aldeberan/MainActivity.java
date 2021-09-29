@@ -31,6 +31,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -42,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // [END declare_auth]
 
     private GoogleSignInClient mGoogleSignInClient;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +64,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
-        SignInButton btn = (SignInButton) findViewById(R.id.sign_in_button);
+        SignInButton btn = findViewById(R.id.sign_in_button);
         btn.setOnClickListener(this);
+
+        Button logout = findViewById(R.id.logout);
+        logout.setOnClickListener(this);
     }
 
 
@@ -121,12 +127,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // [END auth_with_google]
 
     // [START signin]
-    /*
-    private void signIn() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
-    */
     ActivityResultLauncher<Intent> resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
         @Override
         public void onActivityResult(ActivityResult result) {
@@ -138,7 +138,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 try {
                     // Google Sign In was successful, authenticate with Firebase
                     GoogleSignInAccount account = task.getResult(ApiException.class);
-
                     assert account != null;
                     firebaseAuthWithGoogle(account.getIdToken());
                 } catch (ApiException e) {
@@ -151,14 +150,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     });
     // [END signin]
 
-    private void updateUI(FirebaseUser user) {
+    //sign out
+    private void signOut() {
+        mGoogleSignInClient.signOut().addOnCompleteListener(this, task -> {
+            TextView txtv = findViewById(R.id.loginStatus);
+            txtv.setText("Signed out");
+        });
+    }
+    //sign out
 
+    private void updateUI(FirebaseUser user) {
+        //to do
+        TextView txtv = findViewById(R.id.loginStatus);
+        txtv.setText(user.getDisplayName());
     }
 
     @Override
     public void onClick(View view) {
-        resultLauncher.launch(new Intent(mGoogleSignInClient.getSignInIntent()));
+        switch(view.getId()){
+            case R.id.sign_in_button:
+                resultLauncher.launch(new Intent(mGoogleSignInClient.getSignInIntent()));
+                break;
+            case R.id.logout:
+                signOut();
+                break;
+        }
+
     }
+
 
 
     /*
