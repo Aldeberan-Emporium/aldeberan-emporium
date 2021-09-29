@@ -252,6 +252,7 @@ public class MainActivity extends Activity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null)
         updateUI(currentUser);
     }
     // [END on_start_check_user]
