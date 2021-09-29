@@ -15,6 +15,10 @@ import com.example.aldeberan.models.ProductModel;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import org.json.JSONException;
+
+import java.io.IOException;
+
 public class AdminPanel extends AppCompatActivity implements View.OnClickListener{
 
     ProductModel pm = new ProductModel();
@@ -50,8 +54,15 @@ public class AdminPanel extends AppCompatActivity implements View.OnClickListene
         TextView prodStock = findViewById(R.id.prodStock);
         TextView prodPrice = findViewById(R.id.prodPrice);
         String prodImg = "";
-        Switch prodAvail = findViewById(R.id.prodAvail);
+        Switch prodAvailSwitch = findViewById(R.id.prodAvail);
+        int prodAvail = prodAvailSwitch.isChecked() ? 1 : 0;
 
-        //pm.addProduct(prodName.getEditableText(), prodSKU.getEditableText(), prodAvail, prodStock.getEditableText(), prodPrice.getEditableText(), prodImg);
+        try {
+            pm.addProduct(prodName.getEditableText().toString(), prodSKU.getEditableText().toString(), prodAvail, Integer.parseInt(prodStock.getEditableText().toString()), Double.parseDouble(prodPrice.getEditableText().toString()), prodImg);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
