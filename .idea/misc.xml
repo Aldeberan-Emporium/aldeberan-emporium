@@ -13,6 +13,7 @@
 =======
 >>>>>>> parent of 1b314a4 (Refactored the files name and xml code)
         <entry key="..\:/Users/Kelvi/Documents/Final Sem/Mobile/project-aldeberan/app/src/main/res/layout/activity_main.xml" value="0.33" />
+<<<<<<< HEAD
         <entry key="..\:/Users/Kelvi/Documents/Final Sem/Mobile/project-aldeberan/app/src/main/res/layout/activity_product_listing_detail_page.xml" value="0.3808876811594203" />
         <entry key="..\:/Users/Kelvi/Documents/Final Sem/Mobile/project-aldeberan/app/src/main/res/layout/app_bar_product_listing_detail_page.xml" value="0.3808876811594203" />
         <entry key="..\:/Users/Kelvi/Documents/Final Sem/Mobile/project-aldeberan/app/src/main/res/layout/avtivity_login.xml" value="0.33" />
@@ -43,6 +44,11 @@
 >>>>>>> parent of 1b314a4 (Refactored the files name and xml code)
 =======
 >>>>>>> parent of 1b314a4 (Refactored the files name and xml code)
+=======
+        <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/activity_main.xml" value="0.17074275362318841" />
+        <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/activity_product_listing_detail_page.xml" value="0.17074275362318841" />
+        <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/content_product_listing_detail_page.xml" value="0.17074275362318841" />
+>>>>>>> parent of a58aeba (Temporary hide the setting feature.)
       </map>
     </option>
   </component>
