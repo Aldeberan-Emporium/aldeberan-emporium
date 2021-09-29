@@ -188,18 +188,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-/*
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        //Code for test another activity pages.
-        Intent intent = new Intent(this, product_listing_detail_page.class);
-        startActivity(intent);
-    }
-*/
-
 }
 
 /*
