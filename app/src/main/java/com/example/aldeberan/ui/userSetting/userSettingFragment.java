@@ -27,6 +27,7 @@ public class userSettingFragment extends Fragment {
         binding = FragmentUserSettingBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        /*
         final TextView textView = binding.textSlideshow;
         userSettingViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
@@ -34,6 +35,8 @@ public class userSettingFragment extends Fragment {
                 textView.setText(s);
             }
         });
+
+         */
         return root;
     }
 
