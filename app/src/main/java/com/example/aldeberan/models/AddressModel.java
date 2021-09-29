@@ -1,4 +1,4 @@
-package models;
+package com.example.aldeberan.models;
 
 import com.google.gson.Gson;
 

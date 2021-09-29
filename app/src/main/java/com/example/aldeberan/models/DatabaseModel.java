@@ -1,4 +1,4 @@
-package models;
+package com.example.aldeberan.models;
 
 import androidx.annotation.NonNull;
 
@@ -15,7 +15,7 @@ import java.net.URL;
 
 public class DatabaseModel {
 
-    public String DB = "https://aldeberan-emporium.herokuapp.com/";
+    public static String DB = "https://aldeberan-emporium.herokuapp.com/";
 
     //Post data to database
     public String postData(@NonNull JSONObject data) throws IOException {
