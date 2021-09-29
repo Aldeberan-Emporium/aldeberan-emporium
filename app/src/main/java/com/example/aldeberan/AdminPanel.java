@@ -9,8 +9,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -48,9 +51,39 @@ public class AdminPanel extends AppCompatActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_panel);
 
+        //Firebase Cloud Storage reference
+        storageRef = storage.getReference();
+
+        //Submit Button
         Button submitBtn = findViewById(R.id.submitBtn);
         submitBtn.setOnClickListener(this);
-        storageRef = storage.getReference();
+
+        //PickImg Button
+        Button imgBtn = findViewById(R.id.imageBtn);
+        imgBtn.setOnClickListener(this);
+
+        //Set SKU when product name on change
+        EditText prodName = findViewById(R.id.prodName);
+        EditText prodSKU = findViewById(R.id.prodSKU);
+        prodName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                char curr = Character.toLowerCase(charSequence.charAt(i));
+                if (Character.isWhitespace(curr)){curr = '_';}
+                prodSKU.setText(curr);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
     }
 
     private void pickImgFromGallery(){
@@ -85,12 +118,10 @@ public class AdminPanel extends AppCompatActivity implements View.OnClickListene
                         }
                     }
                     else if (data.getExtras().getInt("requestCode") == 102){
-                        if (data != null){
-                            imgURI = data.getData();
-                            if (imgURI != null){
-                                ImageView img = findViewById(R.id.prodImg);
-                                img.setImageURI(imgURI);
-                            }
+                        imgURI = data.getData();
+                        if (imgURI != null){
+                            ImageView img = findViewById(R.id.prodImg);
+                            img.setImageURI(imgURI);
                         }
                     }
 
@@ -159,7 +190,7 @@ public class AdminPanel extends AppCompatActivity implements View.OnClickListene
                     });
                 }
                 else {
-                    //Toast.makeText(this, "Select an image", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Select an image", Toast.LENGTH_SHORT).show();
                 }
 
 
