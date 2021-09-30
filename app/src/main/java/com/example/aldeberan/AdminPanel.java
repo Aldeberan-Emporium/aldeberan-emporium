@@ -2,6 +2,7 @@ package com.example.aldeberan;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -13,6 +14,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -22,8 +24,11 @@ import android.widget.Toast;
 
 import com.example.aldeberan.models.DatabaseModel;
 import com.example.aldeberan.models.ProductModel;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -41,12 +46,12 @@ import androidx.core.content.ContextCompat;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.net.URI;
 
 public class AdminPanel extends AppCompatActivity implements View.OnClickListener{
 
     ProductModel pm = new ProductModel();
     public Uri imgURI;
-    FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef;
 
     @Override
@@ -55,7 +60,7 @@ public class AdminPanel extends AppCompatActivity implements View.OnClickListene
         setContentView(R.layout.activity_admin_panel);
 
         //Firebase Cloud Storage reference
-        storageRef = storage.getReference();
+        storageRef = FirebaseStorage.getInstance().getReference();
 
         //Submit Button
         Button submitBtn = findViewById(R.id.submitBtn);
@@ -68,24 +73,6 @@ public class AdminPanel extends AppCompatActivity implements View.OnClickListene
         //Set SKU when product name on change
         EditText prodName = findViewById(R.id.prodName);
         EditText prodSKU = findViewById(R.id.prodSKU);
-        prodName.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                char curr = Character.toLowerCase(charSequence.charAt(i));
-                if (Character.isWhitespace(curr)){curr = '_';}
-                prodSKU.setText(curr);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
 
     }
 
@@ -165,32 +152,37 @@ public class AdminPanel extends AppCompatActivity implements View.OnClickListene
             TextView prodSKU = findViewById(R.id.prodSKU);
             TextView prodStock = findViewById(R.id.prodStock);
             TextView prodPrice = findViewById(R.id.prodPrice);
-            String prodImg = "";
             Switch prodAvailSwitch = findViewById(R.id.prodAvail);
             int prodAvail = prodAvailSwitch.isChecked() ? 1 : 0;
 
             if (imgURI != null) {
 
-                StorageReference childRef = storageRef.child("/images/" + prodSKU + ".jpg");
+                StorageReference childRef = storageRef.child(prodSKU + "." + getFileExt(imgURI));
 
-                //uploading the image
-                UploadTask uploadTask = childRef.putFile(imgURI);
-                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        //Toast.makeText(this, "Upload successful", Toast.LENGTH_SHORT).show();
+                childRef.putFile(imgURI).continueWithTask(task -> {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
                     }
-                }).addOnFailureListener(new OnFailureListener() {
+
+                    // Continue with the task to get the download URL
+                    //change made here
+                    return childRef.getDownloadUrl();
+                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
                     @Override
-                    public void onFailure(@NonNull Exception e) {
-                        //Toast.makeText(this, "Upload Failed -> " + e, Toast.LENGTH_SHORT).show();
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        if (task.isSuccessful()) {
+                            Uri downloadUri = task.getResult();
+                            String prodImg = downloadUri.toString();
+                            pm.addProduct(prodName.getText().toString(), prodSKU.getText().toString(), prodAvail, Integer.parseInt(prodStock.getText().toString()), Double.parseDouble(prodPrice.getText().toString()), prodImg);
+                            Log.i("UP","Upload success: " + downloadUri);
+                        } else {
+                            Log.i("UP","Upload failed: ");
+                        }
                     }
                 });
             } else {
                 Toast.makeText(this, "Select an image", Toast.LENGTH_SHORT).show();
             }
-
-            pm.addProduct(prodName.getText().toString(), prodSKU.getText().toString(), prodAvail, Integer.parseInt(prodStock.getText().toString()), Double.parseDouble(prodPrice.getText().toString()), "https://google.com");
         }
         else{
             if (isPermissionGranted()){
@@ -200,5 +192,11 @@ public class AdminPanel extends AppCompatActivity implements View.OnClickListene
                 takePermissions();
             }
         }
+    }
+
+    private String getFileExt(Uri uri){
+        ContentResolver cr = getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(cr.getType(uri));
     }
 }

@@ -35,7 +35,7 @@ public class DatabaseModel {
         client.get("https://aldeberan-emporium.herokuapp.com/", params, new TextHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, String response) {
-                Log.i("JSON", params.toString());
+                Log.i("JSON", response);
                 Log.i("STATUS", String.valueOf(statusCode));
             }
 

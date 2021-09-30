@@ -17,7 +17,7 @@ public class ProductModel extends DatabaseModel {
         params.put("product_availability", prodAvail);
         params.put("product_stock", prodStock);
         params.put("product_price", String.valueOf(prodPrice));
-        params.put("product_img", prodImg);
+        params.put("product_img", StringEscapeUtils.escapeHtml4(prodImg));
         this.postData(params);
     }
 
@@ -31,7 +31,7 @@ public class ProductModel extends DatabaseModel {
         params.put("product_availability", prodAvail);
         params.put("product_stock", prodStock);
         params.put("product_price", String.valueOf(prodPrice));
-        params.put("product_img", prodImg);
+        params.put("product_img", StringEscapeUtils.escapeHtml4(prodImg));
         this.postData(params);
     }
 
