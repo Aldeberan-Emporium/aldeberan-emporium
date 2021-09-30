@@ -1,5 +1,8 @@
 package com.example.aldeberan.models;
 
+import com.codepath.asynchttpclient.RequestParams;
+import com.example.aldeberan.structures.Cart;
+import com.example.aldeberan.structures.Order;
 import com.google.gson.Gson;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -11,7 +14,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.Random;
 
-public class OrderModel extends DatabaseModel {
+public class OrderModel extends DatabaseModel{
 
     //Order reference generator
     public String orderRefGenerator(){
@@ -29,99 +32,101 @@ public class OrderModel extends DatabaseModel {
     }
 
     //Validate order reference
-    public String orderRefValidator(String orderRef) throws IOException, JSONException {
-        JSONObject data = this.readOrderRefAll();
-        Iterator<String> keys = data.keys();
+    public String orderRefValidator(String orderRef){
+        Order data = this.readOrderRefAll();
 
-        while(keys.hasNext()) {
-            String key = keys.next();
-            if (data.get(key) instanceof JSONObject) {
-               while (((JSONObject) data.get(key)).toString() != orderRef){
-                   orderRef = this.orderRefGenerator();
-               }
-            }
+        while (data.getOrderRef() != orderRef){
+            orderRef = orderRefGenerator();
         }
+
         return orderRef;
     }
 
+
     //Add order
-    public void addOrder(String userID, String orderDate, double subtotal, double total, String orderStatus) throws JSONException, IOException {
+    public void addOrder(String userID, String orderDate, double subtotal, double total, String orderStatus){
         String orderRef = orderRefGenerator();
 
         orderRef = this.orderRefValidator(orderRef);
 
-        JSONObject json = new JSONObject();
-        json.put("action", "addAddress");
-        json.put("user_id", StringEscapeUtils.escapeHtml3(userID));
-        json.put("order_reference", StringEscapeUtils.escapeHtml3(orderRef));
-        json.put("order_date", orderDate);
-        json.put("subtotal", subtotal);
-        json.put("total", total);
-        json.put("order_status", orderStatus);
-        this.postData(json);
+        RequestParams params = new RequestParams();
+        params.put("action", "addAddress");
+        params.put("user_id", StringEscapeUtils.escapeHtml3(userID));
+        params.put("order_reference", StringEscapeUtils.escapeHtml3(orderRef));
+        params.put("order_date", orderDate);
+        params.put("subtotal", String.valueOf(subtotal));
+        params.put("total", String.valueOf(total));
+        params.put("order_status", orderStatus);
+        this.postData(params);
     }
 
     //Read all order references
-    public JSONObject readOrderRefAll() throws JSONException, IOException {
-        JSONObject json = new JSONObject();
-        json.put("action", "readOrderRefAll");
-        JSONObject data = new Gson().fromJson(this.postData(json), JSONObject.class);
-        return data;
+    public Order readOrderRefAll(){
+        RequestParams params = new RequestParams();
+        params.put("action", "readOrderRefAll");
+        Gson gson = new Gson();
+        String data = this.getData(params);
+        Order order = gson.fromJson(data, Order.class);
+        return order;
     }
 
     //Admin read all orders
-    public JSONObject readOrderAll() throws JSONException, IOException {
-        JSONObject json = new JSONObject();
-        json.put("action", "readOrderAll");
-        JSONObject data = new Gson().fromJson(this.postData(json), JSONObject.class);
-        return data;
+    public Order readOrderAll() {
+        RequestParams params = new RequestParams();
+        params.put("action", "readOrderAll");
+        Gson gson = new Gson();
+        String data = this.getData(params);
+        Order order = gson.fromJson(data, Order.class);
+        return order;
     }
 
     //Read order by user id
-    public JSONObject readOrderByUser(String userID) throws JSONException, IOException {
-        JSONObject json = new JSONObject();
-        json.put("action", "readOrderByUser");
-        json.put("user_id", StringEscapeUtils.escapeHtml3(userID));
-        JSONObject data = new Gson().fromJson(this.postData(json), JSONObject.class);
-        return data;
+    public Order readOrderByUser(String userID) {
+        RequestParams params = new RequestParams();
+        params.put("action", "readOrderByUser");
+        params.put("user_id", StringEscapeUtils.escapeHtml3(userID));
+        Gson gson = new Gson();
+        String data = this.getData(params);
+        Order order = gson.fromJson(data, Order.class);
+        return order;
     }
 
     //Add order item
-    public void addOrderItem(int orderID, String prodName, String prodSKU, int prodQuantity, double prodPrice, String prodImg) throws JSONException, IOException {
-        JSONObject json = new JSONObject();
-        json.put("action", "addOrderItem");
-        json.put("order_id", orderID);
-        json.put("product_name", StringEscapeUtils.escapeHtml3(prodName));
-        json.put("product_SKU", StringEscapeUtils.escapeHtml3(prodSKU));
-        json.put("product_quantity", prodQuantity);
-        json.put("product_price", prodPrice);
-        json.put("product_img", prodImg);
-        this.postData(json);
+    public void addOrderItem(int orderID, String prodName, String prodSKU, int prodQuantity, double prodPrice, String prodImg){
+        RequestParams params = new RequestParams();
+        params.put("action", "addOrderItem");
+        params.put("order_id", orderID);
+        params.put("product_name", StringEscapeUtils.escapeHtml3(prodName));
+        params.put("product_SKU", StringEscapeUtils.escapeHtml3(prodSKU));
+        params.put("product_quantity", prodQuantity);
+        params.put("product_price", String.valueOf(prodPrice));
+        params.put("product_img", prodImg);
+        this.postData(params);
     }
 
     //Add order address
-    public void addOrderAddress(int orderID, String addRecipient, String addContact, String addLine1, String addLine2, String addCode, String addCity, String addState, String addCountry) throws JSONException, IOException {
-        JSONObject json = new JSONObject();
-        json.put("action", "addOrderAddress");
-        json.put("order_id", orderID);
-        json.put("address_recipient", StringEscapeUtils.escapeHtml3(addRecipient));
-        json.put("address_contact", StringEscapeUtils.escapeHtml3(addContact));
-        json.put("address_line1", StringEscapeUtils.escapeHtml3(addLine1));
-        json.put("address_line2", StringEscapeUtils.escapeHtml3(addLine2));
-        json.put("address_code", StringEscapeUtils.escapeHtml3(addCode));
-        json.put("address_city", StringEscapeUtils.escapeHtml3(addCity));
-        json.put("address_state", StringEscapeUtils.escapeHtml3(addState));
-        json.put("address_country", StringEscapeUtils.escapeHtml3(addCountry));
-        this.postData(json);
+    public void addOrderAddress(int orderID, String addRecipient, String addContact, String addLine1, String addLine2, String addCode, String addCity, String addState, String addCountry) {
+        RequestParams params = new RequestParams();
+        params.put("action", "addOrderAddress");
+        params.put("order_id", orderID);
+        params.put("address_recipient", StringEscapeUtils.escapeHtml3(addRecipient));
+        params.put("address_contact", StringEscapeUtils.escapeHtml3(addContact));
+        params.put("address_line1", StringEscapeUtils.escapeHtml3(addLine1));
+        params.put("address_line2", StringEscapeUtils.escapeHtml3(addLine2));
+        params.put("address_code", StringEscapeUtils.escapeHtml3(addCode));
+        params.put("address_city", StringEscapeUtils.escapeHtml3(addCity));
+        params.put("address_state", StringEscapeUtils.escapeHtml3(addState));
+        params.put("address_country", StringEscapeUtils.escapeHtml3(addCountry));
+        this.postData(params);
     }
 
     //Add order payment
-    public void addOrderPayment(int orderID, String payType, String payID) throws JSONException, IOException {
-        JSONObject json = new JSONObject();
-        json.put("action", "addOrderPayment");
-        json.put("order_id", orderID);
-        json.put("payment_type", StringEscapeUtils.escapeHtml3(payType));
-        json.put("payment_id", StringEscapeUtils.escapeHtml3(payID));
-        this.postData(json);
+    public void addOrderPayment(int orderID, String payType, String payID){
+        RequestParams params = new RequestParams();
+        params.put("action", "addOrderPayment");
+        params.put("order_id", orderID);
+        params.put("payment_type", StringEscapeUtils.escapeHtml3(payType));
+        params.put("payment_id", StringEscapeUtils.escapeHtml3(payID));
+        this.postData(params);
     }
 }
