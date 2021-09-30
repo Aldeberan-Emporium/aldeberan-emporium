@@ -11,19 +11,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-<<<<<<< HEAD
+
         android:theme="@style/Theme.Aldeberan">
         <activity
             android:name=".AdminPanel"
             android:exported="true" />
-        <activity
-            android:name=".product_listing_detail_page"
-            android:exported="true"
-            android:label="@string/title_activity_product_listing_detail_page"
-            android:theme="@style/Theme.Aldeberan.NoActionBar" />
-=======
-        android:theme="@style/Theme.Aldeberan" >
->>>>>>> parent of de6c740 (Create a Navigation Drawer activity for product listings/details page)
+
         <activity
             android:name=".MainActivity"
             android:exported="true" >
