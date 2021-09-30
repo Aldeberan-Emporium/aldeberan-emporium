@@ -47,14 +47,15 @@ public class DatabaseModel {
     }
 
     //Get data from database
-    public void getData(@NonNull RequestParams params){
+    public String getData(@NonNull RequestParams params){
         AsyncHttpClient client = new AsyncHttpClient();
-
+        final String[] res = new String[1];
         client.get("https://aldeberan-emporium.herokuapp.com/", params, new TextHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, String response) {
                 Log.i("JSON", response);
                 Log.i("STATUS", String.valueOf(statusCode));
+                res[0] = response;
             }
 
             @Override
@@ -62,5 +63,6 @@ public class DatabaseModel {
                 Log.i("STATUS", String.valueOf(statusCode));
             }
         });
+        return res[0];
     }
 }

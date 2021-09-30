@@ -1,18 +1,15 @@
 package com.example.aldeberan.models;
 
 import com.codepath.asynchttpclient.RequestParams;
+import com.example.aldeberan.structures.Address;
 import com.google.gson.Gson;
 
 import org.apache.commons.text.StringEscapeUtils;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 
 public class AddressModel extends DatabaseModel{
 
     //Add address
-    public void addAddress(String userID, String addRecipient, String addContact, String addLine1, String addLine2, String addCode, String addCity, String addState, String addCountry) throws JSONException, IOException {
+    public void addAddress(String userID, String addRecipient, String addContact, String addLine1, String addLine2, String addCode, String addCity, String addState, String addCountry){
         RequestParams params = new RequestParams();
         params.put("action", "addAddress");
         params.put("user_id", StringEscapeUtils.escapeHtml3(userID));
@@ -28,7 +25,7 @@ public class AddressModel extends DatabaseModel{
     }
 
     //Update address
-    public void updateAddress(int addID, String userID, String addRecipient, String addContact, String addLine1, String addLine2, String addCode, String addCity, String addState, String addCountry) throws JSONException, IOException {
+    public void updateAddress(int addID, String userID, String addRecipient, String addContact, String addLine1, String addLine2, String addCode, String addCity, String addState, String addCountry){
         RequestParams params = new RequestParams();
         params.put("action", "updateAddress");
         params.put("address_id", addID);
@@ -45,21 +42,21 @@ public class AddressModel extends DatabaseModel{
     }
 
     //Delete address
-    public void deleteAddress(int addID) throws JSONException, IOException {
+    public void deleteAddress(int addID){
         RequestParams params = new RequestParams();
         params.put("action", "deleteAddress");
         params.put("address_id", addID);
         this.postData(params);
     }
-    /*
+
     //Read address by user
-    public JSONObject readAddressByUser(String userID) throws JSONException, IOException {
+    public Address readAddressByUser(String userID){
         RequestParams params = new RequestParams();
         params.put("action", "readAddressByUser");
         params.put("user_id", StringEscapeUtils.escapeHtml3(userID));
-        JSONObject data = new Gson().fromJson(this.postData(json), JSONObject.class);
-        return data;
+        Gson gson = new Gson();
+        String data = this.getData(params);
+        Address address = gson.fromJson(data, Address.class);
+        return address;
     }
-
-     */
 }
