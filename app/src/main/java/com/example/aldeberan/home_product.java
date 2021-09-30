@@ -10,9 +10,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+
+import org.w3c.dom.Text;
 
 public class home_product extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -76,4 +79,12 @@ public class home_product extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
     }
+
+    /*
+    public void setUser(String str){
+        TextView txt = findViewById(R.id.user);
+        txt.setText(str);
+    }
+
+     */
 }

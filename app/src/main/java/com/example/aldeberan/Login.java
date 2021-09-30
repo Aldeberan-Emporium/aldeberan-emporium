@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -29,7 +30,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-public class Login extends AppCompatActivity implements View.OnClickListener{
+import com.example.aldeberan.home_product;
+
+import org.w3c.dom.Text;
+
+public class Login extends AppCompatActivity  implements View.OnClickListener{
     private static final String TAG = "GoogleActivity";
     private static final int RC_SIGN_IN = 9001;
 
@@ -70,8 +75,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null)
+        if (currentUser != null){
             updateUI(currentUser);
+        }else{
+            updateUI(null);
+        }
+
     }
     // [END on_start_check_user]
 
@@ -108,6 +117,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
+
+                            Toast.makeText(Login.this, "Login Success", Toast.LENGTH_SHORT).show();
+
+                            //updateHome(user);
+
+                            Intent Lintent = new Intent(Login.this, home_product.class);
+                            startActivity(Lintent);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
@@ -134,7 +150,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                     firebaseAuthWithGoogle(account.getIdToken());
                 } catch (ApiException e) {
                     // Google Sign In failed, update UI appropriately
-
+                    Toast.makeText(Login.this, "Login Failed", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -156,6 +172,15 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         TextView txtv = findViewById(R.id.loginStatus);
         txtv.setText("User ID: " + user.getUid());
     }
+
+    /*
+    private void updateHome(FirebaseUser user){
+        home_product hp = new home_product();
+        String cuser = user.getDisplayName();
+
+        hp.setUser(cuser);
+    }
+    */
 
     @Override
     public void onClick(View view) {
