@@ -11,6 +11,7 @@ import android.os.Environment;
 import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +20,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.aldeberan.models.DatabaseModel;
 import com.example.aldeberan.models.ProductModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -124,18 +126,12 @@ public class AdminPanel extends AppCompatActivity implements View.OnClickListene
                             img.setImageURI(imgURI);
                         }
                     }
+                    else{
+                        takePermissions();
+                    }
 
                 }
             });
-
-    ActivityResultLauncher<String> requestPermissionLauncher =
-        registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-            if (isGranted) {
-                pickImgFromGallery();
-            } else {
-                takePermissions();
-            }
-        });
 
     private void takePermissions(){
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.R){
@@ -160,56 +156,46 @@ public class AdminPanel extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void onClick(View view) {
+        Toast.makeText(this, "Select an image", Toast.LENGTH_SHORT).show();
+        if (view.getId() == R.id.submitBtn) {
+            TextView prodName = findViewById(R.id.prodName);
+            TextView prodSKU = findViewById(R.id.prodSKU);
+            TextView prodStock = findViewById(R.id.prodStock);
+            TextView prodPrice = findViewById(R.id.prodPrice);
+            String prodImg = "https://google.com";
+            Switch prodAvailSwitch = findViewById(R.id.prodAvail);
+            int prodAvail = prodAvailSwitch.isChecked() ? 1 : 0;
 
-        switch (view.getId()){
-            case R.id.submitBtn:
-                TextView prodName = findViewById(R.id.prodName);
-                TextView prodSKU = findViewById(R.id.prodSKU);
-                TextView prodStock = findViewById(R.id.prodStock);
-                TextView prodPrice = findViewById(R.id.prodPrice);
-                String prodImg = "";
-                Switch prodAvailSwitch = findViewById(R.id.prodAvail);
-                int prodAvail = prodAvailSwitch.isChecked() ? 1 : 0;
+                if (imgURI != null) {
 
-                if(imgURI != null) {
+                StorageReference childRef = storageRef.child("/images/" + prodSKU + ".jpg");
 
-                    StorageReference childRef = storageRef.child("/images/"+prodSKU+".jpg");
+                //uploading the image
+                UploadTask uploadTask = childRef.putFile(imgURI);
+                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        //Toast.makeText(this, "Upload successful", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        //Toast.makeText(this, "Upload Failed -> " + e, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                Toast.makeText(this, "Select an image", Toast.LENGTH_SHORT).show();
+            }
 
-                    //uploading the image
-                    UploadTask uploadTask = childRef.putFile(imgURI);
-                    uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                           //Toast.makeText(this, "Upload successful", Toast.LENGTH_SHORT).show();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            //Toast.makeText(this, "Upload Failed -> " + e, Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-                else {
-                    Toast.makeText(this, "Select an image", Toast.LENGTH_SHORT).show();
-                }
-
-
-                try {
-                    pm.addProduct(prodName.getEditableText().toString(), prodSKU.getEditableText().toString(), prodAvail, Integer.parseInt(prodStock.getEditableText().toString()), Double.parseDouble(prodPrice.getEditableText().toString()), prodImg);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                break;
-            case R.id.imageBtn:
-                if (isPermissionGranted()){
-                    pickImgFromGallery();
-                }
-                else{
-                    takePermissions();
-                }
+            pm.addProduct(prodName.getText().toString(), prodSKU.getText().toString(), prodAvail, Integer.parseInt(prodStock.getText().toString()), Double.parseDouble(prodPrice.getText().toString()), "https://google.com");
         }
-
+        else{
+            if (isPermissionGranted()){
+                pickImgFromGallery();
+            }
+            else{
+                takePermissions();
+            }
+        }
     }
 }

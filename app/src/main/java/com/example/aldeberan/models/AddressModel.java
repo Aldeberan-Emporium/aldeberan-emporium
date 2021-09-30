@@ -1,5 +1,6 @@
 package com.example.aldeberan.models;
 
+import com.codepath.asynchttpclient.RequestParams;
 import com.google.gson.Gson;
 
 import org.apache.commons.text.StringEscapeUtils;
@@ -8,55 +9,57 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class AddressModel extends DatabaseModel {
+public class AddressModel extends DatabaseModel{
 
     //Add address
     public void addAddress(String userID, String addRecipient, String addContact, String addLine1, String addLine2, String addCode, String addCity, String addState, String addCountry) throws JSONException, IOException {
-        JSONObject json = new JSONObject();
-        json.put("action", "addAddress");
-        json.put("user_id", StringEscapeUtils.escapeHtml3(userID));
-        json.put("address_recipient", StringEscapeUtils.escapeHtml3(addRecipient));
-        json.put("address_contact", StringEscapeUtils.escapeHtml3(addContact));
-        json.put("address_line1", StringEscapeUtils.escapeHtml3(addLine1));
-        json.put("address_line2", StringEscapeUtils.escapeHtml3(addLine2));
-        json.put("address_code", StringEscapeUtils.escapeHtml3(addCode));
-        json.put("address_city", StringEscapeUtils.escapeHtml3(addCity));
-        json.put("address_state", StringEscapeUtils.escapeHtml3(addState));
-        json.put("address_country", StringEscapeUtils.escapeHtml3(addCountry));
-        this.postData(json);
+        RequestParams params = new RequestParams();
+        params.put("action", "addAddress");
+        params.put("user_id", StringEscapeUtils.escapeHtml3(userID));
+        params.put("address_recipient", StringEscapeUtils.escapeHtml3(addRecipient));
+        params.put("address_contact", StringEscapeUtils.escapeHtml3(addContact));
+        params.put("address_line1", StringEscapeUtils.escapeHtml3(addLine1));
+        params.put("address_line2", StringEscapeUtils.escapeHtml3(addLine2));
+        params.put("address_code", StringEscapeUtils.escapeHtml3(addCode));
+        params.put("address_city", StringEscapeUtils.escapeHtml3(addCity));
+        params.put("address_state", StringEscapeUtils.escapeHtml3(addState));
+        params.put("address_country", StringEscapeUtils.escapeHtml3(addCountry));
+        this.postData(params);
     }
 
     //Update address
     public void updateAddress(int addID, String userID, String addRecipient, String addContact, String addLine1, String addLine2, String addCode, String addCity, String addState, String addCountry) throws JSONException, IOException {
-        JSONObject json = new JSONObject();
-        json.put("action", "updateAddress");
-        json.put("address_id", addID);
-        json.put("user_id", StringEscapeUtils.escapeHtml3(userID));
-        json.put("address_recipient", StringEscapeUtils.escapeHtml3(addRecipient));
-        json.put("address_contact", StringEscapeUtils.escapeHtml3(addContact));
-        json.put("address_line1", StringEscapeUtils.escapeHtml3(addLine1));
-        json.put("address_line2", StringEscapeUtils.escapeHtml3(addLine2));
-        json.put("address_code", StringEscapeUtils.escapeHtml3(addCode));
-        json.put("address_city", StringEscapeUtils.escapeHtml3(addCity));
-        json.put("address_state", StringEscapeUtils.escapeHtml3(addState));
-        json.put("address_country", StringEscapeUtils.escapeHtml3(addCountry));
-        this.postData(json);
+        RequestParams params = new RequestParams();
+        params.put("action", "updateAddress");
+        params.put("address_id", addID);
+        params.put("user_id", StringEscapeUtils.escapeHtml3(userID));
+        params.put("address_recipient", StringEscapeUtils.escapeHtml3(addRecipient));
+        params.put("address_contact", StringEscapeUtils.escapeHtml3(addContact));
+        params.put("address_line1", StringEscapeUtils.escapeHtml3(addLine1));
+        params.put("address_line2", StringEscapeUtils.escapeHtml3(addLine2));
+        params.put("address_code", StringEscapeUtils.escapeHtml3(addCode));
+        params.put("address_city", StringEscapeUtils.escapeHtml3(addCity));
+        params.put("address_state", StringEscapeUtils.escapeHtml3(addState));
+        params.put("address_country", StringEscapeUtils.escapeHtml3(addCountry));
+        this.postData(params);
     }
 
     //Delete address
     public void deleteAddress(int addID) throws JSONException, IOException {
-        JSONObject json = new JSONObject();
-        json.put("action", "deleteAddress");
-        json.put("address_id", addID);
-        this.postData(json);
+        RequestParams params = new RequestParams();
+        params.put("action", "deleteAddress");
+        params.put("address_id", addID);
+        this.postData(params);
     }
-
+    /*
     //Read address by user
     public JSONObject readAddressByUser(String userID) throws JSONException, IOException {
-        JSONObject json = new JSONObject();
-        json.put("action", "readAddressByUser");
-        json.put("user_id", StringEscapeUtils.escapeHtml3(userID));
+        RequestParams params = new RequestParams();
+        params.put("action", "readAddressByUser");
+        params.put("user_id", StringEscapeUtils.escapeHtml3(userID));
         JSONObject data = new Gson().fromJson(this.postData(json), JSONObject.class);
         return data;
     }
+
+     */
 }

@@ -41,7 +41,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-/*
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "GoogleActivity";
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null)
-        updateUI(currentUser);
+            updateUI(currentUser);
     }
     // [END on_start_check_user]
 
@@ -188,21 +188,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        //Code for test another activity pages.
-        Intent intent = new Intent(this, product_listing_detail_page.class);
-        startActivity(intent);
-    }
-
-
 }
-*/
-public class MainActivity extends Activity {
+
+/*
+public class MainActivity extends Activity implements View.OnClickListener{
 
     private static final String TAG = "FacebookLogin";
 
@@ -221,10 +210,14 @@ public class MainActivity extends Activity {
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
 
+        Button btn = findViewById(R.id.logout);
+        btn.setOnClickListener(this);
+
         // [START initialize_fblogin]
         // Initialize Facebook Login button
         mCallbackManager = CallbackManager.Factory.create();
         LoginButton loginButton = findViewById(R.id.login_button);
+
         loginButton.setPermissions("email", "public_profile");
         loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -293,8 +286,22 @@ public class MainActivity extends Activity {
     }
     // [END auth_with_facebook]
 
+    private void signOut() {
+        FirebaseAuth.getInstance().signOut();
+    }
+
+    @Override
+    public void onClick(View view) {
+        signOut();
+        TextView txtv = findViewById(R.id.loginStatus);
+        txtv.setText("Signed out");
+    }
+
     private void updateUI(FirebaseUser user) {
         TextView txtv = findViewById(R.id.loginStatus);
         txtv.setText("User ID: " + user.getUid());
     }
+
+
 }
+ */
