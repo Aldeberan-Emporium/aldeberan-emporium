@@ -1,10 +1,20 @@
 package com.example.aldeberan.models;
 
+import android.net.Uri;
+import android.util.Log;
+
 import com.codepath.asynchttpclient.RequestParams;
 import com.example.aldeberan.structures.Product;
 import com.google.gson.Gson;
 
 import org.apache.commons.text.StringEscapeUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ProductModel extends DatabaseModel {
 
@@ -44,23 +54,47 @@ public class ProductModel extends DatabaseModel {
     }
 
     //Admin read all products
-    public Product readProductAll(){
+    public ArrayList readProductAll() throws JSONException {
         RequestParams params = new RequestParams();
         params.put("action", "readProductAll");
-        Gson gson = new Gson();
-        String data = this.getData(params);
-        Product product = gson.fromJson(data, Product.class);
-        return product;
+
+        ArrayList productList = new ArrayList<>();
+        this.getData(params);
+        String data = this.getRes();
+
+        try {
+            JSONArray array = new JSONArray(data);
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject object = array.getJSONObject(i);
+                String prodID = object.getString("product_id");
+                String prodName = StringEscapeUtils.unescapeHtml4(object.getString("product_name"));
+                String prodSKU = StringEscapeUtils.unescapeHtml4(object.getString("product_SKU"));
+                String prodImg = StringEscapeUtils.unescapeHtml4(object.getString("product_img"));
+                String prodAvail = object.getString("product_availability");
+                String prodStock = object.getString("product_stock");
+                String prodPrice = object.getString("product_price");
+
+                HashMap<String, String> product = new HashMap<>();
+                product.put("product_id", prodID);
+                product.put("product_name", prodName);
+                product.put("product_SKU", prodSKU);
+                product.put("product_img", prodImg);
+                product.put("product_availability", prodAvail);
+                product.put("product_stock", prodStock);
+                product.put("product_price", prodPrice);
+
+                productList.add(product);
+
+            }
+        }catch (Exception e){}
+        Log.i("PL", String.valueOf(productList));
+        return productList;
     }
 
     //Read product by ID
-    public Product readProductById(int prodID){
+    public void readProductById(int prodID){
         RequestParams params = new RequestParams();
         params.put("action", "readProductById");
         params.put("product_id", prodID);
-        Gson gson = new Gson();
-        String data = this.getData(params);
-        Product product = gson.fromJson(data, Product.class);
-        return product;
     }
 }

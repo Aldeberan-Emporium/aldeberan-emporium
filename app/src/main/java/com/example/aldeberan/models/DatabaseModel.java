@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.apache.commons.text.StringEscapeUtils;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -28,6 +29,15 @@ import okhttp3.Response;
 import okhttp3.internal.http2.Header;
 
 public class DatabaseModel {
+
+    private String res;
+
+    public String getRes() {
+        return res;
+    }
+    public void setRes(String res) {
+        this.res = res;
+    }
 
     //Post data to database
     public void postData(@NonNull RequestParams params){
@@ -47,15 +57,15 @@ public class DatabaseModel {
     }
 
     //Get data from database
-    public String getData(@NonNull RequestParams params){
+    public void getData(@NonNull RequestParams params){
         AsyncHttpClient client = new AsyncHttpClient();
-        final String[] res = new String[1];
         client.get("https://aldeberan-emporium.herokuapp.com/", params, new TextHttpResponseHandler() {
+
             @Override
             public void onSuccess(int statusCode, Headers headers, String response) {
                 Log.i("JSON", response);
                 Log.i("STATUS", String.valueOf(statusCode));
-                res[0] = response;
+                setRes(response);
             }
 
             @Override
@@ -63,6 +73,5 @@ public class DatabaseModel {
                 Log.i("STATUS", String.valueOf(statusCode));
             }
         });
-        return res[0];
     }
 }

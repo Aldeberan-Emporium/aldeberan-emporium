@@ -50,13 +50,9 @@ public class AddressModel extends DatabaseModel{
     }
 
     //Read address by user
-    public Address readAddressByUser(String userID){
+    public void readAddressByUser(String userID){
         RequestParams params = new RequestParams();
         params.put("action", "readAddressByUser");
         params.put("user_id", StringEscapeUtils.escapeHtml3(userID));
-        Gson gson = new Gson();
-        String data = this.getData(params);
-        Address address = gson.fromJson(data, Address.class);
-        return address;
     }
 }

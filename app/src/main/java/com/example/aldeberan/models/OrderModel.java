@@ -1,17 +1,10 @@
 package com.example.aldeberan.models;
 
 import com.codepath.asynchttpclient.RequestParams;
-import com.example.aldeberan.structures.Cart;
-import com.example.aldeberan.structures.Order;
-import com.google.gson.Gson;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.text.StringEscapeUtils;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.IOException;
-import java.util.Iterator;
 import java.util.Random;
 
 public class OrderModel extends DatabaseModel{
@@ -32,7 +25,8 @@ public class OrderModel extends DatabaseModel{
     }
 
     //Validate order reference
-    public String orderRefValidator(String orderRef){
+    public void orderRefValidator(String orderRef){
+        /*
         Order data = this.readOrderRefAll();
 
         while (data.getOrderRef() != orderRef){
@@ -40,6 +34,8 @@ public class OrderModel extends DatabaseModel{
         }
 
         return orderRef;
+
+         */
     }
 
 
@@ -47,7 +43,7 @@ public class OrderModel extends DatabaseModel{
     public void addOrder(String userID, String orderDate, double subtotal, double total, String orderStatus){
         String orderRef = orderRefGenerator();
 
-        orderRef = this.orderRefValidator(orderRef);
+        //orderRef = this.orderRefValidator(orderRef);
 
         RequestParams params = new RequestParams();
         params.put("action", "addAddress");
@@ -61,34 +57,22 @@ public class OrderModel extends DatabaseModel{
     }
 
     //Read all order references
-    public Order readOrderRefAll(){
+    public void readOrderRefAll(){
         RequestParams params = new RequestParams();
         params.put("action", "readOrderRefAll");
-        Gson gson = new Gson();
-        String data = this.getData(params);
-        Order order = gson.fromJson(data, Order.class);
-        return order;
     }
 
     //Admin read all orders
-    public Order readOrderAll() {
+    public void readOrderAll() {
         RequestParams params = new RequestParams();
         params.put("action", "readOrderAll");
-        Gson gson = new Gson();
-        String data = this.getData(params);
-        Order order = gson.fromJson(data, Order.class);
-        return order;
     }
 
     //Read order by user id
-    public Order readOrderByUser(String userID) {
+    public void readOrderByUser(String userID) {
         RequestParams params = new RequestParams();
         params.put("action", "readOrderByUser");
         params.put("user_id", StringEscapeUtils.escapeHtml3(userID));
-        Gson gson = new Gson();
-        String data = this.getData(params);
-        Order order = gson.fromJson(data, Order.class);
-        return order;
     }
 
     //Add order item
