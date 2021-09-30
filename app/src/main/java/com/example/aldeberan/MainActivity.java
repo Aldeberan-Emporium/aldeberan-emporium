@@ -12,7 +12,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //Code for test another activity pages.
-        Intent intent = new Intent(this, AdminPanel.class);
+        Intent intent = new Intent(this, home_product.class);
         startActivity(intent);
     }
 }
