@@ -20,17 +20,22 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 public class homeProductFragment extends Fragment {
+    private View myFragmentView;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        /*
+
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference();
         DatabaseReference getImage = databaseReference.child("image");
 
-        ImageView imageView = (ImageView) getView().findViewById(R.id.imageView);
+        myFragmentView = inflater.inflate(R.layout.fragment_home_product, container, false);
+
+        ImageView imageView = (ImageView) myFragmentView.findViewById(R.id.imageView);
+
+
 
         getImage.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -41,7 +46,7 @@ public class homeProductFragment extends Fragment {
 
                 // loading that data into rImage
                 // variable which is ImageView
-                System.out.println("whatlink" + link);
+
                 if (link != null)
                     Picasso.get().load(link).into(imageView);
             }
@@ -52,11 +57,8 @@ public class homeProductFragment extends Fragment {
             }
         });
 
-         */
+        return myFragmentView;
 
-
-
-
-        return inflater.inflate(R.layout.fragment_home_product, container, false);
+        //return inflater.inflate(R.layout.fragment_home_product, container, false);
     }
 }
