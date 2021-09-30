@@ -33,6 +33,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -110,20 +111,12 @@ public class AdminPanel extends AppCompatActivity implements View.OnClickListene
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 if (result.getResultCode() == Activity.RESULT_OK) {
-                    // There are no request codes
                     Intent data = result.getData();
-                    if (data.getExtras().getInt("requestCode") == 100){
+                    if (result.getResultCode() == 100){
                         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.R){
                             if (Environment.isExternalStorageManager()){
                                 pickImgFromGallery();
                             }
-                        }
-                    }
-                    else if (data.getExtras().getInt("requestCode") == 102){
-                        imgURI = data.getData();
-                        if (imgURI != null){
-                            ImageView img = findViewById(R.id.prodImg);
-                            img.setImageURI(imgURI);
                         }
                     }
                     else{
@@ -132,6 +125,16 @@ public class AdminPanel extends AppCompatActivity implements View.OnClickListene
 
                 }
             });
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        imgURI = data.getData();
+        if (imgURI != null){
+            ImageView img = findViewById(R.id.prodImg);
+            img.setImageURI(imgURI);
+        }
+    }
 
     private void takePermissions(){
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.R){
@@ -162,11 +165,11 @@ public class AdminPanel extends AppCompatActivity implements View.OnClickListene
             TextView prodSKU = findViewById(R.id.prodSKU);
             TextView prodStock = findViewById(R.id.prodStock);
             TextView prodPrice = findViewById(R.id.prodPrice);
-            String prodImg = "https://google.com";
+            String prodImg = "";
             Switch prodAvailSwitch = findViewById(R.id.prodAvail);
             int prodAvail = prodAvailSwitch.isChecked() ? 1 : 0;
 
-                if (imgURI != null) {
+            if (imgURI != null) {
 
                 StorageReference childRef = storageRef.child("/images/" + prodSKU + ".jpg");
 
