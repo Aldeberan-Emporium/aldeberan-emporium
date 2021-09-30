@@ -19,13 +19,9 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Order History</string>
-    <string name="menu_slideshow">User Settings</string>
-    <string name="menu_order_history">Order History</string>
-    <string name="menu_user_setting">User Settings</string>
     <string name="def_log_id">905429185029-lsmfp6vf9rghu1bdjkt8r1mvkhvlq813.apps.googleusercontent.com</string>
     <string name="admin_product_btn">Submit</string>
     <string name="admin_product_imagebtn">Pick Image from Gallery</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
