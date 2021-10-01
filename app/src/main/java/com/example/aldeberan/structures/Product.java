@@ -21,6 +21,10 @@ public class Product {
         this.prodImg = StringEscapeUtils.unescapeHtml4(prodImg);
     }
 
+    public Product() {
+
+    }
+
     public int getProdID() {
         return prodID;
     }

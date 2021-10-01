@@ -30,14 +30,7 @@ import okhttp3.internal.http2.Header;
 
 public class DatabaseModel {
 
-    private String res;
-
-    public String getRes() {
-        return res;
-    }
-    public void setRes(String res) {
-        this.res = res;
-    }
+    public String res;
 
     //Post data to database
     public void postData(@NonNull RequestParams params){
@@ -56,21 +49,26 @@ public class DatabaseModel {
         });
     }
 
+    //Callback function for getData response
+    public interface OnResponseCallback {
+        public void onResponse(boolean success, String response);
+    }
+
     //Get data from database
-    public void getData(@NonNull RequestParams params){
+    public void getData(@NonNull RequestParams params, OnResponseCallback callback){
         AsyncHttpClient client = new AsyncHttpClient();
         client.get("https://aldeberan-emporium.herokuapp.com/", params, new TextHttpResponseHandler() {
-
             @Override
             public void onSuccess(int statusCode, Headers headers, String response) {
                 Log.i("JSON", response);
                 Log.i("STATUS", String.valueOf(statusCode));
-                setRes(response);
+                callback.onResponse(true, response);
             }
 
             @Override
             public void onFailure(int statusCode, @Nullable Headers headers, String errorResponse, @Nullable Throwable throwable) {
                 Log.i("STATUS", String.valueOf(statusCode));
+                callback.onResponse(false, null);
             }
         });
     }

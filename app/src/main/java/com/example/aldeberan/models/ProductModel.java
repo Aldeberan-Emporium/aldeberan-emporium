@@ -1,22 +1,23 @@
 package com.example.aldeberan.models;
 
-import android.net.Uri;
 import android.util.Log;
 
 import com.codepath.asynchttpclient.RequestParams;
 import com.example.aldeberan.structures.Product;
-import com.google.gson.Gson;
 
 import org.apache.commons.text.StringEscapeUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class ProductModel extends DatabaseModel {
+
+    public String data;
+    public List<Product> productList = new ArrayList<>();
 
     //Admin create new product
     public void addProduct(String prodName, String prodSKU, int prodAvail, int prodStock, double prodPrice, String prodImg){
@@ -53,42 +54,47 @@ public class ProductModel extends DatabaseModel {
         this.postData(params);
     }
 
+    //Callback function for readProductAll response
+    public interface OnResponseCallback {
+        public void onResponse(List<Product> response);
+    }
+
     //Admin read all products
-    public ArrayList readProductAll() throws JSONException {
+    public void readProductAll(OnResponseCallback callback) throws JSONException {
         RequestParams params = new RequestParams();
         params.put("action", "readProductAll");
+        this.getData(params, (success, response) -> {
+            data = response;
+            Log.i("DATAIN", data);
 
-        ArrayList productList = new ArrayList<>();
-        this.getData(params);
-        String data = this.getRes();
+            try {
+                JSONArray array = new JSONArray(data);
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject object = array.getJSONObject(i);
+                    int prodID = Integer.parseInt(object.getString("product_id"));
+                    String prodName = StringEscapeUtils.unescapeHtml4(object.getString("product_name"));
+                    String prodSKU = StringEscapeUtils.unescapeHtml4(object.getString("product_SKU"));
+                    String prodImg = StringEscapeUtils.unescapeHtml4(object.getString("product_img"));
+                    int prodAvail = Integer.parseInt(object.getString("product_availability"));
+                    int prodStock = Integer.parseInt(object.getString("product_stock"));
+                    double prodPrice = Double.parseDouble(object.getString("product_price"));
 
-        try {
-            JSONArray array = new JSONArray(data);
-            for (int i = 0; i < array.length(); i++) {
-                JSONObject object = array.getJSONObject(i);
-                String prodID = object.getString("product_id");
-                String prodName = StringEscapeUtils.unescapeHtml4(object.getString("product_name"));
-                String prodSKU = StringEscapeUtils.unescapeHtml4(object.getString("product_SKU"));
-                String prodImg = StringEscapeUtils.unescapeHtml4(object.getString("product_img"));
-                String prodAvail = object.getString("product_availability");
-                String prodStock = object.getString("product_stock");
-                String prodPrice = object.getString("product_price");
+                    Product product = new Product();
+                    product.setProdID(prodID);
+                    product.setProdName(prodName);
+                    product.setProdSKU(prodSKU);
+                    product.setProdImg(prodImg);
+                    product.setProdAvail(prodAvail);
+                    product.setProdStock(prodStock);
+                    product.setProdPrice(prodPrice);
 
-                HashMap<String, String> product = new HashMap<>();
-                product.put("product_id", prodID);
-                product.put("product_name", prodName);
-                product.put("product_SKU", prodSKU);
-                product.put("product_img", prodImg);
-                product.put("product_availability", prodAvail);
-                product.put("product_stock", prodStock);
-                product.put("product_price", prodPrice);
+                    productList.add(product);
 
-                productList.add(product);
-
-            }
-        }catch (Exception e){}
-        Log.i("PL", String.valueOf(productList));
-        return productList;
+                }
+            }catch (Exception e){}
+            Log.i("PL", String.valueOf(productList));
+            callback.onResponse(productList);
+        });
     }
 
     //Read product by ID
