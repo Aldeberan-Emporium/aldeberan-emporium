@@ -7,74 +7,96 @@
 
     <TextView
         android:id="@+id/prodNameLbl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="13dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toStartOf="@+id/prodStockLbl"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/prodIDLbl" />
-
-    <TextView
-        android:id="@+id/prodIDLbl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="13dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toStartOf="@+id/prodPriceLbl"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="227dp"
+        android:layout_height="40dp"
+        android:text="prodName"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/prodIDLbl"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toEndOf="@+id/prodImgView"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/prodStockLbl"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintEnd_toStartOf="@+id/prodImgView"
-        app:layout_constraintStart_toEndOf="@+id/prodNameLbl"
-        app:layout_constraintTop_toBottomOf="@+id/prodPriceLbl" />
-
-    <TextView
-        android:id="@+id/prodPriceLbl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toStartOf="@+id/prodImgView"
-        app:layout_constraintStart_toEndOf="@+id/prodIDLbl"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="19dp"
+        android:text="prodStock"
+        app:layout_constraintBottom_toTopOf="@+id/prodPriceLbl"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.009"
+        app:layout_constraintStart_toEndOf="@+id/prodImgView"
+        app:layout_constraintTop_toBottomOf="@+id/prodAvailLbl" />
 
     <TextView
         android:id="@+id/prodAvailLbl"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintEnd_toStartOf="@+id/prodImgView"
-        app:layout_constraintStart_toEndOf="@+id/prodSKULbl"
+        android:layout_height="19dp"
+        android:text="prodAvail"
+        app:layout_constraintBottom_toTopOf="@+id/prodStockLbl"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.009"
+        app:layout_constraintStart_toEndOf="@+id/prodImgView"
+        app:layout_constraintTop_toBottomOf="@+id/prodSKULbl" />
+
+    <TextView
+        android:id="@+id/prodPriceLbl"
+        android:layout_width="wrap_content"
+        android:layout_height="19dp"
+        android:text="prodPrice"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.009"
+        app:layout_constraintStart_toEndOf="@+id/prodImgView"
         app:layout_constraintTop_toBottomOf="@+id/prodStockLbl" />
+
+    <TextView
+        android:id="@+id/prodIDLbl"
+        android:layout_width="wrap_content"
+        android:layout_height="19dp"
+        android:text="prodID"
+        app:layout_constraintBottom_toTopOf="@+id/prodSKULbl"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.008"
+        app:layout_constraintStart_toEndOf="@+id/prodImgView"
+        app:layout_constraintTop_toBottomOf="@+id/prodNameLbl" />
 
     <TextView
         android:id="@+id/prodSKULbl"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="13dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toStartOf="@+id/prodAvailLbl"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/prodNameLbl" />
+        android:layout_height="19dp"
+        android:text="prodSKU"
+        app:layout_constraintBottom_toTopOf="@+id/prodAvailLbl"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.009"
+        app:layout_constraintStart_toEndOf="@+id/prodImgView"
+        app:layout_constraintTop_toBottomOf="@+id/prodIDLbl" />
 
     <ImageView
         android:id="@+id/prodImgView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="140dp"
+        android:layout_height="139dp"
         app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/prodPriceLbl"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
+
+    <Button
+        android:id="@+id/updateBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="update"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/deleteBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="delete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/updateBtn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

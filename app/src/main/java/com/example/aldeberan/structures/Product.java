@@ -53,8 +53,9 @@ public class Product {
         this.prodImg = StringEscapeUtils.unescapeHtml4(prodImg);
     }
 
-    public int getProdAvail() {
-        return prodAvail;
+    public boolean getProdAvail() {
+        if (this.prodAvail == 0){return false;}
+        else{return true;}
     }
     public void setProdAvail(int prodAvail) {
         this.prodAvail = prodAvail;

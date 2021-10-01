@@ -35,16 +35,6 @@ public class AdminPanel_LoadProduct extends AppCompatActivity {
         productList = new ArrayList<>();
         recyclerView = findViewById(R.id.recyclerView);
 
-        ProductModel pm = new ProductModel();
-        try {
-            pm.readProductAll((response -> {
-                productList = response;
-                PutDataIntoRecyclerView(response);
-                Log.i("PL", String.valueOf(productList));
-            }));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
         GetData getData = new GetData();
         getData.execute();
