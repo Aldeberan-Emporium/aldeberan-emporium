@@ -60,8 +60,9 @@ public class home_product extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new userSettingFragment()).commit();
                 break;
             case R.id.nav_login:
-                Intent intent = new Intent(home_product.this, Login.class);
-                startActivity(intent);
+                //Intent intent = new Intent(home_product.this, Login.class);
+                //startActivity(intent);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new loginFragment()).commit();
                 break;
             case R.id.nav_logout:
                 Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();

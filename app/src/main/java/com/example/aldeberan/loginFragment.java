@@ -33,7 +33,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-public class loginFragment extends Fragment{
+import java.util.concurrent.Executor;
+
+public class loginFragment extends Fragment implements View.OnClickListener{
     // implements View.OnClickListener
     private static final String TAG = "GoogleActivity";
     private static final int RC_SIGN_IN = 9001;
@@ -55,8 +57,8 @@ public class loginFragment extends Fragment{
                 .requestIdToken(getString(R.string.def_log_id))
                 .requestEmail()
                 .build();
-        /*
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
         // [END config_signin]
 
         // [START initialize_auth]
@@ -68,27 +70,40 @@ public class loginFragment extends Fragment{
 
         Button logout = myFragmentView.findViewById(R.id.logout);
         logout.setOnClickListener(this);
-        */
+
         return myFragmentView;
     }
 
-    /*
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.sign_in_button:
+                resultLauncher.launch(new Intent(mGoogleSignInClient.getSignInIntent()));
+                break;
+            case R.id.logout:
+                signOut();
+                break;
+
+        }
+    }
+
     // [START on_start_check_user]
     @Override
-    public void onStart() {
+    public void onStart () {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null)
             updateUI(currentUser);
     }
+
     // [END on_start_check_user]
 
     // [START auth_with_google]
-    private void firebaseAuthWithGoogle(String idToken) {
+    private void firebaseAuthWithGoogle (String idToken){
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener((Executor) this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
@@ -104,6 +119,7 @@ public class loginFragment extends Fragment{
                     }
                 });
     }
+
     // [END auth_with_google]
 
     // [START signin]
@@ -131,31 +147,18 @@ public class loginFragment extends Fragment{
     // [END signin]
 
     //sign out
-    private void signOut() {
-        mGoogleSignInClient.signOut().addOnCompleteListener(this, task -> {
-            TextView txtv = findViewById(R.id.loginStatus);
+    private void signOut () {
+        mGoogleSignInClient.signOut().addOnCompleteListener((Executor) this, task -> {
+            TextView txtv = myFragmentView.findViewById(R.id.loginStatus);
             txtv.setText("Signed out");
         });
     }
     //sign out
 
-    private void updateUI(FirebaseUser user) {
+    private void updateUI (FirebaseUser user){
         //to do
-        TextView txtv = findViewById(R.id.loginStatus);
+        TextView txtv = myFragmentView.findViewById(R.id.loginStatus);
         txtv.setText("User ID: " + user.getUid());
     }
 
-    @Override
-    public void onClick(View view) {
-        switch(view.getId()){
-            case R.id.sign_in_button:
-                resultLauncher.launch(new Intent(mGoogleSignInClient.getSignInIntent()));
-                break;
-            case R.id.logout:
-                signOut();
-                break;
-        }
-    }
-
-     */
 }
