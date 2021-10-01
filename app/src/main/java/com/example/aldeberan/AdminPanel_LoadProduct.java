@@ -4,12 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import com.example.aldeberan.models.ProductModel;
 import com.example.aldeberan.structures.Product;
@@ -31,27 +34,28 @@ public class AdminPanel_LoadProduct extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_panel_load_product);
+        /*
+        Typeface font = Typeface.createFromAsset( getAssets(), "fonts/fontawesome-webfont.ttf" );
+
+        Button updateBtn = findViewById(R.id.updateBtn);
+        updateBtn.setTypeface(font);
+
+        Button deleteBtn = findViewById(R.id.deleteBtn);
+        deleteBtn.setTypeface(font);
+
+        */
 
         productList = new ArrayList<>();
         recyclerView = findViewById(R.id.recyclerView);
 
-
-        GetData getData = new GetData();
-        getData.execute();
-
-    }
-
-
-    public class GetData extends AsyncTask<String, String, String> {
-
-        @Override
-        protected String doInBackground(String... strings) {
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String res) {
-
+        ProductModel pm = new ProductModel();
+        try {
+            pm.readProductAll((response) -> {
+                productList = response;
+                PutDataIntoRecyclerView(response);
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 
