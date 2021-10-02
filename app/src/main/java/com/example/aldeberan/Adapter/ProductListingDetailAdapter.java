@@ -73,6 +73,7 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
 
         Glide.with(mContext).load(mData.get(position).getProdImg()).override(450, 450).into(holder.productRowBinding.cusProdImgView);
 
+        /*
         holder.productRowBinding.addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,6 +81,8 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
                 //cm.addQuote();
             }
         });
+        
+         */
     }
 
     @Override
