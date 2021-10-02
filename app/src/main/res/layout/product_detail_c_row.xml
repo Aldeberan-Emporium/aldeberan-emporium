@@ -12,85 +12,52 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <ImageView
+            android:id="@+id/cusProdImgView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintDimensionRatio="3:3"
+            app:layout_constraintBottom_toTopOf="@+id/cusProdNameLbl"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
+
         <TextView
             android:id="@+id/cusProdNameLbl"
-            android:layout_width="272dp"
-            android:layout_height="42dp"
-            android:text="prodName"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/cusProdIDLbl"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintStart_toEndOf="@+id/cusProdImgView"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_wrapBehaviorInParent="horizontal_only" />
-
-        <TextView
-            android:id="@+id/cusProdStockLbl"
             android:layout_width="wrap_content"
-            android:layout_height="19dp"
-            android:text="cusProdStock"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Name"
             app:layout_constraintBottom_toTopOf="@+id/cusProdPriceLbl"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.009"
-            app:layout_constraintStart_toEndOf="@+id/cusProdImgView"
-            app:layout_constraintTop_toBottomOf="@+id/cusProdAvailLbl" />
-
-        <TextView
-            android:id="@+id/cusProdAvailLbl"
-            android:layout_width="wrap_content"
-            android:layout_height="19dp"
-            android:text="cusProdAvail"
-            app:layout_constraintBottom_toTopOf="@+id/cusProdStockLbl"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.009"
-            app:layout_constraintStart_toEndOf="@+id/cusProdImgView"
-            app:layout_constraintTop_toBottomOf="@+id/cusProdSKULbl" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cusProdImgView" />
 
         <TextView
             android:id="@+id/cusProdPriceLbl"
             android:layout_width="wrap_content"
-            android:layout_height="19dp"
-            android:text="cusProdPrice"
+            android:layout_height="wrap_content"
+            android:text="cusProdPriceLbl"
+            app:layout_constraintBottom_toTopOf="@+id/progressBar2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.009"
-            app:layout_constraintStart_toEndOf="@+id/cusProdImgView"
-            app:layout_constraintTop_toBottomOf="@+id/cusProdStockLbl" />
-
-        <TextView
-            android:id="@+id/cusProdIDLbl"
-            android:layout_width="wrap_content"
-            android:layout_height="19dp"
-            android:text="cusProdID"
-            app:layout_constraintBottom_toTopOf="@+id/cusProdSKULbl"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.008"
-            app:layout_constraintStart_toEndOf="@+id/cusProdImgView"
-            app:layout_constraintTop_toBottomOf="@+id/cusProdNameLbl"
-            android:visibility="gone"/>
-
-        <TextView
-            android:id="@+id/cusProdSKULbl"
-            android:layout_width="wrap_content"
-            android:layout_height="19dp"
-            android:text="cusProdSKU"
-            app:layout_constraintBottom_toTopOf="@+id/cusProdAvailLbl"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.009"
-            app:layout_constraintStart_toEndOf="@+id/cusProdImgView"
-            app:layout_constraintTop_toBottomOf="@+id/cusProdIDLbl"
-            android:visibility="gone"/>
-
-        <ImageView
-            android:id="@+id/cusProdImgView"
-            android:layout_width="140dp"
-            android:layout_height="139dp"
-            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:layout_constraintTop_toBottomOf="@+id/cusProdNameLbl" />
+
+        <ProgressBar
+            android:id="@+id/progressBar2"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:layout_marginTop="5dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cusProdPriceLbl" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

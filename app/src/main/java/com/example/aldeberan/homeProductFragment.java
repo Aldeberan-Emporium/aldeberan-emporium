@@ -55,7 +55,6 @@ public class homeProductFragment extends Fragment{
             pullToRefresh.setRefreshing(false);
         });
 
-
         return myFragmentView;
     }
 

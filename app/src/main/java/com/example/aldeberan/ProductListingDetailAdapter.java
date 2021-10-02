@@ -13,7 +13,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.aldeberan.databinding.AdminPanelProductRowBinding;
 import com.example.aldeberan.databinding.ProductDetailCRowBinding;
 import com.example.aldeberan.models.ProductModel;
 import com.example.aldeberan.structures.Product;
@@ -40,7 +39,6 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
         public ProductViewHolder(ProductDetailCRowBinding productRowBinding) {
             super(productRowBinding.getRoot());
             this.productRowBinding = productRowBinding;
-
         }
     }
 
@@ -61,13 +59,13 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
         holder.productRowBinding.executePendingBindings();
 
         holder.productRowBinding.cusProdNameLbl.setText(mData.get(position).getProdName());
-        holder.productRowBinding.cusProdSKULbl.setText("SKU: " + mData.get(position).getProdSKU());
-        holder.productRowBinding.cusProdIDLbl.setText("ID: " + mData.get(position).getProdID());
+        //holder.productRowBinding.cusProdSKULbl.setText("SKU: " + mData.get(position).getProdSKU());
+        //holder.productRowBinding.cusProdIDLbl.setText("ID: " + mData.get(position).getProdID());
 
-        String prodAvail = mData.get(position).getProdAvail() ? "Active" : "Inactive";
+        //String prodAvail = mData.get(position).getProdAvail() ? "Active" : "Inactive";
 
-        holder.productRowBinding.cusProdAvailLbl.setText("Availability: " + prodAvail);
-        holder.productRowBinding.cusProdStockLbl.setText("Stock: " + mData.get(position).getProdStock());
+        //holder.productRowBinding.cusProdAvailLbl.setText("Availability: " + prodAvail);
+        //holder.productRowBinding.cusProdStockLbl.setText("Stock: " + mData.get(position).getProdStock());
         holder.productRowBinding.cusProdPriceLbl.setText("Price: RM " + mData.get(position).getProdPrice());
 
         Glide.with(mContext).load(mData.get(position).getProdImg()).override(450, 450).into(holder.productRowBinding.cusProdImgView);
