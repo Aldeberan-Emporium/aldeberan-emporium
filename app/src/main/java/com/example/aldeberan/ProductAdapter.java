@@ -56,7 +56,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
             productRowBinding.deleteBtn.setOnClickListener(view -> {
                 Log.i("DELETE", String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdID()));
-                showDialog(String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdName()), Integer.parseInt(String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdID())));
+                showDialog(String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdName()),
+                        Integer.parseInt(String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdID())),
+                        String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdSKU()),
+                        String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdImg()));
             });
         }
     }
@@ -96,16 +99,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     }
 
 
-    private void showDialog(String prodName, int prodID){
+    private void showDialog(String prodName, int prodID, String prodSKU, String prodImg){
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 
         builder.setTitle("Warning");
-        builder.setMessage("Are you sure you want to remove " + prodName);
+        builder.setMessage("Are you sure you want to remove " + prodName + "?");
 
         builder.setPositiveButton("Cancel", (dialog, which) -> {
             dialog.dismiss();
         }).setNegativeButton("Confirm", (dialog, which) -> {
-            pm.deleteProduct(prodID);
+            pm.deleteProduct(prodID, prodSKU, prodImg);
             dialog.dismiss();
             Toast.makeText(mContext, prodName + " deleted!", Toast.LENGTH_LONG).show();
         });

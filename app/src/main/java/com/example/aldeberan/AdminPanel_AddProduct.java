@@ -143,7 +143,7 @@ public class AdminPanel_AddProduct extends AppCompatActivity implements View.OnC
 
             if (imgURI != null) {
 
-                StorageReference childRef = storageRef.child(prodSKU + "." + getFileExt(imgURI));
+                StorageReference childRef = storageRef.child("products/" + prodSKU.getText().toString() + "." + getFileExt(imgURI));
 
                 childRef.putFile(imgURI).continueWithTask(task -> {
                     if (!task.isSuccessful()) {

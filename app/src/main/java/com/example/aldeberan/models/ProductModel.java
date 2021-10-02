@@ -2,8 +2,14 @@ package com.example.aldeberan.models;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.codepath.asynchttpclient.RequestParams;
 import com.example.aldeberan.structures.Product;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import org.apache.commons.text.StringEscapeUtils;
 import org.json.JSONArray;
@@ -47,11 +53,21 @@ public class ProductModel extends DatabaseModel {
     }
 
     //Admin delete existing product
-    public void deleteProduct(int prodID){
+    public void deleteProduct(int prodID, String prodSKU, String prodImg){
         RequestParams params = new RequestParams();
         params.put("action", "deleteProduct");
         params.put("product_id", prodID);
         this.postData(params);
+
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+        StorageReference fileRef = storageRef.child("products/"+prodSKU+"."+extValidator(prodImg));
+
+        // Delete the file
+        fileRef.delete().addOnSuccessListener(aVoid -> {
+            Log.i("DELETESUCCESS", "File deleted from firebase!");
+        }).addOnFailureListener(exception -> {
+            Log.i("DELETEFAILED", "File failed to delete!");
+        });
     }
 
     //Callback function for readProductAll response
@@ -102,5 +118,18 @@ public class ProductModel extends DatabaseModel {
         RequestParams params = new RequestParams();
         params.put("action", "readProductById");
         params.put("product_id", prodID);
+    }
+
+    //Check file extension from url
+    public String extValidator(String prodImg){
+        //Only jpg, jpeg, png files are valid atm
+        String[] extArr = {"jpg", "jpeg", "png"};
+        String ext = "";
+        for (int i = 0; i < extArr.length; i++){
+            if (prodImg.contains(extArr[i])){
+                ext = extArr[i];
+            }
+        }
+        return ext;
     }
 }
