@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.apache.commons.text.StringEscapeUtils;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -28,6 +29,8 @@ import okhttp3.Response;
 import okhttp3.internal.http2.Header;
 
 public class DatabaseModel {
+
+    public String res;
 
     //Post data to database
     public void postData(@NonNull RequestParams params){
@@ -46,23 +49,27 @@ public class DatabaseModel {
         });
     }
 
+    //Callback function for getData response
+    public interface OnResponseCallback {
+        public void onResponse(boolean success, String response);
+    }
+
     //Get data from database
-    public String getData(@NonNull RequestParams params){
+    public void getData(@NonNull RequestParams params, OnResponseCallback callback){
         AsyncHttpClient client = new AsyncHttpClient();
-        final String[] res = new String[1];
         client.get("https://aldeberan-emporium.herokuapp.com/", params, new TextHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, String response) {
                 Log.i("JSON", response);
                 Log.i("STATUS", String.valueOf(statusCode));
-                res[0] = response;
+                callback.onResponse(true, response);
             }
 
             @Override
             public void onFailure(int statusCode, @Nullable Headers headers, String errorResponse, @Nullable Throwable throwable) {
                 Log.i("STATUS", String.valueOf(statusCode));
+                callback.onResponse(false, null);
             }
         });
-        return res[0];
     }
 }

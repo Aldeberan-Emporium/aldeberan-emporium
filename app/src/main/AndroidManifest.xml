@@ -13,16 +13,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Aldeberan">
         <activity
-            android:name=".home_product"
-            android:exported="true"  android:theme="@style/Theme.Aldeberan.NoActionBar"/>
-
-
+            android:name=".AdminPanel_UpdateProduct"
+            android:exported="true"
+            android:parentActivityName=".AdminPanel_LoadProduct" />
         <activity
-            android:name=".AdminPanel"
+            android:name=".AdminPanel_LoadProduct"
             android:exported="true" />
         <activity
             android:name=".Login"
             android:exported="true" />
+        <activity
+            android:name=".AdminPanel_AddProduct"
+            android:exported="true"
+            android:parentActivityName=".AdminPanel_LoadProduct" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

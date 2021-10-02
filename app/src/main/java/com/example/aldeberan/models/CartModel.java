@@ -48,14 +48,11 @@ public class CartModel extends DatabaseModel{
     }
 
     //Read quote by user id
-    public Cart readQuoteByUser(String userID){
+    public void readQuoteByUser(String userID){
         RequestParams params = new RequestParams();
         params.put("action", "readQuoteByUser");
         params.put("user_id", StringEscapeUtils.escapeHtml4(userID));
-        Gson gson = new Gson();
-        String data = this.getData(params);
-        Cart cart = gson.fromJson(data, Cart.class);
-        return cart;
+
     }
 
     //Add quote item

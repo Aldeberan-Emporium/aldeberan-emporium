@@ -20,8 +20,13 @@
     <string name="action_settings">Settings</string>
 
     <string name="def_log_id">905429185029-lsmfp6vf9rghu1bdjkt8r1mvkhvlq813.apps.googleusercontent.com</string>
-    <string name="admin_product_btn">Submit</string>
+    <string name="admin_product_submit_btn">Submit</string>
     <string name="admin_product_imagebtn">Pick Image from Gallery</string>
+    <string name="admin_product_update_btn">Update</string>
+    <string name="admin_product_reset_btn">Reset</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string name="update_product">UPDATE</string>
+    <string name="delete_product">DELETE</string>
+    <string name="no_product">There are no products available at the moment! Please add a new product.</string>
 </resources>

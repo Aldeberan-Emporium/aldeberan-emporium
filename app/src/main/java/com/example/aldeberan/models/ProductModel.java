@@ -1,12 +1,29 @@
 package com.example.aldeberan.models;
 
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+
 import com.codepath.asynchttpclient.RequestParams;
 import com.example.aldeberan.structures.Product;
-import com.google.gson.Gson;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import org.apache.commons.text.StringEscapeUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class ProductModel extends DatabaseModel {
+
+    public String data;
+    public List<Product> productList = new ArrayList<>();
 
     //Admin create new product
     public void addProduct(String prodName, String prodSKU, int prodAvail, int prodStock, double prodPrice, String prodImg){
@@ -36,31 +53,83 @@ public class ProductModel extends DatabaseModel {
     }
 
     //Admin delete existing product
-    public void deleteProduct(int prodID){
+    public void deleteProduct(int prodID, String prodSKU, String prodImg){
         RequestParams params = new RequestParams();
         params.put("action", "deleteProduct");
         params.put("product_id", prodID);
         this.postData(params);
+
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+        StorageReference fileRef = storageRef.child("products/"+prodSKU+"."+extValidator(prodImg));
+
+        // Delete the file
+        fileRef.delete().addOnSuccessListener(aVoid -> {
+            Log.i("DELETESUCCESS", "File deleted from firebase!");
+        }).addOnFailureListener(exception -> {
+            Log.i("DELETEFAILED", "File failed to delete!");
+        });
+    }
+
+    //Callback function for readProductAll response
+    public interface OnResponseCallback {
+        public void onResponse(List<Product> response);
     }
 
     //Admin read all products
-    public Product readProductAll(){
+    public void readProductAll(OnResponseCallback callback) throws JSONException {
         RequestParams params = new RequestParams();
         params.put("action", "readProductAll");
-        Gson gson = new Gson();
-        String data = this.getData(params);
-        Product product = gson.fromJson(data, Product.class);
-        return product;
+        this.getData(params, (success, response) -> {
+            data = response;
+            Log.i("DATAIN", data);
+
+            try {
+                JSONArray array = new JSONArray(data);
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject object = array.getJSONObject(i);
+                    int prodID = Integer.parseInt(object.getString("product_id"));
+                    String prodName = StringEscapeUtils.unescapeHtml4(object.getString("product_name"));
+                    String prodSKU = StringEscapeUtils.unescapeHtml4(object.getString("product_SKU"));
+                    String prodImg = StringEscapeUtils.unescapeHtml4(object.getString("product_img"));
+                    int prodAvail = Integer.parseInt(object.getString("product_availability"));
+                    int prodStock = Integer.parseInt(object.getString("product_stock"));
+                    double prodPrice = Double.parseDouble(object.getString("product_price"));
+
+                    Product product = new Product();
+                    product.setProdID(prodID);
+                    product.setProdName(prodName);
+                    product.setProdSKU(prodSKU);
+                    product.setProdImg(prodImg);
+                    product.setProdAvail(prodAvail);
+                    product.setProdStock(prodStock);
+                    product.setProdPrice(prodPrice);
+
+                    productList.add(product);
+
+                }
+            }catch (Exception e){}
+            Log.i("PL", String.valueOf(productList));
+            callback.onResponse(productList);
+        });
     }
 
     //Read product by ID
-    public Product readProductById(int prodID){
+    public void readProductById(int prodID){
         RequestParams params = new RequestParams();
         params.put("action", "readProductById");
         params.put("product_id", prodID);
-        Gson gson = new Gson();
-        String data = this.getData(params);
-        Product product = gson.fromJson(data, Product.class);
-        return product;
+    }
+
+    //Check file extension from url
+    public String extValidator(String prodImg){
+        //Only jpg, jpeg, png files are valid atm
+        String[] extArr = {"jpg", "jpeg", "png"};
+        String ext = "";
+        for (int i = 0; i < extArr.length; i++){
+            if (prodImg.contains(extArr[i])){
+                ext = extArr[i];
+            }
+        }
+        return ext;
     }
 }
