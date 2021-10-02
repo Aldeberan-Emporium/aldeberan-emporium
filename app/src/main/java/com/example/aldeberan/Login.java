@@ -30,11 +30,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-import com.example.aldeberan.home_product;
-
-import org.w3c.dom.Text;
-
-public class Login extends AppCompatActivity  implements View.OnClickListener{
+public class Login extends AppCompatActivity implements View.OnClickListener{
     private static final String TAG = "GoogleActivity";
     private static final int RC_SIGN_IN = 9001;
 
@@ -43,6 +39,8 @@ public class Login extends AppCompatActivity  implements View.OnClickListener{
     // [END declare_auth]
 
     private GoogleSignInClient mGoogleSignInClient;
+
+    private home_product hp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
@@ -77,6 +75,7 @@ public class Login extends AppCompatActivity  implements View.OnClickListener{
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null){
             updateUI(currentUser);
+            //updateHome(currentUser);
         }else{
             updateUI(null);
         }
@@ -120,7 +119,7 @@ public class Login extends AppCompatActivity  implements View.OnClickListener{
 
                             Toast.makeText(Login.this, "Login Success", Toast.LENGTH_SHORT).show();
 
-                            //updateHome(user);
+                            updateHome(user);
 
                             Intent Lintent = new Intent(Login.this, home_product.class);
                             startActivity(Lintent);
@@ -173,14 +172,14 @@ public class Login extends AppCompatActivity  implements View.OnClickListener{
         txtv.setText("User ID: " + user.getUid());
     }
 
-    /*
-    private void updateHome(FirebaseUser user){
-        home_product hp = new home_product();
-        String cuser = user.getDisplayName();
 
-        hp.setUser(cuser);
+    private void updateHome(FirebaseUser user) {
+        Intent i = new Intent(Login.this, home_product.class);
+        String curruser = user.getDisplayName();
+        i.putExtra("currentUser", curruser);
+        startActivity(i);
     }
-    */
+
 
     @Override
     public void onClick(View view) {
@@ -193,5 +192,4 @@ public class Login extends AppCompatActivity  implements View.OnClickListener{
                 break;
         }
     }
-
 }

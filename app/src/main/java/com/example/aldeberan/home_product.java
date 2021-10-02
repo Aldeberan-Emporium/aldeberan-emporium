@@ -1,5 +1,7 @@
 package com.example.aldeberan;
 
+import static android.provider.Settings.NameValueTable.VALUE;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +23,8 @@ public class home_product extends AppCompatActivity implements NavigationView.On
 
     private DrawerLayout drawer;
 
+    private String currentUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +36,17 @@ public class home_product extends AppCompatActivity implements NavigationView.On
         drawer = findViewById(R.id.draw_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        Intent ii = getIntent();
+        String cuser = ii.getStringExtra("currentUser");
+
+        TextView curr = findViewById(R.id.current_user);
+        if (curr != null){
+            curr.setText(cuser);
+        }else{
+
+        }
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -60,12 +75,15 @@ public class home_product extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new userSettingFragment()).commit();
                 break;
             case R.id.nav_login:
-                //Intent intent = new Intent(home_product.this, Login.class);
-                //startActivity(intent);
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new loginFragment()).commit();
+                Intent intent = new Intent(home_product.this, Login.class);
+                startActivity(intent);
                 break;
+                //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new loginFragment()).commit();
+                //break;
             case R.id.nav_logout:
                 Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
+                TextView cuser = findViewById(R.id.current_user);
+                cuser.setText("Please Sign in");
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);

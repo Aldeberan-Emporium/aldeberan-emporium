@@ -16,7 +16,6 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -47,9 +46,9 @@ public class loginFragment extends Fragment implements View.OnClickListener{
 
     private GoogleSignInClient mGoogleSignInClient;
 
-    @Nullable
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         myFragmentView = inflater.inflate(R.layout.fragment_login, container, false);
         
@@ -72,19 +71,6 @@ public class loginFragment extends Fragment implements View.OnClickListener{
         logout.setOnClickListener(this);
 
         return myFragmentView;
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.sign_in_button:
-                resultLauncher.launch(new Intent(mGoogleSignInClient.getSignInIntent()));
-                break;
-            case R.id.logout:
-                signOut();
-                break;
-
-        }
     }
 
     // [START on_start_check_user]
@@ -147,18 +133,31 @@ public class loginFragment extends Fragment implements View.OnClickListener{
     // [END signin]
 
     //sign out
+
     private void signOut () {
         mGoogleSignInClient.signOut().addOnCompleteListener((Executor) this, task -> {
             TextView txtv = myFragmentView.findViewById(R.id.loginStatus);
             txtv.setText("Signed out");
         });
     }
-    //sign out
 
+
+
+    //update UI
     private void updateUI (FirebaseUser user){
-        //to do
         TextView txtv = myFragmentView.findViewById(R.id.loginStatus);
         txtv.setText("User ID: " + user.getUid());
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.sign_in_button:
+                resultLauncher.launch(new Intent(mGoogleSignInClient.getSignInIntent()));
+                break;
+            case R.id.logout:
+                signOut();
+                break;
+        }
+    }
 }
