@@ -1,6 +1,7 @@
 package com.example.aldeberan;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -47,20 +49,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             super(productRowBinding.getRoot());
             this.productRowBinding = productRowBinding;
 
-            productRowBinding.updateBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Log.i("UPDATE", String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdID()));
-                    //Show update screen
-                }
+            productRowBinding.updateBtn.setOnClickListener(view -> {
+                Log.i("UPDATE", String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdID()));
+                //Show update screen
             });
 
-            productRowBinding.deleteBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Log.i("DELETE", String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdID()));
-                    //pm.deleteProduct(mData.get(currentPos).getProdID());
-                }
+            productRowBinding.deleteBtn.setOnClickListener(view -> {
+                Log.i("DELETE", String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdID()));
+                showDialog(String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdName()), Integer.parseInt(String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdID())));
             });
         }
     }
@@ -97,6 +93,25 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     @Override
     public int getItemCount() {
         return mData.size();
+    }
+
+
+    private void showDialog(String prodName, int prodID){
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+
+        builder.setTitle("Warning");
+        builder.setMessage("Are you sure you want to remove " + prodName);
+
+        builder.setPositiveButton("Cancel", (dialog, which) -> {
+            dialog.dismiss();
+        }).setNegativeButton("Confirm", (dialog, which) -> {
+            pm.deleteProduct(prodID);
+            dialog.dismiss();
+            Toast.makeText(mContext, prodName + " deleted!", Toast.LENGTH_LONG).show();
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
 }
