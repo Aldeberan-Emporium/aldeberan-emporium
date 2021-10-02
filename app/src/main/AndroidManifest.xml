@@ -13,6 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Aldeberan">
         <activity
+            android:name=".home_product"
+            android:exported="true"  android:theme="@style/Theme.Aldeberan.NoActionBar"/>
+
+        <activity
             android:name=".AdminPanel_UpdateProduct"
             android:exported="true"
             android:parentActivityName=".AdminPanel_LoadProduct" />
