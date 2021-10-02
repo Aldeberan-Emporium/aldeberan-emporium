@@ -10,6 +10,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
@@ -33,6 +35,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class AdminPanel_AddProduct extends AppCompatActivity implements View.OnClickListener{
 
@@ -59,6 +64,22 @@ public class AdminPanel_AddProduct extends AppCompatActivity implements View.OnC
         //Set SKU when product name on change
         EditText prodName = findViewById(R.id.prodName);
         EditText prodSKU = findViewById(R.id.prodSKU);
+
+        //Regex
+
+
+        prodName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                prodSKU.setText(regexValidator(prodName.getText().toString()));
+            }
+        });
 
     }
 
@@ -144,27 +165,31 @@ public class AdminPanel_AddProduct extends AppCompatActivity implements View.OnC
             int prodStock = Integer.parseInt(prodStockLbl.getText().toString());
             Double prodPrice = Double.parseDouble(prodPriceLbl.getText().toString());
 
-            if (imgURI != null) {
+            if (prodName != null && prodStock != 0 && prodPrice != null && imgURI != null){
+                if (imgURI != null) {
+                    StorageReference childRef = storageRef.child("products/" + prodSKU + "." + getFileExt(imgURI));
 
-                StorageReference childRef = storageRef.child("products/" + prodSKU + "." + getFileExt(imgURI));
-
-                childRef.putFile(imgURI).continueWithTask(task -> {
-                    if (!task.isSuccessful()) {
-                        throw task.getException();
-                    }
-                    return childRef.getDownloadUrl();
-                }).addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        Uri downloadUri = task.getResult();
-                        String prodImg = downloadUri.toString();
-                        pm.addProduct(prodName, prodSKU, prodAvail, prodStock, prodPrice, prodImg);
-                        Log.i("UP","Upload success: " + downloadUri);
-                    } else {
-                        Log.i("UP","Upload failed: ");
-                    }
-                });
-            } else {
-                Toast.makeText(this, "Please select an image!", Toast.LENGTH_SHORT).show();
+                    childRef.putFile(imgURI).continueWithTask(task -> {
+                        if (!task.isSuccessful()) {
+                            throw task.getException();
+                        }
+                        return childRef.getDownloadUrl();
+                    }).addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Uri downloadUri = task.getResult();
+                            String prodImg = downloadUri.toString();
+                            pm.addProduct(prodName, prodSKU, prodAvail, prodStock, prodPrice, prodImg);
+                            Log.i("UP","Upload success: " + downloadUri);
+                        } else {
+                            Log.i("UP","Upload failed: ");
+                        }
+                    });
+                } else {
+                    Toast.makeText(this, "Please select an image!", Toast.LENGTH_LONG).show();
+                }
+            }
+            else{
+                Toast.makeText(this, "All inputs are required!", Toast.LENGTH_LONG).show();
             }
         }
         else{
@@ -181,5 +206,30 @@ public class AdminPanel_AddProduct extends AppCompatActivity implements View.OnC
         ContentResolver cr = getContentResolver();
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(cr.getType(uri));
+    }
+
+    private String regexValidator(String input){
+        char[] charArr = input.toLowerCase().toCharArray();
+        String output = "";
+        for (int i=0; i<charArr.length;i++) {
+            if (charArr[i] == 'a' || charArr[i] == 'b' || charArr[i] == 'c' ||
+                    charArr[i] == 'd' || charArr[i] == 'e' || charArr[i] == 'f' ||
+                    charArr[i] == 'g' || charArr[i] == 'h' || charArr[i] == 'i' ||
+                    charArr[i] == 'j' || charArr[i] == 'k' || charArr[i] == 'l' ||
+                    charArr[i] == 'm' || charArr[i] == 'n' || charArr[i] == 'o' ||
+                    charArr[i] == 'p' || charArr[i] == 'q' || charArr[i] == 'r' ||
+                    charArr[i] == 's' || charArr[i] == 't' || charArr[i] == 'u' ||
+                    charArr[i] == 'v' || charArr[i] == 'w' || charArr[i] == 'x' ||
+                    charArr[i] == 'y' || charArr[i] == 'z' || charArr[i] == '0' ||
+                    charArr[i] == '1' || charArr[i] == '2' || charArr[i] == '3' ||
+                    charArr[i] == '4' || charArr[i] == '5' || charArr[i] == '6' ||
+                    charArr[i] == '7' || charArr[i] == '8' || charArr[i] == '9') {
+                output += String.valueOf(charArr[i]);
+            }
+            else{
+                output += "_";
+            }
+        }
+        return output;
     }
 }
