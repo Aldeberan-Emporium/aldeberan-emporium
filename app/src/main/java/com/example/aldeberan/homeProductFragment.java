@@ -45,7 +45,7 @@ public class homeProductFragment extends Fragment{
         productList = new ArrayList<>();
         recyclerView = myFragmentView.findViewById(R.id.recyclerView);
 
-        /*
+        
         ConstructRecyclerView();
         SwipeRefreshLayout pullToRefresh = myFragmentView.findViewById(R.id.pullToRefresh);
 
@@ -54,7 +54,7 @@ public class homeProductFragment extends Fragment{
             adapter.notifyDataSetChanged();
             pullToRefresh.setRefreshing(false);
         });
-        */
+
 
         return myFragmentView;
     }
@@ -73,7 +73,8 @@ public class homeProductFragment extends Fragment{
 
     private void PutDataIntoRecyclerView(List<Product> productList){
         adapter = new ProductAdapter(getContext(), productList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        //recyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
         Log.i("PLOPE", String.valueOf(productList));
     }
