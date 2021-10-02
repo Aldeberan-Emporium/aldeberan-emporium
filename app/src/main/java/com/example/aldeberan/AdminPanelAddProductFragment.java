@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -125,8 +126,30 @@ public class AdminPanelAddProductFragment extends Fragment implements View.OnCli
         EditText prodPrice = myFragmentView.findViewById(R.id.prodPrice);
         prodPrice.setFilters(new InputFilter[] {filter});
 
+        /*
+        Intent data = null;
+        ActivityResultLauncher<Intent> launchSomeActivity = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == Activity.RESULT_OK) {
+
+                            imgURI = data.getData();
+                            if (imgURI != null) {
+                                ImageView img = myFragmentView.findViewById(R.id.prodImg);
+                                img.setImageURI(imgURI);
+                                System.out.println("Makgailin");
+                            }
+                        }
+                    }
+                });
+
+         */
         return myFragmentView;
     }
+
+
 
     private void pickImgFromGallery(){
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -163,14 +186,15 @@ public class AdminPanelAddProductFragment extends Fragment implements View.OnCli
                 }
             });
 
-    //Ini function die
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         imgURI = data.getData();
-        if (imgURI != null){
+        if (imgURI != null) {
             ImageView img = getActivity().findViewById(R.id.prodImg);
             img.setImageURI(imgURI);
+            System.out.println("Makgailin");
+
         }
     }
 
@@ -293,5 +317,4 @@ public class AdminPanelAddProductFragment extends Fragment implements View.OnCli
         }
         return output;
     }
-
 }
