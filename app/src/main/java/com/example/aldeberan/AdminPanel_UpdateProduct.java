@@ -240,9 +240,9 @@ public class AdminPanel_UpdateProduct extends AppCompatActivity implements View.
                         pm.updateProduct(prevProdID, prodName, prodSKU, prodAvail, prodStock, prodPrice, prevProdImg);
                         onSubmitThrobber.setVisibility(View.GONE);
                         onSubmitView.setVisibility(View.GONE);
-                        finish();
-                        Intent intent = new Intent(AdminPanel_UpdateProduct.this, AdminPanel_LoadProduct.class);
-                        startActivity(intent);
+                        //finish();
+                        //Intent intent = new Intent(AdminPanel_UpdateProduct.this, AdminPanel_LoadProduct.class);
+                        //startActivity(intent);
                     }
                     else{
                         //Remove old image
@@ -272,10 +272,11 @@ public class AdminPanel_UpdateProduct extends AppCompatActivity implements View.
                                 Log.i("UP","Upload success: " + downloadUri);
                                 onSubmitThrobber.setVisibility(View.GONE);
                                 onSubmitView.setVisibility(View.GONE);
-                                finish();
-                                Intent intent = new Intent(AdminPanel_UpdateProduct.this, AdminPanel_LoadProduct.class);
-                                startActivity(intent);
-                            } else {
+                                //finish();
+                                //Intent intent = new Intent(AdminPanel_UpdateProduct.this, AdminPanel_LoadProduct.class);
+                                //startActivity(intent);
+                            }
+                            else {
                                 Log.i("UP","Upload failed: ");
                             }
                         });

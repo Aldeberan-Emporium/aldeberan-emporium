@@ -22,10 +22,14 @@
         <entry key="..\:/Users/Kelvi/Documents/Final Sem/Mobile/project-aldeberan/app/src/main/res/layout/fragment_slideshow.xml" value="0.3808876811594203" />
         <entry key="..\:/Users/Kelvi/Documents/Final Sem/Mobile/project-aldeberan/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.23489583333333333" />
         <entry key="..\:/Users/Kelvi/Documents/Final Sem/Mobile/project-aldeberan/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.23489583333333333" />
+        <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/drawable/ic_admin_update.xml" value="0.14635416666666667" />
         <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/activity_admin_panel.xml" value="0.13020833333333334" />
         <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/activity_admin_panel_add_product.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/activity_admin_panel_load_product.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/activity_admin_panel_update_product.xml" value="0.13020833333333334" />
         <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/activity_main.xml" value="0.13020833333333334" />
         <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/activity_product_listing_detail_page.xml" value="0.24320652173913043" />
+        <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/admin_panel_product_row.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/app_bar_product_listing_detail_page.xml" value="0.2" />
         <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/content_product_listing_detail_page.xml" value="0.24320652173913043" />
         <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/fragment_home.xml" value="0.146875" />
