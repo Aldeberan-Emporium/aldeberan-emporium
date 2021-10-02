@@ -20,7 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
-
 import org.w3c.dom.Text;
 
 public class home_product extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -39,7 +38,7 @@ public class home_product extends AppCompatActivity implements NavigationView.On
         drawer = findViewById(R.id.draw_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
-        TextView  navUsername= (TextView) headerView.findViewById(R.id.current_user);
+        TextView  navUsername = headerView.findViewById(R.id.current_user);
         navigationView.setNavigationItemSelectedListener(this);
 
         String s1 = sh.getString("name", "");
@@ -50,8 +49,7 @@ public class home_product extends AppCompatActivity implements NavigationView.On
             System.out.println("textview object error");
         }
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 

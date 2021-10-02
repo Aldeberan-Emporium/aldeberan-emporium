@@ -1,5 +1,7 @@
 package com.example.aldeberan;
 
+import static android.app.Activity.*;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -42,8 +44,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
     // [END declare_auth]
 
     private GoogleSignInClient mGoogleSignInClient;
-
-    private home_product hp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
@@ -122,8 +122,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
 
                             Toast.makeText(Login.this, "Login Success", Toast.LENGTH_SHORT).show();
 
-                            updateHome(user);
-
+                            finish();
                             Intent Lintent = new Intent(Login.this, home_product.class);
                             startActivity(Lintent);
                         } else {
@@ -141,7 +140,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         @Override
         public void onActivityResult(ActivityResult result) {
 
-            if (result.getResultCode() == Activity.RESULT_OK) {
+            if (result.getResultCode() == RESULT_OK) {
                 Intent intent = result.getData();
 
                 Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(intent);
@@ -161,11 +160,27 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
     // [END signin]
 
     //sign out
-    private void signOut() {
+    public void signOut() {
         mGoogleSignInClient.signOut().addOnCompleteListener(this, task -> {
             TextView txtv = findViewById(R.id.loginStatus);
             txtv.setText("Signed out");
         });
+
+        SharedPreferences sharedPreferences = getSharedPreferences("CurrentUser",MODE_PRIVATE);
+        SharedPreferences.Editor myEdit = sharedPreferences.edit();
+
+        myEdit.putString("name", "Please Sign In");
+        myEdit.putString("id", "");
+        myEdit.putString("photoURL", "");
+        myEdit.putString("email", "");
+
+        myEdit.apply();
+
+        Toast.makeText(Login.this, "Logged out", Toast.LENGTH_SHORT).show();
+
+        finish();
+        Intent Lintent = new Intent(Login.this, home_product.class);
+        startActivity(Lintent);
     }
     //sign out
 
@@ -173,14 +188,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         //to do
         TextView txtv = findViewById(R.id.loginStatus);
         txtv.setText("User ID: " + user.getUid());
-    }
-
-
-    public void updateHome(FirebaseUser user) {
-        //User userr = new User(user.getDisplayName());
 
         SharedPreferences sharedPreferences = getSharedPreferences("CurrentUser",MODE_PRIVATE);
-
         SharedPreferences.Editor myEdit = sharedPreferences.edit();
 
         myEdit.putString("name", user.getDisplayName());
@@ -188,15 +197,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         myEdit.putString("photoURL", String.valueOf(user.getPhotoUrl()));
         myEdit.putString("email", user.getEmail());
 
-        myEdit.commit();
-
-        /*
-        Intent i = new Intent(this, home_product.class);
-        Log.w(TAG, user.getDisplayName());
-        i.putExtra("currentUser", "YEETOLOGY");
-        strtActivity(i);
-
-         */
+        myEdit.apply();
     }
 
     @Override
