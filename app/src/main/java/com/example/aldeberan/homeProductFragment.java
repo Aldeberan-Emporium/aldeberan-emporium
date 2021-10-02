@@ -35,7 +35,7 @@ public class homeProductFragment extends Fragment{
     private View myFragmentView;
     public List<Product> productList;
     public RecyclerView recyclerView;
-    public ProductAdapter adapter;
+    public ProductListingDetailAdapter adapter;
 
     @Nullable
     @Override
@@ -43,11 +43,11 @@ public class homeProductFragment extends Fragment{
 
         myFragmentView = inflater.inflate(R.layout.fragment_home_product, container, false);
         productList = new ArrayList<>();
-        recyclerView = myFragmentView.findViewById(R.id.recyclerView);
+        recyclerView = myFragmentView.findViewById(R.id.cRecyclerView);
 
         
         ConstructRecyclerView();
-        SwipeRefreshLayout pullToRefresh = myFragmentView.findViewById(R.id.pullToRefresh);
+        SwipeRefreshLayout pullToRefresh = myFragmentView.findViewById(R.id.cPullToRefresh);
 
         pullToRefresh.setOnRefreshListener(() -> {
             ConstructRecyclerView();
@@ -72,44 +72,9 @@ public class homeProductFragment extends Fragment{
     }
 
     private void PutDataIntoRecyclerView(List<Product> productList){
-        adapter = new ProductAdapter(getContext(), productList);
-        //recyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        adapter = new ProductListingDetailAdapter(getContext(), productList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
         Log.i("PLOPE", String.valueOf(productList));
     }
-
-    private void onProductDeleted(int index){
-        adapter.notifyItemRemoved(index);
-    }
-
 }
-
-/*
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference databaseReference = firebaseDatabase.getReference();
-        DatabaseReference getImage = databaseReference.child("image");
-
-        ImageView imageView = (ImageView) getView().findViewById(R.id.imageView);
-
-        getImage.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // getting a DataSnapshot for the location at the specified
-                // relative path and getting in the link variable
-                String link = dataSnapshot.getValue(String.class);
-
-                // loading that data into rImage
-                // variable which is ImageView
-                System.out.println("whatlink" + link);
-                if (link != null)
-                    Picasso.get().load(link).into(imageView);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                //Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-         */

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="product"
+            type="com.example.aldeberan.structures.Product"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/cusProdNameLbl"
+            android:layout_width="272dp"
+            android:layout_height="42dp"
+            android:text="prodName"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/cusProdIDLbl"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toEndOf="@+id/cusProdImgView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_wrapBehaviorInParent="horizontal_only" />
+
+        <TextView
+            android:id="@+id/cusProdStockLbl"
+            android:layout_width="wrap_content"
+            android:layout_height="19dp"
+            android:text="cusProdStock"
+            app:layout_constraintBottom_toTopOf="@+id/cusProdPriceLbl"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.009"
+            app:layout_constraintStart_toEndOf="@+id/cusProdImgView"
+            app:layout_constraintTop_toBottomOf="@+id/cusProdAvailLbl" />
+
+        <TextView
+            android:id="@+id/cusProdAvailLbl"
+            android:layout_width="wrap_content"
+            android:layout_height="19dp"
+            android:text="cusProdAvail"
+            app:layout_constraintBottom_toTopOf="@+id/cusProdStockLbl"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.009"
+            app:layout_constraintStart_toEndOf="@+id/cusProdImgView"
+            app:layout_constraintTop_toBottomOf="@+id/cusProdSKULbl" />
+
+        <TextView
+            android:id="@+id/cusProdPriceLbl"
+            android:layout_width="wrap_content"
+            android:layout_height="19dp"
+            android:text="cusProdPrice"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.009"
+            app:layout_constraintStart_toEndOf="@+id/cusProdImgView"
+            app:layout_constraintTop_toBottomOf="@+id/cusProdStockLbl" />
+
+        <TextView
+            android:id="@+id/cusProdIDLbl"
+            android:layout_width="wrap_content"
+            android:layout_height="19dp"
+            android:text="cusProdID"
+            app:layout_constraintBottom_toTopOf="@+id/cusProdSKULbl"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.008"
+            app:layout_constraintStart_toEndOf="@+id/cusProdImgView"
+            app:layout_constraintTop_toBottomOf="@+id/cusProdNameLbl"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/cusProdSKULbl"
+            android:layout_width="wrap_content"
+            android:layout_height="19dp"
+            android:text="cusProdSKU"
+            app:layout_constraintBottom_toTopOf="@+id/cusProdAvailLbl"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.009"
+            app:layout_constraintStart_toEndOf="@+id/cusProdImgView"
+            app:layout_constraintTop_toBottomOf="@+id/cusProdIDLbl"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/cusProdImgView"
+            android:layout_width="140dp"
+            android:layout_height="139dp"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
