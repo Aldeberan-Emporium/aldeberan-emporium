@@ -78,8 +78,6 @@ public class home_product extends AppCompatActivity implements NavigationView.On
                 Intent intent = new Intent(home_product.this, Login.class);
                 startActivity(intent);
                 break;
-                //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new loginFragment()).commit();
-                //break;
             case R.id.nav_logout:
                 Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
                 TextView cuser = findViewById(R.id.current_user);
