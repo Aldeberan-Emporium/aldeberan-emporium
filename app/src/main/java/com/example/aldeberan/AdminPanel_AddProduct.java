@@ -229,6 +229,9 @@ public class AdminPanel_AddProduct extends AppCompatActivity implements View.OnC
                             Log.i("UP","Upload success: " + downloadUri);
                             onSubmitThrobber.setVisibility(View.GONE);
                             onSubmitView.setVisibility(View.GONE);
+                            finish();
+                            Intent intent = new Intent(AdminPanel_AddProduct.this, MainActivity.class);
+                            startActivity(intent);
                         } else {
                             Log.i("UP","Upload failed: ");
                         }

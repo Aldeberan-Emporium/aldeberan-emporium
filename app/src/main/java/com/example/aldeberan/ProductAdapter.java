@@ -83,7 +83,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
         holder.productRowBinding.prodNameLbl.setText(mData.get(position).getProdName());
         holder.productRowBinding.prodSKULbl.setText("SKU: " + mData.get(position).getProdSKU());
-        holder.productRowBinding.prodIDLbl.setText("ID: (" + mData.get(position).getProdID() + ")");
+        holder.productRowBinding.prodIDLbl.setText("ID: " + mData.get(position).getProdID());
 
         String prodAvail = mData.get(position).getProdAvail() ? "Active" : "Inactive";
 

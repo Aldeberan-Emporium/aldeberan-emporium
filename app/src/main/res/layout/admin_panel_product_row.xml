@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
             name="product"
             type="com.example.aldeberan.structures.Product"/>
     </data>
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/prodNameLbl"
-            android:layout_width="227dp"
-            android:layout_height="40dp"
+            android:layout_width="272dp"
+            android:layout_height="42dp"
             android:text="prodName"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/prodIDLbl"
             app:layout_constraintEnd_toEndOf="parent"
@@ -89,22 +90,33 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
 
-        <ImageButton
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/updateBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_edit_solid" />
+            android:layout_marginTop="140dp"
+            android:background="@color/blue_update"
+            android:backgroundTint="@color/blue_update"
+            android:text="@string/update_product"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toStartOf="@+id/deleteBtn"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></androidx.appcompat.widget.AppCompatButton>
 
-        <ImageButton
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/deleteBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="140dp"
+            android:background="@color/red_delete"
+            android:backgroundTint="@color/red_delete"
+            android:text="@string/delete_product"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/updateBtn"
-            app:srcCompat="@drawable/ic_trash_solid" />
+            app:layout_constraintStart_toEndOf="@+id/updateBtn"
+            app:layout_constraintTop_toTopOf="parent"></androidx.appcompat.widget.AppCompatButton>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
