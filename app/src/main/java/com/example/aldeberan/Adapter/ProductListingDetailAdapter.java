@@ -1,8 +1,12 @@
 package com.example.aldeberan.Adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -11,7 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.aldeberan.R;
 import com.example.aldeberan.databinding.ProductDetailCRowBinding;
+import com.example.aldeberan.models.CartModel;
 import com.example.aldeberan.models.ProductModel;
+import com.example.aldeberan.structures.Cart;
 import com.example.aldeberan.structures.Product;
 
 import java.util.List;
@@ -21,7 +27,7 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
     private Context mContext;
     public List<Product> mData;
     ProductModel pm = new ProductModel();
-
+    CartModel cm = new CartModel();
 
     public ProductListingDetailAdapter(Context mContext, List<Product> mData) {
         this.mContext = mContext;
@@ -66,10 +72,20 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
         holder.productRowBinding.cusProdPriceLbl.setText("Price: RM " + mData.get(position).getProdPrice());
 
         Glide.with(mContext).load(mData.get(position).getProdImg()).override(450, 450).into(holder.productRowBinding.cusProdImgView);
+
+        holder.productRowBinding.addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //cm.addQuote();
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return mData.size();
     }
+
+
 }

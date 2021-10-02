@@ -18,6 +18,8 @@ import java.util.List;
 
 public class CartModel extends DatabaseModel{
 
+    public CartModel(){};
+
     //Add quote
     public void addQuote(String userID, double subtotal, double total, String createdAt, String updatedAt, int quoteStatus){
         RequestParams params = new RequestParams();
