@@ -1,18 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-
-
-    <ImageView
-        android:id="@+id/imageView"
+<layout>
+    <data>
+        <variable
+            name="product"
+            type="com.example.aldeberan.structures.Product"/>
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:layout_height="wrap_content">
 
+        <TextView
+            android:id="@+id/prodNameLbl"
+            android:layout_width="227dp"
+            android:layout_height="40dp"
+            android:text="prodName"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/prodIDLbl"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toEndOf="@+id/prodImgView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_wrapBehaviorInParent="horizontal_only" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/prodStockLbl"
+            android:layout_width="wrap_content"
+            android:layout_height="19dp"
+            android:text="prodStock"
+            app:layout_constraintBottom_toTopOf="@+id/prodPriceLbl"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.009"
+            app:layout_constraintStart_toEndOf="@+id/prodImgView"
+            app:layout_constraintTop_toBottomOf="@+id/prodAvailLbl" />
+
+        <TextView
+            android:id="@+id/prodAvailLbl"
+            android:layout_width="wrap_content"
+            android:layout_height="19dp"
+            android:text="prodAvail"
+            app:layout_constraintBottom_toTopOf="@+id/prodStockLbl"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.009"
+            app:layout_constraintStart_toEndOf="@+id/prodImgView"
+            app:layout_constraintTop_toBottomOf="@+id/prodSKULbl" />
+
+        <TextView
+            android:id="@+id/prodPriceLbl"
+            android:layout_width="wrap_content"
+            android:layout_height="19dp"
+            android:text="prodPrice"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.009"
+            app:layout_constraintStart_toEndOf="@+id/prodImgView"
+            app:layout_constraintTop_toBottomOf="@+id/prodStockLbl" />
+
+        <TextView
+            android:id="@+id/prodIDLbl"
+            android:layout_width="wrap_content"
+            android:layout_height="19dp"
+            android:text="prodID"
+            app:layout_constraintBottom_toTopOf="@+id/prodSKULbl"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.008"
+            app:layout_constraintStart_toEndOf="@+id/prodImgView"
+            app:layout_constraintTop_toBottomOf="@+id/prodNameLbl" />
+
+        <TextView
+            android:id="@+id/prodSKULbl"
+            android:layout_width="wrap_content"
+            android:layout_height="19dp"
+            android:text="prodSKU"
+            app:layout_constraintBottom_toTopOf="@+id/prodAvailLbl"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.009"
+            app:layout_constraintStart_toEndOf="@+id/prodImgView"
+            app:layout_constraintTop_toBottomOf="@+id/prodIDLbl" />
+
+        <ImageView
+            android:id="@+id/prodImgView"
+            android:layout_width="140dp"
+            android:layout_height="139dp"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <ImageButton
+            android:id="@+id/updateBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_edit_solid" />
+
+        <ImageButton
+            android:id="@+id/deleteBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/updateBtn"
+            app:srcCompat="@drawable/ic_trash_solid" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
