@@ -25,6 +25,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.aldeberan.models.ProductModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -42,30 +43,54 @@ import androidx.core.content.ContextCompat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class AdminPanel_AddProduct extends AppCompatActivity implements View.OnClickListener{
+public class AdminPanel_UpdateProduct extends AppCompatActivity implements View.OnClickListener{
 
     ProductModel pm = new ProductModel();
     public Uri imgURI;
     StorageReference storageRef;
     Button imgBtn;
     Button submitBtn;
+    Button resetBtn;
     ProgressBar onSubmitThrobber;
     View onSubmitView;
+    TextView prodNameLbl;
+    TextView prodSKULbl;
+    TextView prodStockLbl;
+    TextView prodPriceLbl;
+    Switch prodAvailSwitch;
+    ImageView prodImgView;
+    public String prevProdName;
+    public String prevProdSKU;
+    public String prevProdImg;
+    public int prevProdID;
+    public int prevProdStock;
+    public int prevProdAvail;
+    public double prevProdPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_panel_add_product);
+        setContentView(R.layout.activity_admin_panel_update_product);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //Predeclare components
+        prodNameLbl = findViewById(R.id.prodName);
+        prodSKULbl = findViewById(R.id.prodSKU);
+        prodStockLbl = findViewById(R.id.prodStock);
+        prodPriceLbl = findViewById(R.id.prodPrice);
+        prodAvailSwitch = findViewById(R.id.prodAvail);
+        prodImgView = findViewById(R.id.prodImg);
+
+        retrieveData();
 
         //Firebase Cloud Storage reference
         storageRef = FirebaseStorage.getInstance().getReference();
 
-        //Submit Button
+        //Buttons
         submitBtn = findViewById(R.id.submitBtn);
         submitBtn.setOnClickListener(this);
-
-        //PickImg Button
+        resetBtn = findViewById(R.id.resetBtn);
+        resetBtn.setOnClickListener(this);
         imgBtn = findViewById(R.id.imageBtn);
         imgBtn.setOnClickListener(this);
 
@@ -189,24 +214,20 @@ public class AdminPanel_AddProduct extends AppCompatActivity implements View.OnC
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.submitBtn) {
-            TextView prodNameLbl = findViewById(R.id.prodName);
-            TextView prodSKULbl = findViewById(R.id.prodSKU);
-            TextView prodStockLbl = findViewById(R.id.prodStock);
-            TextView prodPriceLbl = findViewById(R.id.prodPrice);
-            Switch prodAvailSwitch = findViewById(R.id.prodAvail);
-            int prodAvail = prodAvailSwitch.isChecked() ? 1 : 0;
+        switch (view.getId()){
+            case R.id.submitBtn:
 
-            String prodName = prodNameLbl.getText().toString();
-            String prodSKU = prodSKULbl.getText().toString();
-            String prodStockStr = prodStockLbl.getText().toString();
-            String prodPriceStr = prodPriceLbl.getText().toString();
+                int prodAvail = prodAvailSwitch.isChecked() ? 1 : 0;
+                String prodName = prodNameLbl.getText().toString();
+                String prodSKU = prodSKULbl.getText().toString();
+                String prodStockStr = prodStockLbl.getText().toString();
+                String prodPriceStr = prodPriceLbl.getText().toString();
 
-            if (!prodName.isEmpty() && !prodStockStr.isEmpty() && !prodPriceStr.isEmpty()){
-                int prodStock = Integer.parseInt(prodStockStr);
-                Double prodPrice = Double.parseDouble(prodPriceStr);
-                if (imgURI != null) {
+                if (!prodName.isEmpty() && !prodStockStr.isEmpty() && !prodPriceStr.isEmpty()){
+                    int prodStock = Integer.parseInt(prodStockStr);
+                    Double prodPrice = Double.parseDouble(prodPriceStr);
                     submitBtn.setVisibility(View.GONE);
+                    resetBtn.setVisibility(View.GONE);
                     onSubmitThrobber.setVisibility(View.VISIBLE);
                     onSubmitView.setVisibility(View.VISIBLE);
                     imgBtn.setEnabled(false);
@@ -214,43 +235,68 @@ public class AdminPanel_AddProduct extends AppCompatActivity implements View.OnC
                     prodStockLbl.setEnabled(false);
                     prodPriceLbl.setEnabled(false);
                     prodAvailSwitch.setEnabled(false);
-                    StorageReference childRef = storageRef.child("products/" + prodSKU + "." + getFileExt(imgURI));
 
-                    childRef.putFile(imgURI).continueWithTask(task -> {
-                        if (!task.isSuccessful()) {
-                            throw task.getException();
-                        }
-                        return childRef.getDownloadUrl();
-                    }).addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            Uri downloadUri = task.getResult();
-                            String prodImg = downloadUri.toString();
-                            pm.addProduct(prodName, prodSKU, prodAvail, prodStock, prodPrice, prodImg);
-                            Log.i("UP","Upload success: " + downloadUri);
-                            onSubmitThrobber.setVisibility(View.GONE);
-                            onSubmitView.setVisibility(View.GONE);
-                            finish();
-                            Intent intent = new Intent(AdminPanel_AddProduct.this, AdminPanel_LoadProduct.class);
-                            startActivity(intent);
-                        } else {
-                            Log.i("UP","Upload failed: ");
-                        }
-                    });
-                } else {
-                    Toast.makeText(this, "Please select an image!", Toast.LENGTH_LONG).show();
+                    if (imgURI == null){
+                        pm.updateProduct(prevProdID, prodName, prodSKU, prodAvail, prodStock, prodPrice, prevProdImg);
+                        onSubmitThrobber.setVisibility(View.GONE);
+                        onSubmitView.setVisibility(View.GONE);
+                        finish();
+                        Intent intent = new Intent(AdminPanel_UpdateProduct.this, AdminPanel_LoadProduct.class);
+                        startActivity(intent);
+                    }
+                    else{
+                        //Remove old image
+                        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+                        StorageReference fileRef = storageRef.child("products/"+prevProdSKU+"."+extValidator(prevProdImg));
+
+                        // Delete the file
+                        fileRef.delete().addOnSuccessListener(aVoid -> {
+                            Log.i("DELETESUCCESS", "File deleted from firebase!");
+                        }).addOnFailureListener(exception -> {
+                            Log.i("DELETEFAILED", "File failed to delete!");
+                        });
+
+                        //Upload new file
+                        StorageReference childRef = storageRef.child("products/" + prodSKU + "." + extValidator(prevProdImg));
+
+                        childRef.putFile(imgURI).continueWithTask(task -> {
+                            if (!task.isSuccessful()) {
+                                throw task.getException();
+                            }
+                            return childRef.getDownloadUrl();
+                        }).addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                Uri downloadUri = task.getResult();
+                                String prodImg = downloadUri.toString();
+                                pm.updateProduct(prevProdID, prodName, prodSKU, prodAvail, prodStock, prodPrice, prodImg);
+                                Log.i("UP","Upload success: " + downloadUri);
+                                onSubmitThrobber.setVisibility(View.GONE);
+                                onSubmitView.setVisibility(View.GONE);
+                                finish();
+                                Intent intent = new Intent(AdminPanel_UpdateProduct.this, AdminPanel_LoadProduct.class);
+                                startActivity(intent);
+                            } else {
+                                Log.i("UP","Upload failed: ");
+                            }
+                        });
+                    }
+
                 }
-            }
-            else{
-                Toast.makeText(this, "All inputs are required!", Toast.LENGTH_LONG).show();
-            }
-        }
-        else{
-            if (isPermissionGranted()){
-                pickImgFromGallery();
-            }
-            else{
-                takePermissions();
-            }
+                else{
+                    Toast.makeText(this, "All inputs are required!", Toast.LENGTH_LONG).show();
+                }
+                break;
+            case R.id.imageBtn:
+                if (isPermissionGranted()){
+                    pickImgFromGallery();
+                }
+                else{
+                    takePermissions();
+                }
+                break;
+            case R.id.resetBtn:
+                retrieveData();
+                break;
         }
     }
 
@@ -283,5 +329,39 @@ public class AdminPanel_AddProduct extends AppCompatActivity implements View.OnC
             }
         }
         return output;
+    }
+
+    private void retrieveData(){
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            prevProdName = extras.getString("prodName");
+            prevProdSKU = extras.getString("prodSKU");
+            prevProdImg = extras.getString("prodImg");
+            prevProdID = Integer.parseInt(extras.getString("prodID"));
+            prevProdStock = Integer.parseInt(extras.getString("prodStock"));
+            prevProdAvail = Integer.parseInt(extras.getString("prodAvail"));
+            prevProdPrice = Double.parseDouble(extras.getString("prodPrice"));
+
+            prodNameLbl.setText(prevProdName);
+            prodSKULbl.setText(prevProdSKU);
+            prodStockLbl.setText(Integer.toString(prevProdStock));
+            prodPriceLbl.setText(Double.toString(prevProdPrice));
+            boolean isChecked = prevProdAvail == 1 ? true : false;
+            prodAvailSwitch.setChecked(isChecked);
+            Glide.with(this).load(prevProdImg).override(450, 450).into(prodImgView);
+        }
+    }
+
+    //Check file extension from url
+    public String extValidator(String prodImg){
+        //Only jpg, jpeg, png files are valid atm
+        String[] extArr = {"jpg", "jpeg", "png"};
+        String ext = "";
+        for (int i = 0; i < extArr.length; i++){
+            if (prodImg.contains(extArr[i])){
+                ext = extArr[i];
+            }
+        }
+        return ext;
     }
 }

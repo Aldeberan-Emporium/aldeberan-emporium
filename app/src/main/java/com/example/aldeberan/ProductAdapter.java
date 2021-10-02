@@ -2,6 +2,7 @@ package com.example.aldeberan;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.util.Log;
@@ -51,7 +52,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
             productRowBinding.updateBtn.setOnClickListener(view -> {
                 Log.i("UPDATE", String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdID()));
+
+                String prodAvail = String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdAvail()) == "true" ? "1" : "0";
                 //Show update screen
+                toUpdate(String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdName()),
+                        String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdID()),
+                        String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdSKU()),
+                        String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdImg()),
+                        String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdStock()),
+                        prodAvail, String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdPrice()));
             });
 
             productRowBinding.deleteBtn.setOnClickListener(view -> {
@@ -118,6 +127,18 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    private void toUpdate(String prodName, String prodID, String prodSKU, String prodImg, String prodStock, String prodAvail, String prodPrice){
+        Intent intent = new Intent(mContext, AdminPanel_UpdateProduct.class);
+        intent.putExtra("prodName", prodName);
+        intent.putExtra("prodID", prodID);
+        intent.putExtra("prodSKU", prodSKU);
+        intent.putExtra("prodImg", prodImg);
+        intent.putExtra("prodStock", prodStock);
+        intent.putExtra("prodAvail", prodAvail);
+        intent.putExtra("prodPrice", prodPrice);
+        mContext.startActivity(intent);
     }
 
 }
