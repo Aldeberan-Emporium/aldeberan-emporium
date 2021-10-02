@@ -68,7 +68,7 @@ public class home_product extends AppCompatActivity implements NavigationView.On
             case R.id.nav_order_history:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new orderHistoryFragment()).commit();
                 break;
-            case R.id.nav_temp:
+            case R.id.nav_wallet:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new tempFragment()).commit();
                 break;
             case R.id.nav_user_setting:
@@ -79,14 +79,29 @@ public class home_product extends AppCompatActivity implements NavigationView.On
                 Intent intent = new Intent(home_product.this, Login.class);
                 startActivity(intent);
                 break;
+            case R.id.nav_admin_add:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AdminPanelAddProductFragment()).commit();
+                break;
+            case R.id.nav_admin_load:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AdminPanelLoadProductFragment()).commit();
+                break;
+
+            /*
             case R.id.nav_logout:
                 Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
                 TextView cuser = findViewById(R.id.current_user);
                 cuser.setText("Please Sign in");
                 break;
+
+            */
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
