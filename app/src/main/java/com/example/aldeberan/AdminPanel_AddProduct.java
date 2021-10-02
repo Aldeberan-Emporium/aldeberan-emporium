@@ -56,6 +56,7 @@ public class AdminPanel_AddProduct extends AppCompatActivity implements View.OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_panel_add_product);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Firebase Cloud Storage reference
         storageRef = FirebaseStorage.getInstance().getReference();
