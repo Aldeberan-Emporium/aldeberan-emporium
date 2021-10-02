@@ -26,4 +26,5 @@
 
     <string name="icon_update">\uf044</string>
     <string name="icon_delete">\uf1f8</string>
+    <string name="no_product">There are no products available at the moment! Please add a new product.</string>
 </resources>

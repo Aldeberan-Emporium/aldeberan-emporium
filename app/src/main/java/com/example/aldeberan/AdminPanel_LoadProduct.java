@@ -68,8 +68,4 @@ public class AdminPanel_LoadProduct extends AppCompatActivity{
         recyclerView.setAdapter(adapter);
         Log.i("PLOPE", String.valueOf(productList));
     }
-
-    private void onProductDeleted(int index){
-        adapter.notifyItemRemoved(index);
-    }
 }

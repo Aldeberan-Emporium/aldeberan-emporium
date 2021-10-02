@@ -55,8 +55,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             });
 
             productRowBinding.deleteBtn.setOnClickListener(view -> {
-                Log.i("DELETE", String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdID()));
-                showDialog(String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdName()),
+                Log.i("DELETE", String.valueOf(getAbsoluteAdapterPosition()));
+                showDialog(Integer.parseInt(String.valueOf(getAbsoluteAdapterPosition())),
+                        String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdName()),
                         Integer.parseInt(String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdID())),
                         String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdSKU()),
                         String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdImg()));
@@ -99,7 +100,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     }
 
 
-    private void showDialog(String prodName, int prodID, String prodSKU, String prodImg){
+    private void showDialog(int index, String prodName, int prodID, String prodSKU, String prodImg){
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 
         builder.setTitle("Warning");
@@ -111,6 +112,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             pm.deleteProduct(prodID, prodSKU, prodImg);
             dialog.dismiss();
             Toast.makeText(mContext, prodName + " deleted!", Toast.LENGTH_LONG).show();
+            mData.remove(index);
+            notifyItemRemoved(index);
         });
 
         AlertDialog alert = builder.create();
