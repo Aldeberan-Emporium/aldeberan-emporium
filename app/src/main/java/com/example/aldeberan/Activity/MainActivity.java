@@ -1,9 +1,11 @@
-package com.example.aldeberan;
+package com.example.aldeberan.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+
+import com.example.aldeberan.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -13,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         getSupportActionBar().hide();
+
 
         Handler mHandler = new Handler();
         mHandler.postDelayed(new Runnable() {

@@ -36,6 +36,10 @@ public class Cart {
         this.prodImg = StringEscapeUtils.unescapeHtml4(prodImg);
     }
 
+    public Cart() {
+
+    }
+
     public int getQuoteID() {
         return quoteID;
     }

@@ -1,18 +1,15 @@
-package com.example.aldeberan;
+package com.example.aldeberan.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.aldeberan.R;
 import com.example.aldeberan.databinding.ProductDetailCRowBinding;
 import com.example.aldeberan.models.ProductModel;
 import com.example.aldeberan.structures.Product;

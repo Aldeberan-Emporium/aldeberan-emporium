@@ -1,6 +1,4 @@
-package com.example.aldeberan;
-
-import static android.provider.Settings.NameValueTable.VALUE;
+package com.example.aldeberan.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -12,16 +10,19 @@ import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.nfc.Tag;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.aldeberan.AdminFragment.AdminPanelAddProductFragment;
+import com.example.aldeberan.AdminFragment.AdminPanelLoadProductFragment;
+import com.example.aldeberan.R;
+import com.example.aldeberan.UserFragment.homeProductFragment;
+import com.example.aldeberan.UserFragment.orderHistoryFragment;
+import com.example.aldeberan.UserFragment.tempFragment;
+import com.example.aldeberan.UserFragment.userSettingFragment;
 import com.google.android.material.navigation.NavigationView;
-import org.w3c.dom.Text;
 
 public class home_product extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -38,6 +39,7 @@ public class home_product extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_home_product);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setActionBarTitle("Home");
 
         drawer = findViewById(R.id.draw_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -63,20 +65,28 @@ public class home_product extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    public void setActionBarTitle(String title) {
+        getSupportActionBar().setTitle(title);
+    }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()){
             case R.id.nav_home_product:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new homeProductFragment()).commit();
+                setActionBarTitle("Home");
                 break;
             case R.id.nav_order_history:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new orderHistoryFragment()).commit();
+                setActionBarTitle("Order History");
                 break;
             case R.id.nav_wallet:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new tempFragment()).commit();
+                setActionBarTitle("E-Wallet");
                 break;
             case R.id.nav_user_setting:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new userSettingFragment()).commit();
+                setActionBarTitle("User Settings");
                 break;
             case R.id.nav_login:
                 finish();

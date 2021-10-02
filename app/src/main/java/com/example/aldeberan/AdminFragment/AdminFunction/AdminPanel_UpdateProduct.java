@@ -1,4 +1,4 @@
-package com.example.aldeberan;
+package com.example.aldeberan.AdminFragment.AdminFunction;
 
 import android.Manifest;
 import android.app.Activity;
@@ -16,6 +16,7 @@ import android.text.Spanned;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.aldeberan.R;
 import com.example.aldeberan.models.ProductModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -115,6 +117,12 @@ public class AdminPanel_UpdateProduct extends AppCompatActivity implements View.
             }
         });
 
+        prodName.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                hideKeyboard(v);
+            }
+        });
+
         //Limit product stock to 5 digits (max 99999)
         EditText prodStock = findViewById(R.id.prodStock);
         prodStock.setFilters(new InputFilter[] {new InputFilter.LengthFilter(5)});
@@ -141,9 +149,21 @@ public class AdminPanel_UpdateProduct extends AppCompatActivity implements View.
             }
         };
 
+        prodStock.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                hideKeyboard(v);
+            }
+        });
+
         //Limit product price to 7,2 decimal places (max 99999.99)
         EditText prodPrice = findViewById(R.id.prodPrice);
         prodPrice.setFilters(new InputFilter[] {filter});
+
+        prodPrice.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                hideKeyboard(v);
+            }
+        });
     }
 
     private void pickImgFromGallery(){
@@ -208,6 +228,12 @@ public class AdminPanel_UpdateProduct extends AppCompatActivity implements View.
         else{
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 101);
         }
+    }
+
+    //Hide keyboard when out of focus
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     @Override

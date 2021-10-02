@@ -1,4 +1,4 @@
-package com.example.aldeberan;
+package com.example.aldeberan.AdminFragment;
 
 import android.Manifest;
 import android.app.Activity;
@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -19,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,22 +28,16 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.aldeberan.R;
+import com.example.aldeberan.Activity.home_product;
 import com.example.aldeberan.models.ProductModel;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -56,13 +50,14 @@ public class AdminPanelAddProductFragment extends Fragment implements View.OnCli
     ProgressBar onSubmitThrobber;
     View onSubmitView;
 
-    private View myFragmentView;
+    View myFragmentView;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         myFragmentView = inflater.inflate(R.layout.activity_admin_panel_add_product, container, false);
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((home_product) getActivity()).setActionBarTitle("Add New Bread");
 
         //Firebase Cloud Storage reference
         storageRef = FirebaseStorage.getInstance().getReference();
@@ -96,6 +91,12 @@ public class AdminPanelAddProductFragment extends Fragment implements View.OnCli
             }
         });
 
+        prodName.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                hideKeyboard(v);
+            }
+        });
+
         //Limit product stock to 5 digits (max 99999)
         EditText prodStock = myFragmentView.findViewById(R.id.prodStock);
         prodStock.setFilters(new InputFilter[] {new InputFilter.LengthFilter(5)});
@@ -122,34 +123,51 @@ public class AdminPanelAddProductFragment extends Fragment implements View.OnCli
             }
         };
 
+        prodStock.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                hideKeyboard(v);
+            }
+        });
+
         //Limit product price to 7,2 decimal places (max 99999.99)
         EditText prodPrice = myFragmentView.findViewById(R.id.prodPrice);
         prodPrice.setFilters(new InputFilter[] {filter});
 
-        /*
-        Intent data = null;
-        ActivityResultLauncher<Intent> launchSomeActivity = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        if (result.getResultCode() == Activity.RESULT_OK) {
+        prodPrice.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                hideKeyboard(v);
+            }
+        });
 
-                            imgURI = data.getData();
-                            if (imgURI != null) {
-                                ImageView img = myFragmentView.findViewById(R.id.prodImg);
-                                img.setImageURI(imgURI);
-                                System.out.println("Makgailin");
-                            }
-                        }
-                    }
-                });
-
-         */
         return myFragmentView;
     }
 
-
+    ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+        new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+            if (result.getResultCode() == Activity.RESULT_OK) {
+                Intent data = result.getData();
+                if (result.getResultCode() == 100){
+                    if (Build.VERSION.SDK_INT == Build.VERSION_CODES.R){
+                        if (Environment.isExternalStorageManager()){
+                            pickImgFromGallery();
+                        }
+                    }
+                }
+                else if (result.getResultCode() != 100 && result.getResultCode() != 101){
+                    imgURI = data.getData();
+                    Log.i("IMGURI", imgURI.toString());
+                    if (imgURI != null){
+                        ImageView img = myFragmentView.findViewById(R.id.prodImg);
+                        img.setImageURI(imgURI);
+                        System.out.println("Makgailin");
+                    }
+                }
+                else{
+                    takePermissions();
+                }
+            }
+    });
 
     private void pickImgFromGallery(){
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -166,35 +184,6 @@ public class AdminPanelAddProductFragment extends Fragment implements View.OnCli
         else{
             int readExternalStorage = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE);
             return readExternalStorage == PackageManager.PERMISSION_GRANTED;
-        }
-    }
-
-    ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result.getResultCode() == Activity.RESULT_OK) {
-                    if (result.getResultCode() == 100){
-                        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.R){
-                            if (Environment.isExternalStorageManager()){
-                                pickImgFromGallery();
-                            }
-                        }
-                    }
-                    else{
-                        takePermissions();
-                    }
-                }
-            });
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        imgURI = data.getData();
-        if (imgURI != null) {
-            ImageView img = getActivity().findViewById(R.id.prodImg);
-            img.setImageURI(imgURI);
-            System.out.println("Makgailin");
-
         }
     }
 
@@ -219,6 +208,11 @@ public class AdminPanelAddProductFragment extends Fragment implements View.OnCli
         }
     }
 
+    //Hide keyboard when out of focus
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager) this.getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
 
     @Override
     public void onClick(View view) {
@@ -262,9 +256,12 @@ public class AdminPanelAddProductFragment extends Fragment implements View.OnCli
                             Log.i("UP","Upload success: " + downloadUri);
                             onSubmitThrobber.setVisibility(View.GONE);
                             onSubmitView.setVisibility(View.GONE);
-                            //finish();
-                            //Intent intent = new Intent(AdminPanel_AddProduct.this, AdminPanel_LoadProduct.class);
-                            //startActivity(intent);
+                            //Redirect back to load products fragment
+                            AdminPanelLoadProductFragment productFragment= new AdminPanelLoadProductFragment();
+                            getActivity().getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.fragment_container, productFragment)
+                                    .addToBackStack(null)
+                                    .commit();
                         } else {
                             Log.i("UP","Upload failed: ");
                         }

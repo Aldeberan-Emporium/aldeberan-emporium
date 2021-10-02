@@ -1,4 +1,4 @@
-package com.example.aldeberan;
+package com.example.aldeberan.AdminFragment;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -14,9 +14,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.aldeberan.Adapter.ProductAdapter;
+import com.example.aldeberan.R;
+import com.example.aldeberan.Activity.home_product;
 import com.example.aldeberan.models.ProductModel;
 import com.example.aldeberan.structures.Product;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONException;
 
@@ -28,7 +30,6 @@ public class AdminPanelLoadProductFragment extends Fragment {
     public List<Product> productList;
     public RecyclerView recyclerView;
     public ProductAdapter adapter;
-    public FloatingActionButton addProdBtn;
     public TextView noProdLbl;
 
     @Nullable
@@ -36,6 +37,7 @@ public class AdminPanelLoadProductFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         myFragmentView = inflater.inflate(R.layout.activity_admin_panel_load_product, container, false);
+        ((home_product) getActivity()).setActionBarTitle("Manage Bread(s)");
         productList = new ArrayList<>();
         recyclerView = myFragmentView.findViewById(R.id.recyclerView);
         noProdLbl = myFragmentView.findViewById(R.id.noProdLbl);
