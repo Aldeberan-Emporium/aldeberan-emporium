@@ -58,9 +58,9 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
         holder.productRowBinding.setProduct(p);
         holder.productRowBinding.executePendingBindings();
 
-        holder.productRowBinding.cusProdNameLbl.setText(mData.get(position).getProdName());
+        holder.productRowBinding.cusProdNameLbl.setText("Product: " + mData.get(position).getProdName());
         //holder.productRowBinding.cusProdSKULbl.setText("SKU: " + mData.get(position).getProdSKU());
-        //holder.productRowBinding.cusProdIDLbl.setText("ID: " + mData.get(position).getProdID());
+        holder.productRowBinding.cusProdIDLbl.setText("Product ID: " + mData.get(position).getProdID());
 
         //String prodAvail = mData.get(position).getProdAvail() ? "Active" : "Inactive";
 
