@@ -38,7 +38,7 @@ public class home_product extends AppCompatActivity implements NavigationView.On
         drawer = findViewById(R.id.draw_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
-        TextView  navUsername = headerView.findViewById(R.id.current_user);
+        TextView navUsername = headerView.findViewById(R.id.current_user);
         navigationView.setNavigationItemSelectedListener(this);
 
         String s1 = sh.getString("name", "");
@@ -75,6 +75,7 @@ public class home_product extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new userSettingFragment()).commit();
                 break;
             case R.id.nav_login:
+                finish();
                 Intent intent = new Intent(home_product.this, Login.class);
                 startActivity(intent);
                 break;
