@@ -84,7 +84,6 @@ public class AdminPanel_AddProduct extends AppCompatActivity implements View.OnC
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 if (result.getResultCode() == Activity.RESULT_OK) {
-                    Intent data = result.getData();
                     if (result.getResultCode() == 100){
                         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.R){
                             if (Environment.isExternalStorageManager()){
@@ -95,7 +94,6 @@ public class AdminPanel_AddProduct extends AppCompatActivity implements View.OnC
                     else{
                         takePermissions();
                     }
-
                 }
             });
 
@@ -134,40 +132,39 @@ public class AdminPanel_AddProduct extends AppCompatActivity implements View.OnC
     public void onClick(View view) {
         Toast.makeText(this, "Select an image", Toast.LENGTH_SHORT).show();
         if (view.getId() == R.id.submitBtn) {
-            TextView prodName = findViewById(R.id.prodName);
-            TextView prodSKU = findViewById(R.id.prodSKU);
-            TextView prodStock = findViewById(R.id.prodStock);
-            TextView prodPrice = findViewById(R.id.prodPrice);
+            TextView prodNameLbl = findViewById(R.id.prodName);
+            TextView prodSKULbl = findViewById(R.id.prodSKU);
+            TextView prodStockLbl = findViewById(R.id.prodStock);
+            TextView prodPriceLbl = findViewById(R.id.prodPrice);
             Switch prodAvailSwitch = findViewById(R.id.prodAvail);
             int prodAvail = prodAvailSwitch.isChecked() ? 1 : 0;
 
+            String prodName = prodNameLbl.getText().toString();
+            String prodSKU = prodSKULbl.getText().toString();
+            int prodStock = Integer.parseInt(prodStockLbl.getText().toString());
+            Double prodPrice = Double.parseDouble(prodPriceLbl.getText().toString());
+
             if (imgURI != null) {
 
-                StorageReference childRef = storageRef.child("products/" + prodSKU.getText().toString() + "." + getFileExt(imgURI));
+                StorageReference childRef = storageRef.child("products/" + prodSKU + "." + getFileExt(imgURI));
 
                 childRef.putFile(imgURI).continueWithTask(task -> {
                     if (!task.isSuccessful()) {
                         throw task.getException();
                     }
-
-                    // Continue with the task to get the download URL
-                    //change made here
                     return childRef.getDownloadUrl();
-                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Uri> task) {
-                        if (task.isSuccessful()) {
-                            Uri downloadUri = task.getResult();
-                            String prodImg = downloadUri.toString();
-                            pm.addProduct(prodName.getText().toString(), prodSKU.getText().toString(), prodAvail, Integer.parseInt(prodStock.getText().toString()), Double.parseDouble(prodPrice.getText().toString()), prodImg);
-                            Log.i("UP","Upload success: " + downloadUri);
-                        } else {
-                            Log.i("UP","Upload failed: ");
-                        }
+                }).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Uri downloadUri = task.getResult();
+                        String prodImg = downloadUri.toString();
+                        pm.addProduct(prodName, prodSKU, prodAvail, prodStock, prodPrice, prodImg);
+                        Log.i("UP","Upload success: " + downloadUri);
+                    } else {
+                        Log.i("UP","Upload failed: ");
                     }
                 });
             } else {
-                Toast.makeText(this, "Select an image", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Please select an image!", Toast.LENGTH_SHORT).show();
             }
         }
         else{
