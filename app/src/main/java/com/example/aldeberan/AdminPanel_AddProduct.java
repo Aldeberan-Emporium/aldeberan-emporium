@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +20,7 @@ import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +47,10 @@ public class AdminPanel_AddProduct extends AppCompatActivity implements View.OnC
     ProductModel pm = new ProductModel();
     public Uri imgURI;
     StorageReference storageRef;
+    Button imgBtn;
+    Button submitBtn;
+    ProgressBar onSubmitThrobber;
+    View onSubmitView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,19 +61,20 @@ public class AdminPanel_AddProduct extends AppCompatActivity implements View.OnC
         storageRef = FirebaseStorage.getInstance().getReference();
 
         //Submit Button
-        Button submitBtn = findViewById(R.id.submitBtn);
+        submitBtn = findViewById(R.id.submitBtn);
         submitBtn.setOnClickListener(this);
 
         //PickImg Button
-        Button imgBtn = findViewById(R.id.imageBtn);
+        imgBtn = findViewById(R.id.imageBtn);
         imgBtn.setOnClickListener(this);
+
+        //On Submit
+        onSubmitThrobber = findViewById(R.id.onSubmitThrobber);
+        onSubmitView = findViewById(R.id.onSubmitView);
 
         //Set SKU when product name on change
         EditText prodName = findViewById(R.id.prodName);
         EditText prodSKU = findViewById(R.id.prodSKU);
-
-        //Regex
-
 
         prodName.addTextChangedListener(new TextWatcher() {
             @Override
@@ -81,6 +89,35 @@ public class AdminPanel_AddProduct extends AppCompatActivity implements View.OnC
             }
         });
 
+        //Limit product stock to 5 digits (max 99999)
+        EditText prodStock = findViewById(R.id.prodStock);
+        prodStock.setFilters(new InputFilter[] {new InputFilter.LengthFilter(5)});
+
+
+        InputFilter filter = new InputFilter() {
+            final int maxDigitsBeforeDecimalPoint=7;
+            final int maxDigitsAfterDecimalPoint=2;
+
+            @Override
+            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+                StringBuilder builder = new StringBuilder(dest);
+                builder.replace(dstart, dend, source
+                        .subSequence(start, end).toString());
+                if (!builder.toString().matches(
+                        "(([1-9]{1})([0-9]{0,"+(maxDigitsBeforeDecimalPoint-1)+"})?)?(\\.[0-9]{0,"+maxDigitsAfterDecimalPoint+"})?"
+
+                )) {
+                    if(source.length()==0)
+                        return dest.subSequence(dstart, dend);
+                    return "";
+                }
+                return null;
+            }
+        };
+
+        //Limit product price to 7,2 decimal places (max 99999.99)
+        EditText prodPrice = findViewById(R.id.prodPrice);
+        prodPrice.setFilters(new InputFilter[] {filter});
     }
 
     private void pickImgFromGallery(){
@@ -151,7 +188,6 @@ public class AdminPanel_AddProduct extends AppCompatActivity implements View.OnC
 
     @Override
     public void onClick(View view) {
-        Toast.makeText(this, "Select an image", Toast.LENGTH_SHORT).show();
         if (view.getId() == R.id.submitBtn) {
             TextView prodNameLbl = findViewById(R.id.prodName);
             TextView prodSKULbl = findViewById(R.id.prodSKU);
@@ -162,11 +198,21 @@ public class AdminPanel_AddProduct extends AppCompatActivity implements View.OnC
 
             String prodName = prodNameLbl.getText().toString();
             String prodSKU = prodSKULbl.getText().toString();
-            int prodStock = Integer.parseInt(prodStockLbl.getText().toString());
-            Double prodPrice = Double.parseDouble(prodPriceLbl.getText().toString());
+            String prodStockStr = prodStockLbl.getText().toString();
+            String prodPriceStr = prodPriceLbl.getText().toString();
 
-            if (prodName != null && prodStock != 0 && prodPrice != null && imgURI != null){
+            if (!prodName.isEmpty() && !prodStockStr.isEmpty() && !prodPriceStr.isEmpty()){
+                int prodStock = Integer.parseInt(prodStockStr);
+                Double prodPrice = Double.parseDouble(prodPriceStr);
                 if (imgURI != null) {
+                    submitBtn.setVisibility(View.GONE);
+                    onSubmitThrobber.setVisibility(View.VISIBLE);
+                    onSubmitView.setVisibility(View.VISIBLE);
+                    imgBtn.setEnabled(false);
+                    prodNameLbl.setEnabled(false);
+                    prodStockLbl.setEnabled(false);
+                    prodPriceLbl.setEnabled(false);
+                    prodAvailSwitch.setEnabled(false);
                     StorageReference childRef = storageRef.child("products/" + prodSKU + "." + getFileExt(imgURI));
 
                     childRef.putFile(imgURI).continueWithTask(task -> {
@@ -180,6 +226,8 @@ public class AdminPanel_AddProduct extends AppCompatActivity implements View.OnC
                             String prodImg = downloadUri.toString();
                             pm.addProduct(prodName, prodSKU, prodAvail, prodStock, prodPrice, prodImg);
                             Log.i("UP","Upload success: " + downloadUri);
+                            onSubmitThrobber.setVisibility(View.GONE);
+                            onSubmitView.setVisibility(View.GONE);
                         } else {
                             Log.i("UP","Upload failed: ");
                         }
