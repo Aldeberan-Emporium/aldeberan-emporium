@@ -3,6 +3,7 @@ package com.example.aldeberan;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -25,29 +26,31 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdminPanel_LoadProduct extends AppCompatActivity {
+public class AdminPanel_LoadProduct extends AppCompatActivity{
 
     public List<Product> productList;
     public RecyclerView recyclerView;
+    public ProductAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_panel_load_product);
-        /*
-        Typeface font = Typeface.createFromAsset( getAssets(), "fonts/fontawesome-webfont.ttf" );
-
-        Button updateBtn = findViewById(R.id.updateBtn);
-        updateBtn.setTypeface(font);
-
-        Button deleteBtn = findViewById(R.id.deleteBtn);
-        deleteBtn.setTypeface(font);
-
-        */
 
         productList = new ArrayList<>();
         recyclerView = findViewById(R.id.recyclerView);
 
+        ConstructRecyclerView();
+
+        SwipeRefreshLayout pullToRefresh = findViewById(R.id.pullToRefresh);
+        pullToRefresh.setOnRefreshListener(() -> {
+            ConstructRecyclerView();
+            adapter.notifyDataSetChanged();
+            pullToRefresh.setRefreshing(false);
+        });
+    }
+
+    private void ConstructRecyclerView(){
         ProductModel pm = new ProductModel();
         try {
             pm.readProductAll((response) -> {
@@ -60,9 +63,13 @@ public class AdminPanel_LoadProduct extends AppCompatActivity {
     }
 
     private void PutDataIntoRecyclerView(List<Product> productList){
-        ProductAdapter adapter = new ProductAdapter(this, productList);
+        adapter = new ProductAdapter(this, productList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         Log.i("PLOPE", String.valueOf(productList));
+    }
+
+    private void onProductDeleted(int index){
+        adapter.notifyItemRemoved(index);
     }
 }
