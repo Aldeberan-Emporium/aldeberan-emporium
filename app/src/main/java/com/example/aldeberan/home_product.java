@@ -10,8 +10,12 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,29 +27,27 @@ public class home_product extends AppCompatActivity implements NavigationView.On
 
     private DrawerLayout drawer;
 
-    private String currentUser;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences sh = getSharedPreferences("CurrentUser", MODE_PRIVATE);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_product);
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         drawer = findViewById(R.id.draw_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+        TextView  navUsername= (TextView) headerView.findViewById(R.id.current_user);
         navigationView.setNavigationItemSelectedListener(this);
 
+        String s1 = sh.getString("name", "");
 
-        Intent ii = getIntent();
-        String cuser = ii.getStringExtra("currentUser");
-
-        TextView curr = findViewById(R.id.current_user);
-        if (curr != null){
-            curr.setText(cuser);
+        if (navUsername != null){
+            navUsername.setText(s1);
         }else{
-
+            System.out.println("textview object error");
         }
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
@@ -98,12 +100,4 @@ public class home_product extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
     }
-
-    /*
-    public void setUser(String str){
-        TextView txt = findViewById(R.id.user);
-        txt.setText(str);
-    }
-
-     */
 }

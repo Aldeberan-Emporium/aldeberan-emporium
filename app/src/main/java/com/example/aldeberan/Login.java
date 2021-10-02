@@ -1,7 +1,9 @@
 package com.example.aldeberan;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +18,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.aldeberan.structures.User;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -173,13 +176,28 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
     }
 
 
-    private void updateHome(FirebaseUser user) {
-        Intent i = new Intent(Login.this, home_product.class);
-        String curruser = user.getDisplayName();
-        i.putExtra("currentUser", curruser);
-        startActivity(i);
-    }
+    public void updateHome(FirebaseUser user) {
+        //User userr = new User(user.getDisplayName());
 
+        SharedPreferences sharedPreferences = getSharedPreferences("CurrentUser",MODE_PRIVATE);
+
+        SharedPreferences.Editor myEdit = sharedPreferences.edit();
+
+        myEdit.putString("name", user.getDisplayName());
+        myEdit.putString("id", user.getUid());
+        myEdit.putString("photoURL", String.valueOf(user.getPhotoUrl()));
+        myEdit.putString("email", user.getEmail());
+
+        myEdit.commit();
+
+        /*
+        Intent i = new Intent(this, home_product.class);
+        Log.w(TAG, user.getDisplayName());
+        i.putExtra("currentUser", "YEETOLOGY");
+        strtActivity(i);
+
+         */
+    }
 
     @Override
     public void onClick(View view) {
