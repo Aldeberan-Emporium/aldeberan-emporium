@@ -41,7 +41,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
     // [END declare_auth]
 
     private GoogleSignInClient mGoogleSignInClient;
-
     private userStorage userStorage = new userStorage(this);
 
     @Override
