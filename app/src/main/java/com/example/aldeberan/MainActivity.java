@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
+
         Handler mHandler = new Handler();
         mHandler.postDelayed(new Runnable() {
 

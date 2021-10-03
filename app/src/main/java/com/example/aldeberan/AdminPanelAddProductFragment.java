@@ -34,10 +34,14 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.ActionBarContextView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
 import com.example.aldeberan.models.ProductModel;
@@ -64,7 +68,7 @@ public class AdminPanelAddProductFragment extends Fragment implements View.OnCli
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         myFragmentView = inflater.inflate(R.layout.activity_admin_panel_add_product, container, false);
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((home_product) getActivity()).setActionBarTitle("Add New Bread");
 
         //Firebase Cloud Storage reference
         storageRef = FirebaseStorage.getInstance().getReference();
@@ -240,9 +244,12 @@ public class AdminPanelAddProductFragment extends Fragment implements View.OnCli
                             Log.i("UP","Upload success: " + downloadUri);
                             onSubmitThrobber.setVisibility(View.GONE);
                             onSubmitView.setVisibility(View.GONE);
-                            //finish();
-                            //Intent intent = new Intent(AdminPanel_AddProduct.this, AdminPanel_LoadProduct.class);
-                            //startActivity(intent);
+                            //Redirect back to load products fragment
+                            AdminPanelLoadProductFragment productFragment= new AdminPanelLoadProductFragment();
+                            getActivity().getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.fragment_container, productFragment)
+                                    .addToBackStack(null)
+                                    .commit();
                         } else {
                             Log.i("UP","Upload failed: ");
                         }

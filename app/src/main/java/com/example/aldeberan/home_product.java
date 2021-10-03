@@ -38,6 +38,7 @@ public class home_product extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_home_product);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setActionBarTitle("Home");
 
         drawer = findViewById(R.id.draw_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -63,20 +64,28 @@ public class home_product extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    public void setActionBarTitle(String title) {
+        getSupportActionBar().setTitle(title);
+    }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()){
             case R.id.nav_home_product:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new homeProductFragment()).commit();
+                setActionBarTitle("Home");
                 break;
             case R.id.nav_order_history:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new orderHistoryFragment()).commit();
+                setActionBarTitle("Order History");
                 break;
             case R.id.nav_wallet:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new tempFragment()).commit();
+                setActionBarTitle("E-Wallet");
                 break;
             case R.id.nav_user_setting:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new userSettingFragment()).commit();
+                setActionBarTitle("User Settings");
                 break;
             case R.id.nav_login:
                 finish();
