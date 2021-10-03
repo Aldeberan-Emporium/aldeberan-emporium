@@ -28,6 +28,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
 
-        }, 3000L);
+        }, 300L);
     }
 }
