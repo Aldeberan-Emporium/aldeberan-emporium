@@ -13,25 +13,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Aldeberan">
         <activity
-            android:name=".home_product"
+            android:name=".Activity.home_product"
             android:exported="true"  android:theme="@style/Theme.Aldeberan.NoActionBar"/>
 
         <activity
-            android:name=".AdminPanel_UpdateProduct"
+            android:name=".AdminFragment.AdminFunction.AdminPanel_UpdateProduct"
             android:exported="true"
-            android:parentActivityName=".AdminPanel_LoadProduct" />
+            android:parentActivityName=".AdminFragment.AdminFunction.AdminPanel_LoadProduct" />
         <activity
-            android:name=".AdminPanel_LoadProduct"
+            android:name=".AdminFragment.AdminFunction.AdminPanel_LoadProduct"
             android:exported="true" />
         <activity
-            android:name=".Login"
+            android:name=".Activity.Login"
             android:exported="true" />
         <activity
-            android:name=".AdminPanel_AddProduct"
+            android:name=".AdminFragment.AdminFunction.AdminPanel_AddProduct"
             android:exported="true"
-            android:parentActivityName=".AdminPanel_LoadProduct" />
+            android:parentActivityName=".AdminFragment.AdminFunction.AdminPanel_LoadProduct" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

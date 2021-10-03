@@ -1,17 +1,10 @@
-package com.example.aldeberan;
+package com.example.aldeberan.Adapter;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Typeface;
-import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,12 +13,11 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.aldeberan.databinding.ActivityMainBinding;
+import com.example.aldeberan.AdminFragment.AdminFunction.AdminPanel_UpdateProduct;
+import com.example.aldeberan.R;
 import com.example.aldeberan.databinding.AdminPanelProductRowBinding;
 import com.example.aldeberan.models.ProductModel;
 import com.example.aldeberan.structures.Product;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 

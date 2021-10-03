@@ -1,6 +1,4 @@
-package com.example.aldeberan;
-
-import static android.provider.Settings.NameValueTable.VALUE;
+package com.example.aldeberan.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -12,16 +10,19 @@ import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.nfc.Tag;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.aldeberan.AdminFragment.AdminPanelAddProductFragment;
+import com.example.aldeberan.AdminFragment.AdminPanelLoadProductFragment;
+import com.example.aldeberan.R;
+import com.example.aldeberan.UserFragment.homeProductFragment;
+import com.example.aldeberan.UserFragment.orderHistoryFragment;
+import com.example.aldeberan.UserFragment.tempFragment;
+import com.example.aldeberan.UserFragment.userSettingFragment;
 import com.google.android.material.navigation.NavigationView;
-import org.w3c.dom.Text;
 
 public class home_product extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 

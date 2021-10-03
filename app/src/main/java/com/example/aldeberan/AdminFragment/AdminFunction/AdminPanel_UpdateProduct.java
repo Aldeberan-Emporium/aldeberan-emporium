@@ -1,4 +1,4 @@
-package com.example.aldeberan;
+package com.example.aldeberan.AdminFragment.AdminFunction;
 
 import android.Manifest;
 import android.app.Activity;
@@ -27,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.aldeberan.R;
 import com.example.aldeberan.models.ProductModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
