@@ -1,10 +1,18 @@
 package com.example.aldeberan.models;
 
+import android.util.Log;
+
 import com.codepath.asynchttpclient.RequestParams;
 import com.example.aldeberan.structures.Address;
+import com.example.aldeberan.structures.Order;
 import com.google.gson.Gson;
 
 import org.apache.commons.text.StringEscapeUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddressModel extends DatabaseModel{
 
@@ -49,10 +57,51 @@ public class AddressModel extends DatabaseModel{
         this.postData(params);
     }
 
+    //Callback function for addressList response
+    public interface OnResponseCallback {
+        public void onResponse(List<Address> response);
+    }
+
     //Read address by user
-    public void readAddressByUser(String userID){
+    public void readAddressByUser(String userID, OnResponseCallback callback){
         RequestParams params = new RequestParams();
         params.put("action", "readAddressByUser");
-        params.put("user_id", StringEscapeUtils.escapeHtml3(userID));
+        params.put("user_id", StringEscapeUtils.escapeHtml4(userID));
+        this.getData(params, (success, response) -> {
+            List<Address> addressList = new ArrayList<>();
+            String data = response;
+            Log.i("DATAIN", data);
+            try {
+                JSONArray array = new JSONArray(data);
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject object = array.getJSONObject(i);
+                    int addressID = Integer.parseInt(object.getString("address_id"));
+                    String addRecipient = StringEscapeUtils.unescapeHtml4(object.getString("address_recipient"));
+                    String addContact = StringEscapeUtils.unescapeHtml4(object.getString("address_contact"));
+                    String addLine1 = StringEscapeUtils.unescapeHtml4(object.getString("address_line1"));
+                    String addLine2 = StringEscapeUtils.unescapeHtml4(object.getString("address_line2"));
+                    String addCode = StringEscapeUtils.unescapeHtml4(object.getString("address_code"));
+                    String addCity = StringEscapeUtils.unescapeHtml4(object.getString("address_city"));
+                    String addState = StringEscapeUtils.unescapeHtml4(object.getString("address_state"));
+                    String addCountry = StringEscapeUtils.unescapeHtml4(object.getString("address_country"));
+
+                    Address address = new Address();
+                    address.setAddID(addressID);
+                    address.setAddRecipient(addRecipient);
+                    address.setAddContact(addContact);
+                    address.setAddLine1(addLine1);
+                    address.setAddLine2(addLine2);
+                    address.setAddCode(addCode);
+                    address.setAddCity(addCity);
+                    address.setAddState(addState);
+                    address.setAddCountry(addCountry);
+
+                    addressList.add(address);
+
+                }
+            }catch (Exception e){}
+            Log.i("PL", String.valueOf(addressList));
+            callback.onResponse(addressList);
+        });
     }
 }

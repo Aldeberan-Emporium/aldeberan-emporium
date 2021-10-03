@@ -55,7 +55,7 @@ public class CartModel extends DatabaseModel{
         this.postData(params);
     }
 
-    //Callback function for readProductAll response
+    //Callback function for cartList response
     public interface OnResponseCallback {
         public void onResponse(List<Cart> response);
     }
