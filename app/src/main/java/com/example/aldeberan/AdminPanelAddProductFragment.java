@@ -39,6 +39,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.aldeberan.models.ProductModel;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -56,7 +57,8 @@ public class AdminPanelAddProductFragment extends Fragment implements View.OnCli
     ProgressBar onSubmitThrobber;
     View onSubmitView;
 
-    private View myFragmentView;
+    View myFragmentView;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -126,30 +128,35 @@ public class AdminPanelAddProductFragment extends Fragment implements View.OnCli
         EditText prodPrice = myFragmentView.findViewById(R.id.prodPrice);
         prodPrice.setFilters(new InputFilter[] {filter});
 
-        /*
-        Intent data = null;
-        ActivityResultLauncher<Intent> launchSomeActivity = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        if (result.getResultCode() == Activity.RESULT_OK) {
-
-                            imgURI = data.getData();
-                            if (imgURI != null) {
-                                ImageView img = myFragmentView.findViewById(R.id.prodImg);
-                                img.setImageURI(imgURI);
-                                System.out.println("Makgailin");
-                            }
-                        }
-                    }
-                });
-
-         */
         return myFragmentView;
     }
 
-
+    ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+        new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+            if (result.getResultCode() == Activity.RESULT_OK) {
+                Intent data = result.getData();
+                if (result.getResultCode() == 100){
+                    if (Build.VERSION.SDK_INT == Build.VERSION_CODES.R){
+                        if (Environment.isExternalStorageManager()){
+                            pickImgFromGallery();
+                        }
+                    }
+                }
+                else if (result.getResultCode() != 100 && result.getResultCode() != 101){
+                    imgURI = data.getData();
+                    Log.i("IMGURI", imgURI.toString());
+                    if (imgURI != null){
+                        ImageView img = myFragmentView.findViewById(R.id.prodImg);
+                        img.setImageURI(imgURI);
+                        System.out.println("Makgailin");
+                    }
+                }
+                else{
+                    takePermissions();
+                }
+            }
+    });
 
     private void pickImgFromGallery(){
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -166,35 +173,6 @@ public class AdminPanelAddProductFragment extends Fragment implements View.OnCli
         else{
             int readExternalStorage = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE);
             return readExternalStorage == PackageManager.PERMISSION_GRANTED;
-        }
-    }
-
-    ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result.getResultCode() == Activity.RESULT_OK) {
-                    if (result.getResultCode() == 100){
-                        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.R){
-                            if (Environment.isExternalStorageManager()){
-                                pickImgFromGallery();
-                            }
-                        }
-                    }
-                    else{
-                        takePermissions();
-                    }
-                }
-            });
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        imgURI = data.getData();
-        if (imgURI != null) {
-            ImageView img = getActivity().findViewById(R.id.prodImg);
-            img.setImageURI(imgURI);
-            System.out.println("Makgailin");
-
         }
     }
 

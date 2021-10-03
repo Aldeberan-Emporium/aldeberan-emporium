@@ -28,7 +28,6 @@ public class AdminPanelLoadProductFragment extends Fragment {
     public List<Product> productList;
     public RecyclerView recyclerView;
     public ProductAdapter adapter;
-    public FloatingActionButton addProdBtn;
     public TextView noProdLbl;
 
     @Nullable

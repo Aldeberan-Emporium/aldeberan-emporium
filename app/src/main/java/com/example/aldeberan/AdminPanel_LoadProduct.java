@@ -36,7 +36,6 @@ public class AdminPanel_LoadProduct extends AppCompatActivity{
     public List<Product> productList;
     public RecyclerView recyclerView;
     public ProductAdapter adapter;
-    public FloatingActionButton addProdBtn;
     public TextView noProdLbl;
 
     @Override
@@ -55,12 +54,6 @@ public class AdminPanel_LoadProduct extends AppCompatActivity{
             ConstructRecyclerView();
             adapter.notifyDataSetChanged();
             pullToRefresh.setRefreshing(false);
-        });
-
-        //Navigate to add product
-        addProdBtn = findViewById(R.id.addProdBtn);
-        addProdBtn.setOnClickListener(view -> {
-            startActivity(new Intent(AdminPanel_LoadProduct.this, AdminPanel_AddProduct.class));
         });
     }
 
