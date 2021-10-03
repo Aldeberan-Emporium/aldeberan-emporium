@@ -66,6 +66,10 @@ public class Order {
         this.payID = payID;
     }
 
+    public Order() {
+
+    }
+
     public int getOrderID() {
         return orderID;
     }
