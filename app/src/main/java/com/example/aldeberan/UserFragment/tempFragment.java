@@ -1,4 +1,4 @@
-package com.example.aldeberan;
+package com.example.aldeberan.UserFragment;
 
 
 import android.os.Bundle;
@@ -10,11 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-public class orderHistoryFragment extends Fragment {
+import com.example.aldeberan.R;
+
+public class tempFragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_order_history, container, false);
+        return inflater.inflate(R.layout.fragment_temp, container, false);
     }
 }

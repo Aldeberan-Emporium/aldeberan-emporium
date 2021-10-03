@@ -1,4 +1,4 @@
-package com.example.aldeberan;
+package com.example.aldeberan.AdminFragment.AdminFunction;
 
 import android.Manifest;
 import android.app.Activity;
@@ -25,22 +25,16 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.aldeberan.R;
 import com.example.aldeberan.models.ProductModel;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class AdminPanel_AddProduct extends AppCompatActivity implements View.OnClickListener{
 
