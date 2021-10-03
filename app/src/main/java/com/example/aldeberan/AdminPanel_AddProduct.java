@@ -143,6 +143,7 @@ public class AdminPanel_AddProduct extends AppCompatActivity implements View.OnC
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 if (result.getResultCode() == Activity.RESULT_OK) {
+                    Intent data = result.getData();
                     if (result.getResultCode() == 100){
                         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.R){
                             if (Environment.isExternalStorageManager()){
@@ -150,21 +151,18 @@ public class AdminPanel_AddProduct extends AppCompatActivity implements View.OnC
                             }
                         }
                     }
+                    else if (result.getResultCode() == 102){
+                        imgURI = data.getData();
+                        if (imgURI != null){
+                            ImageView img = findViewById(R.id.prodImg);
+                            img.setImageURI(imgURI);
+                        }
+                    }
                     else{
                         takePermissions();
                     }
                 }
             });
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        imgURI = data.getData();
-        if (imgURI != null){
-            ImageView img = findViewById(R.id.prodImg);
-            img.setImageURI(imgURI);
-        }
-    }
 
     private void takePermissions(){
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.R){
