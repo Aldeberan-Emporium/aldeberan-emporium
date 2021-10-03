@@ -78,7 +78,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null){
             updateUI(currentUser);
-            //updateHome(currentUser);
         }else{
             updateUI(null);
         }
@@ -123,8 +122,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                             Toast.makeText(Login.this, "Login Success", Toast.LENGTH_SHORT).show();
 
                             finish();
-                            Intent Lintent = new Intent(Login.this, home_product.class);
-                            startActivity(Lintent);
+                            //Intent Lintent = new Intent(Login.this, home_product.class);
+                            //startActivity(Lintent);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
@@ -179,25 +178,30 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         Toast.makeText(Login.this, "Logged out", Toast.LENGTH_SHORT).show();
 
         finish();
-        Intent Lintent = new Intent(Login.this, home_product.class);
-        startActivity(Lintent);
+        //Intent Lintent = new Intent(Login.this, home_product.class);
+        //startActivity(Lintent);
     }
     //sign out
 
     private void updateUI(FirebaseUser user) {
         //to do
-        TextView txtv = findViewById(R.id.loginStatus);
-        txtv.setText("User ID: " + user.getUid());
+        if (user != null){
+            TextView txtv = findViewById(R.id.loginStatus);
+            txtv.setText("User ID: " + user.getUid());
 
-        SharedPreferences sharedPreferences = getSharedPreferences("CurrentUser",MODE_PRIVATE);
-        SharedPreferences.Editor myEdit = sharedPreferences.edit();
+            SharedPreferences sharedPreferences = getSharedPreferences("CurrentUser",MODE_PRIVATE);
+            SharedPreferences.Editor myEdit = sharedPreferences.edit();
 
-        myEdit.putString("name", user.getDisplayName());
-        myEdit.putString("id", user.getUid());
-        myEdit.putString("photoURL", String.valueOf(user.getPhotoUrl()));
-        myEdit.putString("email", user.getEmail());
+            myEdit.putString("name", user.getDisplayName());
+            myEdit.putString("id", user.getUid());
+            myEdit.putString("photoURL", String.valueOf(user.getPhotoUrl()));
+            myEdit.putString("email", user.getEmail());
 
-        myEdit.apply();
+            myEdit.apply();
+        }else{
+            TextView txtv = findViewById(R.id.loginStatus);
+            txtv.setText("User ID: Please Sign in");
+        }
     }
 
     @Override

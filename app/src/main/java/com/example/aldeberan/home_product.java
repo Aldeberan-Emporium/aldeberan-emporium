@@ -79,7 +79,6 @@ public class home_product extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new userSettingFragment()).commit();
                 break;
             case R.id.nav_login:
-                finish();
                 Intent intent = new Intent(home_product.this, Login.class);
                 startActivity(intent);
                 break;
