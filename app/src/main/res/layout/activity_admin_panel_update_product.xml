@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".AdminPanel_UpdateProduct"
     tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="0dp">
+    tools:layout_editor_absoluteY="0dp"
+    android:clickable="true"
+    android:focusableInTouchMode="true" >
 
     <Switch
         android:id="@+id/prodAvail"

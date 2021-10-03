@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
@@ -102,6 +103,12 @@ public class AdminPanelAddProductFragment extends Fragment implements View.OnCli
             }
         });
 
+        prodName.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                hideKeyboard(v);
+            }
+        });
+
         //Limit product stock to 5 digits (max 99999)
         EditText prodStock = myFragmentView.findViewById(R.id.prodStock);
         prodStock.setFilters(new InputFilter[] {new InputFilter.LengthFilter(5)});
@@ -128,9 +135,21 @@ public class AdminPanelAddProductFragment extends Fragment implements View.OnCli
             }
         };
 
+        prodStock.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                hideKeyboard(v);
+            }
+        });
+
         //Limit product price to 7,2 decimal places (max 99999.99)
         EditText prodPrice = myFragmentView.findViewById(R.id.prodPrice);
         prodPrice.setFilters(new InputFilter[] {filter});
+
+        prodPrice.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                hideKeyboard(v);
+            }
+        });
 
         return myFragmentView;
     }
@@ -201,6 +220,11 @@ public class AdminPanelAddProductFragment extends Fragment implements View.OnCli
         }
     }
 
+    //Hide keyboard when out of focus
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager) this.getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
 
     @Override
     public void onClick(View view) {
