@@ -29,6 +29,10 @@ public class Address{
         this.addCountry = StringEscapeUtils.unescapeHtml4(addCountry);
     }
 
+    public Address() {
+
+    }
+
     public int getAddID() {
         return addID;
     }
