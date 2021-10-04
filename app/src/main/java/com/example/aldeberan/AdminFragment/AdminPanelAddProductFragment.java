@@ -160,7 +160,6 @@ public class AdminPanelAddProductFragment extends Fragment implements View.OnCli
                     if (imgURI != null){
                         ImageView img = myFragmentView.findViewById(R.id.prodImg);
                         img.setImageURI(imgURI);
-                        System.out.println("Makgailin");
                     }
                 }
                 else{
@@ -170,8 +169,10 @@ public class AdminPanelAddProductFragment extends Fragment implements View.OnCli
     });
 
     private void pickImgFromGallery(){
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
+        String[] mimeTypes = {"image/jpeg", "image/jpg", "image/png"};
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                .setType("image/*")
+                .putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
         intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.putExtra("requestCode", 102);
         activityResultLauncher.launch(intent);
@@ -223,6 +224,7 @@ public class AdminPanelAddProductFragment extends Fragment implements View.OnCli
             TextView prodPriceLbl = getActivity().findViewById(R.id.prodPrice);
             Switch prodAvailSwitch = getActivity().findViewById(R.id.prodAvail);
             int prodAvail = prodAvailSwitch.isChecked() ? 1 : 0;
+            ImageView img = myFragmentView.findViewById(R.id.prodImg);
 
             String prodName = prodNameLbl.getText().toString();
             String prodSKU = prodSKULbl.getText().toString();
@@ -264,14 +266,17 @@ public class AdminPanelAddProductFragment extends Fragment implements View.OnCli
                                     .commit();
                         } else {
                             Log.i("UP","Upload failed: ");
+                            img.setImageResource(R.drawable.upload_img_error);
                         }
                     });
                 } else {
                     Toast.makeText(getContext(), "Please select an image!", Toast.LENGTH_LONG).show();
+                    img.setImageResource(R.drawable.upload_img_error);
                 }
             }
             else{
                 Toast.makeText(getContext(), "All inputs are required!", Toast.LENGTH_LONG).show();
+                img.setImageResource(R.drawable.upload_img_error);
             }
         }
         else{

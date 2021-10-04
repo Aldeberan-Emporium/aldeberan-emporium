@@ -135,7 +135,7 @@
         android:id="@+id/prodImg"
         android:layout_width="0dp"
         android:layout_height="200dp"
-        android:src="@drawable/uploadimg"
+        android:src="@drawable/upload_img"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"

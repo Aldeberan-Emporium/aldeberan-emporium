@@ -167,8 +167,10 @@ public class AdminPanel_UpdateProduct extends AppCompatActivity implements View.
     }
 
     private void pickImgFromGallery(){
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
+        String[] mimeTypes = {"image/jpeg", "image/jpg", "image/png"};
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                .setType("image/*")
+                .putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
         intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.putExtra("requestCode", 102);
         activityResultLauncher.launch(intent);
@@ -246,6 +248,7 @@ public class AdminPanel_UpdateProduct extends AppCompatActivity implements View.
                 String prodSKU = prodSKULbl.getText().toString();
                 String prodStockStr = prodStockLbl.getText().toString();
                 String prodPriceStr = prodPriceLbl.getText().toString();
+                ImageView img = findViewById(R.id.prodImg);
 
                 if (!prodName.isEmpty() && !prodStockStr.isEmpty() && !prodPriceStr.isEmpty()){
                     int prodStock = Integer.parseInt(prodStockStr);
@@ -302,6 +305,7 @@ public class AdminPanel_UpdateProduct extends AppCompatActivity implements View.
                             }
                             else {
                                 Log.i("UP","Upload failed: ");
+                                img.setImageResource(R.drawable.upload_img_error);
                             }
                         });
                     }
@@ -309,6 +313,7 @@ public class AdminPanel_UpdateProduct extends AppCompatActivity implements View.
                 }
                 else{
                     Toast.makeText(this, "All inputs are required!", Toast.LENGTH_LONG).show();
+                    img.setImageResource(R.drawable.upload_img_error);
                 }
                 break;
             case R.id.imageBtn:
