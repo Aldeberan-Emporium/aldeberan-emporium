@@ -122,7 +122,6 @@ public class CartModel extends DatabaseModel{
                     cart.setProdPrice(prodPrice);
 
                     cartList.add(cart);
-
                 }
             }catch (Exception e){}
             Log.i("PL", String.valueOf(cartList));

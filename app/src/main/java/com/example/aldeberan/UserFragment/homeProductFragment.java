@@ -6,6 +6,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Switch;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,9 +27,10 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class homeProductFragment extends Fragment{
+public class homeProductFragment extends Fragment implements View.OnClickListener{
 
-    private View myFragmentView;
+    private View myProductFragmentView;
+    //private View myCartFragmentView;
     public List<Product> productList;
     public RecyclerView recyclerView;
     public ProductListingDetailAdapter adapter;
@@ -35,13 +39,15 @@ public class homeProductFragment extends Fragment{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        myFragmentView = inflater.inflate(R.layout.fragment_home_product, container, false);
+        myProductFragmentView = inflater.inflate(R.layout.fragment_home_product, container, false);
+        //myCartFragmentView = inflater.inflate(R.layout.fragment_cart, container, false);
+
         productList = new ArrayList<>();
-        recyclerView = myFragmentView.findViewById(R.id.cRecyclerView);
+        recyclerView = myProductFragmentView.findViewById(R.id.cRecyclerView);
 
         
         ConstructRecyclerView();
-        SwipeRefreshLayout pullToRefresh = myFragmentView.findViewById(R.id.cPullToRefresh);
+        SwipeRefreshLayout pullToRefresh = myProductFragmentView.findViewById(R.id.cPullToRefresh);
 
         pullToRefresh.setOnRefreshListener(() -> {
             ConstructRecyclerView();
@@ -49,7 +55,7 @@ public class homeProductFragment extends Fragment{
             pullToRefresh.setRefreshing(false);
         });
 
-        return myFragmentView;
+        return myProductFragmentView;
     }
 
     private void ConstructRecyclerView(){
@@ -69,5 +75,33 @@ public class homeProductFragment extends Fragment{
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
         Log.i("PLOPE", String.valueOf(productList));
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.button_add_cart) {
+            Switch prodAvailSwitch = getActivity().findViewById(R.id.cusProdIDLbl);
+            TextView prodNameLbl = getActivity().findViewById(R.id.cusProdNameLbl);
+            TextView prodPriceLbl = getActivity().findViewById(R.id.prodPrice);
+            ImageView img = getActivity().findViewById(R.id.cusProdImgView);
+
+            //int prodAvail = prodAvailSwitch.isChecked() ? 1 : 0;
+
+
+            //String prodName = prodNameLbl.getText().toString();
+            //String prodPriceStr = prodPriceLbl.getText().toString();
+            //String prodPriceStr = prodPriceLbl.getText().toString();
+
+
+
+            cartFragment productFragment= new cartFragment();
+                            getActivity().getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.fragment_container, productFragment)
+                                    .addToBackStack(null)
+                                    .commit();
+
+
+
+        }
     }
 }

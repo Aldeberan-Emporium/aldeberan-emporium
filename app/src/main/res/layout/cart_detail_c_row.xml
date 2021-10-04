@@ -19,7 +19,7 @@
         >
 
         <ImageView
-            android:id="@+id/cusProdImgView"
+            android:id="@+id/cartProdImgView"
             android:layout_width="150dp"
             android:layout_height="150dp">
             app:layout_constraintDimensionRatio="3:3"
@@ -27,70 +27,82 @@
         </ImageView>
 
 
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:background="@color/blue_update"
             android:paddingLeft="5dp"
-            android:paddingRight="5dp">
+            android:paddingRight="5dp"
+            android:background="@color/blue_update">
 
             <TextView
-                android:id="@+id/cusProdIDLbl"
+                android:id="@+id/cartProdIDLbl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:paddingTop="3dp"
                 android:text="Item ID"
-                app:layout_constraintBottom_toTopOf="@+id/cusProdNameLbl"
+                android:paddingTop="3dp"
+                app:layout_constraintBottom_toTopOf="@+id/cartProdNameLbl"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="packed" />
 
             <TextView
-                android:id="@+id/cusProdNameLbl"
+                android:id="@+id/cartProdNameLbl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="3dp"
                 android:text="Item Name"
-                app:layout_constraintBottom_toTopOf="@+id/cusProdPriceLbl"
+                android:paddingTop="3dp"
+                app:layout_constraintBottom_toTopOf="@+id/cartProdPriceLbl"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cusProdIDLbl" />
+                app:layout_constraintTop_toBottomOf="@+id/cartProdIDLbl" />
 
             <TextView
-                android:id="@+id/cusProdPriceLbl"
+                android:id="@+id/cartProdPriceLbl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="3dp"
                 android:text="Item Price"
+                android:paddingTop="3dp"
                 app:layout_constraintBottom_toTopOf="@+id/textView6"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cusProdNameLbl" />
+                app:layout_constraintTop_toBottomOf="@+id/cartProdNameLbl" />
 
             <TextView
                 android:id="@+id/textView6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="3dp"
                 android:text="Item Description"
-                app:layout_constraintBottom_toTopOf="@+id/button_add_cart"
+                android:paddingTop="3dp"
+                app:layout_constraintBottom_toTopOf="@+id/add_quantity"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.555"
                 app:layout_constraintStart_toStartOf="parent"
-                android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@+id/cusProdPriceLbl" />
+                app:layout_constraintTop_toBottomOf="@+id/cartProdPriceLbl"
+                android:visibility="gone"/>
 
-            <Button
-                android:id="@+id/button_add_cart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Add to cart"
+            <TextView
+                android:id="@+id/add_quantity"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/ic_add"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/remove_quantity"
+                app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+            <TextView
+                android:id="@+id/remove_quantity"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:background="@drawable/ic_remove"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/add_quantity"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cusProdPriceLbl" />
+                app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
