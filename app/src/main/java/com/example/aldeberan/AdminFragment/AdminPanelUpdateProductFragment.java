@@ -18,6 +18,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
@@ -64,6 +66,7 @@ public class AdminPanelUpdateProductFragment extends Fragment implements View.On
     public int prevProdStock;
     public int prevProdAvail;
     public double prevProdPrice;
+    public AlphaAnimation alphaAnimation;
 
     View myFragmentView;
 
@@ -302,8 +305,7 @@ public class AdminPanelUpdateProductFragment extends Fragment implements View.On
                                 String prodImg = downloadUri.toString();
                                 pm.updateProduct(prevProdID, prodName, prodSKU, prodAvail, prodStock, prodPrice, prodImg);
                                 Log.i("UP","Upload success: " + downloadUri);
-                                onSubmitThrobber.setVisibility(View.GONE);
-                                onSubmitView.setVisibility(View.GONE);
+                                onSubmitAnim();
                                 //Redirect back to load products fragment
                                 AdminPanelLoadProductFragment productFragment= new AdminPanelLoadProductFragment();
                                 getActivity().getSupportFragmentManager().beginTransaction()
@@ -336,6 +338,31 @@ public class AdminPanelUpdateProductFragment extends Fragment implements View.On
                 retrieveData();
                 break;
         }
+    }
+
+    private void onSubmitAnim() {
+        //On load throbber fade out
+        alphaAnimation = new AlphaAnimation(1.0f, 0.0f);
+        alphaAnimation.setDuration(2000);
+        onSubmitThrobber.startAnimation(alphaAnimation);
+        onSubmitView.startAnimation(alphaAnimation);
+
+        alphaAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                onSubmitThrobber.setVisibility(View.VISIBLE);
+                onSubmitView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                onSubmitThrobber.setVisibility(View.GONE);
+                onSubmitView.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {}
+        });
     }
 
     private String getFileExt(Uri uri){
