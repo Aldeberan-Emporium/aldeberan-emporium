@@ -13,8 +13,10 @@ import androidx.fragment.app.Fragment;
 
 import com.example.aldeberan.Activity.home_product;
 import com.example.aldeberan.R;
+import com.example.aldeberan.UserFragment.UserSettings.UserAddressFragment;
+import com.example.aldeberan.UserFragment.UserSettings.UserInfoFragment;
 
-public class userSettingFragment extends Fragment implements View.OnClickListener{
+public class UserSettingFragment extends Fragment implements View.OnClickListener{
 
     View userSettingsView;
     @Nullable
@@ -39,6 +41,7 @@ public class userSettingFragment extends Fragment implements View.OnClickListene
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.addressBtn:
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new UserAddressFragment()).commit();
                 ((home_product) getActivity()).setActionBarTitle("Address Book");
                 break;
             case R.id.infoBtn:

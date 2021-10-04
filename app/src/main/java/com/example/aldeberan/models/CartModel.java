@@ -21,28 +21,22 @@ public class CartModel extends DatabaseModel{
     public CartModel(){};
 
     //Add quote
-    public void addQuote(String userID, double subtotal, double total, String createdAt, String updatedAt, int quoteStatus){
+    public void addQuote(String userID, double total, int quoteStatus){
         RequestParams params = new RequestParams();
         params.put("action", "addQuote");
         params.put("user_id", StringEscapeUtils.escapeHtml4(userID));
-        params.put("subtotal", String.valueOf(subtotal));
         params.put("total", String.valueOf(total));
-        params.put("created_at", createdAt);
-        params.put("updated_at", updatedAt);
         params.put("quote_status", quoteStatus);
         this.postData(params);
     }
 
     //Update quote
-    public void updateQuote(int quoteID, String userID, double subtotal, double total, String createdAt, String updatedAt, int quoteStatus){
+    public void updateQuote(int quoteID, String userID, double total, int quoteStatus){
         RequestParams params = new RequestParams();
         params.put("action", "updateQuote");
         params.put("quote_id", quoteID);
         params.put("user_id", StringEscapeUtils.escapeHtml4(userID));
-        params.put("subtotal", String.valueOf(subtotal));
         params.put("total", String.valueOf(total));
-        params.put("created_at", createdAt);
-        params.put("updated_at", updatedAt);
         params.put("quote_status", quoteStatus);
         this.postData(params);
     }
@@ -52,6 +46,14 @@ public class CartModel extends DatabaseModel{
         RequestParams params = new RequestParams();
         params.put("action", "deleteQuote");
         params.put("quote_id", quoteID);
+        this.postData(params);
+    }
+
+    //Check if User Exist and create a new quote
+    public void checkIfUserExist(String userID){
+        RequestParams params = new RequestParams();
+        params.put("action", "checkIfUserExist");
+        params.put("user_id", userID);
         this.postData(params);
     }
 
@@ -74,18 +76,12 @@ public class CartModel extends DatabaseModel{
                 for (int i = 0; i < array.length(); i++) {
                     JSONObject object = array.getJSONObject(i);
                     int quoteID = Integer.parseInt(object.getString("quote_id"));
-                    double subtotal = Double.parseDouble(object.getString("subtotal"));
                     double total = Double.parseDouble(object.getString("total"));
-                    String createdAt = object.getString("created_at");
-                    String updatedAt = object.getString("updated_at");
                     int quoteStatus = Integer.parseInt(object.getString("quote_status"));
 
                     Cart cart = new Cart();
                     cart.setQuoteID(quoteID);
-                    cart.setSubtotal(subtotal);
                     cart.setTotal(total);
-                    cart.setCreatedAt(createdAt);
-                    cart.setUpdatedAt(updatedAt);
                     cart.setQuoteStatus(quoteStatus);
 
                     cartList.add(cart);

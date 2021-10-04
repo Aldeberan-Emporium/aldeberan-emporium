@@ -1,4 +1,4 @@
-package com.example.aldeberan.UserFragment;
+package com.example.aldeberan.UserFragment.UserSettings;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,8 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.aldeberan.AdminFragment.AdminPanelLoadProductFragment;
 import com.example.aldeberan.R;
+import com.example.aldeberan.UserFragment.UserSettingFragment;
 import com.example.aldeberan.storage.UserStorage;
 
 public class UserInfoFragment extends Fragment {
@@ -31,7 +31,7 @@ public class UserInfoFragment extends Fragment {
         TextView userID = userInfoView.findViewById(R.id.userID);
         Button backBtn = userInfoView.findViewById(R.id.backInfoBtn);
         backBtn.setOnClickListener(view -> getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, new userSettingFragment())
+                .replace(R.id.fragment_container, new UserSettingFragment())
                 .commit());
 
         UserStorage us = new UserStorage(getActivity());
