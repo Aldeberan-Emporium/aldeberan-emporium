@@ -21,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.aldeberan.R;
+import com.example.aldeberan.storage.UserStorage;
 import com.example.aldeberan.structures.User;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -190,15 +191,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
             TextView txtv = findViewById(R.id.loginStatus);
             txtv.setText("User ID: " + user.getUid());
 
-            SharedPreferences sharedPreferences = getSharedPreferences("CurrentUser",MODE_PRIVATE);
-            SharedPreferences.Editor myEdit = sharedPreferences.edit();
-
-            myEdit.putString("name", user.getDisplayName());
-            myEdit.putString("id", user.getUid());
-            myEdit.putString("photoURL", String.valueOf(user.getPhotoUrl()));
-            myEdit.putString("email", user.getEmail());
-
-            myEdit.apply();
+            UserStorage us = new UserStorage(this);
+            us.saveUser(user.getDisplayName(), user.getUid(), user.getPhotoUrl().toString(), user.getEmail());
         }else{
             TextView txtv = findViewById(R.id.loginStatus);
             txtv.setText("User ID: Please Sign in");

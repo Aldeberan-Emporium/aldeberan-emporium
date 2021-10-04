@@ -24,6 +24,7 @@ import com.example.aldeberan.UserFragment.homeProductFragment;
 import com.example.aldeberan.UserFragment.orderHistoryFragment;
 import com.example.aldeberan.UserFragment.tempFragment;
 import com.example.aldeberan.UserFragment.userSettingFragment;
+import com.example.aldeberan.storage.UserStorage;
 import com.google.android.material.navigation.NavigationView;
 
 public class home_product extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -35,8 +36,6 @@ public class home_product extends AppCompatActivity implements NavigationView.On
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SharedPreferences sh = getSharedPreferences("CurrentUser", MODE_PRIVATE);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_product);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -49,7 +48,8 @@ public class home_product extends AppCompatActivity implements NavigationView.On
         TextView navUsername = headerView.findViewById(R.id.current_user);
         navigationView.setNavigationItemSelectedListener(this);
 
-        String s1 = sh.getString("name", "");
+        UserStorage us = new UserStorage(this);
+        String s1 = us.getName();
 
         if (navUsername != null){
             navUsername.setText(s1);

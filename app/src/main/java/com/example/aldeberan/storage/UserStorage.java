@@ -8,7 +8,7 @@ import android.content.SharedPreferences;
 public class UserStorage {
 
     private Context context;
-    private SharedPreferences sharedPreferences;
+    public SharedPreferences sharedPreferences;
     private SharedPreferences.Editor myEdit;
 
     public UserStorage(Context context){
@@ -17,9 +17,7 @@ public class UserStorage {
         myEdit = sharedPreferences.edit();
     };
 
-    public UserStorage() {
-
-    }
+    public UserStorage() {}
 
     public void logoutUser(){
 

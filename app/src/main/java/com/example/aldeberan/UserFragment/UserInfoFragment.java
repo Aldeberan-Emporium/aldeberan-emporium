@@ -31,8 +31,7 @@ public class UserInfoFragment extends Fragment {
         Button backBtn = userInfoView.findViewById(R.id.backInfoBtn);
         backBtn.setOnClickListener(view -> getActivity().onBackPressed());
 
-        UserStorage us = new UserStorage();
-
+        UserStorage us = new UserStorage(getActivity());
 
         Glide.with(userInfoView).load(Uri.parse(us.getPhotoURL())).into(userImg);
 
