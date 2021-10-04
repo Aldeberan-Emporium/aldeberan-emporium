@@ -12,8 +12,10 @@ import android.os.Environment;
 import android.provider.Settings;
 import android.text.Editable;
 import android.text.InputFilter;
+import android.text.InputType;
 import android.text.Spanned;
 import android.text.TextWatcher;
+import android.text.method.DigitsKeyListener;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -105,6 +107,9 @@ public class AdminPanelUpdateProductFragment extends Fragment implements View.On
         //Set SKU when product name on change
         EditText prodName = myFragmentView.findViewById(R.id.prodName);
         EditText prodSKU = myFragmentView.findViewById(R.id.prodSKU);
+
+        prodName.setKeyListener(DigitsKeyListener.getInstance("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 "));
+        prodName.setRawInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
 
         prodName.addTextChangedListener(new TextWatcher() {
             @Override
