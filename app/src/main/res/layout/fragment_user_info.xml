@@ -7,13 +7,13 @@
     android:layout_height="match_parent"
     tools:context=".UserFragment.UserInfoFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <ImageView
         android:id="@+id/userPic"
-        android:layout_width="223dp"
-        android:layout_height="235dp"
-        app:layout_constraintBottom_toTopOf="@+id/loginProvider"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="120dp"
+        android:layout_marginEnd="120dp"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -21,60 +21,114 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@tools:sample/avatars" />
 
-    <TextView
-        android:id="@+id/userJoinedDate"
+    <Button
+        android:id="@+id/backInfoBtn"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="joinedDate"
+        android:text="@string/user_settings_info_back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reportBugBtn" />
+
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:foregroundGravity="center_vertical|center|center_horizontal"
+        android:gravity="center|center_horizontal|center_vertical"
+        app:layout_constraintBottom_toTopOf="@+id/reportBugBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userPic">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/userNameLbl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="User Name" />
+
+            <TextView
+                android:id="@+id/userNameLbl3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=": " />
+
+            <TextView
+                android:id="@+id/userName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="userName" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/userEmailLbl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="User Email" />
+
+            <TextView
+                android:id="@+id/userEmailLbl2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=": " />
+
+            <TextView
+                android:id="@+id/userEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="userEmail" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/userIDLbl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="User ID" />
+
+            <TextView
+                android:id="@+id/userIDLbl2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=": " />
+
+            <TextView
+                android:id="@+id/userID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="uid" />
+
+        </TableRow>
+
+    </TableLayout>
+
+    <Button
+        android:id="@+id/reportBugBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/user_settings_report"
         app:layout_constraintBottom_toTopOf="@+id/backInfoBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userEmail" />
-
-    <TextView
-        android:id="@+id/loginProvider"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="loginProvider"
-        app:layout_constraintBottom_toTopOf="@+id/userName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userPic" />
-
-    <Button
-        android:id="@+id/backInfoBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="44dp"
-        android:text="@string/user_settings_info_back"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userJoinedDate" />
-
-    <TextView
-        android:id="@+id/userEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="userEmail"
-        app:layout_constraintBottom_toTopOf="@+id/userJoinedDate"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userName" />
-
-    <TextView
-        android:id="@+id/userName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="userName"
-        app:layout_constraintBottom_toTopOf="@+id/userEmail"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginProvider" />
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

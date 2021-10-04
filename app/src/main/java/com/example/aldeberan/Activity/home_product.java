@@ -11,12 +11,15 @@ import androidx.fragment.app.Fragment;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.aldeberan.AdminFragment.AdminPanelAddProductFragment;
 import com.example.aldeberan.AdminFragment.AdminPanelLoadProductFragment;
 import com.example.aldeberan.R;
@@ -48,13 +51,17 @@ public class home_product extends AppCompatActivity implements NavigationView.On
         TextView navUsername = headerView.findViewById(R.id.current_user);
         navigationView.setNavigationItemSelectedListener(this);
 
+        ImageView navUserPic = headerView.findViewById(R.id.current_user_pic);
+
         UserStorage us = new UserStorage(this);
         String s1 = us.getName();
 
         if (navUsername != null){
             navUsername.setText(s1);
+            //Glide.with(this).load(Uri.parse(us.getPhotoURL())).into((navUserPic));
         }else{
             System.out.println("textview object error");
+            //navUserPic.setImageResource(R.drawable.ic_launcher);
         }
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);

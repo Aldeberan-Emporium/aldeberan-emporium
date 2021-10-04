@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.aldeberan.AdminFragment.AdminPanelLoadProductFragment;
 import com.example.aldeberan.R;
 import com.example.aldeberan.storage.UserStorage;
 
@@ -27,13 +28,18 @@ public class UserInfoFragment extends Fragment {
         ImageView userImg = userInfoView.findViewById(R.id.userPic);
         TextView userName = userInfoView.findViewById(R.id.userName);
         TextView userEmail = userInfoView.findViewById(R.id.userEmail);
-        TextView userJoinedDate = userInfoView.findViewById(R.id.userJoinedDate);
+        TextView userID = userInfoView.findViewById(R.id.userID);
         Button backBtn = userInfoView.findViewById(R.id.backInfoBtn);
-        backBtn.setOnClickListener(view -> getActivity().onBackPressed());
+        backBtn.setOnClickListener(view -> getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, new userSettingFragment())
+                .commit());
 
         UserStorage us = new UserStorage(getActivity());
 
         Glide.with(userInfoView).load(Uri.parse(us.getPhotoURL())).into(userImg);
+        userName.setText(us.getName());
+        userEmail.setText(us.getEmail());
+        userID.setText(us.getID());
 
         return userInfoView;
     }

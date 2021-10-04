@@ -35,4 +35,5 @@
     <string name="user_settings_wishlist">My Wishlist</string>
     <string name="user_settings_coupons">My Coupons</string>
     <string name="user_settings_info_back">Return to User Settings</string>
+    <string name="user_settings_report">Report a Bug?</string>
 </resources>
