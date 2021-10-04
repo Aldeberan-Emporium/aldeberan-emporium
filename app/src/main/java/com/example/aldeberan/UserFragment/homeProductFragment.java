@@ -19,8 +19,12 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.aldeberan.Adapter.ProductListingDetailAdapter;
 import com.example.aldeberan.R;
+import com.example.aldeberan.models.CartModel;
 import com.example.aldeberan.models.ProductModel;
+import com.example.aldeberan.storage.UserStorage;
 import com.example.aldeberan.structures.Product;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import org.json.JSONException;
 
@@ -29,6 +33,8 @@ import java.util.List;
 
 public class homeProductFragment extends Fragment implements View.OnClickListener{
 
+    UserStorage user;
+    CartModel cm = new CartModel();
     private View myProductFragmentView;
     //private View myCartFragmentView;
     public List<Product> productList;
@@ -91,6 +97,13 @@ public class homeProductFragment extends Fragment implements View.OnClickListene
             //String prodName = prodNameLbl.getText().toString();
             //String prodPriceStr = prodPriceLbl.getText().toString();
             //String prodPriceStr = prodPriceLbl.getText().toString();
+
+            //cm.addQuote();
+            user = new UserStorage(getContext());
+            if(!cm.checkIfUserExist(user.getID())){
+                cm.addQuoteItem(cus);
+
+            }
 
 
 

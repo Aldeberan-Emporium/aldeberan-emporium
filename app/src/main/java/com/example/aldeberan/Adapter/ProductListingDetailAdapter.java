@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.aldeberan.R;
+import com.example.aldeberan.databinding.CartDetailCRowBinding;
 import com.example.aldeberan.databinding.ProductDetailCRowBinding;
 import com.example.aldeberan.models.CartModel;
 import com.example.aldeberan.models.ProductModel;
