@@ -56,13 +56,15 @@ public class AdminPanel_LoadProduct extends AppCompatActivity{
                 }
                 else{
                     noProdLbl.setVisibility(View.GONE);
-                    PutDataIntoRecyclerView(response);
+                    //PutDataIntoRecyclerView(response);
                 }
             });
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
+
+    /*
 
     private void PutDataIntoRecyclerView(List<Product> productList){
         adapter = new ProductAdapter(this, productList);
@@ -71,4 +73,7 @@ public class AdminPanel_LoadProduct extends AppCompatActivity{
         recyclerView.setAdapter(adapter);
         Log.i("PLOPE", String.valueOf(productList));
     }
+
+
+     */
 }

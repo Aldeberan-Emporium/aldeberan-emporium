@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -66,8 +68,27 @@ public class AdminPanelLoadProductFragment extends Fragment {
         }
     }
 
+    ProductAdapter.FragmentCommunication communication= (prodName, prodID, prodSKU, prodImg, prodStock, prodAvail, prodPrice) -> {
+        AdminPanelUpdateProductFragment updateProductFragment = new AdminPanelUpdateProductFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("prodName", prodName);
+        bundle.putString("prodID", prodID);
+        bundle.putString("prodSKU", prodSKU);
+        bundle.putString("prodImg", prodImg);
+        bundle.putString("prodStock", prodStock);
+        bundle.putString("prodAvail", prodAvail);
+        bundle.putString("prodPrice", prodPrice);
+        updateProductFragment.setArguments(bundle);
+
+        //Redirect to update product fragment
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, updateProductFragment)
+                .addToBackStack(null)
+                .commit();
+    };
+
     private void PutDataIntoRecyclerView(List<Product> productList){
-        adapter = new ProductAdapter(getContext(), productList);
+        adapter = new ProductAdapter(getContext(), productList, communication);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
         Log.i("PLOPE", String.valueOf(productList));
