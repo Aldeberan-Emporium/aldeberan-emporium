@@ -17,40 +17,44 @@
         <item
             android:id="@+id/nav_wallet"
             android:icon="@drawable/ic_temp"
-            android:title="E-Wallet" />
+            android:title="E-Wallet"
+            android:visible="false"/>
+
+        <item android:title="Admin Features">
+            <menu>
+                <group android:checkableBehavior="single">
+                    <item
+                        android:id="@+id/nav_admin_add"
+                        android:icon="@drawable/ic_admin_addproduct"
+                        android:title="Add New Bread" />
+
+                    <item
+                        android:id="@+id/nav_admin_load"
+                        android:icon="@drawable/ic_admin_loadproduct"
+                        android:title="Manage Bread(s)" />
+
+                    <item
+                        android:id="@+id/nav_admin_order"
+                        android:icon="@drawable/ic_admin_loadproduct"
+                        android:title="Manage Order(s)" />
+                </group>
+            </menu>
+        </item>
+
+        <item android:title="Settings">
+            <menu>
+                <group android:checkableBehavior="single">
+                    <item
+                        android:id="@+id/nav_user_setting"
+                        android:icon="@drawable/ic_user_setting"
+                        android:title="User Settings" />
+                </group>
+                <item
+                    android:id="@+id/nav_login"
+                    android:icon="@drawable/ic_login"
+                    android:title="Account Management" />
+            </menu>
+        </item>
     </group>
-
-    <item android:title="Admin Features">
-        <menu>
-            <item
-                android:id="@+id/nav_admin_add"
-                android:icon="@drawable/ic_admin_addproduct"
-                android:title="Add New Bread" />
-
-            <item
-                android:id="@+id/nav_admin_load"
-                android:icon="@drawable/ic_admin_loadproduct"
-                android:title="Manage Bread(s)" />
-
-            <item
-                android:id="@+id/nav_admin_order"
-                android:icon="@drawable/ic_admin_loadproduct"
-                android:title="Manage Order(s)" />
-        </menu>
-    </item>
-
-    <item android:title="Settings">
-        <menu>
-            <item
-                android:id="@+id/nav_user_setting"
-                android:icon="@drawable/ic_user_setting"
-                android:title="User Settings" />
-
-            <item
-                android:id="@+id/nav_login"
-                android:icon="@drawable/ic_login"
-                android:title="Account Management" />
-
-        </menu>
-    </item>
 </menu>
+
