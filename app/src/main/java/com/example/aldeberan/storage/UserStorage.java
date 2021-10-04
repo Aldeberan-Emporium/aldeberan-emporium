@@ -5,17 +5,21 @@ import static android.content.Context.MODE_PRIVATE;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-public class userStorage {
+public class UserStorage {
 
     private Context context;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor myEdit;
 
-    public userStorage(Context context){
+    public UserStorage(Context context){
         this.context = context;
         sharedPreferences = context.getSharedPreferences("CurrentUser",MODE_PRIVATE);
         myEdit = sharedPreferences.edit();
     };
+
+    public UserStorage() {
+
+    }
 
     public void logoutUser(){
 

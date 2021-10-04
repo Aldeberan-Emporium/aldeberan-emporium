@@ -1,4 +1,4 @@
-package com.example.aldeberan;
+package com.example.aldeberan.Activity;
 
 import static android.app.Activity.*;
 
@@ -20,6 +20,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.aldeberan.R;
 import com.example.aldeberan.structures.User;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
