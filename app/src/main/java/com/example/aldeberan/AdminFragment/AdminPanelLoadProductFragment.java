@@ -1,10 +1,17 @@
 package com.example.aldeberan.AdminFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.aldeberan.Activity.MainActivity;
 import com.example.aldeberan.Adapter.ProductAdapter;
 import com.example.aldeberan.R;
 import com.example.aldeberan.Activity.home_product;
@@ -33,6 +41,9 @@ public class AdminPanelLoadProductFragment extends Fragment {
     public RecyclerView recyclerView;
     public ProductAdapter adapter;
     public TextView noProdLbl;
+    public ProgressBar onLoadThrobber;
+    public Handler mHandler;
+    public AlphaAnimation alphaAnimation;
 
     @Nullable
     @Override
@@ -43,6 +54,8 @@ public class AdminPanelLoadProductFragment extends Fragment {
         productList = new ArrayList<>();
         recyclerView = myFragmentView.findViewById(R.id.recyclerView);
         noProdLbl = myFragmentView.findViewById(R.id.noProdLbl);
+        onLoadThrobber = myFragmentView.findViewById(R.id.onLoadThrobber);
+        mHandler = new Handler();
 
         ConstructRecyclerView();
         SwipeRefreshLayout pullToRefresh = myFragmentView.findViewById(R.id.pullToRefresh);
@@ -56,12 +69,41 @@ public class AdminPanelLoadProductFragment extends Fragment {
         return myFragmentView;
     }
 
+    private void onLoadThrobber() {
+        //On load throbber fade out
+        alphaAnimation = new AlphaAnimation(1.0f, 0.0f);
+        alphaAnimation.setDuration(2000);
+        onLoadThrobber.startAnimation(alphaAnimation);
+
+        alphaAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                onLoadThrobber.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                onLoadThrobber.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {}
+        });
+    }
+
     private void ConstructRecyclerView(){
         ProductModel pm = new ProductModel();
+        onLoadThrobber();
         try {
             pm.readProductAll((response) -> {
                 productList = response;
-                PutDataIntoRecyclerView(response);
+                if (productList.isEmpty()){
+                    noProdLbl.setVisibility(View.VISIBLE);
+                }
+                else{
+                    noProdLbl.setVisibility(View.GONE);
+                    PutDataIntoRecyclerView(response);
+                }
             });
         } catch (JSONException e) {
             e.printStackTrace();
