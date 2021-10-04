@@ -122,8 +122,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                             Toast.makeText(Login.this, "Login Success", Toast.LENGTH_SHORT).show();
 
                             finish();
-                            //Intent Lintent = new Intent(Login.this, home_product.class);
-                            //startActivity(Lintent);
+                            Intent Lintent = new Intent(Login.this, home_product.class);
+                            startActivity(Lintent);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
@@ -178,8 +178,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         Toast.makeText(Login.this, "Logged out", Toast.LENGTH_SHORT).show();
 
         finish();
-        //Intent Lintent = new Intent(Login.this, home_product.class);
-        //startActivity(Lintent);
+        Intent Lintent = new Intent(Login.this, home_product.class);
+        startActivity(Lintent);
     }
     //sign out
 
