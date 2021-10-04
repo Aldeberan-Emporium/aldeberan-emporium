@@ -29,4 +29,9 @@
     <string name="update_product">UPDATE</string>
     <string name="delete_product">DELETE</string>
     <string name="no_product">There are no products available at the moment! Please add a new product.</string>
+
+    <string name="user_settings_address">Address Book</string>
+    <string name="user_settings_info">User Info</string>
+    <string name="user_settings_wishlist">My Wishlist</string>
+    <string name="user_settings_coupons">My Coupons</string>
 </resources>
