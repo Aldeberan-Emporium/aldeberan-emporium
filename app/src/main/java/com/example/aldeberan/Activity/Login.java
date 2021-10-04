@@ -1,5 +1,9 @@
-package com.example.aldeberan.Activity;
+package com.example.aldeberan;
 
+import static android.app.Activity.*;
+
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,8 +20,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.aldeberan.R;
-import com.example.aldeberan.storage.userStorage;
+import com.example.aldeberan.structures.User;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -41,7 +44,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
     // [END declare_auth]
 
     private GoogleSignInClient mGoogleSignInClient;
-    private userStorage userStorage = new userStorage(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
@@ -72,14 +74,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
     @Override
     public void onStart() {
         super.onStart();
-
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null){
             updateUI(currentUser);
-            //updateHome(currentUser);
         }else{
-            //updateUI(null);
+            updateUI(null);
         }
 
     }
@@ -165,7 +165,15 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
             txtv.setText("Signed out");
         });
 
-        userStorage.logoutUser();
+        SharedPreferences sharedPreferences = getSharedPreferences("CurrentUser",MODE_PRIVATE);
+        SharedPreferences.Editor myEdit = sharedPreferences.edit();
+
+        myEdit.putString("name", "Please Sign In");
+        myEdit.putString("id", "");
+        myEdit.putString("photoURL", "");
+        myEdit.putString("email", "");
+
+        myEdit.apply();
 
         Toast.makeText(Login.this, "Logged out", Toast.LENGTH_SHORT).show();
 
@@ -177,15 +185,23 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
 
     private void updateUI(FirebaseUser user) {
         //to do
-        TextView txtv = findViewById(R.id.loginStatus);
-        txtv.setText("User ID: " + user.getUid());
+        if (user != null){
+            TextView txtv = findViewById(R.id.loginStatus);
+            txtv.setText("User ID: " + user.getUid());
 
-        String name = user.getDisplayName();
-        String id = user.getUid();
-        String photoURL = String.valueOf(user.getPhotoUrl());
-        String email = user.getEmail();
+            SharedPreferences sharedPreferences = getSharedPreferences("CurrentUser",MODE_PRIVATE);
+            SharedPreferences.Editor myEdit = sharedPreferences.edit();
 
-        userStorage.saveUser(name, id, photoURL, email);
+            myEdit.putString("name", user.getDisplayName());
+            myEdit.putString("id", user.getUid());
+            myEdit.putString("photoURL", String.valueOf(user.getPhotoUrl()));
+            myEdit.putString("email", user.getEmail());
+
+            myEdit.apply();
+        }else{
+            TextView txtv = findViewById(R.id.loginStatus);
+            txtv.setText("User ID: Please Sign in");
+        }
     }
 
     @Override
