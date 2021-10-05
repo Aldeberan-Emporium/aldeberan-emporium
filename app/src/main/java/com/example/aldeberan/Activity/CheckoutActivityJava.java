@@ -68,7 +68,7 @@ public class CheckoutActivityJava extends AppCompatActivity {
         Map<String, Object> payMap = new HashMap<>();
         Map<String, Object> itemMap = new HashMap<>();
         List<Map<String, Object>> itemList = new ArrayList<>();
-        payMap.put("currency", "usd"); //dont change currency in testing phase otherwise it won't work
+        payMap.put("currency", "myr"); //dont change currency in testing phase otherwise it won't work
         itemMap.put("id", "photo_subscription");
         itemMap.put("amount", amount);
         itemList.add(itemMap);
