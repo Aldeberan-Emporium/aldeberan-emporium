@@ -77,7 +77,7 @@ public class CheckoutActivityJava extends AppCompatActivity {
 
         RequestBody body = RequestBody.create(json, mediaType);
         Request request = new Request.Builder()
-                .url(BACKEND_URL + "create-payment-intent")
+                .url(BACKEND_URL + "create-payment-intent") //from server side, never change this
                 .post(body)
                 .build();
         httpClient.newCall(request)
