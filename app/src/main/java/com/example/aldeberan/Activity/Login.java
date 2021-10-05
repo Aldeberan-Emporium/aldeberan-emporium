@@ -189,18 +189,27 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
 
     private void updateUI(FirebaseUser user) {
         //to do
+        us = new UserStorage(this);
         if (user != null){
             TextView txtv = findViewById(R.id.loginStatus);
             txtv.setText("User ID: " + user.getUid());
 
-            us = new UserStorage(this);
+            String userID = user.getUid();
 
-            String userID = us.getID();
 
             CartModel cm = new CartModel();
             cm.checkIfUserExist(userID);
             cm.readQuoteByUser(user.getUid(), response -> {
-                us.saveUser(user.getDisplayName(), user.getUid(), user.getPhotoUrl().toString(), user.getEmail(), response.get(0).getQuoteID());
+
+                String userName = user.getDisplayName();
+                String ID = user.getUid();
+                String photoURL = user.getPhotoUrl().toString();
+                String email = user.getEmail();
+
+                int quoteID = response.get(0).getQuoteID();
+                us.saveUser(userName, ID, photoURL, email, quoteID);
+
+                System.out.println("wtf?" + userName + ID + photoURL + email + quoteID);
             });
         }else{
             TextView txtv = findViewById(R.id.loginStatus);

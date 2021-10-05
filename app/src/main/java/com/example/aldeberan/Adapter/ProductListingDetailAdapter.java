@@ -105,8 +105,6 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
             Double prodPrice = Double.parseDouble(String.valueOf(mData.get(position).getProdPrice()));
             String prodImg = String.valueOf(mData.get(position).getProdImg());
 
-            System.out.println();
-
             cm.addQuoteItem(quoteID, prodName, prodSKU, 1, prodPrice, prodImg);
 
             });
