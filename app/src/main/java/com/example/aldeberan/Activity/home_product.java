@@ -88,7 +88,7 @@ public class home_product extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new orderHistoryFragment()).commit();
                 setActionBarTitle("Order History");
                 break;
-            case R.id.nav_wallet:
+            case R.id.nav_cart:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new tempFragment()).commit();
                 setActionBarTitle("E-Wallet");
                 break;

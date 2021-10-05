@@ -15,7 +15,7 @@
             android:title="Order History" />
 
         <item
-            android:id="@+id/nav_wallet"
+            android:id="@+id/nav_cart"
             android:icon="@drawable/ic_temp"
             android:title="E-Wallet"
             android:visible="false"/>

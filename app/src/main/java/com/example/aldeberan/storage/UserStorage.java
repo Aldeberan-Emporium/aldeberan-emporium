@@ -31,12 +31,13 @@ public class UserStorage {
         myEdit.apply();
     }
 
-    public void saveUser(String name, String id, String photoURL, String email){
+    public void saveUser(String name, String id, String photoURL, String email, int quoteID){
 
         myEdit.putString("name", name);
         myEdit.putString("id", id);
         myEdit.putString("photoURL", photoURL);
         myEdit.putString("email", email);
+        myEdit.putInt("quoteID", quoteID);
 
         myEdit.apply();
     }
@@ -56,4 +57,6 @@ public class UserStorage {
     public String getEmail(){
        return sharedPreferences.getString("email", "");
     }
+
+    public int getQuoteID() { return sharedPreferences.getInt("quoteID", 0); }
 }

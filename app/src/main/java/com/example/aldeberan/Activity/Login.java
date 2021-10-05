@@ -21,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.aldeberan.R;
+import com.example.aldeberan.models.CartModel;
 import com.example.aldeberan.storage.UserStorage;
 import com.example.aldeberan.structures.User;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -193,8 +194,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
             TextView txtv = findViewById(R.id.loginStatus);
             txtv.setText("User ID: " + user.getUid());
 
+            CartModel cm = new CartModel();
+            cm.readQuoteByUser(user.getUid(), response -> {
+                us.saveUser(user.getDisplayName(), user.getUid(), user.getPhotoUrl().toString(), user.getEmail(), (response.get(0).getQuoteID()));
+            });
 
-            us.saveUser(user.getDisplayName(), user.getUid(), user.getPhotoUrl().toString(), user.getEmail());
+
         }else{
             TextView txtv = findViewById(R.id.loginStatus);
             txtv.setText(us.getName());

@@ -18,6 +18,7 @@ import com.example.aldeberan.databinding.CartDetailCRowBinding;
 import com.example.aldeberan.databinding.ProductDetailCRowBinding;
 import com.example.aldeberan.models.CartModel;
 import com.example.aldeberan.models.ProductModel;
+import com.example.aldeberan.storage.UserStorage;
 import com.example.aldeberan.structures.Cart;
 import com.example.aldeberan.structures.Product;
 
@@ -27,8 +28,11 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
 
     private Context mContext;
     public List<Product> mData;
-    private FragmentCommunication mCommunicator;
+    public FragmentCommunication mCommunicator;
     ProductModel pm = new ProductModel();
+    CartModel cm = new CartModel();
+    UserStorage userStorage;
+
 
     public ProductListingDetailAdapter(Context mContext, List<Product> mData, FragmentCommunication mCommunicator) {
         this.mContext = mContext;
@@ -85,7 +89,30 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
 
         Glide.with(mContext).load(mData.get(position).getProdImg()).override(450, 450).into(holder.productRowBinding.cusProdImgView);
 
-    }
+        holder.productRowBinding.buttonAddCart.setOnClickListener(view -> {
+            mCommunicator.respond(String.valueOf(mData.get(position).getProdName()),
+                    String.valueOf(mData.get(position).getProdID()),
+                    String.valueOf(mData.get(position).getProdImg()),
+                    String.valueOf(mData.get(position).getProdPrice()));
+
+            userStorage = new UserStorage(mContext);
+            String userID = userStorage.getID();
+            cm.checkIfUserExist(userID);
+
+            int quoteID = userStorage.getQuoteID();
+            String prodName = String.valueOf(mData.get(position).getProdName());
+            String prodSKU = String.valueOf(mData.get(position).getProdSKU());
+            Double prodPrice = Double.parseDouble(String.valueOf(mData.get(position).getProdPrice()));
+            String prodImg = String.valueOf(mData.get(position).getProdImg());
+
+            cm.addQuoteItem(quoteID, prodName, prodSKU, 1, prodPrice, prodImg);
+
+            });
+
+            //addQuoteItem(String.valueOf(cData.get(getAbsoluteAdapterPosition()).getQuoteID());
+    };
+
+
 
     @Override
     public int getItemCount() {
@@ -95,4 +122,5 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
     public interface FragmentCommunication {
         void respond(String prodName, String prodID, String prodImg, String prodPrice);
     }
+
 }

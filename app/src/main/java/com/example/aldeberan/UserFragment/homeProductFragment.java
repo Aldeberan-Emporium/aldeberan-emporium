@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.aldeberan.Adapter.CartAdapter;
 import com.example.aldeberan.Adapter.ProductAdapter;
 import com.example.aldeberan.Adapter.ProductListingDetailAdapter;
 import com.example.aldeberan.AdminFragment.AdminPanelUpdateProductFragment;
@@ -59,7 +60,7 @@ public class homeProductFragment extends Fragment{
 
         pullToRefresh.setOnRefreshListener(() -> {
             ConstructRecyclerView();
-            adapter.notifyDataSetChanged();
+            //adapter.notifyDataSetChanged();
             pullToRefresh.setRefreshing(false);
         });
 
@@ -78,7 +79,9 @@ public class homeProductFragment extends Fragment{
         }
     }
 
-    ProductListingDetailAdapter.FragmentCommunication communication= (prodName, prodID, prodImg, prodPrice) -> {
+
+
+    ProductListingDetailAdapter.FragmentCommunication home_communication = (prodName, prodID, prodImg, prodPrice) -> {
         homeProductFragment homepage = new homeProductFragment();
         Bundle bundle = new Bundle();
         bundle.putString("prodName", prodName);
@@ -90,15 +93,10 @@ public class homeProductFragment extends Fragment{
         bundle.putString("prodPrice", prodPrice);
         homepage.setArguments(bundle);
 
-        //Redirect to update product fragment
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, homepage)
-                .addToBackStack(null)
-                .commit();
     };
 
     private void PutDataIntoRecyclerView(List<Product> productList){
-        adapter = new ProductListingDetailAdapter(getContext(), productList, communication);
+        adapter = new ProductListingDetailAdapter(getContext(), productList, home_communication);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
         Log.i("PLOPE", String.valueOf(productList));
