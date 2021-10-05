@@ -51,8 +51,10 @@ public class home_product extends AppCompatActivity implements NavigationView.On
         ImageView navUserPic = headerView.findViewById(R.id.current_user_pic);
 
         UserStorage us = new UserStorage(this);
-        String s1 = us.getName();
+       // String s1 = us.getName();
 
+        navUsername.setText(us.getName());
+/*
         if (navUsername != null){
             navUsername.setText(s1);
             //Glide.with(this).load(Uri.parse(us.getPhotoURL())).into((navUserPic));
@@ -60,7 +62,7 @@ public class home_product extends AppCompatActivity implements NavigationView.On
             System.out.println("textview object error");
             //navUserPic.setImageResource(R.drawable.ic_launcher);
         }
-
+*/
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
