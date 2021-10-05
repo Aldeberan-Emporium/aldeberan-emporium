@@ -28,8 +28,6 @@ public class UserSettingFragment extends Fragment implements View.OnClickListene
         addressBtn.setOnClickListener(this);
         Button infoBtn = userSettingsView.findViewById(R.id.infoBtn);
         infoBtn.setOnClickListener(this);
-        Button couponBtn = userSettingsView.findViewById(R.id.couponBtn);
-        couponBtn.setOnClickListener(this);
         Button wishlistBtn = userSettingsView.findViewById(R.id.wishlistBtn);
         wishlistBtn.setOnClickListener(this);
 
@@ -47,9 +45,6 @@ public class UserSettingFragment extends Fragment implements View.OnClickListene
             case R.id.infoBtn:
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new UserInfoFragment()).commit();
                 ((home_product) getActivity()).setActionBarTitle("User Info");
-                break;
-            case R.id.couponBtn:
-                ((home_product) getActivity()).setActionBarTitle("My Coupons");
                 break;
             case R.id.wishlistBtn:
                 ((home_product) getActivity()).setActionBarTitle("My Wishlist");
