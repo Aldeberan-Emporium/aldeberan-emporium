@@ -40,7 +40,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class CheckoutActivityJava extends AppCompatActivity {
-    private static final String BACKEND_URL = "https://fierce-chamber-24927.herokuapp.com/";
+    private static final String BACKEND_URL = "https://fierce-chamber-24927.herokuapp.com/"; //never change this url
     private OkHttpClient httpClient = new OkHttpClient();
     private String paymentIntentClientSecret;
     private Stripe stripe;
@@ -55,6 +55,7 @@ public class CheckoutActivityJava extends AppCompatActivity {
 
         stripe = new Stripe(
                 getApplication(),
+                //publishableKey, never touch
                 Objects.requireNonNull("pk_test_51JgYIxKPfEZYnk5WHXPITPG5oh9A0TurNQJ8SfQcHqwe34BkjlofjNGIzSTyzoPFmZLcc5YfQNLxDLFy2ptee7So00ka5eDOaS")
         );
         startCheckout();
@@ -68,7 +69,7 @@ public class CheckoutActivityJava extends AppCompatActivity {
         Map<String, Object> payMap = new HashMap<>();
         Map<String, Object> itemMap = new HashMap<>();
         List<Map<String, Object>> itemList = new ArrayList<>();
-        payMap.put("currency", "myr"); //dont change currency in testing phase otherwise it won't work
+        payMap.put("currency", "myr"); //stick to myr
         itemMap.put("id", "photo_subscription");
         itemMap.put("amount", amount);
         itemList.add(itemMap);
