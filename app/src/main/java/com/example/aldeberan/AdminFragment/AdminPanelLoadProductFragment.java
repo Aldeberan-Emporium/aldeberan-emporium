@@ -1,29 +1,23 @@
 package com.example.aldeberan.AdminFragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.aldeberan.Activity.MainActivity;
 import com.example.aldeberan.Adapter.ProductAdapter;
 import com.example.aldeberan.R;
 import com.example.aldeberan.Activity.home_product;
@@ -58,7 +52,7 @@ public class AdminPanelLoadProductFragment extends Fragment {
         mHandler = new Handler();
 
         ConstructRecyclerView();
-        SwipeRefreshLayout pullToRefresh = myFragmentView.findViewById(R.id.pullToRefresh);
+        SwipeRefreshLayout pullToRefresh = myFragmentView.findViewById(R.id.pullToRefreshProduct);
 
         pullToRefresh.setOnRefreshListener(() -> {
             ConstructRecyclerView();
