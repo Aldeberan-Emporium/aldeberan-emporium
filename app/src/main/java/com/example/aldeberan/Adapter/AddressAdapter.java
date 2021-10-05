@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.aldeberan.R;
+import com.example.aldeberan.UserFragment.UserSettings.UserUpdateAddressFragment;
 import com.example.aldeberan.databinding.UserSettingsAddressRowBinding;
 import com.example.aldeberan.models.AddressModel;
 import com.example.aldeberan.models.ProductModel;
@@ -51,8 +52,6 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
 
             addressRowBinding.editAddBtn.setOnClickListener(view -> {
                 Log.i("UPDATE", String.valueOf(mData.get(getAbsoluteAdapterPosition()).getAddID()));
-
-                String isDefault = String.valueOf(mData.get(getAbsoluteAdapterPosition()).getIsDefault()) == "true" ? "1" : "0";
                 //Show update screen
                 mCommunication.respond(String.valueOf(mData.get(getAbsoluteAdapterPosition()).getAddID()),
                         String.valueOf(mData.get(getAbsoluteAdapterPosition()).getAddRecipient()),
@@ -63,7 +62,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
                         String.valueOf(mData.get(getAbsoluteAdapterPosition()).getAddCity()),
                         String.valueOf(mData.get(getAbsoluteAdapterPosition()).getAddState()),
                         String.valueOf(mData.get(getAbsoluteAdapterPosition()).getAddCountry()),
-                        isDefault);
+                        String.valueOf(mData.get(getAbsoluteAdapterPosition()).getIsDefault()));
             });
 
             addressRowBinding.deleteAddBtn.setOnClickListener(view -> {
@@ -88,11 +87,10 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
     public void onBindViewHolder(@NonNull AddressViewHolder holder, int position) {
 
         final Address a = mData.get(position);
-        //holder.addressRowBinding.setAddress(a);
         holder.addressRowBinding.executePendingBindings();
 
         holder.addressRowBinding.addRecipientLbl.setText(mData.get(position).getAddRecipient());
-        holder.addressRowBinding.addContactLbl.setText(mData.get(position).getAddContact());
+        holder.addressRowBinding.addContactLbl.setText("60"+mData.get(position).getAddContact());
         holder.addressRowBinding.addLine1n2Lbl.setText(mData.get(position).getAddLine1()+", "+mData.get(position).getAddLine2());
         holder.addressRowBinding.add3CLbl.setText(mData.get(position).getAddCode()+", "+mData.get(position).getAddCity()+", "+mData.get(position).getAddState()+", "+mData.get(position).getAddCountry());
 
@@ -104,20 +102,22 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
             holder.addressRowBinding.isDefaultLbl.setVisibility(View.INVISIBLE);
         }
 
-        /*
-        //Set data to pass to update fragment
-        UserSettings updateProductFragment = new AdminPanelUpdateProductFragment();
-        Bundle bundle=new Bundle();
-        bundle.putString("prodName", mData.get(position).getProdName());
-        bundle.putString("prodID", String.valueOf(mData.get(position).getProdID()));
-        bundle.putString("prodSKU", mData.get(position).getProdSKU());
-        bundle.putString("prodImg", mData.get(position).getProdImg());
-        bundle.putString("prodStock", String.valueOf(mData.get(position).getProdStock()));
-        bundle.putString("prodAvail", prodAvail);
-        bundle.putString("prodPrice", String.valueOf(mData.get(position).getProdPrice()));
-        updateProductFragment.setArguments(bundle);
 
-         */
+        //Set data to pass to update fragment
+        UserUpdateAddressFragment updateAddressFragment = new UserUpdateAddressFragment();
+        Bundle bundle=new Bundle();
+        bundle.putString("addID", String.valueOf(mData.get(position).getAddID()));
+        bundle.putString("addRecipient", String.valueOf(mData.get(position).getAddRecipient()));
+        bundle.putString("addContact", String.valueOf(mData.get(position).getAddContact()));
+        bundle.putString("addLine1", String.valueOf(mData.get(position).getAddLine1()));
+        bundle.putString("addLine2", String.valueOf(mData.get(position).getAddLine2()));
+        bundle.putString("addCode", String.valueOf(mData.get(position).getAddCode()));
+        bundle.putString("addCity", String.valueOf(mData.get(position).getAddCity()));
+        bundle.putString("addState", String.valueOf(mData.get(position).getAddState()));
+        bundle.putString("addCountry", String.valueOf(mData.get(position).getAddCountry()));
+        bundle.putString("isDefault", String.valueOf(mData.get(position).getIsDefault()));
+        updateAddressFragment.setArguments(bundle);
+
     }
 
     @Override

@@ -120,7 +120,7 @@ public class UserAddressFragment extends Fragment implements View.OnClickListene
     }
 
     AddressAdapter.FragmentCommunication communication= (addID, addRecipient, addContact, addLine1, addLine2, addCode, addCity, addState, addCountry, isDefault) -> {
-        AdminPanelUpdateProductFragment updateProductFragment = new AdminPanelUpdateProductFragment();
+        UserUpdateAddressFragment updateAddressFragment = new UserUpdateAddressFragment();
         Bundle bundle = new Bundle();
         bundle.putString("addID", addID);
         bundle.putString("addRecipient", addRecipient);
@@ -131,12 +131,12 @@ public class UserAddressFragment extends Fragment implements View.OnClickListene
         bundle.putString("addCity", addCity);
         bundle.putString("addState", addState);
         bundle.putString("addCountry", addCountry);
-        bundle.putString("isDefault", isDefault);
-        updateProductFragment.setArguments(bundle);
+        bundle.putInt("isDefault", Integer.parseInt(isDefault));
+        updateAddressFragment.setArguments(bundle);
 
         //Redirect to update product fragment
         getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, updateProductFragment)
+                .replace(R.id.fragment_container, updateAddressFragment)
                 .addToBackStack(null)
                 .commit();
     };
