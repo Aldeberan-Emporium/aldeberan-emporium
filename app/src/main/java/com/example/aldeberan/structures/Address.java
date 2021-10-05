@@ -15,8 +15,9 @@ public class Address{
     private String addCity;
     private String addState;
     private String addCountry;
+    private int isDefault;
 
-    public Address(int addID, String userID, String addRecipient, String addContact, String addLine1, String addLine2, String addCode, String addCity, String addState, String addCountry){
+    public Address(int addID, String userID, String addRecipient, String addContact, String addLine1, String addLine2, String addCode, String addCity, String addState, String addCountry, int isDefault){
         this.addID = addID;
         User u = new User(userID);
         this.addRecipient = StringEscapeUtils.unescapeHtml4(addRecipient);
@@ -27,6 +28,7 @@ public class Address{
         this.addCity = StringEscapeUtils.unescapeHtml4(addCity);
         this.addState = StringEscapeUtils.unescapeHtml4(addState);
         this.addCountry = StringEscapeUtils.unescapeHtml4(addCountry);
+        this.isDefault = isDefault;
     }
 
     public Address() {
@@ -94,5 +96,13 @@ public class Address{
     }
     public void setAddCountry(String addCountry) {
         this.addCountry = StringEscapeUtils.unescapeHtml4(addCountry);
+    }
+
+    public int getIsDefault() {
+        return isDefault;
+    }
+
+    public void setIsDefault(int isDefault) {
+        this.isDefault = isDefault;
     }
 }

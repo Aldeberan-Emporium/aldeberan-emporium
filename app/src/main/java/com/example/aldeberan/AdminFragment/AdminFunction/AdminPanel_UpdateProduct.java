@@ -29,21 +29,14 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.aldeberan.R;
 import com.example.aldeberan.models.ProductModel;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class AdminPanel_UpdateProduct extends AppCompatActivity implements View.OnClickListener{
 
@@ -79,7 +72,7 @@ public class AdminPanel_UpdateProduct extends AppCompatActivity implements View.
         prodNameLbl = findViewById(R.id.prodName);
         prodSKULbl = findViewById(R.id.prodSKU);
         prodStockLbl = findViewById(R.id.prodStock);
-        prodPriceLbl = findViewById(R.id.prodPrice);
+        prodPriceLbl = findViewById(R.id.addRecipient);
         prodAvailSwitch = findViewById(R.id.prodAvail);
         prodImgView = findViewById(R.id.prodImg);
 
@@ -156,7 +149,7 @@ public class AdminPanel_UpdateProduct extends AppCompatActivity implements View.
         });
 
         //Limit product price to 7,2 decimal places (max 99999.99)
-        EditText prodPrice = findViewById(R.id.prodPrice);
+        EditText prodPrice = findViewById(R.id.addRecipient);
         prodPrice.setFilters(new InputFilter[] {filter});
 
         prodPrice.setOnFocusChangeListener((v, hasFocus) -> {

@@ -14,8 +14,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.aldeberan.AdminFragment.AdminFunction.AdminPanel_UpdateProduct;
-import com.example.aldeberan.AdminFragment.AdminPanelLoadProductFragment;
 import com.example.aldeberan.AdminFragment.AdminPanelUpdateProductFragment;
 import com.example.aldeberan.R;
 import com.example.aldeberan.databinding.AdminPanelProductRowBinding;

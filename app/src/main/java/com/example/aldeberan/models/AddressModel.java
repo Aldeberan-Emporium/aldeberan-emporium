@@ -17,7 +17,7 @@ import java.util.List;
 public class AddressModel extends DatabaseModel{
 
     //Add address
-    public void addAddress(String userID, String addRecipient, String addContact, String addLine1, String addLine2, String addCode, String addCity, String addState, String addCountry){
+    public void addAddress(String userID, String addRecipient, String addContact, String addLine1, String addLine2, String addCode, String addCity, String addState, String addCountry, int isDefault){
         RequestParams params = new RequestParams();
         params.put("action", "addAddress");
         params.put("user_id", StringEscapeUtils.escapeHtml3(userID));
@@ -29,11 +29,12 @@ public class AddressModel extends DatabaseModel{
         params.put("address_city", StringEscapeUtils.escapeHtml3(addCity));
         params.put("address_state", StringEscapeUtils.escapeHtml3(addState));
         params.put("address_country", StringEscapeUtils.escapeHtml3(addCountry));
+        params.put("is_default", isDefault);
         this.postData(params);
     }
 
     //Update address
-    public void updateAddress(int addID, String userID, String addRecipient, String addContact, String addLine1, String addLine2, String addCode, String addCity, String addState, String addCountry){
+    public void updateAddress(int addID, String userID, String addRecipient, String addContact, String addLine1, String addLine2, String addCode, String addCity, String addState, String addCountry, int isDefault){
         RequestParams params = new RequestParams();
         params.put("action", "updateAddress");
         params.put("address_id", addID);
@@ -46,6 +47,7 @@ public class AddressModel extends DatabaseModel{
         params.put("address_city", StringEscapeUtils.escapeHtml3(addCity));
         params.put("address_state", StringEscapeUtils.escapeHtml3(addState));
         params.put("address_country", StringEscapeUtils.escapeHtml3(addCountry));
+        params.put("is_default", isDefault);
         this.postData(params);
     }
 
@@ -84,6 +86,7 @@ public class AddressModel extends DatabaseModel{
                     String addCity = StringEscapeUtils.unescapeHtml4(object.getString("address_city"));
                     String addState = StringEscapeUtils.unescapeHtml4(object.getString("address_state"));
                     String addCountry = StringEscapeUtils.unescapeHtml4(object.getString("address_country"));
+                    int isDefault = Integer.parseInt(object.getString("is_default"));
 
                     Address address = new Address();
                     address.setAddID(addressID);
@@ -95,6 +98,7 @@ public class AddressModel extends DatabaseModel{
                     address.setAddCity(addCity);
                     address.setAddState(addState);
                     address.setAddCountry(addCountry);
+                    address.setIsDefault(isDefault);
 
                     addressList.add(address);
 

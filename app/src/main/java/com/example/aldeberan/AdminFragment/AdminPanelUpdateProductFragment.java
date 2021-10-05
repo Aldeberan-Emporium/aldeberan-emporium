@@ -83,7 +83,7 @@ public class AdminPanelUpdateProductFragment extends Fragment implements View.On
         prodNameLbl = myFragmentView.findViewById(R.id.prodName);
         prodSKULbl = myFragmentView.findViewById(R.id.prodSKU);
         prodStockLbl = myFragmentView.findViewById(R.id.prodStock);
-        prodPriceLbl = myFragmentView.findViewById(R.id.prodPrice);
+        prodPriceLbl = myFragmentView.findViewById(R.id.addRecipient);
         prodAvailSwitch = myFragmentView.findViewById(R.id.prodAvail);
         prodImgView = myFragmentView.findViewById(R.id.prodImg);
 
@@ -163,7 +163,7 @@ public class AdminPanelUpdateProductFragment extends Fragment implements View.On
         });
 
         //Limit product price to 7,2 decimal places (max 99999.99)
-        EditText prodPrice = myFragmentView.findViewById(R.id.prodPrice);
+        EditText prodPrice = myFragmentView.findViewById(R.id.addRecipient);
         prodPrice.setFilters(new InputFilter[] {filter});
 
         prodPrice.setOnFocusChangeListener((v, hasFocus) -> {
