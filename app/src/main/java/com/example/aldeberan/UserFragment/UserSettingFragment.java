@@ -24,7 +24,7 @@ public class UserSettingFragment extends Fragment implements View.OnClickListene
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         userSettingsView = inflater.inflate(R.layout.fragment_user_setting, container, false);
 
-        Button addressBtn = userSettingsView.findViewById(R.id.addressBtn);
+        Button addressBtn = userSettingsView.findViewById(R.id.editAddBtn);
         addressBtn.setOnClickListener(this);
         Button infoBtn = userSettingsView.findViewById(R.id.infoBtn);
         infoBtn.setOnClickListener(this);
@@ -40,7 +40,7 @@ public class UserSettingFragment extends Fragment implements View.OnClickListene
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.addressBtn:
+            case R.id.editAddBtn:
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new UserAddressFragment()).commit();
                 ((home_product) getActivity()).setActionBarTitle("Address Book");
                 break;

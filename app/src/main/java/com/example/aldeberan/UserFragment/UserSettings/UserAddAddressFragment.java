@@ -132,7 +132,7 @@ public class UserAddAddressFragment extends Fragment implements View.OnClickList
             addState.setEnabled(false);
             addCountry.setEnabled(false);
             isDefaultComp.setEnabled(false);
-            
+
             UserStorage us = new UserStorage(getActivity());
             String userID = us.getID();
 

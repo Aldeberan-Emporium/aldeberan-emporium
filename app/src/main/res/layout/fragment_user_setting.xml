@@ -16,13 +16,13 @@
         app:icon="@drawable/ic_user_alt_solid"
         app:iconGravity="textTop"
         app:layout_constraintBottom_toTopOf="@+id/wishlistBtn"
-        app:layout_constraintEnd_toEndOf="@+id/addressBtn"
+        app:layout_constraintEnd_toEndOf="@+id/editAddBtn"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/addressBtn"
-        app:layout_constraintTop_toBottomOf="@+id/addressBtn" />
+        app:layout_constraintStart_toStartOf="@+id/editAddBtn"
+        app:layout_constraintTop_toBottomOf="@+id/editAddBtn" />
 
     <Button
-        android:id="@+id/addressBtn"
+        android:id="@+id/editAddBtn"
         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -46,9 +46,9 @@
         app:icon="@drawable/ic_ticket_alt_solid"
         app:iconGravity="textTop"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/addressBtn"
+        app:layout_constraintEnd_toEndOf="@+id/editAddBtn"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/addressBtn"
+        app:layout_constraintStart_toStartOf="@+id/editAddBtn"
         app:layout_constraintTop_toBottomOf="@+id/wishlistBtn" />
 
     <Button
@@ -61,9 +61,9 @@
         app:icon="@drawable/ic_heart_solid"
         app:iconGravity="textTop"
         app:layout_constraintBottom_toTopOf="@+id/couponBtn"
-        app:layout_constraintEnd_toEndOf="@+id/addressBtn"
+        app:layout_constraintEnd_toEndOf="@+id/editAddBtn"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/addressBtn"
+        app:layout_constraintStart_toStartOf="@+id/editAddBtn"
         app:layout_constraintTop_toBottomOf="@+id/infoBtn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
