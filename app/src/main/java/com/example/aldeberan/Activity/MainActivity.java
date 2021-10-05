@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 //Code for test another activity pages.
                 finish();
-                Intent intent = new Intent(MainActivity.this, CheckoutActivityJava.class);
+                Intent intent = new Intent(MainActivity.this, home_product.class);
                 startActivity(intent);
             }
 
