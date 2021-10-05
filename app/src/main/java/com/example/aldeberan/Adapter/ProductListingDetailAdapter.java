@@ -106,6 +106,7 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
             String prodImg = String.valueOf(mData.get(position).getProdImg());
 
             cm.addQuoteItem(quoteID, prodName, prodSKU, 1, prodPrice, prodImg);
+            cm.updateQuoteRecal(quoteID);
 
             });
 
