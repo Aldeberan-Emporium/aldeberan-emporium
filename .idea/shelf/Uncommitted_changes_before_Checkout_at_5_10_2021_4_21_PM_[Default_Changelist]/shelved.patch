@@ -1,0 +1,50 @@
+Index: app/src/main/java/com/example/aldeberan/Adapter/ProductListingDetailAdapter.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.aldeberan.Adapter;\r\n\r\nimport android.content.Context;\r\nimport android.content.SharedPreferences;\r\nimport android.util.Log;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.Button;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.databinding.DataBindingUtil;\r\nimport androidx.recyclerview.widget.RecyclerView;\r\n\r\nimport com.bumptech.glide.Glide;\r\nimport com.example.aldeberan.R;\r\nimport com.example.aldeberan.databinding.ProductDetailCRowBinding;\r\nimport com.example.aldeberan.models.CartModel;\r\nimport com.example.aldeberan.models.ProductModel;\r\nimport com.example.aldeberan.structures.Cart;\r\nimport com.example.aldeberan.structures.Product;\r\n\r\nimport java.util.List;\r\n\r\npublic class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductListingDetailAdapter.ProductViewHolder>{\r\n\r\n    private Context mContext;\r\n    public List<Product> mData;\r\n<<<<<<< Updated upstream\r\n=======\r\n    public List<Cart> cData;\r\n    private FragmentCommunication mCommunicator;\r\n>>>>>>> Stashed changes\r\n    ProductModel pm = new ProductModel();\r\n    CartModel cm = new CartModel();\r\n\r\n    public ProductListingDetailAdapter(Context mContext, List<Product> mData) {\r\n        this.mContext = mContext;\r\n        this.mData = mData;\r\n    }\r\n\r\n\r\n    public class ProductViewHolder extends RecyclerView.ViewHolder{\r\n\r\n        ProductDetailCRowBinding productRowBinding;\r\n\r\n        public ProductViewHolder(ProductDetailCRowBinding productRowBinding) {\r\n            super(productRowBinding.getRoot());\r\n            this.productRowBinding = productRowBinding;\r\n<<<<<<< Updated upstream\r\n=======\r\n            this.mCommunication = mCommunication;\r\n\r\n            productRowBinding.buttonAddCart.setOnClickListener(view -> {\r\n                //String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdID()));\r\n                mCommunication.respond(String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdName()),\r\n                        String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdID()),\r\n                        String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdImg()),\r\n                        String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdPrice()));\r\n\r\n                //addQuoteItem(String.valueOf(cData.get(getAbsoluteAdapterPosition()).getQuoteID());\r\n            });\r\n>>>>>>> Stashed changes\r\n        }\r\n    }\r\n\r\n    @NonNull\r\n    @Override\r\n    public ProductListingDetailAdapter.ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){\r\n        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());\r\n        ProductDetailCRowBinding productRowBinding = DataBindingUtil.inflate(layoutInflater, R.layout.product_detail_c_row, parent, false);\r\n\r\n        return new ProductViewHolder(productRowBinding);\r\n    }\r\n\r\n    @Override\r\n    public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {\r\n\r\n        final Product p = mData.get(position);\r\n        holder.productRowBinding.setProduct(p);\r\n        holder.productRowBinding.executePendingBindings();\r\n\r\n        holder.productRowBinding.cusProdNameLbl.setText(\"Product: \" + mData.get(position).getProdName());\r\n        //holder.productRowBinding.cusProdSKULbl.setText(\"SKU: \" + mData.get(position).getProdSKU());\r\n        holder.productRowBinding.cusProdIDLbl.setText(\"Product ID: \" + mData.get(position).getProdID());\r\n\r\n        //String prodAvail = mData.get(position).getProdAvail() ? \"Active\" : \"Inactive\";\r\n\r\n        //holder.productRowBinding.cusProdAvailLbl.setText(\"Availability: \" + prodAvail);\r\n        //holder.productRowBinding.cusProdStockLbl.setText(\"Stock: \" + mData.get(position).getProdStock());\r\n        holder.productRowBinding.cusProdPriceLbl.setText(\"Price: RM \" + mData.get(position).getProdPrice());\r\n\r\n        Glide.with(mContext).load(mData.get(position).getProdImg()).override(450, 450).into(holder.productRowBinding.cusProdImgView);\r\n\r\n        /*\r\n        holder.productRowBinding.addButton.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View view) {\r\n\r\n                //cm.addQuote();\r\n            }\r\n        });\r\n        \r\n         */\r\n    }\r\n\r\n    @Override\r\n    public int getItemCount() {\r\n        return mData.size();\r\n    }\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/aldeberan/Adapter/ProductListingDetailAdapter.java b/app/src/main/java/com/example/aldeberan/Adapter/ProductListingDetailAdapter.java
+--- a/app/src/main/java/com/example/aldeberan/Adapter/ProductListingDetailAdapter.java	
++++ b/app/src/main/java/com/example/aldeberan/Adapter/ProductListingDetailAdapter.java	
+@@ -26,11 +26,9 @@
+ 
+     private Context mContext;
+     public List<Product> mData;
+-<<<<<<< Updated upstream
+-=======
+     public List<Cart> cData;
+     private FragmentCommunication mCommunicator;
+->>>>>>> Stashed changes
++
+     ProductModel pm = new ProductModel();
+     CartModel cm = new CartModel();
+ 
+@@ -47,8 +45,6 @@
+         public ProductViewHolder(ProductDetailCRowBinding productRowBinding) {
+             super(productRowBinding.getRoot());
+             this.productRowBinding = productRowBinding;
+-<<<<<<< Updated upstream
+-=======
+             this.mCommunication = mCommunication;
+ 
+             productRowBinding.buttonAddCart.setOnClickListener(view -> {
+@@ -60,7 +56,7 @@
+ 
+                 //addQuoteItem(String.valueOf(cData.get(getAbsoluteAdapterPosition()).getQuoteID());
+             });
+->>>>>>> Stashed changes
++
+         }
+     }
+ 
+@@ -104,6 +100,8 @@
+          */
+     }
+ 
++    public void interface FragmentCommunication{}
++
+     @Override
+     public int getItemCount() {
+         return mData.size();

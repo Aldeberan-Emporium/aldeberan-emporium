@@ -1,0 +1,90 @@
+Index: app/src/main/java/com/example/aldeberan/UserFragment/homeProductFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.aldeberan.UserFragment;\r\n\r\n\r\nimport android.os.Bundle;\r\nimport android.util.Log;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.annotation.Nullable;\r\nimport androidx.fragment.app.Fragment;\r\nimport androidx.recyclerview.widget.LinearLayoutManager;\r\nimport androidx.recyclerview.widget.RecyclerView;\r\nimport androidx.swiperefreshlayout.widget.SwipeRefreshLayout;\r\n\r\n<<<<<<< Updated upstream\r\n=======\r\nimport com.example.aldeberan.Adapter.CartAdapter;\r\nimport com.example.aldeberan.Adapter.ProductAdapter;\r\n>>>>>>> Stashed changes\r\nimport com.example.aldeberan.Adapter.ProductListingDetailAdapter;\r\nimport com.example.aldeberan.R;\r\nimport com.example.aldeberan.models.ProductModel;\r\n<<<<<<< Updated upstream\r\n=======\r\nimport com.example.aldeberan.storage.UserStorage;\r\nimport com.example.aldeberan.structures.Cart;\r\n>>>>>>> Stashed changes\r\nimport com.example.aldeberan.structures.Product;\r\n\r\nimport org.json.JSONException;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\npublic class homeProductFragment extends Fragment implements View.OnClickListener{\r\n\r\n<<<<<<< Updated upstream\r\n    private View myFragmentView;\r\n=======\r\n    UserStorage user;\r\n    CartModel cm = new CartModel();\r\n    private View myProductFragmentView;\r\n>>>>>>> Stashed changes\r\n    public List<Product> productList;\r\n    public List<Cart> cartList;\r\n    public RecyclerView recyclerView;\r\n    public ProductListingDetailAdapter adapter;\r\n    public CartAdapter cartAdapter;\r\n\r\n\r\n    TextView cartProdNameLbl;\r\n    TextView cartProdPriceLbl;\r\n    ImageView cartProdImgView;\r\n    //TextView prodSKULbl;\r\n    //TextView prodStockLbl;\r\n    //Switch prodAvailSwitch;\r\n\r\n\r\n    @Nullable\r\n    @Override\r\n    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {\r\n\r\n        myFragmentView = inflater.inflate(R.layout.fragment_home_product, container, false);\r\n        productList = new ArrayList<>();\r\n        recyclerView = myFragmentView.findViewById(R.id.cRecyclerView);\r\n\r\n        \r\n        ConstructRecyclerView();\r\n        SwipeRefreshLayout pullToRefresh = myFragmentView.findViewById(R.id.cPullToRefresh);\r\n\r\n        pullToRefresh.setOnRefreshListener(() -> {\r\n            ConstructRecyclerView();\r\n            adapter.notifyDataSetChanged();\r\n            pullToRefresh.setRefreshing(false);\r\n        });\r\n\r\n        return myFragmentView;\r\n    }\r\n\r\n    private void ConstructRecyclerView(){\r\n        ProductModel pm = new ProductModel();\r\n        try {\r\n            pm.readProductAll((response) -> {\r\n                productList = response;\r\n                PutDataIntoRecyclerView(response);\r\n            });\r\n        } catch (JSONException e) {\r\n            e.printStackTrace();\r\n        }\r\n    }\r\n\r\n<<<<<<< Updated upstream\r\n    private void PutDataIntoRecyclerView(List<Product> productList){\r\n        adapter = new ProductListingDetailAdapter(getContext(), productList);\r\n=======\r\n    CartAdapter.FragmentCommunication cart_communication = (prodName, prodID, prodImg, prodPrice) -> {\r\n        cartFragment cart = new cartFragment();\r\n        Bundle bundle = new Bundle();\r\n        bundle.putString(\"prodName\", prodName);\r\n        bundle.putString(\"prodID\", prodID);\r\n        //bundle.putString(\"prodSKU\", prodSKU);\r\n        bundle.putString(\"prodImg\", prodImg);\r\n        //bundle.putString(\"prodStock\", prodStock);\r\n        //bundle.putString(\"prodAvail\", prodAvail);\r\n        bundle.putString(\"prodPrice\", prodPrice);\r\n        cart.setArguments(bundle);\r\n\r\n    };\r\n\r\n    ProductListingDetailAdapter.FragmentCommunication home_communication = (prodName, prodID, prodImg, prodPrice) -> {\r\n        homeProductFragment homepage = new homeProductFragment();\r\n        Bundle bundle = new Bundle();\r\n        bundle.putString(\"prodName\", prodName);\r\n        bundle.putString(\"prodID\", prodID);\r\n        //bundle.putString(\"prodSKU\", prodSKU);\r\n        bundle.putString(\"prodImg\", prodImg);\r\n        //bundle.putString(\"prodStock\", prodStock);\r\n        //bundle.putString(\"prodAvail\", prodAvail);\r\n        bundle.putString(\"prodPrice\", prodPrice);\r\n        homepage.setArguments(bundle);\r\n\r\n    };\r\n\r\n    private void PutDataIntoRecyclerView(List<Product> productList){\r\n        adapter = new ProductListingDetailAdapter(getContext(), productList, home_communication);\r\n>>>>>>> Stashed changes\r\n        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));\r\n        recyclerView.setAdapter(adapter);\r\n        Log.i(\"PLOPE\", String.valueOf(productList));\r\n    }\r\n\r\n    @Override\r\n    public void onClick(View view) {\r\n        user = new UserStorage(getActivity());\r\n\r\n        switch(view.getId()){\r\n            case R.id.button_add_cart:\r\n                String cartProdName = cartProdNameLbl.getText().toString();\r\n                String cartProdPrice =cartProdPriceLbl.getText().toString();\r\n                ImageView cartProdImg = cartProdImgView.findViewById(R.id.cusProdImgView);\r\n\r\n                cm.checkIfUserExist(user.getID());\r\n\r\n                try {\r\n                    cm.readQuoteByUser(user.getID(), response -> {\r\n                        cartList = response;\r\n                        PutCartDataIntoRecyclerView(cartList);\r\n\r\n                    });\r\n                } catch(Exception e) {\r\n                    e.printStackTrace();\r\n                }\r\n\r\n        }\r\n    }\r\n\r\n    private void PutCartDataIntoRecyclerView(List<Cart> cartList){\r\n        cartAdapter = new CartAdapter(getContext(), cartList, cart_communication);\r\n        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));\r\n        recyclerView.setAdapter(cartAdapter);\r\n        Log.i(\"PLOPE\", String.valueOf(cartList));\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/aldeberan/UserFragment/homeProductFragment.java b/app/src/main/java/com/example/aldeberan/UserFragment/homeProductFragment.java
+--- a/app/src/main/java/com/example/aldeberan/UserFragment/homeProductFragment.java	
++++ b/app/src/main/java/com/example/aldeberan/UserFragment/homeProductFragment.java	
+@@ -6,6 +6,8 @@
+ import android.view.LayoutInflater;
+ import android.view.View;
+ import android.view.ViewGroup;
++import android.widget.ImageView;
++import android.widget.TextView;
+ 
+ import androidx.annotation.NonNull;
+ import androidx.annotation.Nullable;
+@@ -14,19 +16,18 @@
+ import androidx.recyclerview.widget.RecyclerView;
+ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+ 
+-<<<<<<< Updated upstream
+-=======
++
+ import com.example.aldeberan.Adapter.CartAdapter;
+ import com.example.aldeberan.Adapter.ProductAdapter;
+->>>>>>> Stashed changes
++
+ import com.example.aldeberan.Adapter.ProductListingDetailAdapter;
+ import com.example.aldeberan.R;
++import com.example.aldeberan.models.CartModel;
+ import com.example.aldeberan.models.ProductModel;
+-<<<<<<< Updated upstream
+-=======
++
+ import com.example.aldeberan.storage.UserStorage;
+ import com.example.aldeberan.structures.Cart;
+->>>>>>> Stashed changes
++
+ import com.example.aldeberan.structures.Product;
+ 
+ import org.json.JSONException;
+@@ -36,13 +37,12 @@
+ 
+ public class homeProductFragment extends Fragment implements View.OnClickListener{
+ 
+-<<<<<<< Updated upstream
+     private View myFragmentView;
+-=======
++
+     UserStorage user;
+     CartModel cm = new CartModel();
+     private View myProductFragmentView;
+->>>>>>> Stashed changes
++
+     public List<Product> productList;
+     public List<Cart> cartList;
+     public RecyclerView recyclerView;
+@@ -91,10 +91,10 @@
+         }
+     }
+ 
+-<<<<<<< Updated upstream
++
+     private void PutDataIntoRecyclerView(List<Product> productList){
+         adapter = new ProductListingDetailAdapter(getContext(), productList);
+-=======
++
+     CartAdapter.FragmentCommunication cart_communication = (prodName, prodID, prodImg, prodPrice) -> {
+         cartFragment cart = new cartFragment();
+         Bundle bundle = new Bundle();
+@@ -106,7 +106,6 @@
+         //bundle.putString("prodAvail", prodAvail);
+         bundle.putString("prodPrice", prodPrice);
+         cart.setArguments(bundle);
+-
+     };
+ 
+     ProductListingDetailAdapter.FragmentCommunication home_communication = (prodName, prodID, prodImg, prodPrice) -> {
+@@ -125,7 +124,7 @@
+ 
+     private void PutDataIntoRecyclerView(List<Product> productList){
+         adapter = new ProductListingDetailAdapter(getContext(), productList, home_communication);
+->>>>>>> Stashed changes
++
+         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+         recyclerView.setAdapter(adapter);
+         Log.i("PLOPE", String.valueOf(productList));
