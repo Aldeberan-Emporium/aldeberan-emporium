@@ -1,13 +1,16 @@
 package com.example.aldeberan.Adapter;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.aldeberan.R;
 import com.example.aldeberan.databinding.CartDetailCRowBinding;
+import com.example.aldeberan.databinding.ProductDetailCRowBinding;
 import com.example.aldeberan.models.CartModel;
 import com.example.aldeberan.models.ProductModel;
 import com.example.aldeberan.structures.Cart;
@@ -19,29 +22,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
     private Context mContext;
     public List<Cart> mData;
-    private CartAdapter.FragmentCommunication mCommunicator;
+    private FragmentCommunication mCommunicator;
     CartModel cm = new CartModel();
 
-    public CartAdapter(Context mContext, List<Cart> mData, ProductAdapter.FragmentCommunication mCommunicator) {
+    public CartAdapter(Context mContext, List<Cart> mData, FragmentCommunication mCommunicator) {
         this.mContext = mContext;
         this.mData = mData;
         this.mCommunicator = mCommunicator;
-    }
-
-    @NonNull
-    @Override
-    public CartViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
-
-    }
-
-    @Override
-    public int getItemCount() {
-        return 0;
     }
 
     public class CartViewHolder extends RecyclerView.ViewHolder{
@@ -49,19 +36,41 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         CartDetailCRowBinding cartDetailCRowBinding;
         FragmentCommunication mCommunication;
 
-        public CartViewHolder(CartDetailCRowBinding cartDetailCRowBinding, FragmentCommunication mCommunication) {
+        public CartViewHolder(CartDetailCRowBinding cartDetailCRowBinding, CartAdapter.FragmentCommunication mCommunication) {
             super(cartDetailCRowBinding.getRoot());
             this.cartDetailCRowBinding = cartDetailCRowBinding;
             this.mCommunication = mCommunication;
 
-            //cartDetailCRowBinding.button_add_cart
-        }
-
-        public CartDetailCRowBinding getCartDetailCRowBinding() {
-
         }
     }
 
-    public class FragmentCommunication {
+    @NonNull
+    @Override
+    public CartAdapter.CartViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        CartDetailCRowBinding cartRowBinding = DataBindingUtil.inflate(layoutInflater, R.layout.product_detail_c_row, parent, false);
+        CartAdapter.CartViewHolder holder = new CartAdapter.CartViewHolder(cartRowBinding, mCommunicator);
+        return holder;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
+        final Cart c = mData.get(position);
+        //c.
+        //holder.cartDetailCRowBinding.setProduct(c);
+        holder.cartDetailCRowBinding.executePendingBindings();
+        holder.cartDetailCRowBinding.cartProdNameLbl.setText("Product: " + mData.get(position).getProdName());
+        holder.cartDetailCRowBinding.cartProdIDLbl.setText("Product ID: " + mData.get(position).getProdID());
+        holder.cartDetailCRowBinding.cartProdPriceLbl.setText("Price: RM " + mData.get(position).getProdPrice());
+
+        Glide.with(mContext).load(mData.get(position).getProdImg()).override(450, 450).into(holder.productRowBinding.cusProdImgView);
+    }
+
+    @Override
+    public int getItemCount() {
+        return 0;
+    }
+
+    public interface FragmentCommunication {
     }
 }

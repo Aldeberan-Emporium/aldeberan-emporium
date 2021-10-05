@@ -27,7 +27,7 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
 
     private Context mContext;
     public List<Product> mData;
-    private ProductListingDetailAdapter.FragmentCommunication mCommunicator;
+    private FragmentCommunication mCommunicator;
     ProductModel pm = new ProductModel();
 
     public ProductListingDetailAdapter(Context mContext, List<Product> mData, FragmentCommunication mCommunicator) {
