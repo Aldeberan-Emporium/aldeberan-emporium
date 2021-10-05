@@ -17,7 +17,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.aldeberan.Adapter.ProductAdapter;
 import com.example.aldeberan.Adapter.ProductListingDetailAdapter;
+import com.example.aldeberan.AdminFragment.AdminPanelUpdateProductFragment;
 import com.example.aldeberan.R;
 import com.example.aldeberan.models.CartModel;
 import com.example.aldeberan.models.ProductModel;
@@ -31,7 +33,7 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class homeProductFragment extends Fragment implements View.OnClickListener{
+public class homeProductFragment extends Fragment{
 
     UserStorage user;
     CartModel cm = new CartModel();
@@ -76,45 +78,29 @@ public class homeProductFragment extends Fragment implements View.OnClickListene
         }
     }
 
+    ProductListingDetailAdapter.FragmentCommunication communication= (prodName, prodID, prodImg, prodPrice) -> {
+        homeProductFragment homepage = new homeProductFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("prodName", prodName);
+        bundle.putString("prodID", prodID);
+        //bundle.putString("prodSKU", prodSKU);
+        bundle.putString("prodImg", prodImg);
+        //bundle.putString("prodStock", prodStock);
+        //bundle.putString("prodAvail", prodAvail);
+        bundle.putString("prodPrice", prodPrice);
+        homepage.setArguments(bundle);
+
+        //Redirect to update product fragment
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, homepage)
+                .addToBackStack(null)
+                .commit();
+    };
+
     private void PutDataIntoRecyclerView(List<Product> productList){
-        adapter = new ProductListingDetailAdapter(getContext(), productList);
+        adapter = new ProductListingDetailAdapter(getContext(), productList, communication);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
         Log.i("PLOPE", String.valueOf(productList));
-    }
-
-    @Override
-    public void onClick(View view) {
-        if (view.getId() == R.id.button_add_cart) {
-            Switch prodAvailSwitch = getActivity().findViewById(R.id.cusProdIDLbl);
-            TextView prodNameLbl = getActivity().findViewById(R.id.cusProdNameLbl);
-            TextView prodPriceLbl = getActivity().findViewById(R.id.prodPrice);
-            ImageView img = getActivity().findViewById(R.id.cusProdImgView);
-
-            //int prodAvail = prodAvailSwitch.isChecked() ? 1 : 0;
-
-
-            //String prodName = prodNameLbl.getText().toString();
-            //String prodPriceStr = prodPriceLbl.getText().toString();
-            //String prodPriceStr = prodPriceLbl.getText().toString();
-
-            //cm.addQuote();
-            user = new UserStorage(getContext());
-            if(!cm.checkIfUserExist(user.getID())){
-                cm.addQuoteItem(cus);
-
-            }
-
-
-
-            cartFragment productFragment= new cartFragment();
-                            getActivity().getSupportFragmentManager().beginTransaction()
-                                    .replace(R.id.fragment_container, productFragment)
-                                    .addToBackStack(null)
-                                    .commit();
-
-
-
-        }
     }
 }

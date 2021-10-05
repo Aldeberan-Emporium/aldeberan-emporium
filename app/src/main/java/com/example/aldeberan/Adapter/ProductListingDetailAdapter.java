@@ -27,22 +27,33 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
 
     private Context mContext;
     public List<Product> mData;
+    private ProductListingDetailAdapter.FragmentCommunication mCommunicator;
     ProductModel pm = new ProductModel();
-    CartModel cm = new CartModel();
 
-    public ProductListingDetailAdapter(Context mContext, List<Product> mData) {
+    public ProductListingDetailAdapter(Context mContext, List<Product> mData, FragmentCommunication mCommunicator) {
         this.mContext = mContext;
         this.mData = mData;
+        this.mCommunicator = mCommunicator;
     }
 
 
     public class ProductViewHolder extends RecyclerView.ViewHolder{
 
         ProductDetailCRowBinding productRowBinding;
+        FragmentCommunication mCommunication;
 
-        public ProductViewHolder(ProductDetailCRowBinding productRowBinding) {
+        public ProductViewHolder(ProductDetailCRowBinding productRowBinding, ProductListingDetailAdapter.FragmentCommunication mCommunication) {
             super(productRowBinding.getRoot());
             this.productRowBinding = productRowBinding;
+            this.mCommunication = mCommunication;
+
+            productRowBinding.buttonAddCart.setOnClickListener(view -> {
+                //String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdID()));
+                mCommunication.respond(String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdName()),
+                        String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdID()),
+                        String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdImg()),
+                        String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdPrice()));
+            });
         }
     }
 
@@ -51,8 +62,8 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
     public ProductListingDetailAdapter.ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         ProductDetailCRowBinding productRowBinding = DataBindingUtil.inflate(layoutInflater, R.layout.product_detail_c_row, parent, false);
-
-        return new ProductViewHolder(productRowBinding);
+        ProductListingDetailAdapter.ProductViewHolder holder = new ProductListingDetailAdapter.ProductViewHolder(productRowBinding, mCommunicator);
+        return holder;
     }
 
     @Override
@@ -74,16 +85,6 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
 
         Glide.with(mContext).load(mData.get(position).getProdImg()).override(450, 450).into(holder.productRowBinding.cusProdImgView);
 
-        /*
-        holder.productRowBinding.addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                //cm.addQuote();
-            }
-        });
-        
-         */
     }
 
     @Override
@@ -91,5 +92,7 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
         return mData.size();
     }
 
-
+    public interface FragmentCommunication {
+        void respond(String prodName, String prodID, String prodImg, String prodPrice);
+    }
 }
