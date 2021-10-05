@@ -49,6 +49,14 @@ public class CartModel extends DatabaseModel{
         this.postData(params);
     }
 
+    //Update quote by recalculating the total price
+    public void updateQuoteRecal(int quoteID){
+        RequestParams params = new RequestParams();
+        params.put("action", "updateQuoteRecal");
+        params.put("quote_id", quoteID);
+        this.postData(params);
+    }
+
     //Check if User Exist and create a new quote
     public void checkIfUserExist(String userID){
         RequestParams params = new RequestParams();
