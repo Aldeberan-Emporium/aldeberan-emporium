@@ -46,6 +46,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
     // [END declare_auth]
 
     private GoogleSignInClient mGoogleSignInClient;
+    UserStorage us;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
@@ -188,14 +189,15 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
     private void updateUI(FirebaseUser user) {
         //to do
         if (user != null){
+            us = new UserStorage(this);
             TextView txtv = findViewById(R.id.loginStatus);
             txtv.setText("User ID: " + user.getUid());
 
-            UserStorage us = new UserStorage(this);
+
             us.saveUser(user.getDisplayName(), user.getUid(), user.getPhotoUrl().toString(), user.getEmail());
         }else{
             TextView txtv = findViewById(R.id.loginStatus);
-            txtv.setText("User ID: Please Sign in");
+            txtv.setText(us.getName());
         }
     }
 
