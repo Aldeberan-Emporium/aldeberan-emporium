@@ -54,7 +54,7 @@ public class CartModel extends DatabaseModel{
         RequestParams params = new RequestParams();
         params.put("action", "checkIfUserExist");
         params.put("user_id", userID);
-        
+
         this.postData(params);
     }
 
