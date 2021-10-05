@@ -196,7 +196,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
 
             String userID = user.getUid();
 
-
             CartModel cm = new CartModel();
             cm.checkIfUserExist(userID);
             cm.readQuoteByUser(user.getUid(), response -> {
