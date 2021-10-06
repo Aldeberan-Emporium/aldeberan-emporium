@@ -21,10 +21,12 @@ import java.util.List;
 public class PointsParser extends AsyncTask<String, Integer, List<List<HashMap<String, String>>>> {
     TaskLoadedCallback taskCallback;
     String directionMode = "driving";
+    Context context;
 
     public PointsParser(Context mContext, String directionMode) {
         this.taskCallback = (TaskLoadedCallback) mContext;
         this.directionMode = directionMode;
+        this.context = mContext;
     }
 
     // Parsing the data in non-ui thread
@@ -37,7 +39,7 @@ public class PointsParser extends AsyncTask<String, Integer, List<List<HashMap<S
         try {
             jObject = new JSONObject(jsonData[0]);
             Log.d("mylog", jsonData[0].toString());
-            DataParser parser = new DataParser();
+            DataParser parser = new DataParser(context);
             Log.d("mylog", parser.toString());
 
             // Starts parsing data
