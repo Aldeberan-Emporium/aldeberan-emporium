@@ -9,6 +9,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
 
@@ -27,7 +28,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.aldeberan.databinding.ActivityMapsBinding;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapLongClickListener, GoogleMap.OnMarkerDragListener{
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapLongClickListener, GoogleMap.OnMarkerDragListener {
 
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
@@ -35,6 +36,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public int ACCESS_LOCATION_REQUEST_CODE = 10001;
     FusedLocationProviderClient fusedLocationProviderClient;
     LocationRequest locationRequest;
+
+    Marker userLocationMarker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +84,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onStart() {
         super.onStart();
-        startLocationUpdates();
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            startLocationUpdates();
+        }
     }
 
     @Override
@@ -92,10 +97,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     LocationCallback locationCallback = new LocationCallback() {
         @Override
-        public void onLocationResult(LocationResult locationResult){
+        public void onLocationResult(LocationResult locationResult) {
             super.onLocationResult(locationResult);
+            if (mMap != null) {
+                setUserLocationMarker(locationResult.getLastLocation());
+            }
         }
     };
+
+    private void setUserLocationMarker(Location location) {
+        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+        if (userLocationMarker == null){
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.position(latLng);
+            userLocationMarker = mMap.addMarker(markerOptions);
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17));
+        }
+        else{
+            userLocationMarker.setPosition(latLng);
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17));
+        }
+    }
 
     @SuppressLint("MissingPermission")
     private void startLocationUpdates() {
