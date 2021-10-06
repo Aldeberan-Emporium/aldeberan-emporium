@@ -49,7 +49,6 @@ public class homeProductFragment extends Fragment{
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         myProductFragmentView = inflater.inflate(R.layout.fragment_home_product, container, false);
-        //myCartFragmentView = inflater.inflate(R.layout.fragment_cart, container, false);
 
         productList = new ArrayList<>();
         recyclerView = myProductFragmentView.findViewById(R.id.cRecyclerView);
@@ -79,8 +78,6 @@ public class homeProductFragment extends Fragment{
         }
     }
 
-
-
     ProductListingDetailAdapter.FragmentCommunication home_communication = (prodName, prodID, prodImg, prodPrice) -> {
         homeProductFragment homepage = new homeProductFragment();
         Bundle bundle = new Bundle();
@@ -92,7 +89,6 @@ public class homeProductFragment extends Fragment{
         //bundle.putString("prodAvail", prodAvail);
         bundle.putString("prodPrice", prodPrice);
         homepage.setArguments(bundle);
-
     };
 
     private void PutDataIntoRecyclerView(List<Product> productList){

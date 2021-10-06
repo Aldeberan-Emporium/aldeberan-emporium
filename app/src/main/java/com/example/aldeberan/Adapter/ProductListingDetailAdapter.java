@@ -13,6 +13,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.example.aldeberan.R;
 import com.example.aldeberan.databinding.CartDetailCRowBinding;
 import com.example.aldeberan.databinding.ProductDetailCRowBinding;
@@ -73,6 +74,8 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
 
+        ElegantNumberButton numberButton;
+        int quantity = 0;
         final Product p = mData.get(position);
         holder.productRowBinding.setProduct(p);
         holder.productRowBinding.executePendingBindings();
@@ -89,6 +92,50 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
 
         Glide.with(mContext).load(mData.get(position).getProdImg()).override(450, 450).into(holder.productRowBinding.cusProdImgView);
 
+        //Not finish yet.
+        /*
+        holder.productRowBinding.quantityButton.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
+            @Override
+            public void onValueChange(ElegantNumberButton button, int oldValue, int newValue) {
+                String quantity = button.getNumber();
+                System.out.println("Item quantity:" + quantity);
+                int itemQuantity = Integer.parseInt(quantity);
+
+                holder.productRowBinding.buttonAddCart.setOnClickListener(view -> {
+                    mCommunicator.respond(String.valueOf(mData.get(position).getProdName()),
+                            String.valueOf(mData.get(position).getProdID()),
+                            String.valueOf(mData.get(position).getProdImg()),
+                            String.valueOf(mData.get(position).getProdPrice()));
+
+                    userStorage = new UserStorage(mContext);
+                    String userID = userStorage.getID();
+                    cm.checkIfUserExist(userID);
+
+                    int quoteID = userStorage.getQuoteID();
+                    String prodName = String.valueOf(mData.get(position).getProdName());
+                    String prodSKU = String.valueOf(mData.get(position).getProdSKU());
+                    Double prodPrice = Double.parseDouble(String.valueOf(mData.get(position).getProdPrice()));
+                    String prodImg = String.valueOf(mData.get(position).getProdImg());
+                    String stockQuantity = String.valueOf(mData.get(position).getProdStock());
+
+
+                    int temp_num = Integer.parseInt(stockQuantity);
+                    if(itemQuantity > temp_num){
+                        System.out.println("Out of stock or stock not enough");
+                    }
+                    else{
+                        int item_num_cart = temp_num-itemQuantity;
+                        cm.addQuoteItem(quoteID, prodName, prodSKU, item_num_cart, prodPrice, prodImg);
+                        cm.updateQuoteRecal(quoteID);
+                    }
+
+                    cm.addQuoteItem(quoteID, prodName, prodSKU, 1, prodPrice, prodImg);
+                    cm.updateQuoteRecal(quoteID);
+                });
+            }
+        });
+        */
+
         holder.productRowBinding.buttonAddCart.setOnClickListener(view -> {
             mCommunicator.respond(String.valueOf(mData.get(position).getProdName()),
                     String.valueOf(mData.get(position).getProdID()),
@@ -104,16 +151,13 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
             String prodSKU = String.valueOf(mData.get(position).getProdSKU());
             Double prodPrice = Double.parseDouble(String.valueOf(mData.get(position).getProdPrice()));
             String prodImg = String.valueOf(mData.get(position).getProdImg());
+            String stockQuantity = String.valueOf(mData.get(position).getProdStock());
 
+            System.out.println("stockQuantity: " + stockQuantity);
             cm.addQuoteItem(quoteID, prodName, prodSKU, 1, prodPrice, prodImg);
             cm.updateQuoteRecal(quoteID);
-
-            });
-
-            //addQuoteItem(String.valueOf(cData.get(getAbsoluteAdapterPosition()).getQuoteID());
+        });
     };
-
-
 
     @Override
     public int getItemCount() {
