@@ -132,6 +132,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                     JSONObject route = jsonArray.getJSONObject(i);
                                     JSONObject poly = route.getJSONObject("overview_polyline");
                                     String polyline = poly.getString("points");
+                                    JSONArray legs = route.getJSONArray("legs");
+                                    //JSONObject legsObj = legs.getJSONObject(i);
+
+                                    //String distanceTxt = distance.getString("distance");
                                     polylineList = decodePoly(polyline);
                                 }
 
