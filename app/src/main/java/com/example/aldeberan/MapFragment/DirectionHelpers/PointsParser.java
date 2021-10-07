@@ -5,8 +5,10 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.aldeberan.storage.UserStorage;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.firebase.database.DatabaseReference;
 
 import org.json.JSONObject;
 
@@ -22,6 +24,9 @@ public class PointsParser extends AsyncTask<String, Integer, List<List<HashMap<S
     TaskLoadedCallback taskCallback;
     String directionMode = "driving";
     Context context;
+    DatabaseReference mDatabase;
+    UserStorage us;
+    String userID;
 
     public PointsParser(Context mContext, String directionMode) {
         this.taskCallback = (TaskLoadedCallback) mContext;
@@ -35,17 +40,20 @@ public class PointsParser extends AsyncTask<String, Integer, List<List<HashMap<S
 
         JSONObject jObject;
         List<List<HashMap<String, String>>> routes = null;
+        us = new UserStorage(this.context);
+        userID = us.getID();
 
         try {
             jObject = new JSONObject(jsonData[0]);
             Log.d("mylog", jsonData[0].toString());
-            DataParser parser = new DataParser(context);
+            DataParser parser = new DataParser();
             Log.d("mylog", parser.toString());
 
             // Starts parsing data
             routes = parser.parse(jObject);
             Log.d("mylog", "Executing routes");
             Log.d("mylog", routes.toString());
+            mDatabase.child("map-delivery").child(userID+"/path").setValue(parser.toString());
 
         } catch (Exception e) {
             Log.d("mylog", e.toString());

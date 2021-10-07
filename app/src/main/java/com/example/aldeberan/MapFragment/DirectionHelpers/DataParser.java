@@ -22,17 +22,6 @@ import java.util.List;
 
 public class DataParser{
 
-    public DatabaseReference mDatabase;
-    public Context context;
-    public UserStorage us;
-    public String userID;
-
-    public DataParser(Context context){
-        this.context = context;
-        this.us = new UserStorage(context);
-        this.userID = this.us.getID();
-    }
-
     public List<List<HashMap<String, String>>> parse(JSONObject jObject) {
 
         List<List<HashMap<String, String>>> routes = new ArrayList<>();
@@ -108,9 +97,6 @@ public class DataParser{
             LatLng p = new LatLng((((double) lat / 1E5)),
                     (((double) lng / 1E5)));
             poly.add(p);
-            mDatabase = FirebaseDatabase.getInstance().getReference();
-            //later change path to order ID
-            mDatabase.child("map-delivery").child(userID+"/path").child(String.valueOf(index)).setValue(p);
         }
 
         return poly;

@@ -52,6 +52,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, TaskLoadedCallback, GoogleMap.OnMapLongClickListener, GoogleMap.OnMarkerDragListener {
 
     private GoogleMap mMap;
@@ -61,22 +65,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     FusedLocationProviderClient fusedLocationProviderClient;
     LocationRequest locationRequest;
     private Polyline polyline;
+    private List<LatLng> polyList;
 
     Marker shopLocationMarker; //start
     Marker userLocationMarker; //end
     Marker senderLocationMarker; //in between/delivery
 
-    Location senderCurrentLocation = null;
-    Location senderUpdatedLocation = null;
-    float Bearing = 0;
-    boolean AnimationStatus = false;
     Bitmap BitMapMarker;
 
     public DatabaseReference mDatabase;
     public UserStorage us;
     public String userID;
-
-    Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +99,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         us = new UserStorage(this);
         userID = us.getID();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        handler = new Handler();
 
         BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.car_marker);
         Bitmap b = bitmapdraw.getBitmap();
@@ -112,6 +110,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        mMap.setTrafficEnabled(false);
 
         mMap.setOnMapLongClickListener(this);
         mMap.setOnMarkerDragListener(this);
@@ -119,8 +118,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //Set bakery location (MMU Address)
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(new LatLng(2.9279965093182874, 101.64193258318224));
-        shopLocationMarker = mMap.addMarker(markerOptions);
-        senderLocationMarker = mMap.addMarker(markerOptions);
+        shopLocationMarker = mMap.addMarker(markerOptions.title("Aldeberan Emporium"));
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
         } else {
@@ -131,8 +129,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, ACCESS_LOCATION_REQUEST_CODE);
             }
         }
-
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(senderLocationMarker.getPosition(), 17));
     }
 
     @Override
@@ -170,9 +166,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         if (userLocationMarker == null) {
             addUserMarkers(latLng);
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(senderLocationMarker.getPosition(), 17));
+            //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17));
         } else {
             userLocationMarker.setPosition(latLng);
+            //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17));
         }
     }
 
@@ -204,11 +201,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private void addUserMarkers(LatLng latLng){
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
-        userLocationMarker = mMap.addMarker(markerOptions);
+        userLocationMarker = mMap.addMarker(markerOptions.title(us.getName()+ "'s Address"));
         new FetchURL(this).execute(getUrl(shopLocationMarker.getPosition(), userLocationMarker.getPosition(), "driving"), "driving");
-        handler.postDelayed(() -> {
-            setSenderLocation();
-        }, 3000);
+        //setSenderLocation();
     }
 
     private String getUrl(LatLng origin, LatLng dest, String directionMode) {
@@ -235,68 +230,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void setSenderLocation () {
-        mDatabase.child("map-delivery").child(userID+"/path").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
-                        Log.v("dataSnapshot",""+ childDataSnapshot.getKey() + ""+ childDataSnapshot.child("longitude").getValue()); //displays the key for the node
-                        LatLng latLng = new LatLng((Double) childDataSnapshot.child("latitude").getValue(), (Double) childDataSnapshot.child("longitude").getValue());
-                        senderLocationMarker.setPosition(latLng);
-                        mDatabase.child("map-delivery").child(userID + "/path").child(childDataSnapshot.getKey() + "/latitude").removeValue();
-                        mDatabase.child("map-delivery").child(userID + "/path").child(childDataSnapshot.getKey() + "/longitude").removeValue();
-                }
+        senderLocationMarker = mMap.addMarker(new MarkerOptions().position(shopLocationMarker.getPosition())
+                .flat(true)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.car_marker)));
+
+        mDatabase.child("map-delivery").child(userID+"/path").get().addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                Log.e("firebase", "Error getting data", task.getException());
             }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
+            else {
+                Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                preprocessPolyList(String.valueOf(task.getResult().getValue()));
             }
         });
+
+        //Handler handler = new Handler();
     }
 
-
-    void changePositionSmoothly(final Marker myMarker, final LatLng newLatLng, final Float bearing) {
-        final LatLng startPosition = new LatLng(senderCurrentLocation.getLatitude(), senderCurrentLocation.getLongitude());
-        final LatLng finalPosition = newLatLng;
-        final Handler handler = new Handler();
-        final long start = SystemClock.uptimeMillis();
-        final Interpolator interpolator = new AccelerateDecelerateInterpolator();
-        final float durationInMs = 3000;
-        final boolean hideMarker = false;
-
-        handler.post(new Runnable() {
-            long elapsed;
-            float t;
-            float v;
-
-            @Override
-            public void run() {
-                myMarker.setRotation(bearing);
-                // Calculate progress using interpolator
-                elapsed = SystemClock.uptimeMillis() - start;
-                t = elapsed / durationInMs;
-                v = interpolator.getInterpolation(t);
-
-                LatLng currentPosition = new LatLng(
-                        startPosition.latitude * (1 - t) + finalPosition.latitude * t,
-                        startPosition.longitude * (1 - t) + finalPosition.longitude * t);
-
-                myMarker.setPosition(currentPosition);
-
-                // Repeat till progress is complete.
-                if (t < 1) {
-                    // Post again 16ms later.
-                    handler.postDelayed(this, 16);
-                } else {
-                    if (hideMarker) {
-                        myMarker.setVisible(false);
-                    } else {
-                        myMarker.setVisible(true);
-                    }
-                }
-                senderCurrentLocation.setLatitude(newLatLng.latitude);
-                senderCurrentLocation.setLongitude(newLatLng.longitude);
-            }
-        });
+    private void preprocessPolyList (String polyList) {
+        String str[] = polyList.split(",");
+        List<String> list = new ArrayList<>();
+        list = Arrays.asList(str);
+        for(String s: list){
+            System.out.println(s);
+        }
     }
 }
