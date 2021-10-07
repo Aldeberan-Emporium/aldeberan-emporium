@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,16 +46,25 @@ public class homeProductFragment extends Fragment{
     public RecyclerView recyclerView;
     public ProductListingDetailAdapter adapter;
 
+    ActionBar mActionBar;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // ActionBar
+        mActionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        mActionBar.show();
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        myProductFragmentView = inflater.inflate(R.layout.fragment_home_product, container, false);
-
         productList = new ArrayList<>();
+        myProductFragmentView = inflater.inflate(R.layout.fragment_home_product, container, false);
         recyclerView = myProductFragmentView.findViewById(R.id.cRecyclerView);
 
-        
         ConstructRecyclerView();
         SwipeRefreshLayout pullToRefresh = myProductFragmentView.findViewById(R.id.cPullToRefresh);
 

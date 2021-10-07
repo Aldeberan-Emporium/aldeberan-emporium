@@ -8,11 +8,25 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.aldeberan.R;
 
 public class orderHistoryFragment extends Fragment {
+
+    ActionBar mActionBar;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // ActionBar
+        mActionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        mActionBar.hide();
+    }
+
 
     @Nullable
     @Override
