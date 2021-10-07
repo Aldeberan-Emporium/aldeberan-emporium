@@ -53,7 +53,6 @@ public class PointsParser extends AsyncTask<String, Integer, List<List<HashMap<S
             routes = parser.parse(jObject);
             Log.d("mylog", "Executing routes");
             Log.d("mylog", routes.toString());
-            mDatabase.child("map-delivery").child(userID+"/path").setValue(parser.toString());
 
         } catch (Exception e) {
             Log.d("mylog", e.toString());
@@ -65,7 +64,7 @@ public class PointsParser extends AsyncTask<String, Integer, List<List<HashMap<S
     // Executes in UI thread, after the parsing process
     @Override
     protected void onPostExecute(List<List<HashMap<String, String>>> result) {
-        ArrayList<LatLng> points;
+        ArrayList<LatLng> points = null;
         PolylineOptions lineOptions = null;
         // Traversing through all the routes
         for (int i = 0; i < result.size(); i++) {
@@ -81,22 +80,13 @@ public class PointsParser extends AsyncTask<String, Integer, List<List<HashMap<S
                 LatLng position = new LatLng(lat, lng);
                 points.add(position);
             }
-            // Adding all the points in the route to LineOptions
-            lineOptions.addAll(points);
-            if (directionMode.equalsIgnoreCase("walking")) {
-                lineOptions.width(10);
-                lineOptions.color(Color.MAGENTA);
-            } else {
-                lineOptions.width(20);
-                lineOptions.color(Color.BLUE);
-            }
             Log.d("mylog", "onPostExecute lineoptions decoded");
         }
 
         // Drawing polyline in the Google Map for the i-th route
-        if (lineOptions != null) {
+        if (points != null) {
             //mMap.addPolyline(lineOptions);
-            taskCallback.onTaskDone(lineOptions);
+            taskCallback.onTaskDone(points);
 
         } else {
             Log.d("mylog", "without Polylines drawn");
