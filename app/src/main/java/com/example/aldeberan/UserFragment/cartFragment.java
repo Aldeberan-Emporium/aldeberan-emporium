@@ -69,7 +69,6 @@ public class cartFragment extends Fragment {
          */
     }
 
-
     CartAdapter.FragmentCommunication cart_communication = (prodName, prodID, prodImg, prodPrice) -> {
         cartFragment cart = new cartFragment();
         Bundle bundle = new Bundle();
@@ -81,7 +80,6 @@ public class cartFragment extends Fragment {
         //bundle.putString("prodAvail", prodAvail);
         bundle.putString("prodPrice", prodPrice);
         cart.setArguments(bundle);
-
     };
 
     private void PutDataIntoRecyclerView(List<Cart> cartList){
