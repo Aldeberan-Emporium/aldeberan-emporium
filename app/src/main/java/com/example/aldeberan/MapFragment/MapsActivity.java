@@ -12,7 +12,10 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
+import android.view.View;
 import android.view.animation.LinearInterpolator;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.aldeberan.MapFragment.DirectionHelpers.IGoogleAPI;
@@ -62,8 +65,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Marker senderLocationMarker; //in between/delivery
     private LatLng startPosition, endPosition;
     private int index, next;
-    private double lat, lng;
+    private double lat, lng, prevLat, prevLng, latestDistance, duration;
     private float v;
+    private String durationLeft, distanceLeft;
+    private int distanceInt, speedInt;
+    TextView distanceLeftLbl, durationLeftLbl, etaLbl, distLbl, deliveredLbl;
 
     public UserStorage us;
     public String userID;
@@ -80,6 +86,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         us = new UserStorage(this);
         context = this;
+        distanceLeftLbl = findViewById(R.id.distanceLeftLbl);
+        durationLeftLbl = findViewById(R.id.durationLeftLbl);
+        etaLbl = findViewById(R.id.etaLbl);
+        distLbl = findViewById(R.id.distLbl);
+        deliveredLbl = findViewById(R.id.deliveredLbl);
 
         polylineList = new ArrayList<>();
         mService = Common.getGoogleAPI();
@@ -133,9 +144,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                     JSONObject poly = route.getJSONObject("overview_polyline");
                                     String polyline = poly.getString("points");
                                     JSONArray legs = route.getJSONArray("legs");
-                                    //JSONObject legsObj = legs.getJSONObject(i);
-
-                                    //String distanceTxt = distance.getString("distance");
+                                    durationLeft = legs.getJSONObject(i).getJSONObject("duration").getString("text");
+                                    duration = legs.getJSONObject(i).getJSONObject("duration").getDouble("value");
+                                    distanceLeft = legs.getJSONObject(i).getJSONObject("distance").getString("text");
+                                    distanceInt = legs.getJSONObject(i).getJSONObject("distance").getInt("value");
                                     polylineList = decodePoly(polyline);
                                 }
 
@@ -191,6 +203,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 Handler handler = new Handler();
                                 index = -1;
                                 next = 1;
+                                speedInt = (int) (distanceInt / duration);
+
                                 handler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
@@ -203,9 +217,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                             endPosition = polylineList.get(next);
                                         }
                                         ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, 1);
-                                        valueAnimator.setDuration(3000);
+                                        valueAnimator.setDuration(10);
                                         valueAnimator.setInterpolator(new LinearInterpolator());
                                         valueAnimator.addUpdateListener(valueAnimator1 -> {
+                                            prevLat = senderLocationMarker.getPosition().latitude;
+                                            prevLng = senderLocationMarker.getPosition().longitude;
                                             v = valueAnimator1.getAnimatedFraction();
                                             lng = v * endPosition.longitude + (1 - v)
                                                     * startPosition.longitude;
@@ -216,11 +232,46 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                             senderLocationMarker.setAnchor(0.5f, 0.5f);
                                             senderLocationMarker.setRotation(getBearing(startPosition, newPos));
                                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(senderLocationMarker.getPosition(), 10));
+
+                                            latestDistance = distance(prevLat, prevLng, lat, lng);
+                                            //Calculate the time required based on each distance travelled
+                                            distanceInt = (int) (distanceInt - Math.floor(latestDistance));
+                                            distanceLeftLbl.setText(distanceInt/1000 + "km");
+
+                                            //Preprocess seconds into hour and minutes
+                                            duration = duration - (latestDistance / speedInt);
+                                            int sec = (int) (duration % 60);
+                                            int min = (int) ((duration/60) % 60);
+                                            int hour = (int) ((duration/60)/60);
+                                            if (hour > 0){
+                                                durationLeftLbl.setText(hour+"hr "+min+"min");
+                                            }
+                                            else if (hour == 0 && min != 0){
+                                                if (min > 10) {
+                                                    durationLeftLbl.setText(min+"min");
+                                                }
+                                                else{
+                                                    durationLeftLbl.setText(min+"min "+sec+"sec");
+                                                }
+                                            }
+                                            else {
+                                                if (sec < 0){
+                                                    durationLeftLbl.setText("Arriving soon...");
+                                                }
+                                                else{
+                                                    durationLeftLbl.setText(sec+"sec");
+                                                }
+
+                                            }
                                         });
                                         valueAnimator.start();
-                                        handler.postDelayed(this, 3000);
+                                        handler.postDelayed(this, 500);
                                         if (index == polylineList.size() - 1) {
-                                            Toast.makeText(context, "Product delivered!", Toast.LENGTH_LONG).show();
+                                            deliveredLbl.setVisibility(View.VISIBLE);
+                                            distanceLeftLbl.setVisibility(View.GONE);
+                                            etaLbl.setVisibility(View.GONE);
+                                            distLbl.setVisibility(View.GONE);
+                                            durationLeftLbl.setVisibility(View.GONE);
                                             valueAnimator.end();
                                             handler.removeCallbacksAndMessages(null);
                                         }
@@ -262,6 +313,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             }
 
                             return poly;
+                        }
+
+                        private double distance(double lat1, double lon1, double lat2, double lon2) {
+                            if ((lat1 == lat2) && (lon1 == lon2)) {
+                                return 0;
+                            }
+                            else {
+                                double theta = lon1 - lon2;
+                                double dist = Math.sin(Math.toRadians(lat1)) * Math.sin(Math.toRadians(lat2)) + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) * Math.cos(Math.toRadians(theta));
+                                dist = Math.acos(dist);
+                                dist = Math.toDegrees(dist);
+                                dist = dist * 60 * 1.1515 * 1.609344 * 1000;
+                                return (dist);
+                            }
                         }
 
                         @Override
