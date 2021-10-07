@@ -7,11 +7,13 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.animation.ValueAnimator;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.animation.LinearInterpolator;
+import android.widget.Toast;
 
 import com.example.aldeberan.MapFragment.DirectionHelpers.IGoogleAPI;
 import com.example.aldeberan.R;
@@ -51,6 +53,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Polyline polyline, senderPolyline;
     private List<LatLng> polylineList;
     private PolylineOptions polylineOptions, senderPolylineOptions;
+    Context context;
 
     IGoogleAPI mService;
 
@@ -76,6 +79,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         us = new UserStorage(this);
+        context = this;
 
         polylineList = new ArrayList<>();
         mService = Common.getGoogleAPI();
@@ -86,11 +90,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        /*
         mMap.setTrafficEnabled(false);
         mMap.setIndoorEnabled(false);
         mMap.setBuildingsEnabled(false);
-         */
+        mMap.getUiSettings().setZoomControlsEnabled(false);
+        mMap.getUiSettings().setAllGesturesEnabled(false);
+        mMap.getUiSettings().setZoomGesturesEnabled(false);
 
         //Set bakery location (MMU Address)
         MarkerOptions markerOptions = new MarkerOptions();
@@ -175,7 +180,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 polylineAnimator.start();
 
                                 senderLocationMarker = mMap.addMarker(new MarkerOptions().position(shopLocationMarker.getPosition())
-                                .flat(true).icon(BitmapDescriptorFactory.fromResource(R.drawable.motor)));
+                                .flat(true).icon(BitmapDescriptorFactory.fromResource(R.drawable.motor)).title("Aldeberan Emporium's Delivery Worker"));
+
+                                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(senderLocationMarker.getPosition(), 10));
 
                                 Handler handler = new Handler();
                                 index = -1;
@@ -204,12 +211,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                             senderLocationMarker.setPosition(newPos);
                                             senderLocationMarker.setAnchor(0.5f, 0.5f);
                                             senderLocationMarker.setRotation(getBearing(startPosition, newPos));
-                                            mMap.animateCamera(CameraUpdateFactory.newCameraPosition
-                                                    (new CameraPosition.Builder().target(newPos)
-                                                            .zoom(15.5f).build()));
+                                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(senderLocationMarker.getPosition(), 10));
                                         });
                                         valueAnimator.start();
-                                        handler.postDelayed(this, 1000);
+                                        handler.postDelayed(this, 3000);
+                                        if (index == polylineList.size() - 1) {
+                                            Toast.makeText(context, "Product delivered!", Toast.LENGTH_LONG).show();
+                                            valueAnimator.end();
+                                            handler.removeCallbacksAndMessages(null);
+                                        }
                                     }
                                 }, 3000);
                             }catch (Exception e){
