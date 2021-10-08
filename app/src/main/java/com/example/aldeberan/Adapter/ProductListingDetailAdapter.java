@@ -34,13 +34,11 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
     CartModel cm = new CartModel();
     UserStorage userStorage;
 
-
     public ProductListingDetailAdapter(Context mContext, List<Product> mData, FragmentCommunication mCommunicator) {
         this.mContext = mContext;
         this.mData = mData;
         this.mCommunicator = mCommunicator;
     }
-
 
     public class ProductViewHolder extends RecyclerView.ViewHolder{
 
@@ -53,11 +51,12 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
             this.mCommunication = mCommunication;
 
             productRowBinding.buttonAddCart.setOnClickListener(view -> {
-                //String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdID()));
                 mCommunication.respond(String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdName()),
                         String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdID()),
+                        String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdSKU()),
                         String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdImg()),
-                        String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdPrice()));
+                        String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdPrice()),
+                        String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdStock()));
             });
         }
     }
@@ -81,7 +80,7 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
         holder.productRowBinding.executePendingBindings();
 
         holder.productRowBinding.cusProdNameLbl.setText("Product: " + mData.get(position).getProdName());
-        //holder.productRowBinding.cusProdSKULbl.setText("SKU: " + mData.get(position).getProdSKU());
+        holder.productRowBinding.cusProdSKULbl.setText("SKU: " + mData.get(position).getProdSKU());
         holder.productRowBinding.cusProdIDLbl.setText("Product ID: " + mData.get(position).getProdID());
 
         //String prodAvail = mData.get(position).getProdAvail() ? "Active" : "Inactive";
@@ -93,7 +92,6 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
         Glide.with(mContext).load(mData.get(position).getProdImg()).override(450, 450).into(holder.productRowBinding.cusProdImgView);
 
         //Not finish yet.
-        /*
         holder.productRowBinding.quantityButton.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
             @Override
             public void onValueChange(ElegantNumberButton button, int oldValue, int newValue) {
@@ -104,8 +102,10 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
                 holder.productRowBinding.buttonAddCart.setOnClickListener(view -> {
                     mCommunicator.respond(String.valueOf(mData.get(position).getProdName()),
                             String.valueOf(mData.get(position).getProdID()),
+                            String.valueOf(mData.get(position).getProdSKU()),
                             String.valueOf(mData.get(position).getProdImg()),
-                            String.valueOf(mData.get(position).getProdPrice()));
+                            String.valueOf(mData.get(position).getProdPrice()),
+                            String.valueOf(mData.get(position).getProdStock()));
 
                     userStorage = new UserStorage(mContext);
                     String userID = userStorage.getID();
@@ -118,7 +118,6 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
                     String prodImg = String.valueOf(mData.get(position).getProdImg());
                     String stockQuantity = String.valueOf(mData.get(position).getProdStock());
 
-
                     int temp_num = Integer.parseInt(stockQuantity);
                     if(itemQuantity > temp_num){
                         System.out.println("Out of stock or stock not enough");
@@ -128,19 +127,17 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
                         cm.addQuoteItem(quoteID, prodName, prodSKU, item_num_cart, prodPrice, prodImg);
                         cm.updateQuoteRecal(quoteID);
                     }
-
-                    cm.addQuoteItem(quoteID, prodName, prodSKU, 1, prodPrice, prodImg);
-                    cm.updateQuoteRecal(quoteID);
                 });
             }
         });
-        */
 
         holder.productRowBinding.buttonAddCart.setOnClickListener(view -> {
             mCommunicator.respond(String.valueOf(mData.get(position).getProdName()),
                     String.valueOf(mData.get(position).getProdID()),
+                    String.valueOf(mData.get(position).getProdSKU()),
                     String.valueOf(mData.get(position).getProdImg()),
-                    String.valueOf(mData.get(position).getProdPrice()));
+                    String.valueOf(mData.get(position).getProdPrice()),
+                    String.valueOf(mData.get(position).getProdStock()));
 
             userStorage = new UserStorage(mContext);
             String userID = userStorage.getID();
@@ -154,6 +151,7 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
             String stockQuantity = String.valueOf(mData.get(position).getProdStock());
 
             System.out.println("stockQuantity: " + stockQuantity);
+            //cm.addQuoteItem(quoteID, prodName, 1, prodPrice, prodImg);
             cm.addQuoteItem(quoteID, prodName, prodSKU, 1, prodPrice, prodImg);
             cm.updateQuoteRecal(quoteID);
         });
@@ -165,7 +163,7 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
     }
 
     public interface FragmentCommunication {
-        void respond(String prodName, String prodID, String prodImg, String prodPrice);
+        void respond(String prodName, String prodID, String prodSKU, String prodImg, String prodPrice, String prodStock);
     }
 
 }
