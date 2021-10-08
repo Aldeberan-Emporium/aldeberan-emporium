@@ -94,9 +94,9 @@ public class homeProductFragment extends Fragment{
         Bundle bundle = new Bundle();
         bundle.putString("prodName", prodName);
         bundle.putString("prodID", prodID);
-        //bundle.putString("prodSKU", prodSKU);
+        bundle.putString("prodSKU", prodSKU);
         bundle.putString("prodImg", prodImg);
-        //bundle.putString("prodStock", prodStock);
+        bundle.putString("prodStock", prodStock);
         //bundle.putString("prodAvail", prodAvail);
         bundle.putString("prodPrice", prodPrice);
         homepage.setArguments(bundle);
