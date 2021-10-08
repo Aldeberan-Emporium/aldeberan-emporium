@@ -89,14 +89,14 @@ public class homeProductFragment extends Fragment{
         }
     }
 
-    ProductListingDetailAdapter.FragmentCommunication home_communication = (prodName, prodID, prodImg, prodPrice) -> {
+    ProductListingDetailAdapter.FragmentCommunication home_communication = (prodName, prodID, prodSKU, prodImg, prodPrice, prodStock) -> {
         homeProductFragment homepage = new homeProductFragment();
         Bundle bundle = new Bundle();
         bundle.putString("prodName", prodName);
         bundle.putString("prodID", prodID);
-        //bundle.putString("prodSKU", prodSKU);
+        bundle.putString("prodSKU", prodSKU);
         bundle.putString("prodImg", prodImg);
-        //bundle.putString("prodStock", prodStock);
+        bundle.putString("prodStock", prodStock);
         //bundle.putString("prodAvail", prodAvail);
         bundle.putString("prodPrice", prodPrice);
         homepage.setArguments(bundle);
