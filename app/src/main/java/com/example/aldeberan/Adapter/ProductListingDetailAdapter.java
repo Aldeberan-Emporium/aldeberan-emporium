@@ -96,8 +96,11 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
             @Override
             public void onValueChange(ElegantNumberButton button, int oldValue, int newValue) {
                 String quantity = button.getNumber();
-                System.out.println("Item quantity:" + quantity);
+
                 int itemQuantity = Integer.parseInt(quantity);
+
+                String pName = p.getProdName();
+                System.out.println(pName + "Item quantity:" + quantity);
 
                 holder.productRowBinding.buttonAddCart.setOnClickListener(view -> {
                     mCommunicator.respond(String.valueOf(mData.get(position).getProdName()),
@@ -124,8 +127,10 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
                     }
                     else{
                         int item_num_cart = temp_num-itemQuantity;
-                        cm.addQuoteItem(quoteID, prodName, prodSKU, item_num_cart, prodPrice, prodImg);
+                        int q = Integer.parseInt(quantity);
+                        cm.addQuoteItem(quoteID, prodName, prodSKU, q, prodPrice, prodImg);
                         cm.updateQuoteRecal(quoteID);
+                        System.out.println("successfully" + q);
                     }
                 });
             }
