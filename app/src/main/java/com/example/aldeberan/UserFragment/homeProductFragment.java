@@ -54,7 +54,6 @@ public class homeProductFragment extends Fragment{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // ActionBar
         mActionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
         mActionBar.show();
     }

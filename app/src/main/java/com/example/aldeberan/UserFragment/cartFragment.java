@@ -42,7 +42,6 @@ public class cartFragment extends Fragment {
         productList = new ArrayList<>();
         recyclerView = myCartFragmentView.findViewById(R.id.cartRecyclerView);
 
-
         ConstructRecyclerView();
         SwipeRefreshLayout pullToRefresh = myCartFragmentView.findViewById(R.id.cartPullToRefresh);
 

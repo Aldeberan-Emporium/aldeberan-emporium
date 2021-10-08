@@ -34,13 +34,11 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
     CartModel cm = new CartModel();
     UserStorage userStorage;
 
-
     public ProductListingDetailAdapter(Context mContext, List<Product> mData, FragmentCommunication mCommunicator) {
         this.mContext = mContext;
         this.mData = mData;
         this.mCommunicator = mCommunicator;
     }
-
 
     public class ProductViewHolder extends RecyclerView.ViewHolder{
 
@@ -93,7 +91,6 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
         Glide.with(mContext).load(mData.get(position).getProdImg()).override(450, 450).into(holder.productRowBinding.cusProdImgView);
 
         //Not finish yet.
-        /*
         holder.productRowBinding.quantityButton.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
             @Override
             public void onValueChange(ElegantNumberButton button, int oldValue, int newValue) {
@@ -118,7 +115,6 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
                     String prodImg = String.valueOf(mData.get(position).getProdImg());
                     String stockQuantity = String.valueOf(mData.get(position).getProdStock());
 
-
                     int temp_num = Integer.parseInt(stockQuantity);
                     if(itemQuantity > temp_num){
                         System.out.println("Out of stock or stock not enough");
@@ -128,13 +124,9 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
                         cm.addQuoteItem(quoteID, prodName, prodSKU, item_num_cart, prodPrice, prodImg);
                         cm.updateQuoteRecal(quoteID);
                     }
-
-                    cm.addQuoteItem(quoteID, prodName, prodSKU, 1, prodPrice, prodImg);
-                    cm.updateQuoteRecal(quoteID);
                 });
             }
         });
-        */
 
         holder.productRowBinding.buttonAddCart.setOnClickListener(view -> {
             mCommunicator.respond(String.valueOf(mData.get(position).getProdName()),
@@ -154,6 +146,7 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
             String stockQuantity = String.valueOf(mData.get(position).getProdStock());
 
             System.out.println("stockQuantity: " + stockQuantity);
+            //cm.addQuoteItem(quoteID, prodName, 1, prodPrice, prodImg);
             cm.addQuoteItem(quoteID, prodName, prodSKU, 1, prodPrice, prodImg);
             cm.updateQuoteRecal(quoteID);
         });
@@ -166,6 +159,7 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
 
     public interface FragmentCommunication {
         void respond(String prodName, String prodID, String prodImg, String prodPrice);
+        //void respond(String prodName, String prodID, String prodSKU, String prodAvail, String prodImg, String prodPrice);
     }
 
 }
