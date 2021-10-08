@@ -18,6 +18,7 @@ import com.example.aldeberan.Adapter.ProductListingDetailAdapter;
 import com.example.aldeberan.R;
 import com.example.aldeberan.models.CartModel;
 import com.example.aldeberan.models.ProductModel;
+import com.example.aldeberan.storage.UserStorage;
 import com.example.aldeberan.structures.Cart;
 import com.example.aldeberan.structures.Product;
 
@@ -29,11 +30,11 @@ import java.util.List;
 public class cartFragment extends Fragment {
 
     private View myCartFragmentView;
-    public List<Product> productList;
-    public RecyclerView recyclerView;
-    public List<Cart> cartList;
-    public CartAdapter adapter;
-    public CartAdapter.FragmentCommunication mCommunicator;
+    private List<Product> productList;
+    private RecyclerView recyclerView;
+    private List<Cart> cartList;
+    private CartAdapter adapter;
+    private UserStorage us;
 
     @Nullable
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -56,35 +57,45 @@ public class cartFragment extends Fragment {
 
     private void ConstructRecyclerView(){
         CartModel cm = new CartModel();
-        /*
-        try {
-            cm.readQuoteByUser((response) -> {
-                cartList = response;
-                PutDataIntoRecyclerView(cartList);
-            });
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-         */
-    }
+        us = new UserStorage(getActivity());
 
-    CartAdapter.FragmentCommunication cart_communication = (prodName, prodID, prodImg, prodPrice) -> {
+            int quoteID = us.getQuoteID();
+        System.out.println("quoteID: " + quoteID);
+
+            cm.readQuoteItemByQuote(quoteID, response -> {
+                cartList = response;
+                System.out.println("hello" + cartList);
+                PutDataIntoRecyclerView(response);
+            });
+        }
+
+
+
+        /*
+    CartAdapter.FragmentCommunication cart_communication = (prodName, prodID, prodSKU, prodQuantity, prodImg, prodPrice) -> {
         cartFragment cart = new cartFragment();
         Bundle bundle = new Bundle();
         bundle.putString("prodName", prodName);
         bundle.putString("prodID", prodID);
-        //bundle.putString("prodSKU", prodSKU);
+        bundle.putString("prodSKU", prodSKU);
+        bundle.putInt("prodQuantity", prodQuantity);
         bundle.putString("prodImg", prodImg);
         //bundle.putString("prodStock", prodStock);
         //bundle.putString("prodAvail", prodAvail);
         bundle.putString("prodPrice", prodPrice);
         cart.setArguments(bundle);
+
+
     };
 
+         */
+
     private void PutDataIntoRecyclerView(List<Cart> cartList){
-        adapter = new CartAdapter(getActivity(), cartList, cart_communication);
+        adapter = new CartAdapter(getContext(), cartList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
         Log.i("PLOPE", String.valueOf(cartList));
     }
+
+
 }

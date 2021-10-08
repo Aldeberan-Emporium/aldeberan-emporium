@@ -24,25 +24,21 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
     private Context mContext;
     public List<Cart> mData;
-    private FragmentCommunication mCommunicator;
     CartModel cm = new CartModel();
 
-    public CartAdapter(Context mContext, List<Cart> mData, FragmentCommunication mCommunicator) {
+    public CartAdapter(Context mContext, List<Cart> mData) {
         this.mContext = mContext;
         this.mData = mData;
-        this.mCommunicator = mCommunicator;
     }
 
     public class CartViewHolder extends RecyclerView.ViewHolder{
 
         CartDetailCRowBinding cartDetailCRowBinding;
-        FragmentCommunication mCommunication;
 
-        public CartViewHolder(CartDetailCRowBinding cartDetailCRowBinding, CartAdapter.FragmentCommunication mCommunication) {
+
+        public CartViewHolder(CartDetailCRowBinding cartDetailCRowBinding) {
             super(cartDetailCRowBinding.getRoot());
             this.cartDetailCRowBinding = cartDetailCRowBinding;
-            this.mCommunication = mCommunication;
-
         }
     }
 
@@ -51,29 +47,24 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     public CartAdapter.CartViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         CartDetailCRowBinding cartRowBinding = DataBindingUtil.inflate(layoutInflater, R.layout.cart_detail_c_row, parent, false);
-        CartAdapter.CartViewHolder holder = new CartAdapter.CartViewHolder(cartRowBinding, mCommunicator);
+        CartAdapter.CartViewHolder holder = new CartAdapter.CartViewHolder(cartRowBinding);
         return holder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
-        final Cart c = mData.get(position);
-        //c.
-        //holder.cartDetailCRowBinding.setProduct(c);
+        //final Cart c = mData.get(position);
+
+        //holder.cartDetailCRowBinding.cartProdNameLbl.setText();
         holder.cartDetailCRowBinding.executePendingBindings();
-        holder.cartDetailCRowBinding.cartProdNameLbl.setText("Product: " + mData.get(position).getProdName());
-        //holder.cartDetailCRowBinding.cartProdIDLbl.setText("Product ID: " + mData.get(position).getProdID());
-        holder.cartDetailCRowBinding.cartProdPriceLbl.setText("Price: RM " + mData.get(position).getProdPrice());
+        holder.cartDetailCRowBinding.cartProdNameLbl.setText("Product: " + mData.get(position).getQuoteID());
+        holder.cartDetailCRowBinding.cartProdPriceLbl.setText("Price: RM " + mData.get(position).getTotal());
 
         Glide.with(mContext).load(mData.get(position).getProdImg()).override(450, 450).into(holder.cartDetailCRowBinding.cartProdImgView);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
-    }
-
-    public interface FragmentCommunication {
-        void respond(String prodName, String prodID, String prodImg, String prodPrice);
+        return mData.size();
     }
 }
