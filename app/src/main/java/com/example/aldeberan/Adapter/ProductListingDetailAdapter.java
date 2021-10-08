@@ -96,38 +96,29 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
             @Override
             public void onValueChange(ElegantNumberButton button, int oldValue, int newValue) {
                 String quantity = button.getNumber();
-                System.out.println("Item quantity:" + quantity);
+
                 int itemQuantity = Integer.parseInt(quantity);
+                mCommunicator.respond(String.valueOf(mData.get(position).getProdName()),
+                        String.valueOf(mData.get(position).getProdID()),
+                        String.valueOf(mData.get(position).getProdSKU()),
+                        String.valueOf(mData.get(position).getProdImg()),
+                        String.valueOf(mData.get(position).getProdPrice()),
+                        String.valueOf(mData.get(position).getProdStock()));
 
-                holder.productRowBinding.buttonAddCart.setOnClickListener(view -> {
-                    mCommunicator.respond(String.valueOf(mData.get(position).getProdName()),
-                            String.valueOf(mData.get(position).getProdID()),
-                            String.valueOf(mData.get(position).getProdSKU()),
-                            String.valueOf(mData.get(position).getProdImg()),
-                            String.valueOf(mData.get(position).getProdPrice()),
-                            String.valueOf(mData.get(position).getProdStock()));
+                userStorage = new UserStorage(mContext);
+                String userID = userStorage.getID();
+                cm.checkIfUserExist(userID);
 
-                    userStorage = new UserStorage(mContext);
-                    String userID = userStorage.getID();
-                    cm.checkIfUserExist(userID);
+                int quoteID = userStorage.getQuoteID();
+                String prodName = String.valueOf(mData.get(position).getProdName());
+                String prodSKU = String.valueOf(mData.get(position).getProdSKU());
+                Double prodPrice = Double.parseDouble(String.valueOf(mData.get(position).getProdPrice()));
+                String prodImg = String.valueOf(mData.get(position).getProdImg());
+                String stockQuantity = String.valueOf(mData.get(position).getProdStock());
 
-                    int quoteID = userStorage.getQuoteID();
-                    String prodName = String.valueOf(mData.get(position).getProdName());
-                    String prodSKU = String.valueOf(mData.get(position).getProdSKU());
-                    Double prodPrice = Double.parseDouble(String.valueOf(mData.get(position).getProdPrice()));
-                    String prodImg = String.valueOf(mData.get(position).getProdImg());
-                    String stockQuantity = String.valueOf(mData.get(position).getProdStock());
-
-                    int temp_num = Integer.parseInt(stockQuantity);
-                    if(itemQuantity > temp_num){
-                        System.out.println("Out of stock or stock not enough");
-                    }
-                    else{
-                        int item_num_cart = temp_num-itemQuantity;
-                        cm.addQuoteItem(quoteID, prodName, prodSKU, item_num_cart, prodPrice, prodImg);
-                        cm.updateQuoteRecal(quoteID);
-                    }
-                });
+                System.out.println("Item quantity:" + itemQuantity);
+                cm.addQuoteItem(quoteID, prodName, prodSKU, itemQuantity, prodPrice, prodImg);
+                cm.updateQuoteRecal(quoteID);
             }
         });
 
