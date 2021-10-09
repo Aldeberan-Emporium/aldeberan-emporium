@@ -16,13 +16,12 @@
         app:icon="@drawable/ic_user_alt_solid"
         app:iconGravity="textTop"
         app:layout_constraintBottom_toTopOf="@+id/wishlistBtn"
-        app:layout_constraintEnd_toEndOf="@+id/addressBtn"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/addressBtn"
-        app:layout_constraintTop_toBottomOf="@+id/addressBtn" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editAddBtn" />
 
     <Button
-        android:id="@+id/addressBtn"
+        android:id="@+id/editAddBtn"
         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -33,23 +32,7 @@
         app:layout_constraintBottom_toTopOf="@+id/infoBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed" />
-
-    <Button
-        android:id="@+id/couponBtn"
-        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="@string/user_settings_coupons"
-        android:textSize="16sp"
-        app:icon="@drawable/ic_ticket_alt_solid"
-        app:iconGravity="textTop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/addressBtn"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/addressBtn"
-        app:layout_constraintTop_toBottomOf="@+id/wishlistBtn" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/wishlistBtn"
@@ -60,10 +43,9 @@
         android:textSize="16sp"
         app:icon="@drawable/ic_heart_solid"
         app:iconGravity="textTop"
-        app:layout_constraintBottom_toTopOf="@+id/couponBtn"
-        app:layout_constraintEnd_toEndOf="@+id/addressBtn"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/addressBtn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/infoBtn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -111,7 +111,7 @@ public class AdminPanel_AddProduct extends AppCompatActivity implements View.OnC
         };
 
         //Limit product price to 7,2 decimal places (max 99999.99)
-        EditText prodPrice = findViewById(R.id.prodPrice);
+        EditText prodPrice = findViewById(R.id.addRecipient);
         prodPrice.setFilters(new InputFilter[] {filter});
     }
 
@@ -185,7 +185,7 @@ public class AdminPanel_AddProduct extends AppCompatActivity implements View.OnC
             TextView prodNameLbl = findViewById(R.id.prodName);
             TextView prodSKULbl = findViewById(R.id.prodSKU);
             TextView prodStockLbl = findViewById(R.id.prodStock);
-            TextView prodPriceLbl = findViewById(R.id.prodPrice);
+            TextView prodPriceLbl = findViewById(R.id.addRecipient);
             Switch prodAvailSwitch = findViewById(R.id.prodAvail);
             int prodAvail = prodAvailSwitch.isChecked() ? 1 : 0;
 

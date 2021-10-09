@@ -1,12 +1,10 @@
 package com.example.aldeberan.AdminFragment.AdminFunction;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -38,7 +36,7 @@ public class AdminPanel_LoadProduct extends AppCompatActivity{
 
         ConstructRecyclerView();
 
-        SwipeRefreshLayout pullToRefresh = findViewById(R.id.pullToRefresh);
+        SwipeRefreshLayout pullToRefresh = findViewById(R.id.pullToRefreshProduct);
         pullToRefresh.setOnRefreshListener(() -> {
             ConstructRecyclerView();
             adapter.notifyDataSetChanged();
