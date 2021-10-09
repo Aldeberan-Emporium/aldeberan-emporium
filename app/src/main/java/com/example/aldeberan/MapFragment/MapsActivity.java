@@ -13,6 +13,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -167,7 +168,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder()
         .target(googleMap.getCameraPosition().target).zoom(17).bearing(30).tilt(45).build()));
 
-
         if (ms.sharedPreferences.contains("status")){
             polylineList = decodePoly(ms.getPolyline());
             duration = ms.getDuration();
@@ -267,95 +267,102 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(senderLocationMarker.getPosition(), 10));
 
-        Handler handler = new Handler();
-        speedInt = (int) (distanceInt / duration);
+        BackgroundThread backgroundThread = new BackgroundThread();
+        new Thread(backgroundThread).start();
+    }
 
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (index < polylineList.size() - 1) {
-                    index++;
-                    next = index + 1;
-                    ms.savePolyIndex(index, next);
-                    ms.saveStatus("shipping");
-                }
-                if (index < polylineList.size() - 1) {
-                    startPosition = polylineList.get(index);
-                    endPosition = polylineList.get(next);
-                }
-                ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, 1);
-                valueAnimator.setDuration(10);
-                valueAnimator.setInterpolator(new LinearInterpolator());
-                valueAnimator.addUpdateListener(valueAnimator1 -> {
-                    prevLat = senderLocationMarker.getPosition().latitude;
-                    prevLng = senderLocationMarker.getPosition().longitude;
-                    v = valueAnimator1.getAnimatedFraction();
-                    lng = v * endPosition.longitude + (1 - v)
-                            * startPosition.longitude;
-                    lat = v * endPosition.latitude + (1 - v)
-                            * startPosition.latitude;
-                    LatLng newPos = new LatLng(lat, lng);
-                    senderLocationMarker.setPosition(newPos);
-                    senderLocationMarker.setAnchor(0.5f, 0.5f);
-                    senderLocationMarker.setRotation(getBearing(startPosition, newPos));
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(senderLocationMarker.getPosition(), 10));
+    class BackgroundThread implements Runnable{
+        @Override
+        public void run() {
+            Handler handler = new Handler(Looper.getMainLooper());
+            speedInt = (int) (distanceInt / duration);
 
-                    latestDistance = distance(prevLat, prevLng, lat, lng);
-                    ms.saveLatLng(prevLat, prevLng, lat, lng);
-                    //Calculate the time required based on each distance travelled
-                    distanceInt = (int) (distanceInt - Math.floor(latestDistance));
-                    distanceLeftLbl.setText(distanceInt/1000 + "km");
-                    ms.saveDistance(distanceInt);
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (index < polylineList.size() - 1) {
+                        index++;
+                        next = index + 1;
+                        ms.savePolyIndex(index, next);
+                        ms.saveStatus("shipping");
+                    }
+                    if (index < polylineList.size() - 1) {
+                        startPosition = polylineList.get(index);
+                        endPosition = polylineList.get(next);
+                    }
+                    ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, 1);
+                    valueAnimator.setDuration(10);
+                    valueAnimator.setInterpolator(new LinearInterpolator());
+                    valueAnimator.addUpdateListener(valueAnimator1 -> {
+                        prevLat = senderLocationMarker.getPosition().latitude;
+                        prevLng = senderLocationMarker.getPosition().longitude;
+                        v = valueAnimator1.getAnimatedFraction();
+                        lng = v * endPosition.longitude + (1 - v)
+                                * startPosition.longitude;
+                        lat = v * endPosition.latitude + (1 - v)
+                                * startPosition.latitude;
+                        LatLng newPos = new LatLng(lat, lng);
+                        senderLocationMarker.setPosition(newPos);
+                        senderLocationMarker.setAnchor(0.5f, 0.5f);
+                        senderLocationMarker.setRotation(getBearing(startPosition, newPos));
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(senderLocationMarker.getPosition(), 10));
 
-                    //Preprocess seconds into hour and minutes
-                    duration = duration - (latestDistance / speedInt);
-                    ms.saveDuration(duration);
-                    int sec = (int) (duration % 60);
-                    int min = (int) ((duration/60) % 60);
-                    int hour = (int) ((duration/60)/60);
-                    if (hour > 0){
-                        durationLeftLbl.setText(hour+"hr "+min+"min");
+                        latestDistance = distance(prevLat, prevLng, lat, lng);
+                        ms.saveLatLng(prevLat, prevLng, lat, lng);
+                        //Calculate the time required based on each distance travelled
+                        distanceInt = (int) (distanceInt - Math.floor(latestDistance));
+                        distanceLeftLbl.setText(distanceInt/1000 + "km");
+                        ms.saveDistance(distanceInt);
+
+                        //Preprocess seconds into hour and minutes
+                        duration = duration - (latestDistance / speedInt);
+                        ms.saveDuration(duration);
+                        int sec = (int) (duration % 60);
+                        int min = (int) ((duration/60) % 60);
+                        int hour = (int) ((duration/60)/60);
+                        if (hour > 0){
+                            durationLeftLbl.setText(hour+"hr "+min+"min");
+                        }
+                        else if (hour == 0 && min != 0){
+                            if (min > 10) {
+                                durationLeftLbl.setText(min+"min");
+                            }
+                            else{
+                                durationLeftLbl.setText(min+"min "+sec+"sec");
+                            }
+                        }
+                        else {
+                            if (sec < 0){
+                                durationLeftLbl.setText("Arriving soon...");
+                            }
+                            else{
+                                durationLeftLbl.setText(sec+"sec");
+                            }
+                        }
+                    });
+                    valueAnimator.start();
+                    handler.postDelayed(this, 500);
+                    if (index == polylineList.size() - 1) {
+                        deliveredLbl.setVisibility(View.VISIBLE);
+                        distanceLeftLbl.setVisibility(View.GONE);
+                        etaLbl.setVisibility(View.GONE);
+                        distLbl.setVisibility(View.GONE);
+                        durationLeftLbl.setVisibility(View.GONE);
+                        valueAnimator.end();
+                        handler.removeCallbacksAndMessages(null);
+                        ms.removeStatus();
+                        //om.updateOrderStatus(orderID, "delivered");
                     }
-                    else if (hour == 0 && min != 0){
-                        if (min > 10) {
-                            durationLeftLbl.setText(min+"min");
-                        }
-                        else{
-                            durationLeftLbl.setText(min+"min "+sec+"sec");
-                        }
-                    }
-                    else {
-                        if (sec < 0){
-                            durationLeftLbl.setText("Arriving soon...");
-                        }
-                        else{
-                            durationLeftLbl.setText(sec+"sec");
-                        }
-                    }
-                });
-                valueAnimator.start();
-                handler.postDelayed(this, 500);
-                if (index == polylineList.size() - 1) {
-                    deliveredLbl.setVisibility(View.VISIBLE);
-                    distanceLeftLbl.setVisibility(View.GONE);
-                    etaLbl.setVisibility(View.GONE);
-                    distLbl.setVisibility(View.GONE);
-                    durationLeftLbl.setVisibility(View.GONE);
-                    valueAnimator.end();
-                    handler.removeCallbacksAndMessages(null);
-                    ms.saveStatus("delivered");
-                    ms.removeStatus();
-                    //om.updateOrderStatus(orderID, "delivered");
                 }
-            }
-        }, 3000);
+            }, 3000);
+        }
     }
 
     private void onLoadAnim() {
         alphaAnimation = new AlphaAnimation(1.0f, 0.0f);
-        alphaAnimation.setDuration(2000);
+        alphaAnimation.setDuration(3000);
         reverseAnimation = new AlphaAnimation(0.0f, 1.0f);
-        reverseAnimation.setDuration(2000);
+        reverseAnimation.setDuration(3000);
         loadingMapBox.startAnimation(alphaAnimation);
         onLoadingView.startAnimation(alphaAnimation);
         cardView.startAnimation(reverseAnimation);
