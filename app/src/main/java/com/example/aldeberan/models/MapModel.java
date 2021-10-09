@@ -28,12 +28,12 @@ public class MapModel {
     }
 
     //Callback function for getLatLng response
-    public interface OnResponseCallback {
+    public interface OnGetLatLngResponseCallback {
         public void onResponse(LatLng latLng);
     }
 
     //Get latlng from Google Maps API
-    public void getLatLng(String address, MapModel.OnResponseCallback callback){
+    public void getLatLng(String address, MapModel.OnGetLatLngResponseCallback callback){
         RequestParams params = new RequestParams();
         params.put("address", preprocessAddress(address));
 
@@ -58,6 +58,41 @@ public class MapModel {
             public void onFailure(int statusCode, @Nullable Headers headers, String errorResponse, @Nullable Throwable throwable) {
                 Log.i("STATUS", String.valueOf(statusCode));
                 callback.onResponse(null);
+            }
+        });
+    }
+
+    //Callback function for isValidAddress response
+    public interface OnIsValidAddressResponseCallback {
+        public void onResponse(int status, String message);
+    }
+
+    //Check if address is within West Malaysia
+    public void isValidAddress(String address, MapModel.OnIsValidAddressResponseCallback callback){
+        RequestParams params = new RequestParams();
+        params.put("address", preprocessAddress(address));
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get("https://aldeberan-emporium-nodejs.herokuapp.com/isaddvalid", params, new TextHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, String response) {
+                Log.i("JSON", response);
+                Log.i("STATUS", String.valueOf(statusCode));
+
+                try {
+                    JSONObject resObj = new JSONObject(response);
+                    int status = resObj.getInt("status");
+                    String msg = resObj.getString("msg");
+                    callback.onResponse(status, msg);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, @Nullable Headers headers, String errorResponse, @Nullable Throwable throwable) {
+                Log.i("STATUS", String.valueOf(statusCode));
+                callback.onResponse(500, null);
             }
         });
     }

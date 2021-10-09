@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.aldeberan.Activity.home_product;
 import com.example.aldeberan.R;
 import com.example.aldeberan.models.AddressModel;
+import com.example.aldeberan.models.MapModel;
 import com.example.aldeberan.storage.UserStorage;
 
 public class UserAddAddressFragment extends Fragment implements View.OnClickListener{
@@ -37,12 +38,16 @@ public class UserAddAddressFragment extends Fragment implements View.OnClickList
     EditText addState;
     EditText addCountry;
 
+    MapModel mm;
+
     View userNewAddView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         userNewAddView = inflater.inflate(R.layout.fragment_user_add_address, container, false);
 
         ((home_product) getActivity()).setActionBarTitle("Add New Address");
+
+        mm = new MapModel();
 
         //Submit Button
         submitBtn = userNewAddView.findViewById(R.id.submitBtn);
@@ -119,36 +124,51 @@ public class UserAddAddressFragment extends Fragment implements View.OnClickList
         Switch isDefaultComp = userNewAddView.findViewById(R.id.isDefault);
         int isDefault = isDefaultComp.isChecked() ? 1 : 0;
 
+        String address = concatAddress(line1, line2, code, city, state, country);
+
         if (recipient != null && contact != null && line1 != null && code != null && city != null && state != null && country != null){
-            submitBtn.setVisibility(View.GONE);
-            onSubmitThrobber.setVisibility(View.VISIBLE);
-            onSubmitView.setVisibility(View.VISIBLE);
-            addRecipient.setEnabled(false);
-            addContact.setEnabled(false);
-            addLine1.setEnabled(false);
-            addLine2.setEnabled(false);
-            addCode.setEnabled(false);
-            addCity.setEnabled(false);
-            addState.setEnabled(false);
-            addCountry.setEnabled(false);
-            isDefaultComp.setEnabled(false);
 
-            UserStorage us = new UserStorage(getActivity());
-            String userID = us.getID();
+            mm.isValidAddress(address, (status, msg) -> {
+                if (status == 500){
+                    Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
+                }
+                else{
+                    submitBtn.setVisibility(View.GONE);
+                    onSubmitThrobber.setVisibility(View.VISIBLE);
+                    onSubmitView.setVisibility(View.VISIBLE);
+                    addRecipient.setEnabled(false);
+                    addContact.setEnabled(false);
+                    addLine1.setEnabled(false);
+                    addLine2.setEnabled(false);
+                    addCode.setEnabled(false);
+                    addCity.setEnabled(false);
+                    addState.setEnabled(false);
+                    addCountry.setEnabled(false);
+                    isDefaultComp.setEnabled(false);
 
-            AddressModel am = new AddressModel();
-            am.addAddress(userID, recipient, contact, line1, line2, code, city, state, country, isDefault);
-            onSubmitAnim();
-            //Redirect back to load products fragment
-            UserAddressFragment addressFragment = new UserAddressFragment();
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, addressFragment)
-                    .addToBackStack(null)
-                    .commit();
+                    UserStorage us = new UserStorage(getActivity());
+                    String userID = us.getID();
+
+                    AddressModel am = new AddressModel();
+                    am.addAddress(userID, recipient, contact, line1, line2, code, city, state, country, isDefault);
+                    onSubmitAnim();
+                    //Redirect back to load products fragment
+                    UserAddressFragment addressFragment = new UserAddressFragment();
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_container, addressFragment)
+                            .addToBackStack(null)
+                            .commit();
+                }
+            });
         }
         else{
             Toast.makeText(getContext(), "All inputs are required!", Toast.LENGTH_LONG).show();
         }
+    }
+
+    public String concatAddress(String addLine1, String addLine2, String addCode, String addCity, String addState, String addCountry){
+        String address = addLine1+addLine2+addCode+addCity+addState+addCountry;
+        return address;
     }
 
     //Hide keyboard when out of focus

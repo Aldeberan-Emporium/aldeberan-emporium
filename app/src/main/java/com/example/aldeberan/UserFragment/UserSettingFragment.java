@@ -18,6 +18,7 @@ import com.example.aldeberan.MapFragment.MapsActivity;
 import com.example.aldeberan.R;
 import com.example.aldeberan.UserFragment.UserSettings.UserAddressFragment;
 import com.example.aldeberan.UserFragment.UserSettings.UserInfoFragment;
+import com.example.aldeberan.models.MapModel;
 
 public class UserSettingFragment extends Fragment implements View.OnClickListener{
 
@@ -50,6 +51,11 @@ public class UserSettingFragment extends Fragment implements View.OnClickListene
                 ((home_product) getActivity()).setActionBarTitle("User Info");
                 break;
             case R.id.wishlistBtn:
+                //Get latlng first before entering
+                MapModel mm = new MapModel();
+                mm.getLatLng("", response -> {
+                    //pass latlng into mapsactivity
+                });
                 Intent myIntent = new Intent(getActivity(), MapsActivity.class);
                 getActivity().startActivity(myIntent);
                 ((home_product) getActivity()).setActionBarTitle("My Wishlist");
