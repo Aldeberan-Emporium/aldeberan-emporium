@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,15 +37,33 @@ public class cartFragment extends Fragment {
     private List<Cart> cartList;
     private CartAdapter adapter;
     private UserStorage us;
+    private Button checkoutBtn;
+    private TextView totalPrice;
+    private String totalPriceStr;
+    private CartModel cm;
 
     @Nullable
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         myCartFragmentView = inflater.inflate(R.layout.fragment_cart, container, false);
         productList = new ArrayList<>();
+        cm = new CartModel();
         recyclerView = myCartFragmentView.findViewById(R.id.cartRecyclerView);
+        checkoutBtn = myCartFragmentView.findViewById(R.id.checkoutButton);
+        totalPrice = myCartFragmentView.findViewById(R.id.totalPrice);
+
+
+        checkoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new checkoutFragment()).commit();
+            }
+        });
 
         ConstructRecyclerView();
+        calculateTotalPrice();
+
+
         SwipeRefreshLayout pullToRefresh = myCartFragmentView.findViewById(R.id.cartPullToRefresh);
 
         pullToRefresh.setOnRefreshListener(() -> {
@@ -96,5 +116,10 @@ public class cartFragment extends Fragment {
         Log.i("PLOPE", String.valueOf(cartList));
     }
 
-
+    public void calculateTotalPrice(){
+        cm.readQuoteByUser(us.getID(), response -> {
+            totalPriceStr = String.valueOf(response.get(0).getTotal());
+            totalPrice.setText("RM" + totalPriceStr);
+        });
+    }
 }
