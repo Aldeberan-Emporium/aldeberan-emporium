@@ -37,4 +37,12 @@
     <string name="user_settings_coupons">My Coupons</string>
     <string name="user_settings_info_back">Return to User Settings</string>
     <string name="user_settings_report">Report a Bug?</string>
+
+    <string name="bottom_nav_home">Home</string>
+    <string name="bottom_nav_products">Products</string>
+    <string name="bottom_nav_cart">Cart</string>
+    <string name="bottom_nav_user">User</string>
+
+    <string name="homepage_label_bs">Best Sellers</string>
+    <string name="homepage_label_na">New Arrivals</string>
 </resources>

@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Aldeberan">
         <activity
+            android:name=".Activity.Homepage"
+            android:exported="true" />
+        <activity
             android:name=".Activity.CheckoutActivityJava"
             android:exported="true" />
         <activity
