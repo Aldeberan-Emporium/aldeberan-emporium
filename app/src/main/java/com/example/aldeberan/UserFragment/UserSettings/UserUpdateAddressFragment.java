@@ -194,7 +194,7 @@ public class UserUpdateAddressFragment extends Fragment implements View.OnClickL
     }
 
     public String concatAddress(String addLine1, String addLine2, String addCode, String addCity, String addState, String addCountry){
-        String address = addLine1+addLine2+addCode+addCity+addState+addCountry;
+        String address = addLine1+","+addLine2+","+addCode+addCity+addState+addCountry;
         return address;
     }
 
