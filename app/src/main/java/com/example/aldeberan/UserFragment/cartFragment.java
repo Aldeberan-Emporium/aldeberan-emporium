@@ -59,12 +59,11 @@ public class cartFragment extends Fragment {
         CartModel cm = new CartModel();
         us = new UserStorage(getActivity());
 
-            int quoteID = us.getQuoteID();
+        int quoteID = us.getQuoteID();
         System.out.println("quoteID: " + quoteID);
 
             cm.readQuoteItemByQuote(quoteID, response -> {
                 cartList = response;
-                System.out.println("hello" + cartList);
                 PutDataIntoRecyclerView(response);
             });
         }
