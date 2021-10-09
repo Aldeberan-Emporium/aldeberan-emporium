@@ -130,7 +130,9 @@ public class UserAddAddressFragment extends Fragment implements View.OnClickList
 
             mm.isValidAddress(address, (status, msg) -> {
                 if (status == 500){
+                    onReverseSubmitAnim();
                     Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
+                    onSubmitAnim();
                 }
                 else{
                     submitBtn.setVisibility(View.GONE);
@@ -180,6 +182,31 @@ public class UserAddAddressFragment extends Fragment implements View.OnClickList
     private void onSubmitAnim() {
         //On load throbber fade out
         alphaAnimation = new AlphaAnimation(1.0f, 0.0f);
+        alphaAnimation.setDuration(2000);
+        onSubmitThrobber.startAnimation(alphaAnimation);
+        onSubmitView.startAnimation(alphaAnimation);
+
+        alphaAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                onSubmitThrobber.setVisibility(View.VISIBLE);
+                onSubmitView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                onSubmitThrobber.setVisibility(View.GONE);
+                onSubmitView.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {}
+        });
+    }
+
+    private void onReverseSubmitAnim() {
+        //On load throbber fade out
+        alphaAnimation = new AlphaAnimation(0.0f, 1.0f);
         alphaAnimation.setDuration(2000);
         onSubmitThrobber.startAnimation(alphaAnimation);
         onSubmitView.startAnimation(alphaAnimation);

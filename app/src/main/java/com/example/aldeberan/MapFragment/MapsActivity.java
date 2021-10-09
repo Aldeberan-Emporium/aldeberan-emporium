@@ -351,6 +351,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         valueAnimator.end();
                         handler.removeCallbacksAndMessages(null);
                         ms.removeStatus();
+                        Thread.interrupted();
                         //om.updateOrderStatus(orderID, "delivered");
                     }
                 }
