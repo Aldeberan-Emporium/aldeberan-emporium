@@ -62,4 +62,8 @@ public class MapStorage {
     public double getDuration(){return Double.longBitsToDouble(sharedPreferences.getLong("duration", 0));}
     public String getStatus(){return sharedPreferences.getString("status", "");}
 
+    public void removeStatus () {
+        editor.remove("status").commit();
+    }
+
 }

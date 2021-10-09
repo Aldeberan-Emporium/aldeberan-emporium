@@ -1,6 +1,7 @@
 package com.example.aldeberan.MapFragment;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
@@ -14,7 +15,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -73,6 +77,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private String durationLeft, distanceLeft;
     private int distanceInt, speedInt;
     TextView distanceLeftLbl, durationLeftLbl, etaLbl, distLbl, deliveredLbl;
+    LinearLayout loadingMapBox;
+    View onLoadingView;
+    ConstraintLayout cardView;
+    public AlphaAnimation alphaAnimation, reverseAnimation;
 
     public UserStorage us;
     public String userID;
@@ -99,12 +107,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         etaLbl = findViewById(R.id.etaLbl);
         distLbl = findViewById(R.id.distLbl);
         deliveredLbl = findViewById(R.id.deliveredLbl);
+        loadingMapBox = findViewById(R.id.loadingMapBox);
+        onLoadingView = findViewById(R.id.onLoadingView);
+        cardView = findViewById(R.id.cardView);
 
         polylineList = new ArrayList<>();
         mService = Common.getGoogleAPI();
 
         index = -1;
         next = 1;
+
+        onLoadAnim();
 
         /*
         Bundle extras = getIntent().getExtras();
@@ -138,6 +151,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         userLocationMarker = mMap.addMarker(new MarkerOptions().position(userAddress).title(us.getName() + "'s Address"));
 
+        prevLat = shopLocationMarker.getPosition().latitude;
+        prevLng = shopLocationMarker.getPosition().longitude;
+
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
         } else {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
@@ -151,7 +167,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder()
         .target(googleMap.getCameraPosition().target).zoom(17).bearing(30).tilt(45).build()));
 
-        if (ms.getStatus() == "shipping"){
+
+        if (ms.sharedPreferences.contains("status")){
             polylineList = decodePoly(ms.getPolyline());
             duration = ms.getDuration();
             distanceInt = ms.getDistance();
@@ -161,7 +178,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             prevLng = ms.getPrevLng();
             lat = ms.getLat();
             lng = ms.getLng();
-            pathBuilderAnimation();
+            Handler handler = new Handler();
+            handler.postDelayed(() -> pathBuilderAnimation(), 1500);
         }
         else{
             String requestURL = null;
@@ -191,7 +209,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             }
                             @Override
                             public void onFailure(Call<String> call, Throwable t) {
-
                             }
                         });
 
@@ -245,14 +262,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
         polylineAnimator.start();
 
-        if (ms.getStatus() == "shipping"){
-            senderLocationMarker = mMap.addMarker(new MarkerOptions().position(new LatLng(prevLat, prevLng))
+        senderLocationMarker = mMap.addMarker(new MarkerOptions().position(new LatLng(prevLat, prevLng))
                     .flat(true).icon(BitmapDescriptorFactory.fromResource(R.drawable.motor)).title("Aldeberan Emporium's Delivery Worker"));
-        }
-        else{
-            senderLocationMarker = mMap.addMarker(new MarkerOptions().position(shopLocationMarker.getPosition())
-                    .flat(true).icon(BitmapDescriptorFactory.fromResource(R.drawable.motor)).title("Aldeberan Emporium's Delivery Worker"));
-        }
+
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(senderLocationMarker.getPosition(), 10));
 
         Handler handler = new Handler();
@@ -265,6 +277,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     index++;
                     next = index + 1;
                     ms.savePolyIndex(index, next);
+                    ms.saveStatus("shipping");
                 }
                 if (index < polylineList.size() - 1) {
                     startPosition = polylineList.get(index);
@@ -319,7 +332,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             durationLeftLbl.setText(sec+"sec");
                         }
                     }
-                    ms.saveStatus("shipping");
                 });
                 valueAnimator.start();
                 handler.postDelayed(this, 500);
@@ -332,10 +344,40 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     valueAnimator.end();
                     handler.removeCallbacksAndMessages(null);
                     ms.saveStatus("delivered");
+                    ms.removeStatus();
                     //om.updateOrderStatus(orderID, "delivered");
                 }
             }
         }, 3000);
+    }
+
+    private void onLoadAnim() {
+        alphaAnimation = new AlphaAnimation(1.0f, 0.0f);
+        alphaAnimation.setDuration(2000);
+        reverseAnimation = new AlphaAnimation(0.0f, 1.0f);
+        reverseAnimation.setDuration(2000);
+        loadingMapBox.startAnimation(alphaAnimation);
+        onLoadingView.startAnimation(alphaAnimation);
+        cardView.startAnimation(reverseAnimation);
+
+        alphaAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                loadingMapBox.setVisibility(View.VISIBLE);
+                onLoadingView.setVisibility(View.VISIBLE);
+                cardView.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                loadingMapBox.setVisibility(View.GONE);
+                onLoadingView.setVisibility(View.GONE);
+                cardView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {}
+        });
     }
 
     private List<LatLng> decodePoly(String polyline) {
