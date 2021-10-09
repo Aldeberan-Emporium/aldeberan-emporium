@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.aldeberan.MapFragment.DirectionHelpers.IGoogleAPI;
 import com.example.aldeberan.R;
+import com.example.aldeberan.models.OrderModel;
 import com.example.aldeberan.storage.UserStorage;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -57,13 +58,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private List<LatLng> polylineList;
     private PolylineOptions polylineOptions, senderPolylineOptions;
     Context context;
+    int orderID;
 
     IGoogleAPI mService;
 
     Marker shopLocationMarker; //start
     Marker userLocationMarker; //end
     Marker senderLocationMarker; //in between/delivery
-    private LatLng startPosition, endPosition;
+    private LatLng startPosition, endPosition, userAddress;
     private int index, next;
     private double lat, lng, prevLat, prevLng, latestDistance, duration;
     private float v;
@@ -73,6 +75,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public UserStorage us;
     public String userID;
+
+    public OrderModel om;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +89,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         us = new UserStorage(this);
+        om = new OrderModel();
         context = this;
         distanceLeftLbl = findViewById(R.id.distanceLeftLbl);
         durationLeftLbl = findViewById(R.id.durationLeftLbl);
@@ -94,6 +99,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         polylineList = new ArrayList<>();
         mService = Common.getGoogleAPI();
+
+        /*
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            orderID = extras.getInt("orderID");
+            double lat = extras.getDouble("lat");
+            double lng = extras.getDouble("lng");
+            userAddress = new LatLng(lat, lng);
+        }
+         */
     }
 
     @Override
@@ -108,12 +123,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.getUiSettings().setAllGesturesEnabled(false);
         mMap.getUiSettings().setZoomGesturesEnabled(false);
 
+        userAddress = new LatLng(5.375991955595361, 100.53635499667726);
+
         //Set bakery location (MMU Address)
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(new LatLng(2.9279965093182874, 101.64193258318224));
         shopLocationMarker = mMap.addMarker(markerOptions.title("Aldeberan Emporium"));
 
-        userLocationMarker = mMap.addMarker(new MarkerOptions().position(new LatLng(5.375991955595361, 100.53635499667726)).title(us.getName() + "'s Address"));
+        userLocationMarker = mMap.addMarker(new MarkerOptions().position(userAddress).title(us.getName() + "'s Address"));
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
         } else {
@@ -274,6 +291,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                             durationLeftLbl.setVisibility(View.GONE);
                                             valueAnimator.end();
                                             handler.removeCallbacksAndMessages(null);
+
+                                            //om.updateOrderStatus(orderID, "delivered");
                                         }
                                     }
                                 }, 3000);

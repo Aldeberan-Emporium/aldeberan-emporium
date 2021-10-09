@@ -29,7 +29,7 @@ public class MapModel {
 
     //Callback function for getLatLng response
     public interface OnGetLatLngResponseCallback {
-        public void onResponse(LatLng latLng);
+        public void onResponse(double lat, double lng);
     }
 
     //Get latlng from Google Maps API
@@ -48,7 +48,7 @@ public class MapModel {
                     JSONObject latLngObj = new JSONObject(response);
                     double lat = latLngObj.getDouble("lat");
                     double lng = latLngObj.getDouble("lng");
-                    callback.onResponse(new LatLng(lat, lng));
+                    callback.onResponse(lat, lng);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -57,7 +57,7 @@ public class MapModel {
             @Override
             public void onFailure(int statusCode, @Nullable Headers headers, String errorResponse, @Nullable Throwable throwable) {
                 Log.i("STATUS", String.valueOf(statusCode));
-                callback.onResponse(null);
+                callback.onResponse(0.0, 0.0);
             }
         });
     }
