@@ -79,8 +79,6 @@ public class homeProductFragment extends Fragment{
         }
     }
 
-
-
     ProductListingDetailAdapter.FragmentCommunication home_communication = (prodName, prodID, prodImg, prodPrice) -> {
         homeProductFragment homepage = new homeProductFragment();
         Bundle bundle = new Bundle();

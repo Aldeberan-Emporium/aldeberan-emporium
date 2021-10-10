@@ -4,9 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/drawable/border.xml" value="0.2203125" />
-        <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/drawable/cardview_rounded.xml" value="0.1125" />
+        <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/drawable/cardview_rounded_small.xml" value="0.2203125" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/drawable/ic_add.xml" value="0.2203125" />
-        <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/drawable/ic_box_solid.xml" value="0.1125" />
+        <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/drawable/ic_boxes_solid.xml" value="0.2203125" />
+        <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/drawable/ic_cart_plus_solid.xml" value="0.2203125" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/drawable/ic_edit_solid.xml" value="0.17314814814814813" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/drawable/ic_heart_solid.xml" value="0.16944444444444445" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/drawable/ic_home_product.xml" value="0.16944444444444445" />
@@ -21,16 +22,19 @@
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/activity_admin_panel_add_product.xml" value="0.2" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/activity_admin_panel_load_product.xml" value="0.22" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/activity_admin_panel_update_product.xml" value="0.22" />
-        <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/activity_maps.xml" value="0.12" />
+        <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/activity_home_product.xml" value="0.20416666666666666" />
+        <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/activity_homepage.xml" value="0.16" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/admin_panel_product_row.xml" value="0.5" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/fragment_admin_add_product.xml" value="0.20416666666666666" />
-        <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/fragment_user_add_address.xml" value="0.25" />
+        <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/fragment_home_product.xml" value="0.1" />
+        <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/fragment_user_add_address.xml" value="0.16" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/fragment_user_address_book.xml" value="0.25" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/fragment_user_info.xml" value="0.25" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/fragment_user_setting.xml" value="0.13" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/fragment_user_update_address.xml" value="0.22" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/nav_header.xml" value="0.25" />
+        <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/product_card.xml" value="0.67" />
+        <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/product_detail_c_row.xml" value="0.5" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/user_settings_address_row.xml" value="0.5" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/menu/drawer_menu.xml" value="0.67" />
         <entry key="..\:/Users/Kelvi/Documents/Final Sem/Mobile/project-aldeberan/app/src/main/res/layout/activity_home_product.xml" value="0.2269021739130435" />

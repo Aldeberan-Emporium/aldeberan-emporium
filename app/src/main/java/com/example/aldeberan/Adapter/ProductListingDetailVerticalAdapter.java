@@ -1,12 +1,8 @@
 package com.example.aldeberan.Adapter;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -18,12 +14,11 @@ import com.example.aldeberan.databinding.ProductCardBinding;
 import com.example.aldeberan.models.CartModel;
 import com.example.aldeberan.models.ProductModel;
 import com.example.aldeberan.storage.UserStorage;
-import com.example.aldeberan.structures.Cart;
 import com.example.aldeberan.structures.Product;
 
 import java.util.List;
 
-public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductListingDetailAdapter.ProductViewHolder>{
+public class ProductListingDetailVerticalAdapter extends RecyclerView.Adapter<ProductListingDetailVerticalAdapter.ProductViewHolder>{
 
     private Context mContext;
     public List<Product> mData;
@@ -33,7 +28,7 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
     UserStorage userStorage;
 
 
-    public ProductListingDetailAdapter(Context mContext, List<Product> mData, FragmentCommunication mCommunicator) {
+    public ProductListingDetailVerticalAdapter(Context mContext, List<Product> mData, FragmentCommunication mCommunicator) {
         this.mContext = mContext;
         this.mData = mData;
         this.mCommunicator = mCommunicator;
@@ -45,7 +40,7 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
         ProductCardBinding productCardBinding;
         FragmentCommunication mCommunication;
 
-        public ProductViewHolder(ProductCardBinding productCardBinding, ProductListingDetailAdapter.FragmentCommunication mCommunication) {
+        public ProductViewHolder(ProductCardBinding productCardBinding, ProductListingDetailVerticalAdapter.FragmentCommunication mCommunication) {
             super(productCardBinding.getRoot());
             this.productCardBinding = productCardBinding;
             this.mCommunication = mCommunication;
@@ -62,10 +57,10 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
 
     @NonNull
     @Override
-    public ProductListingDetailAdapter.ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
+    public ProductListingDetailVerticalAdapter.ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         ProductCardBinding productCardBinding = DataBindingUtil.inflate(layoutInflater, R.layout.product_card, parent, false);
-        ProductListingDetailAdapter.ProductViewHolder holder = new ProductListingDetailAdapter.ProductViewHolder(productCardBinding, mCommunicator);
+        ProductListingDetailVerticalAdapter.ProductViewHolder holder = new ProductListingDetailVerticalAdapter.ProductViewHolder(productCardBinding, mCommunicator);
         return holder;
     }
 
