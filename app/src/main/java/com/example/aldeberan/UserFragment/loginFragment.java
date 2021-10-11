@@ -51,7 +51,7 @@ public class loginFragment extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        myFragmentView = inflater.inflate(R.layout.fragment_login, container, false);
+        myFragmentView = inflater.inflate(R.layout.activity_login, container, false);
         
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.def_log_id))

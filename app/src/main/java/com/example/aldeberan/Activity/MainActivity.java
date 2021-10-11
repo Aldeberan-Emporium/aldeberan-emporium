@@ -1,7 +1,10 @@
 package com.example.aldeberan.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -16,6 +19,13 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
+        //gradients, set duration at gradient_1/2/3/list @drawable
+        ConstraintLayout constraintLayout = findViewById(R.id.main_layout);
+        AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
+        animationDrawable.setEnterFadeDuration(0);
+        animationDrawable.setExitFadeDuration(1000);
+        animationDrawable.start();
+
 
         Handler mHandler = new Handler();
         mHandler.postDelayed(new Runnable() {
@@ -28,6 +38,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
 
-        }, 300L);
+        }, 3000L);
     }
 }

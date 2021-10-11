@@ -1,9 +1,5 @@
 package com.example.aldeberan.Activity;
 
-import static android.app.Activity.*;
-
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -23,7 +19,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.aldeberan.R;
 import com.example.aldeberan.models.CartModel;
 import com.example.aldeberan.storage.UserStorage;
-import com.example.aldeberan.structures.User;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -52,7 +47,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_login);
+        setContentView(R.layout.activity_login);
         // [START config_signin]
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
