@@ -67,6 +67,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         Glide.with(mContext).load(mData.get(position).getProdImg()).override(450, 450).into(holder.cartDetailCRowBinding.cartProdImgView);
 
 
+        String currentQuantity = toString().valueOf(mData.get(position).getProdQuantity());
+        holder.cartDetailCRowBinding.cartNumButton.setNumber(currentQuantity);
+        System.out.println("currentzz" + currentQuantity);
+
         //holder.cartDetailCRowBinding.checkId.setOnClickListener();
         holder.cartDetailCRowBinding.cartNumButton.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
             @Override
@@ -81,7 +85,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                     e.printStackTrace();
                 }
 
-                ElegantNumberButton numberButton;
                 String prodName = mData.get(position).getProdName();
 
                 int position = mData.indexOf(prodName);
@@ -89,7 +92,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                 int maxStock = productList.get(position).getProdStock();
 
                 //int maximumStock = Integer.parseInt(String.valueOf(productList.get(position).getProdStock()));
-                               
 
                 view.setRange(0,maxStock);
                 //String quantity = view.getNumber();
