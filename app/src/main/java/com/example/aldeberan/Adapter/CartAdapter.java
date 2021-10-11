@@ -1,5 +1,6 @@
 package com.example.aldeberan.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,7 +43,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
         CartDetailCRowBinding cartDetailCRowBinding;
 
-
         public CartViewHolder(CartDetailCRowBinding cartDetailCRowBinding) {
             super(cartDetailCRowBinding.getRoot());
             this.cartDetailCRowBinding = cartDetailCRowBinding;
@@ -59,11 +59,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CartViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
         holder.cartDetailCRowBinding.executePendingBindings();
-        holder.cartDetailCRowBinding.cartProdNameLbl.setText("Name: " + mData.get(position).getQuoteID());
-        holder.cartDetailCRowBinding.cartProdPriceLbl.setText("Price: RM " + mData.get(position).getTotal());
+        holder.cartDetailCRowBinding.cartProdNameLbl.setText("Name: " + mData.get(position).getProdName());
+        holder.cartDetailCRowBinding.cartProdPriceLbl.setText("Price: RM " + mData.get(position).getProdPrice());
         Glide.with(mContext).load(mData.get(position).getProdImg()).override(450, 450).into(holder.cartDetailCRowBinding.cartProdImgView);
 
 
@@ -82,11 +82,16 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                 }
 
                 ElegantNumberButton numberButton;
-                String prodName = String.valueOf(productList.get(position).getProdName());
-                int maximumStock = Integer.parseInt(String.valueOf(productList.get(position).getProdStock()));
+                String prodName = mData.get(position).getProdName();
+
+                int position = mData.indexOf(prodName);
+
+                int maxStock = productList.get(position).getProdStock();
+
+                //int maximumStock = Integer.parseInt(String.valueOf(productList.get(position).getProdStock()));
                                
 
-                view.setRange(0,100);
+                view.setRange(0,maxStock);
                 //String quantity = view.getNumber();
 
                 userStorage = new UserStorage(mContext);
