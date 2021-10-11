@@ -3,7 +3,6 @@ package com.example.aldeberan.Adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.example.aldeberan.R;
 import com.example.aldeberan.databinding.CartDetailCRowBinding;
-import com.example.aldeberan.databinding.ProductDetailCRowBinding;
 import com.example.aldeberan.models.CartModel;
 import com.example.aldeberan.models.ProductModel;
 import com.example.aldeberan.storage.UserStorage;
@@ -31,12 +29,14 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     public List<Cart> mData;
     ProductModel pm = new ProductModel();
     CartModel cm = new CartModel();
-    List<Product> productList;
+    public List<Product> productList;
     UserStorage userStorage;
 
     public CartAdapter(Context mContext, List<Cart> mData) {
         this.mContext = mContext;
         this.mData = mData;
+        getProductDetail();
+        //System.out.println("lankiao " + productList);
     }
 
     public class CartViewHolder extends RecyclerView.ViewHolder{
@@ -68,6 +68,26 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
 
         String currentQuantity = toString().valueOf(mData.get(position).getProdQuantity());
+
+        //getProductDetail();
+        System.out.println("lankiao " + productList);
+        int currentStock;
+        /*
+        for(int i = 0; i != productList.size(); i++){
+            if(mData.get(position).getProdName() == productList.get(i).getProdName()){
+                currentStock = Integer.parseInt(String.valueOf(productList.get(i).getProdStock()));
+                System.out.println("lankiao " + currentStock);
+            }
+            else{
+                System.out.println("lankiao no found ");
+            }
+        }
+
+         */
+
+
+
+        holder.cartDetailCRowBinding.cartNumButton.setRange(0, 100);
         holder.cartDetailCRowBinding.cartNumButton.setNumber(currentQuantity);
         System.out.println("currentzz" + currentQuantity);
 
@@ -76,23 +96,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             @Override
             public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
 
-                try {
-                    pm.readProductAll(response -> {
-                        productList = response;
-
-                    });
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
 
                 String prodName = mData.get(position).getProdName();
 
                 int position = mData.indexOf(prodName);
 
                 int maxStock = productList.get(position).getProdStock();
-
-                //int maximumStock = Integer.parseInt(String.valueOf(productList.get(position).getProdStock()));
-
                 view.setRange(0,maxStock);
                 //String quantity = view.getNumber();
 
@@ -102,6 +111,17 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
             }
         });
+    }
+
+    public void getProductDetail(){
+        try {
+            pm.readProductAll(response -> {
+                productList = response;
+                System.out.println("lanku " + productList);
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
