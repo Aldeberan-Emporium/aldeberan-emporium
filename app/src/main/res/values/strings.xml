@@ -43,8 +43,8 @@
     <string name="bottom_nav_cart">Cart</string>
     <string name="bottom_nav_user">User</string>
 
-    <string name="homepage_label_bs">Best Sellers</string>
-    <string name="homepage_label_na">New Arrivals</string>
+    <string name="homepage_label_bs">BEST SELLERS</string>
+    <string name="homepage_label_na">NEW ARRIVALS</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="MAPS_API_KEY">AIzaSyAwqKFj-NJ6NfiBGKl6JhsGFJRbj57VQ3w</string>
     <string name="loading_sender_location">Loading live sender\'s location...</string>

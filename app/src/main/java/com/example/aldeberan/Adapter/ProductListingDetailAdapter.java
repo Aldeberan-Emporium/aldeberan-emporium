@@ -57,6 +57,18 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
                         String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdImg()),
                         String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdPrice()));
             });
+
+            //add to wishlist
+            productCardBinding.buttonAddWishlist.setOnClickListener(view -> {
+                productCardBinding.buttonAddWishlist.setVisibility(View.GONE);
+                productCardBinding.buttonDelWishlist.setVisibility(View.VISIBLE);
+            });
+
+            //remove from wishlist
+            productCardBinding.buttonDelWishlist.setOnClickListener(view -> {
+                productCardBinding.buttonDelWishlist.setVisibility(View.GONE);
+                productCardBinding.buttonAddWishlist.setVisibility(View.VISIBLE);
+            });
         }
     }
 

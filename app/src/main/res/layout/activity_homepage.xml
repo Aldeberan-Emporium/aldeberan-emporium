@@ -10,7 +10,7 @@
         android:id="@+id/searchBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/logo_dark_blue"
+        android:background="@color/purple_500"
         android:foregroundGravity="top"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -61,6 +61,7 @@
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:scrollbarSize="0dp"
         app:layout_constraintBottom_toTopOf="@+id/botNavView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -71,11 +72,43 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView5"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/homepage_label_bs" />
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/headerbg"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="4:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_header_bg" />
+
+                <TextView
+                    android:id="@+id/bslabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:gravity="center|center_horizontal"
+                    android:shadowColor="@color/logo_brown"
+                    android:shadowDx="10"
+                    android:shadowDy="10"
+                    android:shadowRadius="10"
+                    android:text="@string/homepage_label_bs"
+                    android:textColor="@color/logo_pale_white"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView6"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/bestSellerBox"
@@ -87,11 +120,42 @@
                 android:layout_marginEnd="0dp"
                 android:layout_marginBottom="5dp" />
 
-            <TextView
-                android:id="@+id/textView7"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/homepage_label_na" />
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/imageView6"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="4:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_between_bg" />
+
+                <TextView
+                    android:id="@+id/nalabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:gravity="center|center_horizontal"
+                    android:shadowColor="@color/logo_brown"
+                    android:shadowDx="10"
+                    android:shadowDy="10"
+                    android:shadowRadius="10"
+                    android:text="@string/homepage_label_na"
+                    android:textColor="@color/logo_pale_white"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView6"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/newArrivalBox"
