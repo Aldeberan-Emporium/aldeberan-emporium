@@ -73,6 +73,7 @@ public class cartFragment extends Fragment {
         pullToRefresh.setOnRefreshListener(() -> {
             ConstructRecyclerView();
             adapter.notifyDataSetChanged();
+            calculateTotalPrice();
             pullToRefresh.setRefreshing(false);
         });
         return myCartFragmentView;
