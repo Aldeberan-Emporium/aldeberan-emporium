@@ -96,8 +96,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                 Double prodPrice = Double.parseDouble(String.valueOf(mData.get(position).getProdPrice()));
                 String prodImg = String.valueOf(mData.get(position).getProdImg());
 
-                cm.updateQuoteItem(quoteItemID, quoteID, prodName, prodSKU, itemQuantity, prodPrice, prodImg);
-                cm.updateQuoteRecal(quoteID);
+                if(itemQuantity == 0){
+                    cm.deleteQuoteItem(quoteItemID);
+                }
+                else{
+                    cm.updateQuoteItem(quoteItemID, quoteID, prodName, prodSKU, itemQuantity, prodPrice, prodImg);
+                    cm.updateQuoteRecal(quoteID);
+                }
             }
         });
     }
