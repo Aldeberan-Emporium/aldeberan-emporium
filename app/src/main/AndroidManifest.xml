@@ -7,17 +7,20 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        tools:replace="android:theme"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Aldeberan">
+        android:theme="@style/Theme.Aldeberan"
+        tools:replace="android:theme">
+        <activity
+            android:name=".Activity.checkoutActivity"
+            android:exported="true" />
         <activity
             android:name=".Activity.home_product"
-            android:exported="true"  android:theme="@style/Theme.Aldeberan.NoActionBar"/>
-
+            android:exported="true"
+            android:theme="@style/Theme.Aldeberan.NoActionBar" />
         <activity
             android:name=".AdminFragment.AdminFunction.AdminPanel_UpdateProduct"
             android:exported="true"

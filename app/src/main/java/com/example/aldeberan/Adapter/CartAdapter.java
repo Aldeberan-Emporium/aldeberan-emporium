@@ -9,11 +9,13 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.example.aldeberan.R;
 import com.example.aldeberan.databinding.CartDetailCRowBinding;
 import com.example.aldeberan.databinding.ProductDetailCRowBinding;
 import com.example.aldeberan.models.CartModel;
 import com.example.aldeberan.models.ProductModel;
+import com.example.aldeberan.storage.UserStorage;
 import com.example.aldeberan.structures.Cart;
 import com.bumptech.glide.Glide;
 import com.example.aldeberan.structures.Product;
@@ -25,6 +27,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     private Context mContext;
     public List<Cart> mData;
     CartModel cm = new CartModel();
+    UserStorage userStorage;
 
     public CartAdapter(Context mContext, List<Cart> mData) {
         this.mContext = mContext;
@@ -53,18 +56,36 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
-        //final Cart c = mData.get(position);
 
-        //holder.cartDetailCRowBinding.cartProdNameLbl.setText();
         holder.cartDetailCRowBinding.executePendingBindings();
-        holder.cartDetailCRowBinding.cartProdNameLbl.setText("Product: " + mData.get(position).getQuoteID());
+        holder.cartDetailCRowBinding.cartProdNameLbl.setText("Name: " + mData.get(position).getQuoteID());
         holder.cartDetailCRowBinding.cartProdPriceLbl.setText("Price: RM " + mData.get(position).getTotal());
-
         Glide.with(mContext).load(mData.get(position).getProdImg()).override(450, 450).into(holder.cartDetailCRowBinding.cartProdImgView);
+
+        //holder.cartDetailCRowBinding.checkId.setOnClickListener();
+        holder.cartDetailCRowBinding.cartNumButton.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
+            @Override
+            public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
+
+                ElegantNumberButton numberButton;
+                view.setRange(0, 100);
+                //String quantity = view.getNumber();
+                int itemQuantity [];
+                userStorage = new UserStorage(mContext);
+                String userID = userStorage.getID();
+                cm.checkIfUserExist(userID);
+                int quoteID = userStorage.getQuoteID();
+
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return mData.size();
+    }
+
+    public interface FragmentCommunication {
+        void respond(String prodName, String prodID, String prodSKU, String prodImg, String prodPrice, String prodStock);
     }
 }

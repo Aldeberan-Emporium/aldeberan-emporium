@@ -1,5 +1,6 @@
 package com.example.aldeberan.UserFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.aldeberan.Activity.MainActivity;
+import com.example.aldeberan.Activity.checkoutActivity;
+import com.example.aldeberan.Activity.home_product;
 import com.example.aldeberan.Adapter.CartAdapter;
 import com.example.aldeberan.Adapter.ProductListingDetailAdapter;
 import com.example.aldeberan.R;
@@ -56,14 +60,14 @@ public class cartFragment extends Fragment {
         checkoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new checkoutFragment()).commit();
+                Intent intent = new Intent(getActivity(), checkoutActivity.class);
+                startActivity(intent);
+                //getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new checkoutFragment()).commit();
             }
         });
 
         ConstructRecyclerView();
         calculateTotalPrice();
-
-
         SwipeRefreshLayout pullToRefresh = myCartFragmentView.findViewById(R.id.cartPullToRefresh);
 
         pullToRefresh.setOnRefreshListener(() -> {
@@ -71,7 +75,6 @@ public class cartFragment extends Fragment {
             adapter.notifyDataSetChanged();
             pullToRefresh.setRefreshing(false);
         });
-
         return myCartFragmentView;
     }
 
@@ -87,27 +90,6 @@ public class cartFragment extends Fragment {
                 PutDataIntoRecyclerView(response);
             });
         }
-
-
-
-        /*
-    CartAdapter.FragmentCommunication cart_communication = (prodName, prodID, prodSKU, prodQuantity, prodImg, prodPrice) -> {
-        cartFragment cart = new cartFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("prodName", prodName);
-        bundle.putString("prodID", prodID);
-        bundle.putString("prodSKU", prodSKU);
-        bundle.putInt("prodQuantity", prodQuantity);
-        bundle.putString("prodImg", prodImg);
-        //bundle.putString("prodStock", prodStock);
-        //bundle.putString("prodAvail", prodAvail);
-        bundle.putString("prodPrice", prodPrice);
-        cart.setArguments(bundle);
-
-
-    };
-
-         */
 
     private void PutDataIntoRecyclerView(List<Cart> cartList){
         adapter = new CartAdapter(getContext(), cartList);
