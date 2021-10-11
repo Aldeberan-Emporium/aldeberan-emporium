@@ -20,13 +20,17 @@ import com.example.aldeberan.structures.Cart;
 import com.bumptech.glide.Glide;
 import com.example.aldeberan.structures.Product;
 
+import org.json.JSONException;
+
 import java.util.List;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
 
     private Context mContext;
     public List<Cart> mData;
+    ProductModel pm = new ProductModel();
     CartModel cm = new CartModel();
+    List<Product> productList;
     UserStorage userStorage;
 
     public CartAdapter(Context mContext, List<Cart> mData) {
@@ -62,19 +66,32 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         holder.cartDetailCRowBinding.cartProdPriceLbl.setText("Price: RM " + mData.get(position).getTotal());
         Glide.with(mContext).load(mData.get(position).getProdImg()).override(450, 450).into(holder.cartDetailCRowBinding.cartProdImgView);
 
+
         //holder.cartDetailCRowBinding.checkId.setOnClickListener();
         holder.cartDetailCRowBinding.cartNumButton.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
             @Override
             public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
 
+                try {
+                    pm.readProductAll(response -> {
+                        productList = response;
+
+                    });
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
                 ElegantNumberButton numberButton;
-                view.setRange(0, 100);
+                String prodName = String.valueOf(productList.get(position).getProdName());
+                int maximumStock = Integer.parseInt(String.valueOf(productList.get(position).getProdStock()));
+                               
+
+                view.setRange(0,100);
                 //String quantity = view.getNumber();
-                int itemQuantity [];
+
                 userStorage = new UserStorage(mContext);
                 String userID = userStorage.getID();
                 cm.checkIfUserExist(userID);
-                int quoteID = userStorage.getQuoteID();
 
             }
         });
