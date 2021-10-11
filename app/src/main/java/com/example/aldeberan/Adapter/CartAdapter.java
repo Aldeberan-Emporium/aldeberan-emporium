@@ -27,16 +27,14 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
     private Context mContext;
     public List<Cart> mData;
-    ProductModel pm = new ProductModel();
     CartModel cm = new CartModel();
     public List<Product> productList;
     UserStorage userStorage;
 
-    public CartAdapter(Context mContext, List<Cart> mData) {
+    public CartAdapter(Context mContext, List<Cart> mData, List<Product> response) {
         this.mContext = mContext;
         this.mData = mData;
-        getProductDetail();
-        //System.out.println("lankiao " + productList);
+        productList = response;
     }
 
     public class CartViewHolder extends RecyclerView.ViewHolder{
@@ -66,11 +64,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         holder.cartDetailCRowBinding.cartProdPriceLbl.setText("Price: RM " + mData.get(position).getProdPrice());
         Glide.with(mContext).load(mData.get(position).getProdImg()).override(450, 450).into(holder.cartDetailCRowBinding.cartProdImgView);
 
-
         String currentQuantity = toString().valueOf(mData.get(position).getProdQuantity());
 
-        //getProductDetail();
-        System.out.println("lankiao " + productList);
+
         int currentStock;
         /*
         for(int i = 0; i != productList.size(); i++){
@@ -85,11 +81,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
          */
 
-
-
         holder.cartDetailCRowBinding.cartNumButton.setRange(0, 100);
         holder.cartDetailCRowBinding.cartNumButton.setNumber(currentQuantity);
-        System.out.println("currentzz" + currentQuantity);
+
 
         //holder.cartDetailCRowBinding.checkId.setOnClickListener();
         holder.cartDetailCRowBinding.cartNumButton.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
@@ -113,21 +107,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         });
     }
 
-    public void getProductDetail(){
-        try {
-            pm.readProductAll(response -> {
-                productList = response;
-                System.out.println("lanku " + productList);
-            });
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public int getItemCount() {
         return mData.size();
     }
+
 
     public interface FragmentCommunication {
         void respond(String prodName, String prodID, String prodSKU, String prodImg, String prodPrice, String prodStock);

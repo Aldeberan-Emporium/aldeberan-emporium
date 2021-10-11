@@ -68,7 +68,7 @@ public class CartModel extends DatabaseModel{
 
     //Callback function for cartList response
     public interface OnResponseCallback {
-        public void onResponse(List<Cart> response);
+        public void onResponse(List<Cart> response) throws JSONException;
     }
 
     //Read quote by user id

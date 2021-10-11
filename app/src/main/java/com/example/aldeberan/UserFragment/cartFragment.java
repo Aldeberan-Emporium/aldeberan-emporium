@@ -91,11 +91,15 @@ public class cartFragment extends Fragment {
             });
         }
 
-    private void PutDataIntoRecyclerView(List<Cart> cartList){
-        adapter = new CartAdapter(getContext(), cartList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(adapter);
-        Log.i("PLOPE", String.valueOf(cartList));
+    private void PutDataIntoRecyclerView(List<Cart> cartList) throws JSONException {
+        ProductModel pm = new ProductModel();
+        pm.readProductAll(response -> {
+            adapter = new CartAdapter(getContext(), cartList, response);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            recyclerView.setAdapter(adapter);
+            Log.i("PLOPE", String.valueOf(cartList));
+        });
+
     }
 
     public void calculateTotalPrice(){
