@@ -22,6 +22,8 @@ import com.example.aldeberan.structures.Product;
 import org.json.JSONException;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
 
@@ -66,22 +68,16 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
         String currentQuantity = toString().valueOf(mData.get(position).getProdQuantity());
 
+        String prodName = mData.get(position).getProdName();
 
-        int currentStock;
-        /*
-        for(int i = 0; i != productList.size(); i++){
-            if(mData.get(position).getProdName() == productList.get(i).getProdName()){
-                currentStock = Integer.parseInt(String.valueOf(productList.get(i).getProdStock()));
-                System.out.println("lankiao " + currentStock);
-            }
-            else{
-                System.out.println("lankiao no found ");
-            }
-        }
 
-         */
+        List<Product> result = productList.stream()
+                .filter(a -> Objects.equals(a.getProdName(), prodName))
+                .collect(Collectors.toList());
 
-        holder.cartDetailCRowBinding.cartNumButton.setRange(0, 100);
+       int currentStock = result.get(0).getProdStock();
+
+        holder.cartDetailCRowBinding.cartNumButton.setRange(0, currentStock);
         holder.cartDetailCRowBinding.cartNumButton.setNumber(currentQuantity);
 
 
@@ -91,12 +87,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
 
 
-                String prodName = mData.get(position).getProdName();
-
-                int position = mData.indexOf(prodName);
-
-                int maxStock = productList.get(position).getProdStock();
-                view.setRange(0,maxStock);
                 //String quantity = view.getNumber();
 
                 userStorage = new UserStorage(mContext);
@@ -105,6 +95,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
             }
         });
+    }
+
+    private int getIndexByProperty(String prodName) {
+        for (int i = 0; i < productList.size(); i++) {
+            if (productList !=null && productList.get(i).equals(prodName)) {
+                return i;
+            }
+        }
+        return -1;// not there is list
     }
 
 
