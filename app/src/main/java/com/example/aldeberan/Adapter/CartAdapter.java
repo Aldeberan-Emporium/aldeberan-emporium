@@ -79,41 +79,37 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
         holder.cartDetailCRowBinding.cartNumButton.setRange(0, currentStock);
         holder.cartDetailCRowBinding.cartNumButton.setNumber(currentQuantity);
-
-
-        //holder.cartDetailCRowBinding.checkId.setOnClickListener();
         holder.cartDetailCRowBinding.cartNumButton.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
             @Override
             public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
-
-
-                //String quantity = view.getNumber();
 
                 userStorage = new UserStorage(mContext);
                 String userID = userStorage.getID();
                 cm.checkIfUserExist(userID);
 
+                String quantity = view.getNumber();
+                int itemQuantity = Integer.parseInt(quantity);
+                int quoteID = userStorage.getQuoteID();
+                int quoteItemID = Integer.parseInt(String.valueOf(mData.get(position).getQuoteItemID()));
+                String prodName = String.valueOf(mData.get(position).getProdName());
+                String prodSKU = String.valueOf(mData.get(position).getProdSKU());
+                Double prodPrice = Double.parseDouble(String.valueOf(mData.get(position).getProdPrice()));
+                String prodImg = String.valueOf(mData.get(position).getProdImg());
+
+                cm.updateQuoteItem(quoteItemID, quoteID, prodName, prodSKU, itemQuantity, prodPrice, prodImg);
+                cm.updateQuoteRecal(quoteID);
             }
         });
     }
-
-    private int getIndexByProperty(String prodName) {
-        for (int i = 0; i < productList.size(); i++) {
-            if (productList !=null && productList.get(i).equals(prodName)) {
-                return i;
-            }
-        }
-        return -1;// not there is list
-    }
-
 
     @Override
     public int getItemCount() {
         return mData.size();
     }
 
-
     public interface FragmentCommunication {
-        void respond(String prodName, String prodID, String prodSKU, String prodImg, String prodPrice, String prodStock);
+        void respond(String prodName, String prodID, String prodSKU, String prodImg, String prodPrice, String prodQuantity);
     }
+
+
 }
