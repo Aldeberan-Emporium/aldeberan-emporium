@@ -100,6 +100,12 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
                 int itemQuantity = Integer.parseInt(quantity);
 
                 String pName = p.getProdName();
+                int maxStock = p.getProdStock();
+
+                System.out.println("maxstock" + maxStock);
+
+                button.setRange(0, maxStock);
+
                 System.out.println(pName + "Item quantity:" + quantity);
 
                 holder.productRowBinding.buttonAddCart.setOnClickListener(view -> {
