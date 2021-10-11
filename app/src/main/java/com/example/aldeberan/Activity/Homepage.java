@@ -1,32 +1,24 @@
 package com.example.aldeberan.Activity;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.aldeberan.Adapter.ProductListingDetailAdapter;
 import com.example.aldeberan.Adapter.ProductListingDetailVerticalAdapter;
 import com.example.aldeberan.R;
 import com.example.aldeberan.UserFragment.homeProductFragment;
-import com.example.aldeberan.models.CartModel;
 import com.example.aldeberan.models.ProductModel;
-import com.example.aldeberan.storage.UserStorage;
 import com.example.aldeberan.structures.Product;
-import com.facebook.login.LoginFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONException;
@@ -65,7 +57,7 @@ public class Homepage extends AppCompatActivity {
         ConstructRecyclerView();
     }
 
-    //LoginFragment loginFragment = new LoginFragment();
+
 
     //@Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -83,6 +75,8 @@ public class Homepage extends AppCompatActivity {
                 Toast.makeText(this, "Cart Clicked", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.botNavUser:
+                Intent intent = new Intent(Homepage.this, Login.class);
+                startActivity(intent);
                 Toast.makeText(this, "User CLicked", Toast.LENGTH_SHORT).show();
                 return true;
         }
