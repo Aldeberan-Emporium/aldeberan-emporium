@@ -22,6 +22,7 @@ import com.example.aldeberan.Adapter.ProductListingDetailAdapter;
 import com.example.aldeberan.Adapter.ProductListingDetailVerticalAdapter;
 import com.example.aldeberan.R;
 import com.example.aldeberan.UserFragment.homeProductFragment;
+import com.example.aldeberan.UserFragment.loginFragment;
 import com.example.aldeberan.models.CartModel;
 import com.example.aldeberan.models.ProductModel;
 import com.example.aldeberan.storage.UserStorage;
@@ -65,8 +66,8 @@ public class Homepage extends AppCompatActivity {
         ConstructRecyclerView();
     }
 
-    //LoginFragment loginFragment = new LoginFragment();
 
+    loginFragment LoginFragment = new loginFragment();
     //@Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
@@ -83,6 +84,7 @@ public class Homepage extends AppCompatActivity {
                 Toast.makeText(this, "Cart Clicked", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.botNavUser:
+                //getSupportFragmentManager().beginTransaction().replace(R.id.container, LoginFragment).commit();
                 Toast.makeText(this, "User CLicked", Toast.LENGTH_SHORT).show();
                 return true;
         }
