@@ -12,9 +12,11 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.aldeberan.Adapter.ProductListingDetailAdapter;
 import com.example.aldeberan.Adapter.ProductListingDetailVerticalAdapter;
@@ -24,6 +26,7 @@ import com.example.aldeberan.models.CartModel;
 import com.example.aldeberan.models.ProductModel;
 import com.example.aldeberan.storage.UserStorage;
 import com.example.aldeberan.structures.Product;
+import com.facebook.login.LoginFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONException;
@@ -38,19 +41,52 @@ public class Homepage extends AppCompatActivity {
     ProductListingDetailVerticalAdapter adapterNA;
     RecyclerView bestSellerBox;
     RecyclerView newArrivalBox;
+    BottomNavigationView bottomNavigationView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
 
+        bottomNavigationView = findViewById(R.id.botNavView);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(this::onNavigationItemSelected);
+        bottomNavigationView.setSelectedItemId(R.id.botNavHome);
+
         getSupportActionBar().hide();
+
+
 
         bestSellerBox = findViewById(R.id.bestSellerBox);
         newArrivalBox = findViewById(R.id.newArrivalBox);
         productList = new ArrayList<>();
 
         ConstructRecyclerView();
+    }
+
+    //LoginFragment loginFragment = new LoginFragment();
+
+    //@Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.botNavHome:
+                //getSupportFragmentManager().beginTransaction().replace(R.id.container, loginFragment).commit();
+                Toast.makeText(this, "Home Clicked", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.botNavProducts:
+                //getSupportFragmentManager().beginTransaction().replace(R.id.container, secondFragment).commit();
+                Toast.makeText(this, "Products Clicked", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.botNavCart:
+                Toast.makeText(this, "Cart Clicked", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.botNavUser:
+                Toast.makeText(this, "User CLicked", Toast.LENGTH_SHORT).show();
+                return true;
+        }
+        return false;
     }
 
     private void ConstructRecyclerView(){
@@ -117,4 +153,6 @@ public class Homepage extends AppCompatActivity {
         int cardWidth = 540;
         return width/cardWidth;
     }
+
+
 }

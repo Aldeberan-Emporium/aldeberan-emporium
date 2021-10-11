@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/page_1"
+        android:id="@+id/botNavHome"
         android:enabled="true"
         android:icon="@drawable/ic_home_solid"
         android:title="@string/bottom_nav_home"/>
     <item
-        android:id="@+id/page_2"
+        android:id="@+id/botNavProducts"
         android:enabled="true"
         android:icon="@drawable/ic_boxes_solid"
         android:title="@string/bottom_nav_products"/>
     <item
-        android:id="@+id/page_3"
+        android:id="@+id/botNavCart"
         android:enabled="true"
         android:icon="@drawable/ic_shopping_cart_solid"
         android:title="@string/bottom_nav_cart"/>
     <item
-        android:id="@+id/page_4"
+        android:id="@+id/botNavUser"
         android:enabled="true"
         android:icon="@drawable/ic_user_alt_solid"
         android:title="@string/bottom_nav_user"/>
