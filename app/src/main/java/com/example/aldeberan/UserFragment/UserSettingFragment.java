@@ -43,12 +43,12 @@ public class UserSettingFragment extends Fragment implements View.OnClickListene
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.editAddBtn:
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new UserAddressFragment()).commit();
-                ((home_product) getActivity()).setActionBarTitle("Address Book");
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView2, new UserAddressFragment()).addToBackStack(null).commit();
+                //((home_product) getActivity()).setActionBarTitle("Address Book");
                 break;
             case R.id.infoBtn:
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new UserInfoFragment()).commit();
-                ((home_product) getActivity()).setActionBarTitle("User Info");
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView2, new UserInfoFragment()).addToBackStack(null).commit();
+                //((home_product) getActivity()).setActionBarTitle("User Info");
                 break;
             case R.id.wishlistBtn:
                 //Pass in Order ID and Order Address

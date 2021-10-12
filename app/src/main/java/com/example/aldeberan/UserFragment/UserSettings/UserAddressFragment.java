@@ -17,6 +17,7 @@ import android.view.animation.Animation;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.aldeberan.Activity.Homepage;
 import com.example.aldeberan.Activity.home_product;
 import com.example.aldeberan.Adapter.AddressAdapter;
 import com.example.aldeberan.AdminFragment.AdminPanelUpdateProductFragment;
@@ -39,12 +40,17 @@ public class UserAddressFragment extends Fragment implements View.OnClickListene
     public Handler mHandler;
     public AlphaAnimation alphaAnimation;
     View userAddressView;
+    //Homepage homepage;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         userAddressView = inflater.inflate(R.layout.fragment_user_address_book, container, false);
 
-        ((home_product) getActivity()).setActionBarTitle("Address Book");
+        //((home_product) getActivity()).setActionBarTitle("Address Book");
+
+        //getActivity().onBackPressed();
+
+        //(homepage).setOnBackPressedListener(new BaseBackPressedListener(getActivity());
 
         addressList = new ArrayList<>();
         recyclerView = userAddressView.findViewById(R.id.addressRecyclerView);
@@ -147,4 +153,5 @@ public class UserAddressFragment extends Fragment implements View.OnClickListene
         recyclerView.setAdapter(adapter);
         Log.i("PLOPE", String.valueOf(addressList));
     }
+
 }
