@@ -21,6 +21,7 @@ import com.example.aldeberan.Adapter.ProductListingDetailVerticalAdapter;
 import com.example.aldeberan.UserFragment.homeProductFragment;
 import com.example.aldeberan.models.ProductModel;
 import com.example.aldeberan.structures.Product;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import org.json.JSONException;
 
@@ -37,6 +38,9 @@ public class HomepageFragment extends Fragment{
     EditText searchBar;
     View homepageView;
 
+    ShimmerFrameLayout shimmerBestSellerBox;
+    ShimmerFrameLayout shimmerNewArrivalBox;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         homepageView = inflater.inflate(R.layout.fragment_homepage, container, false);
@@ -46,6 +50,12 @@ public class HomepageFragment extends Fragment{
         bestSellerBox = homepageView.findViewById(R.id.bestSellerBox);
         newArrivalBox = homepageView.findViewById(R.id.newArrivalBox);
         productList = new ArrayList<>();
+
+        shimmerBestSellerBox = homepageView.findViewById(R.id.shimmerBestSellerBox);
+        shimmerBestSellerBox.startShimmerAnimation();
+
+        shimmerNewArrivalBox = homepageView.findViewById(R.id.shimmerNewArrivalBox);
+        shimmerNewArrivalBox.startShimmerAnimation();
 
         searchBar = homepageView.findViewById(R.id.searchInput);
 
@@ -92,6 +102,8 @@ public class HomepageFragment extends Fragment{
         bestSellerBox.setLayoutManager(horizontalLayoutManagaer);
         bestSellerBox.setAdapter(adapterBS);
         Log.i("PLOPE", String.valueOf(productList));
+        shimmerBestSellerBox.stopShimmerAnimation();
+        shimmerBestSellerBox.setVisibility(View.GONE);
     }
 
     ProductListingDetailVerticalAdapter.FragmentCommunication newArrivalComm = (prodName, prodID, prodImg, prodPrice) -> {
@@ -114,6 +126,8 @@ public class HomepageFragment extends Fragment{
         newArrivalBox.setAdapter(adapterNA);
         Log.i("PLOPE", String.valueOf(productList));
         //calculateScreenWidth();
+        shimmerNewArrivalBox.stopShimmerAnimation();
+        shimmerNewArrivalBox.setVisibility(View.GONE);
     }
 
     private int calculateScreenWidth () {

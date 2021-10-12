@@ -24,6 +24,7 @@ import com.example.aldeberan.Adapter.ProductListingDetailVerticalAdapter;
 import com.example.aldeberan.UserFragment.homeProductFragment;
 import com.example.aldeberan.models.ProductModel;
 import com.example.aldeberan.structures.Product;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import org.json.JSONException;
 
@@ -39,12 +40,17 @@ public class AllProductFragment extends Fragment {
     EditText searchBar;
     View allProdView;
 
+    ShimmerFrameLayout shimmerAllProdBox;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         allProdView = inflater.inflate(R.layout.fragment_all_product, container, false);
 
         allProdBox = allProdView.findViewById(R.id.allProdBox);
         productList = new ArrayList<>();
+
+        shimmerAllProdBox = allProdView.findViewById(R.id.shimmerAllProdBox);
+        shimmerAllProdBox.startShimmerAnimation();
 
         searchBar = allProdView.findViewById(R.id.searchInput);
 
@@ -107,6 +113,8 @@ public class AllProductFragment extends Fragment {
         allProdBox.setLayoutManager(gridLayoutManager);
         allProdBox.setAdapter(adapter);
         Log.i("PLOPE", String.valueOf(productList));
+        shimmerAllProdBox.stopShimmerAnimation();
+        shimmerAllProdBox.setVisibility(View.GONE);
     }
 
     private int calculateScreenWidth () {
