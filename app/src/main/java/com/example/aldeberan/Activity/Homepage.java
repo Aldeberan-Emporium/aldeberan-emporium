@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.example.aldeberan.Adapter.ProductListingDetailAdapter;
 import com.example.aldeberan.Adapter.ProductListingDetailVerticalAdapter;
 import com.example.aldeberan.AllProductFragment;
+import com.example.aldeberan.CartFragment;
 import com.example.aldeberan.HomepageFragment;
 import com.example.aldeberan.R;
 import com.example.aldeberan.UserFragment.UserSettingFragment;
@@ -69,6 +70,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                 Toast.makeText(this, "Products Clicked", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.botNavCart:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView2, new CartFragment()).addToBackStack(null).commit();
                 Toast.makeText(this, "Cart Clicked", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.botNavUser:

@@ -76,8 +76,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null){
+            Toast.makeText(this, "Currently Signed in", Toast.LENGTH_SHORT).show();
             updateUI(currentUser);
         }else{
+            Toast.makeText(this, "Currently NOT Signed in", Toast.LENGTH_SHORT).show();
             updateUI(null);
         }
 
@@ -89,10 +91,17 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        Toast.makeText(Login.this, "OnActivityResult", Toast.LENGTH_SHORT).show();
+
+        Toast.makeText(Login.this, String.valueOf(requestCode), Toast.LENGTH_SHORT).show();
+        Log.w(TAG, String.valueOf(requestCode));
+
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
+            Toast.makeText(Login.this, "Masuk IF", Toast.LENGTH_SHORT).show();
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
+                Toast.makeText(Login.this, "Masuk TRY", Toast.LENGTH_SHORT).show();
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
@@ -138,8 +147,11 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
     ActivityResultLauncher<Intent> resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
         @Override
         public void onActivityResult(ActivityResult result) {
+            Toast.makeText(Login.this, String.valueOf(result.getResultCode()), Toast.LENGTH_SHORT).show();
 
             if (result.getResultCode() == RESULT_OK) {
+                Toast.makeText(Login.this, "yeet", Toast.LENGTH_SHORT).show();
+
                 Intent intent = result.getData();
 
                 Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(intent);
