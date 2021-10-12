@@ -1,16 +1,24 @@
 package com.example.aldeberan.Activity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.aldeberan.Adapter.ProductListingDetailAdapter;
@@ -36,8 +44,9 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
     RecyclerView bestSellerBox;
     RecyclerView newArrivalBox;
     BottomNavigationView bottomNavigationView;
+    EditText searchBar;
 
-
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,11 +59,17 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
 
         getSupportActionBar().hide();
 
-
-
         bestSellerBox = findViewById(R.id.bestSellerBox);
         newArrivalBox = findViewById(R.id.newArrivalBox);
         productList = new ArrayList<>();
+
+        searchBar = findViewById(R.id.searchInput);
+
+        searchBar.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                hideKeyboard(v);
+            }
+        });
 
         ConstructRecyclerView();
     }
@@ -149,6 +164,13 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         Log.i("SCREENWIDTH", String.valueOf(width));
         int cardWidth = 540;
         return width/cardWidth;
+    }
+
+    //Hide keyboard when out of focus
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        //inputMethodManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
     }
 
 
