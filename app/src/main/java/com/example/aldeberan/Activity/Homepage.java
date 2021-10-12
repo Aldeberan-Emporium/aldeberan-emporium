@@ -16,17 +16,19 @@ import android.widget.Toast;
 import com.example.aldeberan.Adapter.ProductListingDetailAdapter;
 import com.example.aldeberan.Adapter.ProductListingDetailVerticalAdapter;
 import com.example.aldeberan.R;
+import com.example.aldeberan.UserFragment.UserSettingFragment;
 import com.example.aldeberan.UserFragment.homeProductFragment;
 import com.example.aldeberan.models.ProductModel;
 import com.example.aldeberan.structures.Product;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Homepage extends AppCompatActivity {
+public class Homepage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     List<Product> productList;
     ProductListingDetailAdapter adapterBS;
@@ -59,7 +61,7 @@ public class Homepage extends AppCompatActivity {
 
 
 
-    //@Override
+    @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()) {
@@ -75,6 +77,7 @@ public class Homepage extends AppCompatActivity {
                 Toast.makeText(this, "Cart Clicked", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.botNavUser:
+                //getSupportFragmentManager().beginTransaction().replace(R.id.content, new UserSettingFragment()).commit();
                 Intent intent = new Intent(Homepage.this, Login.class);
                 startActivity(intent);
                 Toast.makeText(this, "User CLicked", Toast.LENGTH_SHORT).show();
