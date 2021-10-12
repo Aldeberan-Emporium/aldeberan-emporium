@@ -23,10 +23,11 @@ import android.widget.Toast;
 
 import com.example.aldeberan.Adapter.ProductListingDetailAdapter;
 import com.example.aldeberan.Adapter.ProductListingDetailVerticalAdapter;
+import com.example.aldeberan.AllProductFragment;
+import com.example.aldeberan.HomepageFragment;
 import com.example.aldeberan.R;
 import com.example.aldeberan.UserFragment.UserSettingFragment;
 import com.example.aldeberan.UserFragment.homeProductFragment;
-import com.example.aldeberan.homepageFragment;
 import com.example.aldeberan.models.ProductModel;
 import com.example.aldeberan.structures.Product;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -60,11 +61,11 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
 
         switch (item.getItemId()) {
             case R.id.botNavHome:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView2, new homepageFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView2, new HomepageFragment()).addToBackStack(null).commit();
                 Toast.makeText(this, "Home Clicked", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.botNavProducts:
-                //getSupportFragmentManager().beginTransaction().replace(R.id.container, secondFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView2, new AllProductFragment()).addToBackStack(null).commit();
                 Toast.makeText(this, "Products Clicked", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.botNavCart:

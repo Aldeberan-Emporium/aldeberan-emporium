@@ -83,7 +83,7 @@
                     app:srcCompat="@drawable/ic_header_bg" />
 
                 <TextView
-                    android:id="@+id/bslabel"
+                    android:id="@+id/bsLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center|center_horizontal"

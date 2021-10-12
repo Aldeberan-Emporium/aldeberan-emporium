@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.example.aldeberan.Adapter.AllProductAdapter;
 import com.example.aldeberan.Adapter.ProductListingDetailAdapter;
 import com.example.aldeberan.Adapter.ProductListingDetailVerticalAdapter;
 import com.example.aldeberan.UserFragment.homeProductFragment;
@@ -26,28 +29,24 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
-public class HomepageFragment extends Fragment{
+public class AllProductFragment extends Fragment {
 
     List<Product> productList;
-    ProductListingDetailAdapter adapterBS;
-    ProductListingDetailVerticalAdapter adapterNA;
-    RecyclerView bestSellerBox;
-    RecyclerView newArrivalBox;
+    AllProductAdapter adapter;
+    RecyclerView allProdBox;
     EditText searchBar;
-    View homepageView;
+    View allProdView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        homepageView = inflater.inflate(R.layout.fragment_homepage, container, false);
+        allProdView = inflater.inflate(R.layout.fragment_all_product, container, false);
 
-        //getActivity().getSupportActionBar().hide();
-
-        bestSellerBox = homepageView.findViewById(R.id.bestSellerBox);
-        newArrivalBox = homepageView.findViewById(R.id.newArrivalBox);
+        allProdBox = allProdView.findViewById(R.id.allProdBox);
         productList = new ArrayList<>();
 
-        searchBar = homepageView.findViewById(R.id.searchInput);
+        searchBar = allProdView.findViewById(R.id.searchInput);
 
         searchBar.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
@@ -55,9 +54,26 @@ public class HomepageFragment extends Fragment{
             }
         });
 
+        searchBar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                filterProducts(editable.toString());
+            }
+        });
+
         ConstructRecyclerView();
 
-        return homepageView;
+        return allProdView;
     }
 
     private void ConstructRecyclerView(){
@@ -65,15 +81,14 @@ public class HomepageFragment extends Fragment{
         try {
             pm.readProductAll((response) -> {
                 productList = response;
-                PutDataIntoBestSellerBox(response);
-                PutDataIntoNewArrivalBox(response);
+                PutDataIntoAllProdBox(response);
             });
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    ProductListingDetailAdapter.FragmentCommunication bestSellerComm = (prodName, prodID, prodImg, prodPrice) -> {
+    AllProductAdapter.FragmentCommunication comm = (prodName, prodID, prodImg, prodPrice) -> {
         homeProductFragment homepage = new homeProductFragment();
         Bundle bundle = new Bundle();
         bundle.putString("prodName", prodName);
@@ -86,34 +101,12 @@ public class HomepageFragment extends Fragment{
         homepage.setArguments(bundle);
     };
 
-    private void PutDataIntoBestSellerBox(List<Product> productList){
-        adapterBS = new ProductListingDetailAdapter(getContext(), productList, bestSellerComm);
-        LinearLayoutManager horizontalLayoutManagaer = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        bestSellerBox.setLayoutManager(horizontalLayoutManagaer);
-        bestSellerBox.setAdapter(adapterBS);
-        Log.i("PLOPE", String.valueOf(productList));
-    }
-
-    ProductListingDetailVerticalAdapter.FragmentCommunication newArrivalComm = (prodName, prodID, prodImg, prodPrice) -> {
-        homeProductFragment homepage = new homeProductFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("prodName", prodName);
-        bundle.putString("prodID", prodID);
-        //bundle.putString("prodSKU", prodSKU);
-        bundle.putString("prodImg", prodImg);
-        //bundle.putString("prodStock", prodStock);
-        //bundle.putString("prodAvail", prodAvail);
-        bundle.putString("prodPrice", prodPrice);
-        homepage.setArguments(bundle);
-    };
-
-    private void PutDataIntoNewArrivalBox(List<Product> productList){
-        adapterNA = new ProductListingDetailVerticalAdapter(getContext(), productList, newArrivalComm);
+    private void PutDataIntoAllProdBox(List<Product> productList){
+        adapter = new AllProductAdapter(getContext(), productList, comm);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
-        newArrivalBox.setLayoutManager(gridLayoutManager);
-        newArrivalBox.setAdapter(adapterNA);
+        allProdBox.setLayoutManager(gridLayoutManager);
+        allProdBox.setAdapter(adapter);
         Log.i("PLOPE", String.valueOf(productList));
-        //calculateScreenWidth();
     }
 
     private int calculateScreenWidth () {
@@ -130,5 +123,18 @@ public class HomepageFragment extends Fragment{
         InputMethodManager inputMethodManager =(InputMethodManager) this.getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
         //inputMethodManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+    }
+
+    //Filter recycler view items
+    private void filterProducts(String input){
+        ArrayList<Product> filteredProductList = new ArrayList<>();
+
+        for (Product item : productList) {
+            if (item.getProdName().toLowerCase().contains(input.toLowerCase())){
+                filteredProductList.add(item);
+            }
+        }
+
+        adapter.filteredProductList(filteredProductList);
     }
 }
