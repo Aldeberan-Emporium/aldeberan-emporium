@@ -2,14 +2,24 @@ package com.example.aldeberan.storage;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.widget.TextView;
+
+import com.example.aldeberan.R;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+
+import java.util.concurrent.Executor;
 
 public class UserStorage {
 
     private Context context;
     public SharedPreferences sharedPreferences;
     private SharedPreferences.Editor myEdit;
+    private GoogleSignInClient mGoogleSignInClient;
 
     public UserStorage(Context context){
         this.context = context;
@@ -19,14 +29,24 @@ public class UserStorage {
 
     public UserStorage() {}
 
-    public void logoutUser(){
+    public void logoutUser(Activity activity){
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(String.valueOf(R.string.def_log_id))
+                .requestEmail()
+                .build();
 
-        /*
+        mGoogleSignInClient = GoogleSignIn.getClient(activity, gso);
+
+        mGoogleSignInClient.signOut();//.addOnCompleteListener((Executor) activity, task -> {
+            //TextView txtv = findViewById(R.id.loginStatus);
+            //txtv.setText("Signed out");
+        //});   
+
         myEdit.putString("name", "Please Sign In");
         myEdit.putString("id", "");
         myEdit.putString("photoURL", "");
         myEdit.putString("email", "");
-*/
+
         myEdit.clear();
         myEdit.apply();
     }

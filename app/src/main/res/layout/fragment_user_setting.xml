@@ -15,10 +15,10 @@
         android:textSize="16sp"
         app:icon="@drawable/ic_user_alt_solid"
         app:iconGravity="textTop"
-        app:layout_constraintBottom_toTopOf="@+id/wishlistBtn"
+        app:layout_constraintBottom_toTopOf="@+id/editAddBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editAddBtn" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/editAddBtn"
@@ -29,10 +29,10 @@
         android:textSize="16sp"
         app:icon="@drawable/ic_map_marked_alt_solid"
         app:iconGravity="textTop"
-        app:layout_constraintBottom_toTopOf="@+id/infoBtn"
+        app:layout_constraintBottom_toTopOf="@+id/wishlistBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/infoBtn" />
 
     <Button
         android:id="@+id/wishlistBtn"
@@ -43,37 +43,54 @@
         android:textSize="16sp"
         app:icon="@drawable/ic_heart_solid"
         app:iconGravity="textTop"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/orderBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/infoBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/editAddBtn"  />
 
     <Button
         android:id="@+id/orderBtn"
         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="@string/user_settings_wishlist"
+        android:text="@string/user_settings_order"
         android:textSize="16sp"
-        app:icon="@drawable/ic_heart_solid"
+        app:icon="@drawable/ic_history_solid"
         app:iconGravity="textTop"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/userFragLinear"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/infoBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/wishlistBtn"/>
 
-    <Button
-        android:id="@+id/loginBtn"
-        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+    <LinearLayout
+        android:id="@+id/userFragLinear"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="@string/user_settings_wishlist"
-        android:textSize="16sp"
-        app:icon="@drawable/ic_heart_solid"
-        app:iconGravity="textTop"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/infoBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/orderBtn">
+
+        <Button
+            android:id="@+id/loginBtn"
+            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/user_settings_login"
+            android:textSize="16sp"
+            app:icon="@drawable/ic_sign_in_alt_solid"
+            app:iconGravity="textTop" />
+
+        <Button
+            android:id="@+id/logoutBtn"
+            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/user_settings_logout"
+            android:textSize="16sp"
+            app:icon="@drawable/ic_sign_out_alt_solid"
+            app:iconGravity="textTop" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

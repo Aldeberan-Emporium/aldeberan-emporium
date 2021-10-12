@@ -116,6 +116,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            System.out.println(user.getIdToken(true));
                             updateUI(user);
 
                             Toast.makeText(Login.this, "Login Success", Toast.LENGTH_SHORT).show();
