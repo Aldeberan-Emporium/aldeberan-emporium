@@ -97,4 +97,26 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
 
         Toast.makeText(this, "Back Clicked", Toast.LENGTH_SHORT).show();
     }
+
+
+    public void setBotNavView(int selected) {
+        switch (selected) {
+            case 0:
+                Toast.makeText(this, "Home Clicked", Toast.LENGTH_SHORT).show();
+                bottomNavigationView.setSelectedItemId(R.id.botNavHome);
+                break;
+            case 1:
+                Toast.makeText(this, "Products Clicked", Toast.LENGTH_SHORT).show();
+                bottomNavigationView.setSelectedItemId(R.id.botNavProducts);
+                break;
+            case 2:
+                Toast.makeText(this, "Cart Clicked", Toast.LENGTH_SHORT).show();
+                bottomNavigationView.setSelectedItemId(R.id.botNavCart);
+                break;
+            case 3:
+                Toast.makeText(this, "User CLicked", Toast.LENGTH_SHORT).show();
+                bottomNavigationView.setSelectedItemId(R.id.botNavUser);
+                break;
+        }
+    }
 }

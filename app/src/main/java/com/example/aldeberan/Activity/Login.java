@@ -16,7 +16,9 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.aldeberan.HomepageFragment;
 import com.example.aldeberan.R;
+import com.example.aldeberan.UserFragment.UserSettingFragment;
 import com.example.aldeberan.models.CartModel;
 import com.example.aldeberan.storage.UserStorage;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -131,6 +133,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                             Toast.makeText(Login.this, "Login Success", Toast.LENGTH_SHORT).show();
 
                             finish();
+
+                            
                             //Intent Lintent = new Intent(Login.this, home_product.class); //dun open this line back pls
                             //startActivity(Lintent); //dun open this line back pls
                         } else {

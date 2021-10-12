@@ -7,26 +7,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.aldeberan.Activity.Homepage;
 import com.example.aldeberan.Activity.Login;
 import com.example.aldeberan.Activity.home_product;
+import com.example.aldeberan.AdminFragment.AdminPanelLoadProductFragment;
+import com.example.aldeberan.HomepageFragment;
 import com.example.aldeberan.MapFragment.MapsActivity;
 import com.example.aldeberan.R;
 import com.example.aldeberan.UserFragment.UserSettings.UserAddressFragment;
 import com.example.aldeberan.UserFragment.UserSettings.UserInfoFragment;
 import com.example.aldeberan.storage.UserStorage;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class UserSettingFragment extends Fragment implements View.OnClickListener{
 
     private GoogleSignInClient mGoogleSignInClient;
     View userSettingsView;
     UserStorage us;
-    //private FirebaseAuth mAuth;
+    private FirebaseAuth mAuth;
     Button addressBtn;
     Button infoBtn;
     Button wishlistBtn;
@@ -92,11 +97,18 @@ public class UserSettingFragment extends Fragment implements View.OnClickListene
             case R.id.loginBtn:
                 Intent loginIntent = new Intent(getActivity(), Login.class); //-->this line
                 startActivity(loginIntent);
-                //switchSession();
+
+                HomepageFragment homepageFragment= new HomepageFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentContainerView2, homepageFragment)
+                        .addToBackStack(null)
+                        .commit();
+
+                ((Homepage) getActivity()).setBotNavView(0);
                 break;
             case R.id.logoutBtn:
                 us.logoutUser(getActivity());
-                //FirebaseAuth.getInstance().signOut();
+                FirebaseAuth.getInstance().signOut();
                 switchSession();
                 break;
 
