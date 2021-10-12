@@ -25,12 +25,7 @@
                 android:paddingRight="5dp"
                 android:paddingBottom="10dp"
                 android:orientation="horizontal">
-
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/check_id"/>
-
+                
             <ImageView
                 android:id="@+id/cartProdImgView"
                 android:layout_width="150dp"
@@ -99,7 +94,7 @@
             <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:paddingRight="19dp"
+                android:paddingRight="5dp"
                 android:id="@+id/cart_num_button"
                 app:backGroundColor="@color/design_default_color_primary"/>
         </LinearLayout>

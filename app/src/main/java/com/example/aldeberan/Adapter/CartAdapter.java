@@ -67,10 +67,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         Glide.with(mContext).load(mData.get(position).getProdImg()).override(450, 450).into(holder.cartDetailCRowBinding.cartProdImgView);
 
         String currentQuantity = toString().valueOf(mData.get(position).getProdQuantity());
-
         String prodName = mData.get(position).getProdName();
-
-
         List<Product> result = productList.stream()
                 .filter(a -> Objects.equals(a.getProdName(), prodName))
                 .collect(Collectors.toList());
@@ -98,6 +95,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
                 if(itemQuantity == 0){
                     cm.deleteQuoteItem(quoteItemID);
+                    
                 }
                 else{
                     cm.updateQuoteItem(quoteItemID, quoteID, prodName, prodSKU, itemQuantity, prodPrice, prodImg);
@@ -111,10 +109,4 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     public int getItemCount() {
         return mData.size();
     }
-
-    public interface FragmentCommunication {
-        void respond(String prodName, String prodID, String prodSKU, String prodImg, String prodPrice, String prodQuantity);
-    }
-
-
 }
