@@ -86,7 +86,7 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
 
         holder.productCardBinding.executePendingBindings();
         String prodNameLbl = mData.get(position).getProdName();
-        holder.productCardBinding.cusProdNameLbl.setText(prodNameLbl.substring(0, prodNameLbl.indexOf(' ', prodNameLbl.indexOf(' ')+3)));
+        holder.productCardBinding.cusProdNameLbl.setText(prodNameLbl.substring(0, prodNameLbl.indexOf(' ', prodNameLbl.indexOf(' ')+1)));
         //holder.productRowBinding.cusProdSKULbl.setText("SKU: " + mData.get(position).getProdSKU());
         //holder.productRowBinding.cusProdIDLbl.setText("Product ID: " + mData.get(position).getProdID());
 
