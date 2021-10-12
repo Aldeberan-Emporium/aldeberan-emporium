@@ -45,10 +45,6 @@
             "package_name": "com.example.aldeberan",
             "certificate_hash": "f2a93f4be65b9e13ef8ba19e816197f5d552f6c5"
           }
-        },
-        {
-          "client_id": "905429185029-lsmfp6vf9rghu1bdjkt8r1mvkhvlq813.apps.googleusercontent.com",
-          "client_type": 3
         }
       ],
       "api_key": [
@@ -58,12 +54,7 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "905429185029-lsmfp6vf9rghu1bdjkt8r1mvkhvlq813.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

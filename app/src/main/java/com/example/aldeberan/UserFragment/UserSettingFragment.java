@@ -2,29 +2,22 @@ package com.example.aldeberan.UserFragment;
 
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.aldeberan.Activity.Homepage;
 import com.example.aldeberan.Activity.Login;
 import com.example.aldeberan.Activity.home_product;
-import com.example.aldeberan.MapFragment.MapMainFragment;
 import com.example.aldeberan.MapFragment.MapsActivity;
 import com.example.aldeberan.R;
 import com.example.aldeberan.UserFragment.UserSettings.UserAddressFragment;
 import com.example.aldeberan.UserFragment.UserSettings.UserInfoFragment;
-import com.example.aldeberan.models.MapModel;
 import com.example.aldeberan.storage.UserStorage;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 
@@ -33,38 +26,39 @@ public class UserSettingFragment extends Fragment implements View.OnClickListene
     private GoogleSignInClient mGoogleSignInClient;
     View userSettingsView;
     UserStorage us;
+    //private FirebaseAuth mAuth;
+    Button addressBtn;
+    Button infoBtn;
+    Button wishlistBtn;
+    Button orderBtn;
+    Button loginBtn;
+    Button logoutBtn;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         userSettingsView = inflater.inflate(R.layout.fragment_user_setting, container, false);
 
-        Button addressBtn = userSettingsView.findViewById(R.id.editAddBtn);
+        //(signOutInterface) getActivity();
+
+        addressBtn = userSettingsView.findViewById(R.id.editAddBtn);
         addressBtn.setOnClickListener(this);
-        Button infoBtn = userSettingsView.findViewById(R.id.infoBtn);
+        infoBtn = userSettingsView.findViewById(R.id.infoBtn);
         infoBtn.setOnClickListener(this);
-        Button wishlistBtn = userSettingsView.findViewById(R.id.wishlistBtn);
+        wishlistBtn = userSettingsView.findViewById(R.id.wishlistBtn);
         wishlistBtn.setOnClickListener(this);
-        Button orderBtn = userSettingsView.findViewById(R.id.orderBtn);
+        orderBtn = userSettingsView.findViewById(R.id.orderBtn);
         orderBtn.setOnClickListener(this);
-        Button loginBtn = userSettingsView.findViewById(R.id.loginBtn);
+        loginBtn = userSettingsView.findViewById(R.id.loginBtn);
         loginBtn.setOnClickListener(this);
-        Button logoutBtn = userSettingsView.findViewById(R.id.logoutBtn);
+        logoutBtn = userSettingsView.findViewById(R.id.logoutBtn);
         logoutBtn.setOnClickListener(this);
 
         us = new UserStorage(getActivity());
-        if (us.getID() == ""){
-            loginBtn.setVisibility(View.VISIBLE);
-            logoutBtn.setVisibility(View.GONE);
-        }
-        else{
-            loginBtn.setVisibility(View.GONE);
-            logoutBtn.setVisibility(View.VISIBLE);
-        }
+        switchSession();
 
         return userSettingsView;
     }
-
 
     @Override
     public void onClick(View view) {
@@ -98,13 +92,33 @@ public class UserSettingFragment extends Fragment implements View.OnClickListene
             case R.id.loginBtn:
                 Intent loginIntent = new Intent(getActivity(), Login.class); //-->this line
                 startActivity(loginIntent);
+                //switchSession();
                 break;
             case R.id.logoutBtn:
                 us.logoutUser(getActivity());
-                //Intent logoutIntent = new Intent(getActivity(), Login.class); //-->this line
-                //startActivity(logoutIntent);
+                //FirebaseAuth.getInstance().signOut();
+                switchSession();
                 break;
 
+        }
+    }
+
+    public void switchSession() {
+        if (us.getID() == ""){
+            loginBtn.setVisibility(View.VISIBLE);
+            logoutBtn.setVisibility(View.GONE);
+            addressBtn.setVisibility(View.GONE);
+            infoBtn.setVisibility(View.GONE);
+            wishlistBtn.setVisibility(View.GONE);
+            orderBtn.setVisibility(View.GONE);
+        }
+        else{
+            loginBtn.setVisibility(View.GONE);
+            logoutBtn.setVisibility(View.VISIBLE);
+            addressBtn.setVisibility(View.VISIBLE);
+            infoBtn.setVisibility(View.VISIBLE);
+            wishlistBtn.setVisibility(View.VISIBLE);
+            orderBtn.setVisibility(View.VISIBLE);
         }
     }
 }
