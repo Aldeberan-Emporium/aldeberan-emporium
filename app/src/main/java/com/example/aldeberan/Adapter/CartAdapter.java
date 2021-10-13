@@ -1,7 +1,9 @@
 package com.example.aldeberan.Adapter;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -79,6 +81,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             @Override
             public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
 
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(mContext);
+                builder1.setMessage("Do you want to remove this product?");
+                builder1.setCancelable(true);
+
                 userStorage = new UserStorage(mContext);
                 String userID = userStorage.getID();
                 cm.checkIfUserExist(userID);
@@ -93,8 +99,26 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                 String prodImg = String.valueOf(mData.get(position).getProdImg());
 
                 if(itemQuantity == 0){
-                    cm.deleteQuoteItem(quoteItemID);
-                    
+                    builder1.setPositiveButton(
+                            "Yes",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    cm.deleteQuoteItem(quoteItemID);
+                                    dialog.cancel();
+                                }
+                            });
+
+                    builder1.setNegativeButton(
+                            "No",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    holder.cartDetailCRowBinding.cartNumButton.setNumber("1");
+                                    dialog.cancel();
+                                }
+                            });
+
+                    AlertDialog alert11 = builder1.create();
+                    alert11.show();
                 }
                 else{
                     cm.updateQuoteItem(quoteItemID, quoteID, prodName, prodSKU, itemQuantity, prodPrice, prodImg);
