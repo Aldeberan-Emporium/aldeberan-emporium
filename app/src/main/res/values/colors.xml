@@ -15,4 +15,6 @@
     <color name="logo_pale_gray">#9A9C9A</color>
     <color name="logo_pale_white">#F0ECE2</color>
     <color name="logo_brown">#C7B198</color>
+    <color name="search_dark_gray">#6F6D69</color>
+    <color name="search_light_gray">#96938D</color>
 </resources>

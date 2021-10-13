@@ -1,6 +1,7 @@
 package com.example.aldeberan;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,8 +15,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.aldeberan.Activity.SearchProduct;
 import com.example.aldeberan.Adapter.ProductListingDetailAdapter;
 import com.example.aldeberan.Adapter.ProductListingDetailVerticalAdapter;
 import com.example.aldeberan.UserFragment.homeProductFragment;
@@ -35,7 +38,7 @@ public class HomepageFragment extends Fragment{
     ProductListingDetailVerticalAdapter adapterNA;
     RecyclerView bestSellerBox;
     RecyclerView newArrivalBox;
-    EditText searchBar;
+    Button searchOpenBtn;
     View homepageView;
 
     ShimmerFrameLayout shimmerBestSellerBox;
@@ -57,12 +60,10 @@ public class HomepageFragment extends Fragment{
         shimmerNewArrivalBox = homepageView.findViewById(R.id.shimmerNewArrivalBox);
         shimmerNewArrivalBox.startShimmerAnimation();
 
-        searchBar = homepageView.findViewById(R.id.searchInput);
-
-        searchBar.setOnFocusChangeListener((v, hasFocus) -> {
-            if (!hasFocus) {
-                hideKeyboard(v);
-            }
+        searchOpenBtn = homepageView.findViewById(R.id.searchOpenBtn);
+        searchOpenBtn.setOnClickListener(view -> {
+            Intent searchIntent = new Intent(getActivity(), SearchProduct.class);
+            startActivity(searchIntent);
         });
 
         ConstructRecyclerView();
@@ -137,12 +138,5 @@ public class HomepageFragment extends Fragment{
         Log.i("SCREENWIDTH", String.valueOf(width));
         int cardWidth = 540;
         return width/cardWidth;
-    }
-
-    //Hide keyboard when out of focus
-    public void hideKeyboard(View view) {
-        InputMethodManager inputMethodManager =(InputMethodManager) this.getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        //inputMethodManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
     }
 }
