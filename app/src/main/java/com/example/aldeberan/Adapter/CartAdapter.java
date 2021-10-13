@@ -42,7 +42,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     public class CartViewHolder extends RecyclerView.ViewHolder{
 
         CartDetailCRowBinding cartDetailCRowBinding;
-
         public CartViewHolder(CartDetailCRowBinding cartDetailCRowBinding) {
             super(cartDetailCRowBinding.getRoot());
             this.cartDetailCRowBinding = cartDetailCRowBinding;

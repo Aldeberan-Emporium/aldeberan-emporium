@@ -7,7 +7,7 @@
     tools:context=".Activity.checkoutActivity">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/orderPullToRefresh"
+        android:id="@+id/checkoutPullToRefresh"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:visibility="visible"
@@ -19,7 +19,7 @@
         tools:visibility="visible">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/orderRecyclerView"
+            android:id="@+id/checkoutRecyclerView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginBottom="550dp"
@@ -69,7 +69,7 @@
         app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/orderPullToRefresh">
+        app:layout_constraintTop_toBottomOf="@+id/checkoutPullToRefresh">
 
         <TextView
             android:id="@+id/textView3"

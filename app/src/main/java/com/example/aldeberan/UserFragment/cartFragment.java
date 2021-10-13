@@ -56,7 +56,6 @@ public class cartFragment extends Fragment {
         checkoutBtn = myCartFragmentView.findViewById(R.id.checkoutButton);
         totalPrice = myCartFragmentView.findViewById(R.id.totalPrice);
 
-
         checkoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,10 +81,8 @@ public class cartFragment extends Fragment {
     private void ConstructRecyclerView(){
         CartModel cm = new CartModel();
         us = new UserStorage(getActivity());
-
         int quoteID = us.getQuoteID();
         System.out.println("quoteID: " + quoteID);
-
             cm.readQuoteItemByQuote(quoteID, response -> {
                 cartList = response;
                 PutDataIntoRecyclerView(response);
