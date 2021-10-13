@@ -1,37 +1,21 @@
 {
   "project_info": {
-    "project_number": "905429185029",
-    "firebase_url": "https://aldeberan-emporium-default-rtdb.asia-southeast1.firebasedatabase.app",
-    "project_id": "aldeberan-emporium",
-    "storage_bucket": "aldeberan-emporium.appspot.com"
+    "project_number": "642954040818",
+    "firebase_url": "https://aldeberan-emporium-firebase-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "aldeberan-emporium-firebase",
+    "storage_bucket": "aldeberan-emporium-firebase.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:905429185029:android:81b0ff82ecd34b5e02226c",
+        "mobilesdk_app_id": "1:642954040818:android:8f16c7f3f2fcc94032876b",
         "android_client_info": {
           "package_name": "com.example.aldeberan"
         }
       },
       "oauth_client": [
         {
-          "client_id": "905429185029-6i5ptsl9bla39jblc8f3oedmcj8btuqn.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.aldeberan",
-            "certificate_hash": "457d55050f88dcc2034946cbe6476efdd07eea7b"
-          }
-        },
-        {
-          "client_id": "905429185029-89ij6uav76udbhrgl4feber707iopemf.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.aldeberan",
-            "certificate_hash": "5b4e68a3c3beaf88f4a8cc1909a1ddf224b10c1c"
-          }
-        },
-        {
-          "client_id": "905429185029-e8ep6no1vfcqsqfk535n4k0ln3qmt9se.apps.googleusercontent.com",
+          "client_id": "642954040818-psjafmog3mns6tm22d0g7qpnikc27kqn.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.aldeberan",
@@ -39,22 +23,47 @@
           }
         },
         {
-          "client_id": "905429185029-hv1q91m67mcsbpp9uu6bld3pu1b58ibf.apps.googleusercontent.com",
+          "client_id": "642954040818-se9on1ib4v5hdt8mi7jlr7aktf4g0bnl.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.aldeberan",
             "certificate_hash": "f2a93f4be65b9e13ef8ba19e816197f5d552f6c5"
           }
+        },
+        {
+          "client_id": "642954040818-tnta9rsja2pio796dsmdlj8idputcv51.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.aldeberan",
+            "certificate_hash": "457d55050f88dcc2034946cbe6476efdd07eea7b"
+          }
+        },
+        {
+          "client_id": "642954040818-u3dlphvohb4rva5q51namnehc9peom5r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.aldeberan",
+            "certificate_hash": "5b4e68a3c3beaf88f4a8cc1909a1ddf224b10c1c"
+          }
+        },
+        {
+          "client_id": "642954040818-6irbp09abs1ndjh611uif3sf1qrhdne7.apps.googleusercontent.com",
+          "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC4DEMofykV34CLkeCc7QkPVpUaoVvsxNE"
+          "current_key": "AIzaSyDDIrQbBjyWCn67qXkcO14YKckFKEX2PJE"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "642954040818-6irbp09abs1ndjh611uif3sf1qrhdne7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

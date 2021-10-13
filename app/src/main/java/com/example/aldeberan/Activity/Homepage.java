@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.example.aldeberan.Adapter.ProductListingDetailAdapter;
 import com.example.aldeberan.Adapter.ProductListingDetailVerticalAdapter;
 import com.example.aldeberan.AllProductFragment;
+import com.example.aldeberan.CartFragment;
 import com.example.aldeberan.HomepageFragment;
 import com.example.aldeberan.R;
 import com.example.aldeberan.UserFragment.UserSettingFragment;
@@ -69,6 +70,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                 Toast.makeText(this, "Products Clicked", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.botNavCart:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView2, new CartFragment()).addToBackStack(null).commit();
                 Toast.makeText(this, "Cart Clicked", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.botNavUser:
@@ -94,5 +96,27 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         }
 
         Toast.makeText(this, "Back Clicked", Toast.LENGTH_SHORT).show();
+    }
+
+
+    public void setBotNavView(int selected) {
+        switch (selected) {
+            case 0:
+                Toast.makeText(this, "Home Clicked", Toast.LENGTH_SHORT).show();
+                bottomNavigationView.setSelectedItemId(R.id.botNavHome);
+                break;
+            case 1:
+                Toast.makeText(this, "Products Clicked", Toast.LENGTH_SHORT).show();
+                bottomNavigationView.setSelectedItemId(R.id.botNavProducts);
+                break;
+            case 2:
+                Toast.makeText(this, "Cart Clicked", Toast.LENGTH_SHORT).show();
+                bottomNavigationView.setSelectedItemId(R.id.botNavCart);
+                break;
+            case 3:
+                Toast.makeText(this, "User CLicked", Toast.LENGTH_SHORT).show();
+                bottomNavigationView.setSelectedItemId(R.id.botNavUser);
+                break;
+        }
     }
 }

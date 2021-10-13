@@ -6,7 +6,6 @@
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/drawable/border.xml" value="0.2203125" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/drawable/cardview_rounded_small.xml" value="0.2203125" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/drawable/ic_add.xml" value="0.2203125" />
-        <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/drawable/ic_arrow_left_solid.xml" value="0.2203125" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/drawable/ic_between_bg.xml" value="0.2203125" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/drawable/ic_boxes_solid.xml" value="0.2203125" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/drawable/ic_bs_title.xml" value="0.2203125" />
@@ -27,21 +26,17 @@
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/activity_admin_panel_load_product.xml" value="0.22" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/activity_admin_panel_update_product.xml" value="0.22" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/activity_home_product.xml" value="0.20416666666666666" />
-        <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/activity_homepage.xml" value="0.2527646129541864" />
-        <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/activity_search_product.xml" value="0.5" />
+        <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/activity_homepage.xml" value="0.33" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/admin_panel_product_row.xml" value="0.5" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/fragment_admin_add_product.xml" value="0.20416666666666666" />
-        <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/fragment_all_product.xml" value="0.21" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/fragment_home_product.xml" value="0.1" />
-        <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/fragment_homepage.xml" value="0.25" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/fragment_user_add_address.xml" value="0.16" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/fragment_user_address_book.xml" value="0.25" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/fragment_user_info.xml" value="0.25" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/fragment_user_setting.xml" value="0.13" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/fragment_user_update_address.xml" value="0.22" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/nav_header.xml" value="0.25" />
-        <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/product_card.xml" value="0.22" />
-        <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/product_card_shimmer.xml" value="0.22" />
+        <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/product_card.xml" value="0.33" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/product_detail_c_row.xml" value="0.5" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/user_settings_address_row.xml" value="0.5" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/menu/drawer_menu.xml" value="0.67" />
@@ -57,11 +52,13 @@
         <entry key="..\:/Users/Kelvi/Documents/Final Sem/Mobile/project-aldeberan/app/src/main/res/drawable/ic_sign_out_alt_solid.xml" value="0.4010416666666667" />
         <entry key="..\:/Users/Kelvi/Documents/Final Sem/Mobile/project-aldeberan/app/src/main/res/layout/activity_home_product.xml" value="0.2269021739130435" />
         <entry key="..\:/Users/Kelvi/Documents/Final Sem/Mobile/project-aldeberan/app/src/main/res/layout/activity_homepage.xml" value="0.317481884057971" />
+        <entry key="..\:/Users/Kelvi/Documents/Final Sem/Mobile/project-aldeberan/app/src/main/res/layout/activity_login.xml" value="0.3848958333333333" />
         <entry key="..\:/Users/Kelvi/Documents/Final Sem/Mobile/project-aldeberan/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/Kelvi/Documents/Final Sem/Mobile/project-aldeberan/app/src/main/res/layout/activity_mid_man.xml" value="0.3428442028985507" />
         <entry key="..\:/Users/Kelvi/Documents/Final Sem/Mobile/project-aldeberan/app/src/main/res/layout/activity_product_listing_detail_page.xml" value="0.3808876811594203" />
         <entry key="..\:/Users/Kelvi/Documents/Final Sem/Mobile/project-aldeberan/app/src/main/res/layout/app_bar_product_listing_detail_page.xml" value="0.3808876811594203" />
         <entry key="..\:/Users/Kelvi/Documents/Final Sem/Mobile/project-aldeberan/app/src/main/res/layout/avtivity_login.xml" value="0.33" />
+        <entry key="..\:/Users/Kelvi/Documents/Final Sem/Mobile/project-aldeberan/app/src/main/res/layout/cart.xml" value="0.3848958333333333" />
         <entry key="..\:/Users/Kelvi/Documents/Final Sem/Mobile/project-aldeberan/app/src/main/res/layout/content_product_listing_detail_page.xml" value="0.3808876811594203" />
         <entry key="..\:/Users/Kelvi/Documents/Final Sem/Mobile/project-aldeberan/app/src/main/res/layout/fragment_gallery.xml" value="0.3808876811594203" />
         <entry key="..\:/Users/Kelvi/Documents/Final Sem/Mobile/project-aldeberan/app/src/main/res/layout/fragment_home.xml" value="0.3808876811594203" />
@@ -72,6 +69,7 @@
         <entry key="..\:/Users/Kelvi/Documents/Final Sem/Mobile/project-aldeberan/app/src/main/res/layout/fragment_user_setting.xml" value="0.3848958333333333" />
         <entry key="..\:/Users/Kelvi/Documents/Final Sem/Mobile/project-aldeberan/app/src/main/res/layout/gradient_1.xml" value="0.3473731884057971" />
         <entry key="..\:/Users/Kelvi/Documents/Final Sem/Mobile/project-aldeberan/app/src/main/res/layout/nav_header.xml" value="0.21875" />
+        <entry key="..\:/Users/Kelvi/Documents/Final Sem/Mobile/project-aldeberan/app/src/main/res/layout/product_card.xml" value="0.3848958333333333" />
         <entry key="..\:/Users/Kelvi/Documents/Final Sem/Mobile/project-aldeberan/app/src/main/res/menu/bottom_navigation.xml" value="0.38697916666666665" />
         <entry key="..\:/Users/Kelvi/Documents/Final Sem/Mobile/project-aldeberan/app/src/main/res/menu/drawer_menu.xml" value="0.21875" />
         <entry key="..\:/Users/Kelvi/Documents/Final Sem/Mobile/project-aldeberan/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.23489583333333333" />
