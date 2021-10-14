@@ -16,11 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.aldeberan.Activity.MainActivity;
 import com.example.aldeberan.Activity.checkoutActivity;
-import com.example.aldeberan.Activity.home_product;
 import com.example.aldeberan.Adapter.CartAdapter;
-import com.example.aldeberan.Adapter.ProductListingDetailAdapter;
 import com.example.aldeberan.R;
 import com.example.aldeberan.models.CartModel;
 import com.example.aldeberan.models.ProductModel;

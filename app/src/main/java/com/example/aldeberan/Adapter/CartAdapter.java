@@ -15,13 +15,10 @@ import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.example.aldeberan.R;
 import com.example.aldeberan.databinding.CartDetailCRowBinding;
 import com.example.aldeberan.models.CartModel;
-import com.example.aldeberan.models.ProductModel;
 import com.example.aldeberan.storage.UserStorage;
 import com.example.aldeberan.structures.Cart;
 import com.bumptech.glide.Glide;
 import com.example.aldeberan.structures.Product;
-
-import org.json.JSONException;
 
 import java.util.List;
 import java.util.Objects;

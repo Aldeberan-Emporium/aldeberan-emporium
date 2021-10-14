@@ -4,15 +4,12 @@ import android.util.Log;
 
 import com.codepath.asynchttpclient.RequestParams;
 import com.example.aldeberan.structures.Cart;
-import com.example.aldeberan.structures.Product;
-import com.google.gson.Gson;
 
 import org.apache.commons.text.StringEscapeUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
