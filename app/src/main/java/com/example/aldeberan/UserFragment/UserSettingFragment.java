@@ -51,22 +51,6 @@ public class UserSettingFragment extends Fragment implements View.OnClickListene
                 ((home_product) getActivity()).setActionBarTitle("User Info");
                 break;
             case R.id.wishlistBtn:
-                //Pass in Order ID and Order Address
-                //String address = line1+line2+code+city+state+country; //from order_address
-                /*
-                //Get latlng first before entering
-                MapModel mm = new MapModel();
-                mm.getLatLng(address, (lat, lng) -> {
-                    //Insert here
-                });
-                */
-                //Put remaining lines into mm.getLatLng
-                Intent mapIntent = new Intent(getActivity(), MapsActivity.class); //-->this line
-                //mapIntent.putExtra("orderID", orderID); //-->this line
-                //mapIntent.putExtra("lat", lat); //-->this line
-                //mapIntent.putExtra("lng", lng); //-->this line
-                getActivity().startActivity(mapIntent); //-->this line
-                ((home_product) getActivity()).setActionBarTitle("My Wishlist");
                 break;
         }
     }
