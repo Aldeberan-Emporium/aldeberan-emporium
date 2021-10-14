@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.aldeberan.Adapter.CheckoutAdapter;
@@ -34,6 +35,8 @@ public class checkoutActivity extends AppCompatActivity {
     private CheckoutAdapter checkoutAdapter;
 
     private OrderStorage os;
+    ImageButton addressBtn;
+    TextView selectedAddressLbl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +53,28 @@ public class checkoutActivity extends AppCompatActivity {
             }
         });
 
+        addressBtn = findViewById(R.id.addressBtn);
+        addressBtn.setOnClickListener(view -> {
+            finish();
+            Intent addIntent = new Intent(checkoutActivity.this, AddressSelection.class);
+            startActivity(addIntent);
+        });
+
         os = new OrderStorage(this);
 
         TextView price = findViewById(R.id.price);
         price.setText(String.valueOf(os.getTotal()));
 
         recyclerView = findViewById(R.id.checkoutRecyclerView);
+
+        selectedAddressLbl = findViewById(R.id.selectedAddressLbl);
+
+        if (os.getRecipient() == ""){
+            selectedAddressLbl.setText("Please select an address.");
+        }
+        else{
+            updateSelectedAddress();
+        }
 
         /*
         pullToRefresh = findViewById(R.id.checkoutPullToRefresh);
@@ -95,5 +114,9 @@ public class checkoutActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(checkoutAdapter);
         Log.i("PLOPE", String.valueOf(cartList));
+    }
+
+    public void updateSelectedAddress(){
+        selectedAddressLbl.setText(os.getRecipient()+ " 60"+os.getContact()+"\n"+os.getLine1()+", "+os.getLine2()+"\n"+os.getCode()+", "+os.getCity()+", "+os.getState());
     }
 }
