@@ -2,7 +2,6 @@ package com.example.aldeberan.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -11,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.aldeberan.R;
 import com.example.aldeberan.databinding.OrderDetailCRowBinding;
-import com.example.aldeberan.storage.UserStorage;
 import com.example.aldeberan.structures.Cart;
 
 import java.util.List;
@@ -48,8 +46,8 @@ public class CheckoutAdapter extends RecyclerView.Adapter<CheckoutAdapter.Checko
         holder.orderDetailCRowBinding.executePendingBindings();
         holder.orderDetailCRowBinding.checkoutName.setText(mData.get(position).getProdName());
 
-        System.out.println("Order: " + mData.get(position).getProdName());
-        System.out.println();
+        //System.out.println("Order: " + mData.get(position).getProdName());
+        //System.out.println();
         holder.orderDetailCRowBinding.checkoutTotalPrice.setText(String.valueOf(mData.get(position).getProdPrice()));
         holder.orderDetailCRowBinding.checkoutItemNum.setText(String.valueOf(mData.get(position).getProdQuantity()));
     }
