@@ -56,6 +56,8 @@ public class checkoutActivity extends AppCompatActivity {
         price.setText(String.valueOf(os.getTotal()));
 
         recyclerView = findViewById(R.id.checkoutRecyclerView);
+
+        /*
         pullToRefresh = findViewById(R.id.checkoutPullToRefresh);
 
         pullToRefresh.setOnRefreshListener(() -> {
@@ -64,6 +66,8 @@ public class checkoutActivity extends AppCompatActivity {
             checkoutAdapter.notifyDataSetChanged();
             pullToRefresh.setRefreshing(false);
         });
+        
+         */
 
         ConstructRecyclerView();
     }
