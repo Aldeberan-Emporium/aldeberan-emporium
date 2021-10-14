@@ -37,4 +37,7 @@
     <string name="user_settings_coupons">My Coupons</string>
     <string name="user_settings_info_back">Return to User Settings</string>
     <string name="user_settings_report">Report a Bug?</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="MAPS_API_KEY">AIzaSyAwqKFj-NJ6NfiBGKl6JhsGFJRbj57VQ3w</string>
+    <string name="loading_sender_location">Loading live sender\'s location...</string>
 </resources>

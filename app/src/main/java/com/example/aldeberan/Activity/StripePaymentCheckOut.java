@@ -11,7 +11,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.aldeberan.MapFragment.MapsActivity;
 import com.example.aldeberan.R;
+import com.example.aldeberan.models.MapModel;
 import com.example.aldeberan.storage.OrderStorage;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -156,7 +158,7 @@ public class StripePaymentCheckOut extends AppCompatActivity {
             }
         }
     }
-    private static final class PaymentResultCallback
+    private final class PaymentResultCallback
             implements ApiResultCallback<PaymentIntentResult> {
         @NonNull private final WeakReference<StripePaymentCheckOut> activityRef;
         PaymentResultCallback(@NonNull StripePaymentCheckOut activity) {
@@ -177,6 +179,7 @@ public class StripePaymentCheckOut extends AppCompatActivity {
                         "Payment completed",
                         gson.toJson(paymentIntent)
                 );
+                toMap();
             } else if (status == PaymentIntent.Status.RequiresPaymentMethod) {
                 // Payment failed – allow retrying using a different payment method
                 activity.displayAlert(
@@ -194,5 +197,24 @@ public class StripePaymentCheckOut extends AppCompatActivity {
             // Payment request failed – allow retrying using the same payment method
             activity.displayAlert("Error", e.toString());
         }
+    }
+
+    public void toMap(){
+        //Pass in Order ID and Order Address
+        //String address = line1+line2+code+city+state+country; //from order_address
+
+        /*
+        //Get latlng first before entering
+        MapModel mm = new MapModel();
+        mm.getLatLng(address, (lat, lng) -> {
+            //Insert here
+        });
+         */
+        //Put remaining lines into mm.getLatLng
+        Intent mapIntent = new Intent(StripePaymentCheckOut.this, MapsActivity.class);
+        //mapIntent.putExtra("orderID", orderID);
+        //mapIntent.putExtra("lat", lat);
+        //mapIntent.putExtra("lng", lng);
+        startActivity(mapIntent);
     }
 }

@@ -244,6 +244,15 @@ public class OrderModel extends DatabaseModel{
         });
     }
 
+    //Update order status -> shipping, delivered or add what you needed (in lowercase)
+    public void updateOrderStatus(int orderID, String orderStatus){
+        RequestParams params = new RequestParams();
+        params.put("action", "updateOrderStatus");
+        params.put("order_id", orderID);
+        params.put("order_status", orderStatus);
+        this.postData(params);
+    }
+
     //Add order item
     public void addOrderItem(int orderID, String prodName, String prodSKU, int prodQuantity, double prodPrice, String prodImg){
         RequestParams params = new RequestParams();

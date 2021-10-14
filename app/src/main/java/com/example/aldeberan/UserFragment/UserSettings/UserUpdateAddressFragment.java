@@ -24,6 +24,7 @@ import com.bumptech.glide.Glide;
 import com.example.aldeberan.Activity.home_product;
 import com.example.aldeberan.R;
 import com.example.aldeberan.models.AddressModel;
+import com.example.aldeberan.models.MapModel;
 import com.example.aldeberan.models.ProductModel;
 import com.example.aldeberan.storage.UserStorage;
 import com.google.firebase.storage.StorageReference;
@@ -45,6 +46,8 @@ public class UserUpdateAddressFragment extends Fragment implements View.OnClickL
     EditText addCountry;
     Switch isDefaultSwitch;
 
+    MapModel mm;
+
     public String prevAddRecipient;
     public String prevAddContact;
     public String prevAddLine1;
@@ -63,6 +66,8 @@ public class UserUpdateAddressFragment extends Fragment implements View.OnClickL
         userNewAddView = inflater.inflate(R.layout.fragment_user_update_address, container, false);
 
         ((home_product) getActivity()).setActionBarTitle("Update Address");
+
+        mm = new MapModel();
 
         //Buttons
         submitBtn = userNewAddView.findViewById(R.id.submitBtnUpdateAdd);
@@ -144,33 +149,43 @@ public class UserUpdateAddressFragment extends Fragment implements View.OnClickL
             String country = addCountry.getText().toString();
             int isDefault = isDefaultSwitch.isChecked() ? 1 : 0;
 
+            String address = concatAddress(line1, line2, code, city, state, country);
+
             if (recipient != null && contact != null && line1 != null && code != null && city != null && state != null && country != null) {
-                submitBtn.setVisibility(View.GONE);
-                resetBtn.setVisibility(View.GONE);
-                onSubmitThrobber.setVisibility(View.VISIBLE);
-                onSubmitView.setVisibility(View.VISIBLE);
-                addRecipient.setEnabled(false);
-                addContact.setEnabled(false);
-                addLine1.setEnabled(false);
-                addLine2.setEnabled(false);
-                addCode.setEnabled(false);
-                addCity.setEnabled(false);
-                addState.setEnabled(false);
-                addCountry.setEnabled(false);
-                isDefaultSwitch.setEnabled(false);
+                mm.isValidAddress(address, (status, msg) -> {
+                    if (status == 500) {
+                        onReverseSubmitAnim();
+                        Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
+                        onSubmitAnim();
+                    } else {
+                        submitBtn.setVisibility(View.GONE);
+                        resetBtn.setVisibility(View.GONE);
+                        onSubmitThrobber.setVisibility(View.VISIBLE);
+                        onSubmitView.setVisibility(View.VISIBLE);
+                        addRecipient.setEnabled(false);
+                        addContact.setEnabled(false);
+                        addLine1.setEnabled(false);
+                        addLine2.setEnabled(false);
+                        addCode.setEnabled(false);
+                        addCity.setEnabled(false);
+                        addState.setEnabled(false);
+                        addCountry.setEnabled(false);
+                        isDefaultSwitch.setEnabled(false);
 
-                UserStorage us = new UserStorage(getActivity());
-                String userID = us.getID();
+                        UserStorage us = new UserStorage(getActivity());
+                        String userID = us.getID();
 
-                AddressModel am = new AddressModel();
-                am.updateAddress(prevAddID, userID, recipient, contact, line1, line2, code, city, state, country, isDefault);
-                onSubmitAnim();
-                //Redirect back to load products fragment
-                UserAddressFragment addressFragment = new UserAddressFragment();
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, addressFragment)
-                        .addToBackStack(null)
-                        .commit();
+                        AddressModel am = new AddressModel();
+                        am.updateAddress(prevAddID, userID, recipient, contact, line1, line2, code, city, state, country, isDefault);
+                        onSubmitAnim();
+                        //Redirect back to load products fragment
+                        UserAddressFragment addressFragment = new UserAddressFragment();
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.fragment_container, addressFragment)
+                                .addToBackStack(null)
+                                .commit();
+                    }
+                });
             } else {
                 Toast.makeText(getContext(), "All inputs are required!", Toast.LENGTH_LONG).show();
             }
@@ -178,6 +193,11 @@ public class UserUpdateAddressFragment extends Fragment implements View.OnClickL
         else{
             retrieveData();
         }
+    }
+
+    public String concatAddress(String addLine1, String addLine2, String addCode, String addCity, String addState, String addCountry){
+        String address = addLine1+","+addLine2+","+addCode+addCity+addState+addCountry;
+        return address;
     }
 
     //Hide keyboard when out of focus
@@ -189,6 +209,31 @@ public class UserUpdateAddressFragment extends Fragment implements View.OnClickL
     private void onSubmitAnim() {
         //On load throbber fade out
         alphaAnimation = new AlphaAnimation(1.0f, 0.0f);
+        alphaAnimation.setDuration(2000);
+        onSubmitThrobber.startAnimation(alphaAnimation);
+        onSubmitView.startAnimation(alphaAnimation);
+
+        alphaAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                onSubmitThrobber.setVisibility(View.VISIBLE);
+                onSubmitView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                onSubmitThrobber.setVisibility(View.GONE);
+                onSubmitView.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {}
+        });
+    }
+
+    private void onReverseSubmitAnim() {
+        //On load throbber fade out
+        alphaAnimation = new AlphaAnimation(0.0f, 1.0f);
         alphaAnimation.setDuration(2000);
         onSubmitThrobber.startAnimation(alphaAnimation);
         onSubmitView.startAnimation(alphaAnimation);
