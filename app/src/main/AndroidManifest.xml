@@ -22,9 +22,13 @@
         android:theme="@style/Theme.Aldeberan"
         tools:replace="android:theme">
         <activity
+            android:name=".Activity.AddressSelectionToBook"
+            android:exported="true"
+            android:parentActivityName=".Activity.AddressSelection" />
+        <activity
             android:name=".Activity.AddressSelection"
             android:exported="true"
-            android:parentActivityName=".Activity.checkoutActivity"/>
+            android:parentActivityName=".Activity.checkoutActivity" />
         <activity
             android:name=".Activity.checkoutActivity"
             android:exported="true" />

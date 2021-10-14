@@ -5,14 +5,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.example.aldeberan.Adapter.AddressAdapter;
 import com.example.aldeberan.Adapter.AddressSelectionAdapter;
 import com.example.aldeberan.R;
+import com.example.aldeberan.UserFragment.UserSettings.UserAddressFragment;
 import com.example.aldeberan.UserFragment.UserSettings.UserUpdateAddressFragment;
+import com.example.aldeberan.UserFragment.cartFragment;
 import com.example.aldeberan.models.AddressModel;
 import com.example.aldeberan.storage.OrderStorage;
 import com.example.aldeberan.storage.UserStorage;
@@ -36,7 +42,7 @@ public class AddressSelection extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address_selection);
 
-        getSupportActionBar().setTitle("Address Book");
+        getSupportActionBar().setTitle("Delivery Address Book");
 
         recyclerView = findViewById(R.id.addressSelectBox);
         addressList = new ArrayList<>();
@@ -55,6 +61,27 @@ public class AddressSelection extends AppCompatActivity {
             });
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.address_selection, menu);
+        
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.addressBookBtn:
+                Intent addBookIntent = new Intent(AddressSelection.this, AddressSelectionToBook.class);
+                startActivity(addBookIntent);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 

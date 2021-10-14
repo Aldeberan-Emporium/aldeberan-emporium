@@ -3,6 +3,7 @@ package com.example.aldeberan.UserFragment.UserSettings;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,7 @@ import com.example.aldeberan.models.AddressModel;
 import com.example.aldeberan.models.MapModel;
 import com.example.aldeberan.models.ProductModel;
 import com.example.aldeberan.storage.UserStorage;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.storage.StorageReference;
 
 public class UserUpdateAddressFragment extends Fragment implements View.OnClickListener{
@@ -64,8 +66,6 @@ public class UserUpdateAddressFragment extends Fragment implements View.OnClickL
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         userNewAddView = inflater.inflate(R.layout.fragment_user_update_address, container, false);
-
-        ((home_product) getActivity()).setActionBarTitle("Update Address");
 
         mm = new MapModel();
 
@@ -151,11 +151,11 @@ public class UserUpdateAddressFragment extends Fragment implements View.OnClickL
 
             String address = concatAddress(line1, line2, code, city, state, country);
 
-            if (recipient != null && contact != null && line1 != null && code != null && city != null && state != null && country != null) {
+            if (!TextUtils.isEmpty(recipient) && !TextUtils.isEmpty(contact) && !TextUtils.isEmpty(line1) && !TextUtils.isEmpty(code) && !TextUtils.isEmpty(city) && !TextUtils.isEmpty(state) && !TextUtils.isEmpty(country)){
                 mm.isValidAddress(address, (status, msg) -> {
                     if (status == 500) {
                         onReverseSubmitAnim();
-                        Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
+                        showSnackbar(msg);
                         onSubmitAnim();
                     } else {
                         submitBtn.setVisibility(View.GONE);
@@ -179,20 +179,21 @@ public class UserUpdateAddressFragment extends Fragment implements View.OnClickL
                         am.updateAddress(prevAddID, userID, recipient, contact, line1, line2, code, city, state, country, isDefault);
                         onSubmitAnim();
                         //Redirect back to load products fragment
-                        UserAddressFragment addressFragment = new UserAddressFragment();
-                        getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_container, addressFragment)
-                                .addToBackStack(null)
-                                .commit();
+                        getActivity().onBackPressed();
                     }
                 });
             } else {
-                Toast.makeText(getContext(), "All inputs are required!", Toast.LENGTH_LONG).show();
+                showSnackbar("All inputs are required!");
             }
         }
         else{
             retrieveData();
         }
+    }
+
+    public void showSnackbar(String string){
+        Snackbar snackBar = Snackbar.make(getActivity().findViewById(android.R.id.content), string, Snackbar.LENGTH_LONG);
+        snackBar.show();
     }
 
     public String concatAddress(String addLine1, String addLine2, String addCode, String addCity, String addState, String addCountry){
