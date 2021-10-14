@@ -101,6 +101,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     cm.deleteQuoteItem(quoteItemID);
+                                    notifyItemRemoved(position);
                                     dialog.cancel();
                                 }
                             });

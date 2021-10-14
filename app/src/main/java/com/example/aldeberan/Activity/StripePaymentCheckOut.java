@@ -1,6 +1,5 @@
 package com.example.aldeberan.Activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +12,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.aldeberan.R;
+import com.example.aldeberan.storage.OrderStorage;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -39,19 +39,23 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class CheckoutActivityJava extends AppCompatActivity {
+public class StripePaymentCheckOut extends AppCompatActivity {
     private static final String BACKEND_URL = "https://fierce-chamber-24927.herokuapp.com/"; //never change this url
     private OkHttpClient httpClient = new OkHttpClient();
     private String paymentIntentClientSecret;
     private Stripe stripe;
     private TextView amountTextView;
+    private OrderStorage os;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout_java);
 
+        os = new OrderStorage(this);
+
         amountTextView = findViewById(R.id.amountTextView);
+        amountTextView.setText(String.valueOf(os.getTotal()));
 
         stripe = new Stripe(
                 getApplication(),
@@ -118,13 +122,13 @@ public class CheckoutActivityJava extends AppCompatActivity {
         paymentIntentClientSecret = responseMap.get("clientSecret");
     }
     private static final class PayCallback implements Callback {
-        @NonNull private final WeakReference<CheckoutActivityJava> activityRef;
-        PayCallback(@NonNull CheckoutActivityJava activity) {
+        @NonNull private final WeakReference<StripePaymentCheckOut> activityRef;
+        PayCallback(@NonNull StripePaymentCheckOut activity) {
             activityRef = new WeakReference<>(activity);
         }
         @Override
         public void onFailure(@NonNull Call call, @NonNull IOException e) {
-            final CheckoutActivityJava activity = activityRef.get();
+            final StripePaymentCheckOut activity = activityRef.get();
             if (activity == null) {
                 return;
             }
@@ -137,7 +141,7 @@ public class CheckoutActivityJava extends AppCompatActivity {
         @Override
         public void onResponse(@NonNull Call call, @NonNull final Response response)
                 throws IOException {
-            final CheckoutActivityJava activity = activityRef.get();
+            final StripePaymentCheckOut activity = activityRef.get();
             if (activity == null) {
                 return;
             }
@@ -154,13 +158,13 @@ public class CheckoutActivityJava extends AppCompatActivity {
     }
     private static final class PaymentResultCallback
             implements ApiResultCallback<PaymentIntentResult> {
-        @NonNull private final WeakReference<CheckoutActivityJava> activityRef;
-        PaymentResultCallback(@NonNull CheckoutActivityJava activity) {
+        @NonNull private final WeakReference<StripePaymentCheckOut> activityRef;
+        PaymentResultCallback(@NonNull StripePaymentCheckOut activity) {
             activityRef = new WeakReference<>(activity);
         }
         @Override
         public void onSuccess(@NonNull PaymentIntentResult result) {
-            final CheckoutActivityJava activity = activityRef.get();
+            final StripePaymentCheckOut activity = activityRef.get();
             if (activity == null) {
                 return;
             }
@@ -183,7 +187,7 @@ public class CheckoutActivityJava extends AppCompatActivity {
         }
         @Override
         public void onError(@NonNull Exception e) {
-            final CheckoutActivityJava activity = activityRef.get();
+            final StripePaymentCheckOut activity = activityRef.get();
             if (activity == null) {
                 return;
             }

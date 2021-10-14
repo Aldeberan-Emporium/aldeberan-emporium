@@ -21,6 +21,7 @@ import com.example.aldeberan.Adapter.CartAdapter;
 import com.example.aldeberan.R;
 import com.example.aldeberan.models.CartModel;
 import com.example.aldeberan.models.ProductModel;
+import com.example.aldeberan.storage.OrderStorage;
 import com.example.aldeberan.storage.UserStorage;
 import com.example.aldeberan.structures.Cart;
 import com.example.aldeberan.structures.Product;
@@ -42,6 +43,7 @@ public class cartFragment extends Fragment {
     private TextView totalPrice;
     private String totalPriceStr;
     private CartModel cm;
+    private OrderStorage os;
 
     @Nullable
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -49,6 +51,7 @@ public class cartFragment extends Fragment {
         myCartFragmentView = inflater.inflate(R.layout.fragment_cart, container, false);
         productList = new ArrayList<>();
         cm = new CartModel();
+        os = new OrderStorage(getActivity());
         recyclerView = myCartFragmentView.findViewById(R.id.cartRecyclerView);
         checkoutBtn = myCartFragmentView.findViewById(R.id.checkoutButton);
         totalPrice = myCartFragmentView.findViewById(R.id.totalPrice);
@@ -100,7 +103,10 @@ public class cartFragment extends Fragment {
     public void calculateTotalPrice(){
         cm.readQuoteByUser(us.getID(), response -> {
             totalPriceStr = String.valueOf(response.get(0).getTotal());
-            totalPrice.setText("RM" + totalPriceStr);
-        });
+            totalPrice.setText("RM" + totalPriceStr);           
+            
+            os.saveTotal(response.get(0).getTotal());
+        });       
+        
     }
 }
