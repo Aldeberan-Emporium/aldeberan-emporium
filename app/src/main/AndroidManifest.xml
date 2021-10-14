@@ -18,6 +18,9 @@
             android:name=".Activity.checkoutActivity"
             android:exported="true" />
         <activity
+            android:name=".Activity.CheckoutActivityJava"
+            android:exported="true" />
+        <activity
             android:name=".Activity.home_product"
             android:exported="true"
             android:theme="@style/Theme.Aldeberan.NoActionBar" />
