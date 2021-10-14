@@ -6,17 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".Activity.checkoutActivity">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/checkoutPullToRefresh"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible">
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/checkoutRecyclerView"
@@ -28,7 +18,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -69,7 +59,7 @@
         app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkoutPullToRefresh">
+        app:layout_constraintTop_toBottomOf="@+id/checkoutRecyclerView">
 
         <TextView
             android:id="@+id/textView3"
