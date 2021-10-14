@@ -143,7 +143,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.getUiSettings().setAllGesturesEnabled(false);
         mMap.getUiSettings().setZoomGesturesEnabled(false);
 
-        userAddress = new LatLng(5.375991955595361, 100.53635499667726);
+        userAddress = new LatLng(2.988382328709302, 101.79601227801334);
 
         //Set bakery location (MMU Address)
         MarkerOptions markerOptions = new MarkerOptions();
@@ -204,15 +204,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                         polylineList = decodePoly(polyline);
                                         ms.saveGeocode(polyline);
                                     }
+                                    Log.d("SUCCESSMAP", "success");
                                     pathBuilderAnimation();
-                                }catch (Exception e){}
+                                }catch (Exception e){
+                                    Log.d("EXEPTION INNER", e.toString());
+                                }
                             }
                             @Override
                             public void onFailure(Call<String> call, Throwable t) {
+                                Log.d("YEETMAP", "map hailat oh :<");
                             }
                         });
 
-            } catch (Exception e){}
+            } catch (Exception e){
+                Log.d("EXCEPTION OUTER", "map hailat oh :<");
+            }
         }
     }
 

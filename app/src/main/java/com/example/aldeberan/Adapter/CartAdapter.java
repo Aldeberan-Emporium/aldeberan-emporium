@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -64,7 +65,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         holder.cartDetailCRowBinding.cartProdPriceLbl.setText("Price: RM " + mData.get(position).getProdPrice());
         Glide.with(mContext).load(mData.get(position).getProdImg()).override(450, 450).into(holder.cartDetailCRowBinding.cartProdImgView);
 
-        String currentQuantity = toString().valueOf(mData.get(position).getProdQuantity());
+        String currentQuantity = String.valueOf(mData.get(position).getProdQuantity());
         String prodName = mData.get(position).getProdName();
         List<Product> result = productList.stream()
                 .filter(a -> Objects.equals(a.getProdName(), prodName))
@@ -118,10 +119,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                     AlertDialog alert11 = builder1.create();
                     alert11.show();
                 }
-                else{
-                    cm.updateQuoteItem(quoteItemID, quoteID, prodName, prodSKU, itemQuantity, prodPrice, prodImg);
-                    cm.updateQuoteRecal(quoteID);
-                }
+                holder.cartDetailCRowBinding.cartNumButton.setNumber(String.valueOf(itemQuantity));
+                cm.updateQuoteItem(quoteItemID, quoteID, prodName, prodSKU, itemQuantity, prodPrice, prodImg);
+                cm.updateQuoteRecal(quoteID);
             }
         });
     }

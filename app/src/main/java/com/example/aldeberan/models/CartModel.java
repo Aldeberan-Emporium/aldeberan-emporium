@@ -76,7 +76,7 @@ public class CartModel extends DatabaseModel{
         this.getData(params, (success, response) -> {
             List<Cart> cartList = new ArrayList<>();
             String data = response;
-            Log.i("DATAIN", data);
+            //Log.i("DATAIN", data);
             try {
                 JSONArray array = new JSONArray(data);
                 for (int i = 0; i < array.length(); i++) {

@@ -72,7 +72,7 @@ public class DatabaseModel {
 
             @Override
             public void onFailure(int statusCode, @Nullable Headers headers, String errorResponse, @Nullable Throwable throwable) {
-                Log.i("STATUS", String.valueOf(statusCode));
+                Log.i("STATUS-GET-FAIL", String.valueOf(statusCode));
                 try {
                     callback.onResponse(false, null);
                 } catch (JSONException e) {
