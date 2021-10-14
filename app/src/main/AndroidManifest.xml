@@ -35,7 +35,7 @@
             android:exported="true"
             android:label="@string/title_activity_maps" />
         <activity
-            android:name=".Activity.CheckoutActivityJava"
+            android:name=".Activity.StripePaymentCheckOut"
             android:exported="true" />
         <activity
             android:name=".Activity.home_product"
