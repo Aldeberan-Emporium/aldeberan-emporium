@@ -2,6 +2,7 @@ package com.example.aldeberan.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,7 +15,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.aldeberan.MapFragment.MapsActivity;
 import com.example.aldeberan.R;
 import com.example.aldeberan.models.MapModel;
+import com.example.aldeberan.models.OrderModel;
 import com.example.aldeberan.storage.OrderStorage;
+import com.example.aldeberan.storage.UserStorage;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -28,9 +31,12 @@ import com.stripe.android.view.CardInputWidget;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import okhttp3.Call;
@@ -48,6 +54,8 @@ public class StripePaymentCheckOut extends AppCompatActivity {
     private Stripe stripe;
     private TextView amountTextView;
     private OrderStorage os;
+    private OrderModel om;
+    private UserStorage us;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,6 +63,8 @@ public class StripePaymentCheckOut extends AppCompatActivity {
         setContentView(R.layout.activity_checkout_java);
 
         os = new OrderStorage(this);
+        us = new UserStorage(this);
+        om = new OrderModel();
 
         amountTextView = findViewById(R.id.amountTextView);
         amountTextView.setText(String.valueOf(os.getTotal()));
@@ -179,6 +189,12 @@ public class StripePaymentCheckOut extends AppCompatActivity {
                         "Payment completed",
                         gson.toJson(paymentIntent)
                 );
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+                String currentTime = sdf.format(new Date());
+                om.addOrder(us.getID(), currentTime, os.getTotal(), "shipping", (response) -> {
+                    os.saveOrderID(response);
+                });
+                Log.i("STRIPE_ID",paymentIntent.getId());
                 toMap();
             } else if (status == PaymentIntent.Status.RequiresPaymentMethod) {
                 // Payment failed – allow retrying using a different payment method

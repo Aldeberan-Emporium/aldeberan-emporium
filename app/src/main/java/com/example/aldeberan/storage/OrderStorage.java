@@ -25,9 +25,11 @@ public class OrderStorage {
         myEdit.apply();
     }
 
-    public String getName(){
-       return sharedPreferences.getString("name", "Please sign in");
+    public void saveOrderID(int orderID){
+        myEdit.putInt("orderID", orderID);
+        myEdit.apply();
     }
 
     public double getTotal(){return Double.longBitsToDouble(sharedPreferences.getLong("total", 0));}
+    public int getOrderID(){return sharedPreferences.getInt("orderID", 0);}
 }

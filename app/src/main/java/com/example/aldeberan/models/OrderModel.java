@@ -15,88 +15,38 @@ import java.util.List;
 import java.util.Random;
 
 public class OrderModel extends DatabaseModel{
-
-    //Order reference generator
-    public String orderRefGenerator(){
-        int length = 15;
-        String prefix = "AE_";
-        String postfix = "";
-        char[] chars = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','0','1','2','3','4','5','6','7','8','9'};
-        Random rand = new Random();
-        for (int i = 0; i < length; i++){
-            int index = rand.nextInt(chars.length);
-            chars = ArrayUtils.remove(chars, index);
-            postfix += chars[index];
-        }
-        return prefix+postfix;
+    //Callback function for orderID response
+    public interface OnOrderIDResponseCallback {
+        public void onResponse(int orderID);
     }
-
-    //Callback function for orderList response
-    public interface OnResponseRefCallback {
-        public void onResponse(String response);
-    }
-
-    //Validate order reference
-    public void orderRefValidator(final String orderRef, OnResponseRefCallback callback){
-        this.readOrderRefAll((response -> {
-            String ref = orderRef;
-            for (int i = 0; i < response.size(); i++){
-                if (ref == response.get(i).getOrderRef()){
-                    ref = this.orderRefGenerator();
-                }
-            }
-            callback.onResponse(ref);
-        }));
-    }
-
 
     //Add order
-    public void addOrder(String userID, String orderDate, double subtotal, double total, String orderStatus){
-        String orderRef = orderRefGenerator();
-
-        this.orderRefValidator(orderRef, response -> {
-            String ref = response;
-            RequestParams params = new RequestParams();
-            params.put("action", "addAddress");
-            params.put("user_id", StringEscapeUtils.escapeHtml4(userID));
-            params.put("order_reference", StringEscapeUtils.escapeHtml4(ref));
-            params.put("order_date", orderDate);
-            params.put("subtotal", String.valueOf(subtotal));
-            params.put("total", String.valueOf(total));
-            params.put("order_status", orderStatus);
-            this.postData(params);
+    public void addOrder(String userID, String orderDate, double total, String orderStatus, OnOrderIDResponseCallback callback){
+        RequestParams params = new RequestParams();
+        params.put("action", "addOrder");
+        params.put("user_id", StringEscapeUtils.escapeHtml4(userID));
+        params.put("order_date", orderDate);
+        params.put("total", String.valueOf(total));
+        params.put("order_status", orderStatus);
+        this.getData(params, (success, res) -> {
+            String data = res;
+            //Log.i("DATAIN", data);
+            try {
+                JSONArray array = new JSONArray(data);
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject object = array.getJSONObject(i);
+                    int orderID = object.getInt("order_id");
+                    callback.onResponse(orderID);
+                }
+            }catch (Exception e){
+                Log.i("EXCEPTION-ORDER", e.toString());
+            }
         });
     }
 
     //Callback function for orderList response
     public interface OnResponseCallback {
         public void onResponse(List<Order> response);
-    }
-
-    //Read all order references
-    public void readOrderRefAll(OnResponseCallback callback){
-        RequestParams params = new RequestParams();
-        params.put("action", "readOrderRefAll");
-        this.getData(params, (success, response) -> {
-            List<Order> orderList = new ArrayList<>();
-            String data = response;
-            Log.i("DATAIN", data);
-            try {
-                JSONArray array = new JSONArray(data);
-                for (int i = 0; i < array.length(); i++) {
-                    JSONObject object = array.getJSONObject(i);
-                    String orderRef = StringEscapeUtils.unescapeHtml4(object.getString("order_reference"));
-
-                    Order order = new Order();
-                    order.setOrderRef(orderRef);
-
-                    orderList.add(order);
-
-                }
-            }catch (Exception e){}
-            Log.i("PL", String.valueOf(orderList));
-            callback.onResponse(orderList);
-        });
     }
 
     //Admin read all orders
@@ -114,7 +64,6 @@ public class OrderModel extends DatabaseModel{
                     int orderID = Integer.parseInt(object.getString("order_id"));
                     String orderRef = StringEscapeUtils.unescapeHtml4(object.getString("order_reference"));
                     String orderDate = object.getString("order_date");
-                    double subtotal = Double.parseDouble(object.getString("subtotal"));
                     double total = Double.parseDouble(object.getString("total"));
                     String orderStatus = object.getString("order_status");
                     int orderItemID = Integer.parseInt(object.getString("order_item_id"));
@@ -140,7 +89,6 @@ public class OrderModel extends DatabaseModel{
                     order.setOrderID(orderID);
                     order.setOrderRef(orderRef);
                     order.setOrderDate(orderDate);
-                    order.setSubtotal(subtotal);
                     order.setTotal(total);
                     order.setOrderStatus(orderStatus);
                     order.setOrderItemID(orderItemID);
@@ -187,7 +135,6 @@ public class OrderModel extends DatabaseModel{
                     int orderID = Integer.parseInt(object.getString("order_id"));
                     String orderRef = StringEscapeUtils.unescapeHtml4(object.getString("order_reference"));
                     String orderDate = object.getString("order_date");
-                    double subtotal = Double.parseDouble(object.getString("subtotal"));
                     double total = Double.parseDouble(object.getString("total"));
                     String orderStatus = object.getString("order_status");
                     int orderItemID = Integer.parseInt(object.getString("order_item_id"));
@@ -213,7 +160,6 @@ public class OrderModel extends DatabaseModel{
                     order.setOrderID(orderID);
                     order.setOrderRef(orderRef);
                     order.setOrderDate(orderDate);
-                    order.setSubtotal(subtotal);
                     order.setTotal(total);
                     order.setOrderStatus(orderStatus);
                     order.setOrderItemID(orderItemID);
