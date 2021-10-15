@@ -217,20 +217,15 @@ public class StripePaymentCheckOut extends AppCompatActivity {
 
     public void toMap(){
         //Pass in Order ID and Order Address
-        //String address = line1+line2+code+city+state+country; //from order_address
+        String address = os.getLine1()+os.getLine2()+os.getCode()+os.getCity()+os.getState()+os.getCountry();
 
-        /*
-        //Get latlng first before entering
         MapModel mm = new MapModel();
         mm.getLatLng(address, (lat, lng) -> {
-            //Insert here
+            finish();
+            Intent mapIntent = new Intent(StripePaymentCheckOut.this, MapsActivity.class);
+            mapIntent.putExtra("lat", lat);
+            mapIntent.putExtra("lng", lng);
+            startActivity(mapIntent);
         });
-         */
-        //Put remaining lines into mm.getLatLng
-        Intent mapIntent = new Intent(StripePaymentCheckOut.this, MapsActivity.class);
-        //mapIntent.putExtra("orderID", orderID);
-        //mapIntent.putExtra("lat", lat);
-        //mapIntent.putExtra("lng", lng);
-        startActivity(mapIntent);
     }
 }
