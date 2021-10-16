@@ -22,6 +22,9 @@
         android:theme="@style/Theme.Aldeberan"
         tools:replace="android:theme">
         <activity
+            android:name=".Activity.OrderActivity"
+            android:exported="true" />
+        <activity
             android:name=".Activity.AddressSelectionToBook"
             android:exported="true"
             android:parentActivityName=".Activity.AddressSelection" />
