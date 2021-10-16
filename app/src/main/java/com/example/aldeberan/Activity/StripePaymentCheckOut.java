@@ -196,12 +196,12 @@ public class StripePaymentCheckOut extends AppCompatActivity {
                 String currentTime = sdf.format(new Date());
                 om.addOrder(us.getID(), currentTime, os.getTotal(), "shipping", (response) -> {
                     os.saveOrderID(response);
-                    Log.i("WOW", String.valueOf(response));
                     om.addOrderItem(response, us.getQuoteID());
                     om.addOrderAddress(response, os.getRecipient(), os.getContact(), os.getLine1(), os.getLine2(), os.getCode(), os.getCity(), os.getState(), os.getCountry());
                     om.addOrderPayment(response, "Card", paymentIntent.getId());
                     cm.updateQuoteStatus(us.getQuoteID());
                     cm.addQuote(us.getID(), 0., 0);
+                    cm.getQuote(us.getID(), res -> us.setQuoteID(res));
                 });
 
                 Log.i("STRIPE_ID",paymentIntent.getId());
@@ -227,7 +227,7 @@ public class StripePaymentCheckOut extends AppCompatActivity {
 
     public void toMap(){
         //Pass in Order ID and Order Address
-        String address = os.getLine1()+os.getLine2()+os.getCode()+os.getCity()+os.getState()+os.getCountry();
+        String address = os.getLine1()+","+os.getLine2()+","+os.getCode()+","+os.getCity()+","+os.getState()+","+os.getCountry();
 
         MapModel mm = new MapModel();
         mm.getLatLng(address, (lat, lng) -> {

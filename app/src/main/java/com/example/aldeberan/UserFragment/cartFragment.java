@@ -83,11 +83,11 @@ public class cartFragment extends Fragment {
         us = new UserStorage(getActivity());
         int quoteID = us.getQuoteID();
         System.out.println("quoteID: " + quoteID);
-            cm.readQuoteItemByQuote(quoteID, response -> {
-                cartList = response;
-                PutDataIntoRecyclerView(response);
-            });
-        }
+        cm.readQuoteItemByQuote(quoteID, response -> {
+            cartList = response;
+            PutDataIntoRecyclerView(response);
+        });
+    }
 
     private void PutDataIntoRecyclerView(List<Cart> cartList) throws JSONException {
         ProductModel pm = new ProductModel();
@@ -101,12 +101,11 @@ public class cartFragment extends Fragment {
     }
 
     public void calculateTotalPrice(){
+        cm.updateQuoteRecal(us.getQuoteID());
         cm.readQuoteByUser(us.getID(), response -> {
             totalPriceStr = String.valueOf(response.get(0).getTotal());
-            totalPrice.setText("RM" + totalPriceStr);           
-            
+            totalPrice.setText("RM" + totalPriceStr);
             os.saveTotal(response.get(0).getTotal());
-        });       
-        
+        });
     }
 }

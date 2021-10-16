@@ -47,6 +47,7 @@ public class homeProductFragment extends Fragment{
     public List<Product> productList;
     public RecyclerView recyclerView;
     public ProductListingDetailAdapter adapter;
+    UserStorage us;
 
     ActionBar mActionBar;
 
@@ -65,6 +66,8 @@ public class homeProductFragment extends Fragment{
         productList = new ArrayList<>();
         myProductFragmentView = inflater.inflate(R.layout.fragment_home_product, container, false);
         recyclerView = myProductFragmentView.findViewById(R.id.cRecyclerView);
+        us = new UserStorage(getActivity());
+        cm.getQuote(us.getID(), res -> us.setQuoteID(res));
 
         ConstructRecyclerView();
         SwipeRefreshLayout pullToRefresh = myProductFragmentView.findViewById(R.id.cPullToRefresh);

@@ -129,6 +129,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             double lat = extras.getDouble("lat");
             double lng = extras.getDouble("lng");
             userAddress = new LatLng(lat, lng);
+            Log.i("LAT", String.valueOf(lat));
+            Log.i("LNG", String.valueOf(lng));
         }
     }
 
@@ -326,7 +328,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         if (hour > 0){
                             durationLeftLbl.setText(hour+"hr "+min+"min");
                         }
-                        else if (hour == 0 && min != 0){
+                        else if (hour == 0 && min != 0 && min >= 0){
                             if (min > 10) {
                                 durationLeftLbl.setText(min+"min");
                             }

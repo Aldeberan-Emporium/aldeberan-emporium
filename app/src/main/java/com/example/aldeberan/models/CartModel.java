@@ -60,6 +60,31 @@ public class CartModel extends DatabaseModel{
         this.postData(params);
     }
 
+    //Callback function for quote ID response
+    public interface OnQuoteIDResponseCallback {
+        public void onResponse(int quoteID);
+    }
+
+    //Get quote by user id
+    public void getQuote(String userID, OnQuoteIDResponseCallback callback){
+        RequestParams params = new RequestParams();
+        params.put("action", "getQuote");
+        params.put("user_id", StringEscapeUtils.escapeHtml4(userID));
+        this.getData(params, (success, response) -> {
+            List<Cart> cartList = new ArrayList<>();
+            String data = response;
+            int quoteID = 0;
+            try {
+                JSONArray array = new JSONArray(data);
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject object = array.getJSONObject(i);
+                    quoteID = Integer.parseInt(object.getString("quote_id"));
+                }
+            }catch (Exception e){}
+            callback.onResponse(quoteID);
+        });
+    }
+
     //Callback function for cartList response
     public interface OnResponseCallback {
         public void onResponse(List<Cart> response) throws JSONException;

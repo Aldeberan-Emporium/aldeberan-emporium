@@ -38,7 +38,7 @@ public class MapModel {
         params.put("address", preprocessAddress(address));
 
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get("https://aldeberan-emporium-map.herokuapp.com/latlng", params, new TextHttpResponseHandler() {
+        client.get("https://aldeberan-emporium-nodejs.herokuapp.com/latlng", params, new TextHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, String response) {
                 Log.i("JSON", response);
