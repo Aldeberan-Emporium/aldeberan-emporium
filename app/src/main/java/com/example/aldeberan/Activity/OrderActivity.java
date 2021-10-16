@@ -43,7 +43,7 @@ public class OrderActivity extends AppCompatActivity {
         om = new OrderModel();
         us = new UserStorage(this);
         String userID = us.getID();
-        om.readOrderByUser("XHXDzxi0ZMM4I8dEwLYoTNIGkb93", response -> {
+        om.readOrderByUser(userID, response -> {
             orderList = response;
             System.out.println("lanjiao" + response);
             PutDataIntoRecyclerView(orderList);
