@@ -73,7 +73,6 @@ public class CartModel extends DatabaseModel{
         this.getData(params, (success, response) -> {
             List<Cart> cartList = new ArrayList<>();
             String data = response;
-            //Log.i("DATAIN", data);
             try {
                 JSONArray array = new JSONArray(data);
                 for (int i = 0; i < array.length(); i++) {
@@ -91,7 +90,6 @@ public class CartModel extends DatabaseModel{
 
                 }
             }catch (Exception e){}
-            Log.i("PL", String.valueOf(cartList));
             callback.onResponse(cartList);
         });
     }
@@ -104,8 +102,7 @@ public class CartModel extends DatabaseModel{
         this.getData(params, (success, response) -> {
             List<Cart> cartList = new ArrayList<>();
             String data = response;
-            System.out.println("data:" + data);
-            Log.i("DATAIN", data);
+
             try {
                 JSONArray array = new JSONArray(data);
                 for (int i = 0; i < array.length(); i++) {
@@ -128,7 +125,6 @@ public class CartModel extends DatabaseModel{
                     cartList.add(cart);
                 }
             }catch (Exception e){}
-            Log.i("PL", String.valueOf(cartList));
             callback.onResponse(cartList);
         });
     }
