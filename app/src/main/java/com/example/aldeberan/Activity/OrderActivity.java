@@ -19,6 +19,7 @@ import com.example.aldeberan.structures.Order;
 
 import org.json.JSONException;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,20 +39,21 @@ public class OrderActivity extends AppCompatActivity {
         ConstructRecyclerView();
     }
 
-    public void PutDataIntoRecyclerView(List<Order> orderList) {
-            orderAdapter = new OrderAdapter(OrderActivity.this, orderList);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            recyclerView.setAdapter(orderAdapter);
-    }
-
     private void ConstructRecyclerView(){
         om = new OrderModel();
         us = new UserStorage(this);
         String userID = us.getID();
-        om.readOrderByUser(userID, response -> {
+        om.readOrderByUser("XHXDzxi0ZMM4I8dEwLYoTNIGkb93", response -> {
             orderList = response;
+            System.out.println("lanjiao" + response);
             PutDataIntoRecyclerView(orderList);
         });
+    }
+
+    public void PutDataIntoRecyclerView(List<Order> orderList) {
+            orderAdapter = new OrderAdapter(OrderActivity.this, orderList);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            recyclerView.setAdapter(orderAdapter);
     }
 
 }

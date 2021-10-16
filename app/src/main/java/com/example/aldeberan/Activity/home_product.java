@@ -24,7 +24,6 @@ import com.example.aldeberan.AdminFragment.AdminPanelLoadProductFragment;
 import com.example.aldeberan.R;
 import com.example.aldeberan.UserFragment.cartFragment;
 import com.example.aldeberan.UserFragment.homeProductFragment;
-import com.example.aldeberan.UserFragment.orderHistoryFragment;
 import com.example.aldeberan.UserFragment.tempFragment;
 import com.example.aldeberan.UserFragment.UserSettingFragment;
 import com.example.aldeberan.storage.UserStorage;
@@ -111,7 +110,8 @@ public class home_product extends AppCompatActivity implements NavigationView.On
                 setActionBarTitle("Home");
                 break;
             case R.id.nav_order_history:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new orderHistoryFragment()).commit();
+                Intent i = new Intent(this, OrderActivity.class);
+                startActivity(i);
                 setActionBarTitle("Order History");
                 break;
             case R.id.nav_cart:

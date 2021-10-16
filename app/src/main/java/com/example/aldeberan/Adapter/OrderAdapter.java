@@ -16,7 +16,6 @@ import com.example.aldeberan.Activity.home_product;
 import com.example.aldeberan.MapFragment.MapsActivity;
 import com.example.aldeberan.R;
 import com.example.aldeberan.databinding.CartDetailCRowBinding;
-import com.example.aldeberan.databinding.OrderDetailCRowBinding;
 import com.example.aldeberan.databinding.OrderHistoryCRowBinding;
 import com.example.aldeberan.models.CartModel;
 import com.example.aldeberan.models.OrderModel;
