@@ -28,13 +28,10 @@ public class CartModel extends DatabaseModel{
     }
 
     //Update quote
-    public void updateQuote(int quoteID, String userID, double total, int quoteStatus){
+    public void updateQuoteStatus(int quoteID){
         RequestParams params = new RequestParams();
-        params.put("action", "updateQuote");
+        params.put("action", "updateQuoteStatus");
         params.put("quote_id", quoteID);
-        params.put("user_id", StringEscapeUtils.escapeHtml4(userID));
-        params.put("total", String.valueOf(total));
-        params.put("quote_status", quoteStatus);
         this.postData(params);
     }
 

@@ -200,15 +200,11 @@ public class OrderModel extends DatabaseModel{
     }
 
     //Add order item
-    public void addOrderItem(int orderID, String prodName, String prodSKU, int prodQuantity, double prodPrice, String prodImg){
+    public void addOrderItem(int orderID, int quoteID){
         RequestParams params = new RequestParams();
         params.put("action", "addOrderItem");
         params.put("order_id", orderID);
-        params.put("product_name", StringEscapeUtils.escapeHtml4(prodName));
-        params.put("product_SKU", StringEscapeUtils.escapeHtml4(prodSKU));
-        params.put("product_quantity", prodQuantity);
-        params.put("product_price", String.valueOf(prodPrice));
-        params.put("product_img", prodImg);
+        params.put("quote_id", quoteID);
         this.postData(params);
     }
 

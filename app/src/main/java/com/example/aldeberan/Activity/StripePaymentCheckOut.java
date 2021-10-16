@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.aldeberan.MapFragment.MapsActivity;
 import com.example.aldeberan.R;
+import com.example.aldeberan.models.CartModel;
 import com.example.aldeberan.models.MapModel;
 import com.example.aldeberan.models.OrderModel;
 import com.example.aldeberan.storage.OrderStorage;
@@ -56,6 +57,7 @@ public class StripePaymentCheckOut extends AppCompatActivity {
     private OrderStorage os;
     private OrderModel om;
     private UserStorage us;
+    private CartModel cm;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,7 @@ public class StripePaymentCheckOut extends AppCompatActivity {
         os = new OrderStorage(this);
         us = new UserStorage(this);
         om = new OrderModel();
+        cm = new CartModel();
 
         amountTextView = findViewById(R.id.amountTextView);
         amountTextView.setText(String.valueOf(os.getTotal()));
@@ -194,6 +197,14 @@ public class StripePaymentCheckOut extends AppCompatActivity {
                 om.addOrder(us.getID(), currentTime, os.getTotal(), "shipping", (response) -> {
                     os.saveOrderID(response);
                 });
+
+                om.addOrderItem(os.getOrderID(), us.getQuoteID());
+                om.addOrderAddress(os.getOrderID(), os.getRecipient(), os.getContact(),
+                os.getLine1(), os.getLine2(), os.getCode(), os.getCity(), os.getState(), os.getCountry());
+                om.addOrderPayment(os.getOrderID(), "Card", paymentIntent.getId());
+                cm.updateQuoteStatus(us.getQuoteID());
+                cm.addQuote(us.getID(), 0., 0);
+
                 Log.i("STRIPE_ID",paymentIntent.getId());
                 toMap();
             } else if (status == PaymentIntent.Status.RequiresPaymentMethod) {
