@@ -27,6 +27,7 @@ public class OrderStorage {
 
     public void saveOrderID(int orderID){
         myEdit.putInt("orderID", orderID);
+        myEdit.apply();
     }
     
     public void saveAddress(String recipient, String contact, String line1, String line2, String code, String city, String state, String country){

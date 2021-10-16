@@ -45,8 +45,7 @@ public class OrderActivity extends AppCompatActivity {
         String userID = us.getID();
         om.readOrderByUser(userID, response -> {
             orderList = response;
-            System.out.println("lanjiao" + response);
-            PutDataIntoRecyclerView(orderList);
+            PutDataIntoRecyclerView(response);
         });
     }
 

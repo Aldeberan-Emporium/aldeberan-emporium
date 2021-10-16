@@ -196,14 +196,13 @@ public class StripePaymentCheckOut extends AppCompatActivity {
                 String currentTime = sdf.format(new Date());
                 om.addOrder(us.getID(), currentTime, os.getTotal(), "shipping", (response) -> {
                     os.saveOrderID(response);
+                    Log.i("WOW", String.valueOf(response));
+                    om.addOrderItem(response, us.getQuoteID());
+                    om.addOrderAddress(response, os.getRecipient(), os.getContact(), os.getLine1(), os.getLine2(), os.getCode(), os.getCity(), os.getState(), os.getCountry());
+                    om.addOrderPayment(response, "Card", paymentIntent.getId());
+                    cm.updateQuoteStatus(us.getQuoteID());
+                    cm.addQuote(us.getID(), 0., 0);
                 });
-
-                om.addOrderItem(os.getOrderID(), us.getQuoteID());
-                om.addOrderAddress(os.getOrderID(), os.getRecipient(), os.getContact(),
-                os.getLine1(), os.getLine2(), os.getCode(), os.getCity(), os.getState(), os.getCountry());
-                om.addOrderPayment(os.getOrderID(), "Card", paymentIntent.getId());
-                cm.updateQuoteStatus(us.getQuoteID());
-                cm.addQuote(us.getID(), 0., 0);
 
                 Log.i("STRIPE_ID",paymentIntent.getId());
                 toMap();
