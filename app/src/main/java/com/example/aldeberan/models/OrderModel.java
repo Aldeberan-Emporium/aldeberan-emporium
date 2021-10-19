@@ -135,7 +135,7 @@ public class OrderModel extends DatabaseModel{
                     int orderID = Integer.parseInt(object.getString("order_id"));
                     String orderRef = StringEscapeUtils.unescapeHtml4(object.getString("order_reference"));
                     String orderDate = object.getString("order_date");
-                    double total = Double.parseDouble(object.getString("total"));
+                    double total = Double.parseDouble(object.getString("order_total"));
                     String orderStatus = object.getString("order_status");
                     int orderItemID = Integer.parseInt(object.getString("order_item_id"));
                     String prodName = StringEscapeUtils.unescapeHtml4(object.getString("product_name"));
@@ -184,7 +184,9 @@ public class OrderModel extends DatabaseModel{
                     orderList.add(order);
 
                 }
-            }catch (Exception e){}
+            }catch (Exception e){
+                e.printStackTrace();
+            }
             Log.i("PL", String.valueOf(orderList));
             callback.onResponse(orderList);
         });
