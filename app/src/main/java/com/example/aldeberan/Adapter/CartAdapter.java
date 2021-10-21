@@ -60,28 +60,42 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     @Override
     public void onBindViewHolder(@NonNull CartViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
+        double currentQuantityPrice = 0;
+        int currentStock;
+        String temp_name = mData.get(position).getProdSKU();
+        String currentQuantity = String.valueOf(mData.get(position).getProdQuantity());
+        String price = String.valueOf(mData.get(position).getProdPrice());
+        currentQuantityPrice = Integer.parseInt(currentQuantity)*Double.parseDouble(price);
+
         holder.cartDetailCRowBinding.executePendingBindings();
-        holder.cartDetailCRowBinding.cartProdNameLbl.setText("Name: " + mData.get(position).getProdName());
-        holder.cartDetailCRowBinding.cartProdPriceLbl.setText("Price: RM " + mData.get(position).getProdPrice());
+        holder.cartDetailCRowBinding.cartProdNameLbl.setText(mData.get(position).getProdName());
+        holder.cartDetailCRowBinding.cartProdPriceLbl.setText("RM " + currentQuantityPrice);
         Glide.with(mContext).load(mData.get(position).getProdImg()).override(450, 450).into(holder.cartDetailCRowBinding.cartProdImgView);
 
-        String currentQuantity = String.valueOf(mData.get(position).getProdQuantity());
-        String prodName = mData.get(position).getProdName();
+        for(int i = 0; i < productList.size(); i++){
+            if(temp_name.equals(productList.get(i).getProdSKU())){
+                currentStock = productList.get(i).getProdStock();
+                holder.cartDetailCRowBinding.cartNumButton.setRange(0, currentStock);
+                break;
+            }
+        }
+
+        /*
         List<Product> result = productList.stream()
                 .filter(a -> Objects.equals(a.getProdName(), prodName))
                 .collect(Collectors.toList());
+        int currentStock = result.get(0).getProdStock();
+        //holder.cartDetailCRowBinding.cartNumButton.setRange(0, currentStock);
+         */
 
-       int currentStock = result.get(0).getProdStock();
-
-        holder.cartDetailCRowBinding.cartNumButton.setRange(0, currentStock);
-        holder.cartDetailCRowBinding.cartNumButton.setNumber(currentQuantity);
+        holder.cartDetailCRowBinding.cartNumButton.setNumber(String.valueOf(currentQuantity));
         holder.cartDetailCRowBinding.cartNumButton.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
             @Override
             public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
 
-                AlertDialog.Builder builder1 = new AlertDialog.Builder(mContext);
-                builder1.setMessage("Do you want to remove this product?");
-                builder1.setCancelable(true);
+                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                builder.setMessage("Do you want to remove this product?");
+                builder.setCancelable(true);
 
                 userStorage = new UserStorage(mContext);
                 String userID = userStorage.getID();
@@ -97,7 +111,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                 String prodImg = String.valueOf(mData.get(position).getProdImg());
 
                 if(itemQuantity == 0){
-                    builder1.setPositiveButton(
+                    builder.setPositiveButton(
                             "Yes",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
@@ -107,7 +121,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                                 }
                             });
 
-                    builder1.setNegativeButton(
+                    builder.setNegativeButton(
                             "No",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
@@ -116,7 +130,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                                 }
                             });
 
-                    AlertDialog alert11 = builder1.create();
+                    AlertDialog alert11 = builder.create();
                     alert11.show();
                 }
                 holder.cartDetailCRowBinding.cartNumButton.setNumber(String.valueOf(itemQuantity));
