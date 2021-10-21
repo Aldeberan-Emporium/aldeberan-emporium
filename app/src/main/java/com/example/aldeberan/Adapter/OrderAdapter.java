@@ -40,8 +40,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         this.orderList = orderList;
     }
 
-
-
     public class OrderViewHolder extends RecyclerView.ViewHolder{
         OrderHistoryCRowBinding orderHistoryCRowBinding;
 
@@ -77,18 +75,16 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         String orderTotal = String.valueOf(orderList.get(position).getTotal());
         holder.orderHistoryCRowBinding.addedPrice.setText(("Order total: RM"+ orderTotal));
         int itemNum = orderList.get(position).getTotalItems();
+
         String item;
         if (itemNum <= 1){
             item = " item";
         }
         else
             item = " items";
+
         String totalItem = String.valueOf(orderList.get(position).getTotalItems());
         holder.orderHistoryCRowBinding.totalItem.setText(totalItem + item);
-
-        //holder.orderHistoryCRowBinding.totalItem.setText(orderList.get(position).);
-
-
 
         holder.orderHistoryCRowBinding.orderButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,8 +93,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
                 mContext.startActivity(orderDetailActivity);
             }
         });
-
-
     }
 
     @Override
