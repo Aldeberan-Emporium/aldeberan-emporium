@@ -201,6 +201,43 @@ public class OrderModel extends DatabaseModel{
         this.postData(params);
     }
 
+    //Read order item by User ID
+    public void readOrderItem(String userID, OnResponseCallback callback){
+        RequestParams params = new RequestParams();
+        params.put("action", "readOrderItem");
+        params.put("user_id", StringEscapeUtils.escapeHtml4(userID));
+        this.getData(params, (success, response) -> {
+            List<Order> orderList = new ArrayList<>();
+            String data = response;
+            try {
+                JSONArray array = new JSONArray(data);
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject object = array.getJSONObject(i);
+                    int orderItemID = Integer.parseInt(object.getString("order_item_id"));
+                    String prodName = StringEscapeUtils.unescapeHtml4(object.getString("product_name"));
+                    String prodSKU = StringEscapeUtils.unescapeHtml4(object.getString("product_SKU"));
+                    String prodImg = StringEscapeUtils.unescapeHtml4(object.getString("product_img"));
+                    int prodQuantity = Integer.parseInt(object.getString("product_quantity"));
+                    double prodPrice = Double.parseDouble(object.getString("product_price"));
+
+                    Order order = new Order();
+                    order.setOrderItemID(orderItemID);
+                    order.setProdName(prodName);
+                    order.setProdSKU(prodSKU);
+                    order.setProdImg(prodImg);
+                    order.setProdQuantity(prodQuantity);
+                    order.setProdPrice(prodPrice);
+
+                    orderList.add(order);
+
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            callback.onResponse(orderList);
+        });
+    }
+
     //Add order item
     public void addOrderItem(int orderID, int quoteID){
         RequestParams params = new RequestParams();
