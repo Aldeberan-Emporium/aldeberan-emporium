@@ -4,15 +4,12 @@ import android.util.Log;
 
 import com.codepath.asynchttpclient.RequestParams;
 import com.example.aldeberan.structures.Cart;
-import com.example.aldeberan.structures.Product;
-import com.google.gson.Gson;
 
 import org.apache.commons.text.StringEscapeUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,13 +28,10 @@ public class CartModel extends DatabaseModel{
     }
 
     //Update quote
-    public void updateQuote(int quoteID, String userID, double total, int quoteStatus){
+    public void updateQuoteStatus(int quoteID){
         RequestParams params = new RequestParams();
-        params.put("action", "updateQuote");
+        params.put("action", "updateQuoteStatus");
         params.put("quote_id", quoteID);
-        params.put("user_id", StringEscapeUtils.escapeHtml4(userID));
-        params.put("total", String.valueOf(total));
-        params.put("quote_status", quoteStatus);
         this.postData(params);
     }
 
@@ -66,9 +60,34 @@ public class CartModel extends DatabaseModel{
         this.postData(params);
     }
 
+    //Callback function for quote ID response
+    public interface OnQuoteIDResponseCallback {
+        public void onResponse(int quoteID);
+    }
+
+    //Get quote by user id
+    public void getQuote(String userID, OnQuoteIDResponseCallback callback){
+        RequestParams params = new RequestParams();
+        params.put("action", "getQuote");
+        params.put("user_id", StringEscapeUtils.escapeHtml4(userID));
+        this.getData(params, (success, response) -> {
+            List<Cart> cartList = new ArrayList<>();
+            String data = response;
+            int quoteID = 0;
+            try {
+                JSONArray array = new JSONArray(data);
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject object = array.getJSONObject(i);
+                    quoteID = Integer.parseInt(object.getString("quote_id"));
+                }
+            }catch (Exception e){}
+            callback.onResponse(quoteID);
+        });
+    }
+
     //Callback function for cartList response
     public interface OnResponseCallback {
-        public void onResponse(List<Cart> response);
+        public void onResponse(List<Cart> response) throws JSONException;
     }
 
     //Read quote by user id
@@ -79,7 +98,6 @@ public class CartModel extends DatabaseModel{
         this.getData(params, (success, response) -> {
             List<Cart> cartList = new ArrayList<>();
             String data = response;
-            Log.i("DATAIN", data);
             try {
                 JSONArray array = new JSONArray(data);
                 for (int i = 0; i < array.length(); i++) {
@@ -97,7 +115,6 @@ public class CartModel extends DatabaseModel{
 
                 }
             }catch (Exception e){}
-            Log.i("PL", String.valueOf(cartList));
             callback.onResponse(cartList);
         });
     }
@@ -110,7 +127,7 @@ public class CartModel extends DatabaseModel{
         this.getData(params, (success, response) -> {
             List<Cart> cartList = new ArrayList<>();
             String data = response;
-            Log.i("DATAIN", data);
+
             try {
                 JSONArray array = new JSONArray(data);
                 for (int i = 0; i < array.length(); i++) {
@@ -133,7 +150,6 @@ public class CartModel extends DatabaseModel{
                     cartList.add(cart);
                 }
             }catch (Exception e){}
-            Log.i("PL", String.valueOf(cartList));
             callback.onResponse(cartList);
         });
     }

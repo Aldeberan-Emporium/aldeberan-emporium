@@ -81,7 +81,7 @@ public class ProductModel extends DatabaseModel {
         params.put("action", "readProductAll");
         this.getData(params, (success, response) -> {
             data = response;
-            Log.i("DATAIN", data);
+            //Log.i("DATAIN", data);
 
             try {
                 JSONArray array = new JSONArray(data);

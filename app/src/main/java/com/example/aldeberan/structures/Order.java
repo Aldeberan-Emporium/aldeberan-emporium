@@ -7,7 +7,6 @@ public class Order {
     private int orderID;
     private String orderRef;
     private String orderDate;
-    private double subtotal;
     private double total;
     private String orderStatus;
 
@@ -35,7 +34,7 @@ public class Order {
     private String payType;
     private String payID;
 
-    public Order(int orderID, String userID, String orderRef, String orderDate, double subtotal, double total, String orderStatus,
+    public Order(int orderID, String userID, String orderRef, String orderDate, double total, String orderStatus,
         int orderItemID, String prodName, String prodSKU, int prodQuantity, double prodPrice, String prodImg,
         int orderAddressID, String addRecipient, String addContact, String addLine1, String addLine2, String addCode, String addCity, String addState, String addCountry,
         int orderPaymentID, String payType, String payID){
@@ -43,7 +42,6 @@ public class Order {
         User u = new User(userID);
         this.orderRef = orderRef;
         this.orderDate = orderDate;
-        this.subtotal = subtotal;
         this.total = total;
         this.orderStatus = orderStatus;
         this.orderItemID = orderItemID;
@@ -89,13 +87,6 @@ public class Order {
     }
     public void setOrderDate(String orderDate) {
         this.orderDate = orderDate;
-    }
-
-    public double getSubtotal() {
-        return subtotal;
-    }
-    public void setSubtotal(double subtotal) {
-        this.subtotal = subtotal;
     }
 
     public double getTotal() {

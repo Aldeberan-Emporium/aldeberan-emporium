@@ -27,6 +27,7 @@ import com.example.aldeberan.MapFragment.DirectionHelpers.IGoogleAPI;
 import com.example.aldeberan.R;
 import com.example.aldeberan.models.OrderModel;
 import com.example.aldeberan.storage.MapStorage;
+import com.example.aldeberan.storage.OrderStorage;
 import com.example.aldeberan.storage.UserStorage;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -86,6 +87,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public UserStorage us;
     public String userID;
     public MapStorage ms;
+    public OrderStorage os;
 
     public OrderModel om;
 
@@ -100,6 +102,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         us = new UserStorage(this);
+        os = new OrderStorage(this);
         ms = new MapStorage(this);
         om = new OrderModel();
         context = this;
@@ -120,15 +123,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         onLoadAnim();
 
-        /*
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            orderID = extras.getInt("orderID");
+            orderID = os.getOrderID();
             double lat = extras.getDouble("lat");
             double lng = extras.getDouble("lng");
             userAddress = new LatLng(lat, lng);
+            Log.i("LAT", String.valueOf(lat));
+            Log.i("LNG", String.valueOf(lng));
         }
-         */
     }
 
     @Override
@@ -143,7 +146,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.getUiSettings().setAllGesturesEnabled(false);
         mMap.getUiSettings().setZoomGesturesEnabled(false);
 
-        userAddress = new LatLng(5.375991955595361, 100.53635499667726);
+        //userAddress = new LatLng(2.988382328709302, 101.79601227801334);
 
         //Set bakery location (MMU Address)
         MarkerOptions markerOptions = new MarkerOptions();
@@ -205,14 +208,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                         ms.saveGeocode(polyline);
                                     }
                                     pathBuilderAnimation();
-                                }catch (Exception e){}
+                                }catch (Exception e){
+                                }
                             }
                             @Override
                             public void onFailure(Call<String> call, Throwable t) {
                             }
                         });
 
-            } catch (Exception e){}
+            } catch (Exception e){
+            }
         }
     }
 
@@ -323,7 +328,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         if (hour > 0){
                             durationLeftLbl.setText(hour+"hr "+min+"min");
                         }
-                        else if (hour == 0 && min != 0){
+                        else if (hour == 0 && min != 0 && min >= 0){
                             if (min > 10) {
                                 durationLeftLbl.setText(min+"min");
                             }
@@ -352,7 +357,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         handler.removeCallbacksAndMessages(null);
                         ms.removeStatus();
                         Thread.interrupted();
-                        //om.updateOrderStatus(orderID, "delivered");
+                        om.updateOrderStatus(orderID, "delivered");
                     }
                 }
             }, 3000);

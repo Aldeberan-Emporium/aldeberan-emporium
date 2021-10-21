@@ -66,7 +66,6 @@ public class UserAddressFragment extends Fragment implements View.OnClickListene
 
         pullToRefresh.setOnRefreshListener(() -> {
             ConstructRecyclerView();
-            adapter.notifyDataSetChanged();
             pullToRefresh.setRefreshing(false);
         });
 
@@ -75,12 +74,21 @@ public class UserAddressFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View view) {
-        //Redirect back to load products fragment
         UserAddAddressFragment newAddressFragment = new UserAddAddressFragment();
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, newAddressFragment)
-                .addToBackStack(null)
-                .commit();
+        if (getActivity().getClass().getSimpleName().contains("AddressSelectionToBook")){
+            //Redirect to update product fragment
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.addressFragmentView, newAddressFragment)
+                    .addToBackStack(null)
+                    .commit();
+        }
+        else{
+            //Redirect to update product fragment
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, newAddressFragment)
+                    .addToBackStack(null)
+                    .commit();
+        }
     }
 
     private void onLoadThrobber() {
@@ -140,11 +148,20 @@ public class UserAddressFragment extends Fragment implements View.OnClickListene
         bundle.putInt("isDefault", Integer.parseInt(isDefault));
         updateAddressFragment.setArguments(bundle);
 
-        //Redirect to update product fragment
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, updateAddressFragment)
-                .addToBackStack(null)
-                .commit();
+        if (getActivity().getClass().getSimpleName() == "AddressSelectionToBook"){
+            //Redirect to update product fragment
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.addressFragmentView, updateAddressFragment)
+                    .addToBackStack(null)
+                    .commit();
+        }
+        else{
+            //Redirect to update product fragment
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, updateAddressFragment)
+                    .addToBackStack(null)
+                    .commit();
+        }
     };
 
     private void PutDataIntoRecyclerView(List<Address> addressList){

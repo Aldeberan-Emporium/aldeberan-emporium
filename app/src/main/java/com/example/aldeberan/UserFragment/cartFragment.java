@@ -1,10 +1,13 @@
 package com.example.aldeberan.UserFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,11 +16,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.aldeberan.Activity.checkoutActivity;
 import com.example.aldeberan.Adapter.CartAdapter;
-import com.example.aldeberan.Adapter.ProductListingDetailAdapter;
 import com.example.aldeberan.R;
 import com.example.aldeberan.models.CartModel;
 import com.example.aldeberan.models.ProductModel;
+import com.example.aldeberan.storage.OrderStorage;
+import com.example.aldeberan.storage.UserStorage;
 import com.example.aldeberan.structures.Cart;
 import com.example.aldeberan.structures.Product;
 
@@ -29,65 +34,78 @@ import java.util.List;
 public class cartFragment extends Fragment {
 
     private View myCartFragmentView;
-    public List<Product> productList;
-    public RecyclerView recyclerView;
-    public List<Cart> cartList;
-    public CartAdapter adapter;
-    public CartAdapter.FragmentCommunication mCommunicator;
+    private List<Product> productList;
+    private RecyclerView recyclerView;
+    private List<Cart> cartList;
+    private CartAdapter adapter;
+    private UserStorage us;
+    private Button checkoutBtn;
+    private TextView totalPrice;
+    private String totalPriceStr;
+    private CartModel cm;
+    private OrderStorage os;
 
     @Nullable
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         myCartFragmentView = inflater.inflate(R.layout.fragment_cart, container, false);
         productList = new ArrayList<>();
+        cm = new CartModel();
+        os = new OrderStorage(getActivity());
         recyclerView = myCartFragmentView.findViewById(R.id.cartRecyclerView);
+        checkoutBtn = myCartFragmentView.findViewById(R.id.checkoutButton);
+        totalPrice = myCartFragmentView.findViewById(R.id.totalPrice);
 
+        checkoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), checkoutActivity.class);
+                startActivity(intent);
+                //getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new checkoutFragment()).commit();
+            }
+        });
 
         ConstructRecyclerView();
+        calculateTotalPrice();
         SwipeRefreshLayout pullToRefresh = myCartFragmentView.findViewById(R.id.cartPullToRefresh);
 
         pullToRefresh.setOnRefreshListener(() -> {
             ConstructRecyclerView();
             adapter.notifyDataSetChanged();
+            calculateTotalPrice();
             pullToRefresh.setRefreshing(false);
         });
-
         return myCartFragmentView;
     }
 
     private void ConstructRecyclerView(){
         CartModel cm = new CartModel();
-        /*
-        try {
-            cm.readQuoteByUser((response) -> {
-                cartList = response;
-                PutDataIntoRecyclerView(cartList);
-            });
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-         */
+        us = new UserStorage(getActivity());
+        int quoteID = us.getQuoteID();
+        System.out.println("quoteID: " + quoteID);
+        cm.readQuoteItemByQuote(quoteID, response -> {
+            cartList = response;
+            PutDataIntoRecyclerView(response);
+        });
     }
 
+    private void PutDataIntoRecyclerView(List<Cart> cartList) throws JSONException {
+        ProductModel pm = new ProductModel();
+        pm.readProductAll(response -> {
+            adapter = new CartAdapter(getContext(), cartList, response);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            recyclerView.setAdapter(adapter);
+            Log.i("PLOPE", String.valueOf(cartList));
+        });
 
-    CartAdapter.FragmentCommunication cart_communication = (prodName, prodID, prodImg, prodPrice) -> {
-        cartFragment cart = new cartFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("prodName", prodName);
-        bundle.putString("prodID", prodID);
-        //bundle.putString("prodSKU", prodSKU);
-        bundle.putString("prodImg", prodImg);
-        //bundle.putString("prodStock", prodStock);
-        //bundle.putString("prodAvail", prodAvail);
-        bundle.putString("prodPrice", prodPrice);
-        cart.setArguments(bundle);
+    }
 
-    };
-
-    private void PutDataIntoRecyclerView(List<Cart> cartList){
-        adapter = new CartAdapter(getActivity(), cartList, cart_communication);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(adapter);
-        Log.i("PLOPE", String.valueOf(cartList));
+    public void calculateTotalPrice(){
+        cm.updateQuoteRecal(us.getQuoteID());
+        cm.readQuoteByUser(us.getID(), response -> {
+            totalPriceStr = String.valueOf(response.get(0).getTotal());
+            totalPrice.setText("RM" + totalPriceStr);
+            os.saveTotal(response.get(0).getTotal());
+        });
     }
 }

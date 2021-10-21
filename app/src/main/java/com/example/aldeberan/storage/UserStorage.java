@@ -49,6 +49,11 @@ public class UserStorage {
         myEdit.apply();
     }
 
+    public void setQuoteID(int quoteID){
+        myEdit.putInt("quoteID", quoteID);
+        myEdit.apply();
+    }
+
     public String getName(){
        return sharedPreferences.getString("name", "Please sign in");
     }

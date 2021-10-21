@@ -1,8 +1,8 @@
 package com.example.aldeberan.Activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -12,7 +12,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.aldeberan.MapFragment.MapsActivity;
 import com.example.aldeberan.R;
+import com.example.aldeberan.models.CartModel;
+import com.example.aldeberan.models.MapModel;
+import com.example.aldeberan.models.OrderModel;
+import com.example.aldeberan.storage.OrderStorage;
+import com.example.aldeberan.storage.UserStorage;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -26,9 +32,12 @@ import com.stripe.android.view.CardInputWidget;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import okhttp3.Call;
@@ -39,19 +48,29 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class CheckoutActivityJava extends AppCompatActivity {
+public class StripePaymentCheckOut extends AppCompatActivity {
     private static final String BACKEND_URL = "https://fierce-chamber-24927.herokuapp.com/"; //never change this url
     private OkHttpClient httpClient = new OkHttpClient();
     private String paymentIntentClientSecret;
     private Stripe stripe;
     private TextView amountTextView;
+    private OrderStorage os;
+    private OrderModel om;
+    private UserStorage us;
+    private CartModel cm;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout_java);
 
+        os = new OrderStorage(this);
+        us = new UserStorage(this);
+        om = new OrderModel();
+        cm = new CartModel();
+
         amountTextView = findViewById(R.id.amountTextView);
+        amountTextView.setText(String.valueOf(os.getTotal()));
 
         stripe = new Stripe(
                 getApplication(),
@@ -118,13 +137,13 @@ public class CheckoutActivityJava extends AppCompatActivity {
         paymentIntentClientSecret = responseMap.get("clientSecret");
     }
     private static final class PayCallback implements Callback {
-        @NonNull private final WeakReference<CheckoutActivityJava> activityRef;
-        PayCallback(@NonNull CheckoutActivityJava activity) {
+        @NonNull private final WeakReference<StripePaymentCheckOut> activityRef;
+        PayCallback(@NonNull StripePaymentCheckOut activity) {
             activityRef = new WeakReference<>(activity);
         }
         @Override
         public void onFailure(@NonNull Call call, @NonNull IOException e) {
-            final CheckoutActivityJava activity = activityRef.get();
+            final StripePaymentCheckOut activity = activityRef.get();
             if (activity == null) {
                 return;
             }
@@ -137,7 +156,7 @@ public class CheckoutActivityJava extends AppCompatActivity {
         @Override
         public void onResponse(@NonNull Call call, @NonNull final Response response)
                 throws IOException {
-            final CheckoutActivityJava activity = activityRef.get();
+            final StripePaymentCheckOut activity = activityRef.get();
             if (activity == null) {
                 return;
             }
@@ -152,15 +171,15 @@ public class CheckoutActivityJava extends AppCompatActivity {
             }
         }
     }
-    private static final class PaymentResultCallback
+    private final class PaymentResultCallback
             implements ApiResultCallback<PaymentIntentResult> {
-        @NonNull private final WeakReference<CheckoutActivityJava> activityRef;
-        PaymentResultCallback(@NonNull CheckoutActivityJava activity) {
+        @NonNull private final WeakReference<StripePaymentCheckOut> activityRef;
+        PaymentResultCallback(@NonNull StripePaymentCheckOut activity) {
             activityRef = new WeakReference<>(activity);
         }
         @Override
         public void onSuccess(@NonNull PaymentIntentResult result) {
-            final CheckoutActivityJava activity = activityRef.get();
+            final StripePaymentCheckOut activity = activityRef.get();
             if (activity == null) {
                 return;
             }
@@ -173,6 +192,20 @@ public class CheckoutActivityJava extends AppCompatActivity {
                         "Payment completed",
                         gson.toJson(paymentIntent)
                 );
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+                String currentTime = sdf.format(new Date());
+                om.addOrder(us.getID(), currentTime, os.getTotal(), "shipping", (response) -> {
+                    os.saveOrderID(response);
+                    om.addOrderItem(response, us.getQuoteID());
+                    om.addOrderAddress(response, os.getRecipient(), os.getContact(), os.getLine1(), os.getLine2(), os.getCode(), os.getCity(), os.getState(), os.getCountry());
+                    om.addOrderPayment(response, "Card", paymentIntent.getId());
+                    cm.updateQuoteStatus(us.getQuoteID());
+                    cm.addQuote(us.getID(), 0., 0);
+                    cm.getQuote(us.getID(), res -> us.setQuoteID(res));
+                });
+
+                Log.i("STRIPE_ID",paymentIntent.getId());
+                toMap();
             } else if (status == PaymentIntent.Status.RequiresPaymentMethod) {
                 // Payment failed – allow retrying using a different payment method
                 activity.displayAlert(
@@ -183,12 +216,26 @@ public class CheckoutActivityJava extends AppCompatActivity {
         }
         @Override
         public void onError(@NonNull Exception e) {
-            final CheckoutActivityJava activity = activityRef.get();
+            final StripePaymentCheckOut activity = activityRef.get();
             if (activity == null) {
                 return;
             }
             // Payment request failed – allow retrying using the same payment method
             activity.displayAlert("Error", e.toString());
         }
+    }
+
+    public void toMap(){
+        //Pass in Order ID and Order Address
+        String address = os.getLine1()+","+os.getLine2()+","+os.getCode()+","+os.getCity()+","+os.getState()+","+os.getCountry();
+
+        MapModel mm = new MapModel();
+        mm.getLatLng(address, (lat, lng) -> {
+            finish();
+            Intent mapIntent = new Intent(StripePaymentCheckOut.this, MapsActivity.class);
+            mapIntent.putExtra("lat", lat);
+            mapIntent.putExtra("lng", lng);
+            startActivity(mapIntent);
+        });
     }
 }

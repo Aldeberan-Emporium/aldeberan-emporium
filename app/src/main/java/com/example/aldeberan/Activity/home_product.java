@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,8 +22,8 @@ import android.widget.Toast;
 import com.example.aldeberan.AdminFragment.AdminPanelAddProductFragment;
 import com.example.aldeberan.AdminFragment.AdminPanelLoadProductFragment;
 import com.example.aldeberan.R;
+import com.example.aldeberan.UserFragment.cartFragment;
 import com.example.aldeberan.UserFragment.homeProductFragment;
-import com.example.aldeberan.UserFragment.orderHistoryFragment;
 import com.example.aldeberan.UserFragment.tempFragment;
 import com.example.aldeberan.UserFragment.UserSettingFragment;
 import com.example.aldeberan.storage.UserStorage;
@@ -63,6 +65,7 @@ public class home_product extends AppCompatActivity implements NavigationView.On
             //navUserPic.setImageResource(R.drawable.ic_launcher);
         }
 */
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
@@ -78,6 +81,28 @@ public class home_product extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_toolbar, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.cart_button:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new cartFragment()).commit();
+                setActionBarTitle("Cart");
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()){
             case R.id.nav_home_product:
@@ -85,7 +110,8 @@ public class home_product extends AppCompatActivity implements NavigationView.On
                 setActionBarTitle("Home");
                 break;
             case R.id.nav_order_history:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new orderHistoryFragment()).commit();
+                Intent i = new Intent(this, OrderActivity.class);
+                startActivity(i);
                 setActionBarTitle("Order History");
                 break;
             case R.id.nav_cart:
@@ -106,7 +132,6 @@ public class home_product extends AppCompatActivity implements NavigationView.On
             case R.id.nav_admin_load:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AdminPanelLoadProductFragment()).commit();
                 break;
-
             /*
             case R.id.nav_logout:
                 Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();

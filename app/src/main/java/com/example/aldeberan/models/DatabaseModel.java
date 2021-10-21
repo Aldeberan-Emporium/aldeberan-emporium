@@ -14,6 +14,7 @@ import com.google.gson.GsonBuilder;
 
 import org.apache.commons.text.StringEscapeUtils;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -51,7 +52,7 @@ public class DatabaseModel {
 
     //Callback function for getData response
     public interface OnResponseCallback {
-        public void onResponse(boolean success, String response);
+        public void onResponse(boolean success, String response) throws JSONException;
     }
 
     //Get data from database
@@ -62,13 +63,21 @@ public class DatabaseModel {
             public void onSuccess(int statusCode, Headers headers, String response) {
                 Log.i("JSON", response);
                 Log.i("STATUS", String.valueOf(statusCode));
-                callback.onResponse(true, response);
+                try {
+                    callback.onResponse(true, response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
             public void onFailure(int statusCode, @Nullable Headers headers, String errorResponse, @Nullable Throwable throwable) {
-                Log.i("STATUS", String.valueOf(statusCode));
-                callback.onResponse(false, null);
+                Log.i("STATUS-GET-FAIL", String.valueOf(statusCode));
+                try {
+                    callback.onResponse(false, null);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
