@@ -12,9 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.aldeberan.Activity.OrderActivity;
+import com.example.aldeberan.Activity.OrderDetailActivity;
 import com.example.aldeberan.Activity.home_product;
 import com.example.aldeberan.MapFragment.MapsActivity;
 import com.example.aldeberan.R;
+import com.example.aldeberan.UserFragment.cartFragment;
 import com.example.aldeberan.databinding.CartDetailCRowBinding;
 import com.example.aldeberan.databinding.OrderHistoryCRowBinding;
 import com.example.aldeberan.models.CartModel;
@@ -65,21 +67,29 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
 
         holder.orderHistoryCRowBinding.executePendingBindings();
 
-        holder.orderHistoryCRowBinding.orderID.setText("ID: " + orderList.get(position).getOrderRef());
-        holder.orderHistoryCRowBinding.orderDate.setText("Name: " + orderList.get(position).getProdName());
-        holder.orderHistoryCRowBinding.orderTotalPrice.setText("Price: RM " + orderList.get(position).getProdPrice());
-        holder.orderHistoryCRowBinding.orderPaymentMethod.setText(orderList.get(position).getPayType());
+        Glide.with(mContext).load(orderList.get(position).getProdImg()).override(450, 450).into(holder.orderHistoryCRowBinding.orderImage);
+        holder.orderHistoryCRowBinding.orderHistoryStatus.setText(orderList.get(position).getOrderStatus());
+        holder.orderHistoryCRowBinding.orderProductName.setText("Name: " + orderList.get(position).getProdName());
+        String productQuantity = toString().valueOf(orderList.get(position).getProdQuantity());
+        holder.orderHistoryCRowBinding.orderQuantity.setText(productQuantity + "x");
+        String onePrice = toString().valueOf(orderList.get(position).getProdPrice());
+        holder.orderHistoryCRowBinding.onePrice.setText("RM" + onePrice);
+        String orderTotal = toString().valueOf(orderList.get(position).getTotal());
+        holder.orderHistoryCRowBinding.addedPrice.setText(("Order total: RM"+ orderTotal));
 
-        /*
+        //holder.orderHistoryCRowBinding.totalItem.setText(orderList.get(position).);
+
+
+
         holder.orderHistoryCRowBinding.orderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, MapsActivity.class);
-                mContext.startActivity(intent);
+                Intent orderDetailActivity = new Intent(mContext, OrderDetailActivity.class);
+                mContext.startActivity(orderDetailActivity);
             }
         });
 
-         */
+
     }
 
     @Override

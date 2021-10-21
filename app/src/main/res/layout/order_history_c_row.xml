@@ -2,72 +2,125 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
+
     <data>
         <variable
             name="order"
             type="com.example.aldeberan.structures.Order"/>
+
     </data>
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="5dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:paddingBottom="10dp"
-        android:orientation="horizontal">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/divider5"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/orderButton"
+            app:layout_constraintVertical_bias="0.013"
+            tools:layout_editor_absoluteX="0dp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/orderButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="126dp"
             android:background="@color/blue_update"
-            android:clickable="false"
+            android:clickable="true"
             android:paddingLeft="5dp"
+            android:paddingTop="5dp"
             android:paddingRight="5dp"
-            android:paddingBottom="5dp">
+            android:paddingBottom="5dp"
+            tools:ignore="MissingConstraints">
+
+            <ImageView
+                android:id="@+id/orderImage"
+                android:layout_width="61dp"
+                android:layout_height="68dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="40dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
-                android:id="@+id/orderID"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="3dp"
-                android:text="Order ID:"
+                android:id="@+id/orderProductName"
+                android:layout_width="293dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="5dp"
+                android:text="product name"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.161"
+                app:layout_constraintStart_toEndOf="@+id/orderImage"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_chainStyle="packed"
-                tools:layout_editor_absoluteX="5dp" />
+                app:layout_constraintVertical_bias="0.16" />
 
             <TextView
-                android:id="@+id/orderDate"
-                android:layout_width="match_parent"
+                android:id="@+id/orderQuantity"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="3dp"
-                android:text="Order Date:"
-                app:layout_constraintTop_toBottomOf="@id/orderID"
-                app:layout_constraintVertical_chainStyle="packed"
-                tools:layout_editor_absoluteX="31dp" />
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="8dp"
+                android:text="x1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.97"
+                app:layout_constraintStart_toEndOf="@+id/orderImage"
+                app:layout_constraintTop_toBottomOf="@+id/orderHistoryStatus"
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
-                android:id="@+id/orderTotalPrice"
-                android:layout_width="match_parent"
+                android:id="@+id/orderHistoryStatus"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="3dp"
-                android:text="Total Price:"
-                app:layout_constraintTop_toBottomOf="@id/orderDate"
-                app:layout_constraintVertical_chainStyle="packed"
-                tools:layout_editor_absoluteX="5dp" />
+                android:text="Completed"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.935"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
-                android:id="@+id/orderPaymentMethod"
-                android:layout_width="match_parent"
+                android:id="@+id/addedPrice"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="3dp"
-                android:text="Payment Method:"
-                app:layout_constraintTop_toBottomOf="@id/orderTotalPrice"
-                app:layout_constraintVertical_chainStyle="packed"
-                tools:layout_editor_absoluteX="5dp" />
+                android:text="Order total: "
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.798"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.953" />
+
+            <TextView
+                android:id="@+id/totalItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/onePrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="RM4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.96"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/orderQuantity" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>
