@@ -44,7 +44,7 @@ public class AdminPanelLoadProductFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         myFragmentView = inflater.inflate(R.layout.activity_admin_panel_load_product, container, false);
-        ((home_product) getActivity()).setActionBarTitle("Manage Bread(s)");
+        //((home_product) getActivity()).setActionBarTitle("Manage Bread(s)");
         productList = new ArrayList<>();
         recyclerView = myFragmentView.findViewById(R.id.recyclerView);
         noProdLbl = myFragmentView.findViewById(R.id.noProdLbl);
@@ -118,7 +118,7 @@ public class AdminPanelLoadProductFragment extends Fragment {
 
         //Redirect to update product fragment
         getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, updateProductFragment)
+                .replace(R.id.fragmentContainerView2, updateProductFragment)
                 .addToBackStack(null)
                 .commit();
     };

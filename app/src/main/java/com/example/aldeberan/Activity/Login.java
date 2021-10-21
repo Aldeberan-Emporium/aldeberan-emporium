@@ -50,6 +50,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        getSupportActionBar().hide();
+
         // [START config_signin]
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -67,8 +70,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         SignInButton btn = findViewById(R.id.sign_in_button);
         btn.setOnClickListener(this);
 
-        Button logout = findViewById(R.id.logout);
-        logout.setOnClickListener(this);
+        //Button logout = findViewById(R.id.logout);
+        //logout.setOnClickListener(this);
     }
 
     // [START on_start_check_user]
@@ -177,8 +180,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
     //sign out
     public void signOut() {
         mGoogleSignInClient.signOut().addOnCompleteListener(this, task -> {
-            TextView txtv = findViewById(R.id.loginStatus);
-            txtv.setText("Signed out");
+            //TextView txtv = findViewById(R.id.loginStatus);
+            //txtv.setText("Signed out");
         });
 
         SharedPreferences sharedPreferences = getSharedPreferences("CurrentUser",MODE_PRIVATE);
@@ -203,8 +206,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         //to do
         us = new UserStorage(this);
         if (user != null){
-            TextView txtv = findViewById(R.id.loginStatus);
-            txtv.setText("User ID: " + user.getUid());
+            //TextView txtv = findViewById(R.id.loginStatus);
+            //txtv.setText("User ID: " + user.getUid());
 
             String userID = user.getUid();
 
@@ -223,8 +226,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                 System.out.println("wtf?" + userName + ID + photoURL + email + quoteID);
             });
         }else{
-            TextView txtv = findViewById(R.id.loginStatus);
-            txtv.setText("User ID: Please Sign in");
+            //TextView txtv = findViewById(R.id.loginStatus);
+            //txtv.setText("User ID: Please Sign in");
         }
     }
 
@@ -234,9 +237,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
             case R.id.sign_in_button:
                 resultLauncher.launch(new Intent(mGoogleSignInClient.getSignInIntent()));
                 break;
-            case R.id.logout:
-                signOut();
-                break;
+            //case R.id.logout:
+                //signOut();
+                //break;
         }
     }
 }

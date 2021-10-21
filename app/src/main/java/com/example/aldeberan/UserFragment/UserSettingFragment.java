@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.aldeberan.Activity.Homepage;
 import com.example.aldeberan.Activity.Login;
+import com.example.aldeberan.Activity.OrderActivity;
 import com.example.aldeberan.Activity.home_product;
 import com.example.aldeberan.AdminFragment.AdminPanelLoadProductFragment;
 import com.example.aldeberan.HomepageFragment;
@@ -38,6 +39,9 @@ public class UserSettingFragment extends Fragment implements View.OnClickListene
     Button orderBtn;
     Button loginBtn;
     Button logoutBtn;
+    Button adminBtn;
+
+    String temp_name = "aldeberan.emporium@gmail.com";
 
     @Nullable
     @Override
@@ -58,6 +62,8 @@ public class UserSettingFragment extends Fragment implements View.OnClickListene
         loginBtn.setOnClickListener(this);
         logoutBtn = userSettingsView.findViewById(R.id.logoutBtn);
         logoutBtn.setOnClickListener(this);
+        adminBtn = userSettingsView.findViewById(R.id.adminBtn);
+        adminBtn.setOnClickListener(this);
 
         us = new UserStorage(getActivity());
         switchSession();
@@ -77,6 +83,8 @@ public class UserSettingFragment extends Fragment implements View.OnClickListene
                 //((home_product) getActivity()).setActionBarTitle("User Info");
                 break;
             case R.id.wishlistBtn:
+                //Intent intent = new Intent(getActivity(), MapsActivity.class);
+                //getActivity().startActivity(intent);
                 break;
             case R.id.loginBtn:
                 Intent loginIntent = new Intent(getActivity(), Login.class); //-->this line
@@ -90,16 +98,27 @@ public class UserSettingFragment extends Fragment implements View.OnClickListene
 
                 ((Homepage) getActivity()).setBotNavView(0);
                 break;
+            case R.id.adminBtn:
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView2, new AdminPanelLoadProductFragment()).addToBackStack(null).commit();
+                break;
             case R.id.logoutBtn:
                 us.logoutUser(getActivity());
                 FirebaseAuth.getInstance().signOut();
                 switchSession();
                 break;
+            case R.id.orderBtn:
+                Intent hist = new Intent(getActivity(), OrderActivity.class);
+                startActivity(hist);
 
         }
     }
 
     public void switchSession() {
+        //if(temp_name.equals(us.getEmail())) {
+        //  Toast.makeText(getActivity(), "betul", Toast.LENGTH_SHORT).show();
+        //adminBtn.setVisibility(View.VISIBLE);
+    //}
+
         if (us.getID() == ""){
             loginBtn.setVisibility(View.VISIBLE);
             logoutBtn.setVisibility(View.GONE);
@@ -107,14 +126,19 @@ public class UserSettingFragment extends Fragment implements View.OnClickListene
             infoBtn.setVisibility(View.GONE);
             wishlistBtn.setVisibility(View.GONE);
             orderBtn.setVisibility(View.GONE);
-        }
-        else{
+            adminBtn.setVisibility(View.GONE);
+        } else{
             loginBtn.setVisibility(View.GONE);
             logoutBtn.setVisibility(View.VISIBLE);
             addressBtn.setVisibility(View.VISIBLE);
             infoBtn.setVisibility(View.VISIBLE);
             wishlistBtn.setVisibility(View.VISIBLE);
             orderBtn.setVisibility(View.VISIBLE);
+            adminBtn.setVisibility(View.GONE);
+            if(temp_name.equals(us.getEmail())) {
+                Toast.makeText(getActivity(), "betul", Toast.LENGTH_SHORT).show();
+                adminBtn.setVisibility(View.VISIBLE);
+            }
         }
     }
 }

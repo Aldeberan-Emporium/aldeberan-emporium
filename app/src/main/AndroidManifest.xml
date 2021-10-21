@@ -19,7 +19,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Aldeberan">
+        android:theme="@style/Theme.Aldeberan"
+        tools:replace="android:theme">
         <activity
             android:name=".Activity.SearchProduct"
             android:exported="true" />

@@ -84,7 +84,7 @@ public class HomepageFragment extends Fragment{
         }
     }
 
-    ProductListingDetailAdapter.FragmentCommunication bestSellerComm = (prodName, prodID, prodImg, prodPrice) -> {
+    ProductListingDetailAdapter.FragmentCommunication bestSellerComm = (prodName, prodID, prodSKU ,prodImg, prodPrice, prodStock) -> {
         homeProductFragment homepage = new homeProductFragment();
         Bundle bundle = new Bundle();
         bundle.putString("prodName", prodName);

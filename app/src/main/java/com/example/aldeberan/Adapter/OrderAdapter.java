@@ -70,6 +70,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         holder.orderHistoryCRowBinding.orderTotalPrice.setText("Price: RM " + orderList.get(position).getProdPrice());
         holder.orderHistoryCRowBinding.orderPaymentMethod.setText(orderList.get(position).getPayType());
 
+        /*
         holder.orderHistoryCRowBinding.orderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,6 +78,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
                 mContext.startActivity(intent);
             }
         });
+
+         */
     }
 
     @Override

@@ -40,6 +40,7 @@
     <string name="user_settings_coupons">My Coupons</string>
     <string name="user_settings_info_back">Return to User Settings</string>
     <string name="user_settings_report">Report a Bug?</string>
+    <string name="user_setting_admin">Admin Panel</string>
 
     <string name="bottom_nav_home">Home</string>
     <string name="bottom_nav_products">Products</string>
@@ -52,5 +53,6 @@
     <string name="title_activity_maps">MapsActivity</string>
     <string name="MAPS_API_KEY">AIzaSyBy75XBl8JciqNkdJbAKxdZULVxw4IMPBY</string>
     <string name="loading_sender_location">Loading live sender\'s location...</string>
+
 
 </resources>

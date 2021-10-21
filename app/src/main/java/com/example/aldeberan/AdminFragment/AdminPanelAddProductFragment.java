@@ -62,7 +62,7 @@ public class AdminPanelAddProductFragment extends Fragment implements View.OnCli
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         myFragmentView = inflater.inflate(R.layout.activity_admin_panel_add_product, container, false);
 
-        ((home_product) getActivity()).setActionBarTitle("Add New Bread");
+        //((home_product) getActivity()).setActionBarTitle("Add New Bread");
 
         //Firebase Cloud Storage reference
         storageRef = FirebaseStorage.getInstance().getReference();
@@ -268,7 +268,7 @@ public class AdminPanelAddProductFragment extends Fragment implements View.OnCli
                             //Redirect back to load products fragment
                             AdminPanelLoadProductFragment productFragment= new AdminPanelLoadProductFragment();
                             getActivity().getSupportFragmentManager().beginTransaction()
-                                    .replace(R.id.fragment_container, productFragment)
+                                    .replace(R.id.fragmentContainerView2, productFragment)
                                     .addToBackStack(null)
                                     .commit();
                         } else {

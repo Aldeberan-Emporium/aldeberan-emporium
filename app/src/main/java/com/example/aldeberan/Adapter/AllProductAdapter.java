@@ -83,7 +83,7 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductAdapter.Pr
 
         holder.productCardBinding.executePendingBindings();
         String prodNameLbl = mData.get(position).getProdName();
-        holder.productCardBinding.cusProdNameLbl.setText(prodNameLbl.substring(0, prodNameLbl.indexOf(' ', prodNameLbl.indexOf(' ')+1)));
+        holder.productCardBinding.cusProdNameLbl.setText(prodNameLbl);
         //holder.productRowBinding.cusProdSKULbl.setText("SKU: " + mData.get(position).getProdSKU());
         //holder.productRowBinding.cusProdIDLbl.setText("Product ID: " + mData.get(position).getProdID());
 

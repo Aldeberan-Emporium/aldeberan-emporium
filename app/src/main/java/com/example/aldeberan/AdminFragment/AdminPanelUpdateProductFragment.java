@@ -77,7 +77,7 @@ public class AdminPanelUpdateProductFragment extends Fragment implements View.On
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         myFragmentView = inflater.inflate(R.layout.activity_admin_panel_update_product, container, false);
 
-        ((home_product) getActivity()).setActionBarTitle("Update Bread");
+        //((home_product) getActivity()).setActionBarTitle("Update Bread");
 
         //Predeclare components
         prodNameLbl = myFragmentView.findViewById(R.id.prodName);
@@ -280,7 +280,7 @@ public class AdminPanelUpdateProductFragment extends Fragment implements View.On
                         //Redirect back to load products fragment
                         AdminPanelLoadProductFragment productFragment= new AdminPanelLoadProductFragment();
                         getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_container, productFragment)
+                                .replace(R.id.fragmentContainerView2, productFragment)
                                 .addToBackStack(null)
                                 .commit();
                     }

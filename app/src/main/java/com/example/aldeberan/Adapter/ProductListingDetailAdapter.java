@@ -51,18 +51,18 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
 
             productCardBinding.buttonAddCart.setOnClickListener(view -> {
                 //String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdID()));
-
-            //add to wishlist
-            productCardBinding.buttonAddWishlist.setOnClickListener(view -> {
-                productCardBinding.buttonAddWishlist.setVisibility(View.GONE);
-                productCardBinding.buttonDelWishlist.setVisibility(View.VISIBLE);
             });
+                //add to wishlist
+                productCardBinding.buttonAddWishlist.setOnClickListener(view -> {
+                    productCardBinding.buttonAddWishlist.setVisibility(View.GONE);
+                    productCardBinding.buttonDelWishlist.setVisibility(View.VISIBLE);
+                });
 
-            //remove from wishlist
-            productCardBinding.buttonDelWishlist.setOnClickListener(view -> {
-                productCardBinding.buttonDelWishlist.setVisibility(View.GONE);
-                productCardBinding.buttonAddWishlist.setVisibility(View.VISIBLE);
-            });
+                //remove from wishlist
+                productCardBinding.buttonDelWishlist.setOnClickListener(view -> {
+                    productCardBinding.buttonDelWishlist.setVisibility(View.GONE);
+                    productCardBinding.buttonAddWishlist.setVisibility(View.VISIBLE);
+                });
         }
     }
 
@@ -80,20 +80,20 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
 
         holder.productCardBinding.executePendingBindings();
         String prodNameLbl = mData.get(position).getProdName();
-        holder.productCardBinding.cusProdNameLbl.setText(prodNameLbl.substring(0, prodNameLbl.indexOf(' ', prodNameLbl.indexOf(' ')+1)));
+        holder.productCardBinding.cusProdNameLbl.setText(prodNameLbl);
         //holder.productRowBinding.cusProdSKULbl.setText("SKU: " + mData.get(position).getProdSKU());
         //holder.productRowBinding.cusProdIDLbl.setText("Product ID: " + mData.get(position).getProdID());
-        /*
+
         ElegantNumberButton numberButton;
         int quantity = 0;
         final Product p = mData.get(position);
-        holder.productRowBinding.setProduct(p);
-        holder.productRowBinding.executePendingBindings();
+        holder.productCardBinding.setProduct(p);
+        holder.productCardBinding.executePendingBindings();
 
-        holder.productRowBinding.cusProdNameLbl.setText("Product: " + mData.get(position).getProdName());
-        holder.productRowBinding.cusProdSKULbl.setText("SKU: " + mData.get(position).getProdSKU());
-        holder.productRowBinding.cusProdIDLbl.setText("Product ID: " + mData.get(position).getProdID());
-        */
+        //holder.productCardBinding.cusProdNameLbl.setText("Product: " + mData.get(position).getProdName());
+        //holder.productCardBinding.cusProdSKULbl.setText("SKU: " + mData.get(position).getProdSKU());
+        //holder.productCardBinding.cusProdIDLbl.setText("Product ID: " + mData.get(position).getProdID());
+
 
         //String prodAvail = mData.get(position).getProdAvail() ? "Active" : "Inactive";
 
@@ -103,9 +103,10 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
 
         Glide.with(mContext).load(mData.get(position).getProdImg()).override(450, 450).into(holder.productCardBinding.cusProdImgView);
 
-        holder.productCardBinding.buttonAddCart.setOnClickListener(view -> {
+        //holder.productCardBinding.buttonAddCart.setOnClickListener(view -> {
 
         //Not finish yet.
+            /*
         holder.productRowBinding.quantityButton.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
             @Override
             public void onValueChange(ElegantNumberButton button, int oldValue, int newValue) {
@@ -122,7 +123,7 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
 
                 System.out.println(pName + "Item quantity:" + quantity);
 
-                holder.productRowBinding.buttonAddCart.setOnClickListener(view -> {
+                holder.productCardBinding.buttonAddCart.setOnClickListener(view -> {
                     mCommunicator.respond(String.valueOf(mData.get(position).getProdName()),
                             String.valueOf(mData.get(position).getProdID()),
                             String.valueOf(mData.get(position).getProdSKU()),
@@ -155,8 +156,10 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
                 });
             }
         });
-        /*
-        holder.productRowBinding.buttonAddCart.setOnClickListener(view -> {
+
+             */
+
+        holder.productCardBinding.buttonAddCart.setOnClickListener(view -> {
             mCommunicator.respond(String.valueOf(mData.get(position).getProdName()),
                     String.valueOf(mData.get(position).getProdID()),
                     String.valueOf(mData.get(position).getProdSKU()),
@@ -180,8 +183,7 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
             cm.addQuoteItem(quoteID, prodName, prodSKU, 1, prodPrice, prodImg);
             cm.updateQuoteRecal(quoteID);
         });
-        */
-    };
+    }
 
     @Override
     public int getItemCount() {
