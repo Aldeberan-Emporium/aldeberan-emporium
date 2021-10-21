@@ -70,12 +70,21 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         Glide.with(mContext).load(orderList.get(position).getProdImg()).override(450, 450).into(holder.orderHistoryCRowBinding.orderImage);
         holder.orderHistoryCRowBinding.orderHistoryStatus.setText(orderList.get(position).getOrderStatus());
         holder.orderHistoryCRowBinding.orderProductName.setText("Name: " + orderList.get(position).getProdName());
-        String productQuantity = toString().valueOf(orderList.get(position).getProdQuantity());
+        String productQuantity = String.valueOf(orderList.get(position).getProdQuantity());
         holder.orderHistoryCRowBinding.orderQuantity.setText(productQuantity + "x");
-        String onePrice = toString().valueOf(orderList.get(position).getProdPrice());
+        String onePrice = String.valueOf(orderList.get(position).getProdPrice());
         holder.orderHistoryCRowBinding.onePrice.setText("RM" + onePrice);
-        String orderTotal = toString().valueOf(orderList.get(position).getTotal());
+        String orderTotal = String.valueOf(orderList.get(position).getTotal());
         holder.orderHistoryCRowBinding.addedPrice.setText(("Order total: RM"+ orderTotal));
+        int itemNum = orderList.get(position).getTotalItems();
+        String item;
+        if (itemNum <= 1){
+            item = " item";
+        }
+        else
+            item = " items";
+        String totalItem = String.valueOf(orderList.get(position).getTotalItems());
+        holder.orderHistoryCRowBinding.totalItem.setText(totalItem + item);
 
         //holder.orderHistoryCRowBinding.totalItem.setText(orderList.get(position).);
 
