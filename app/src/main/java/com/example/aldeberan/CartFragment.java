@@ -26,6 +26,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.aldeberan.Activity.checkoutActivity;
 import com.example.aldeberan.Adapter.AllProductAdapter;
 import com.example.aldeberan.Adapter.CartAdapter;
+import com.example.aldeberan.UserFragment.checkoutFragment;
 import com.example.aldeberan.UserFragment.homeProductFragment;
 import com.example.aldeberan.models.CartModel;
 import com.example.aldeberan.models.ProductModel;
@@ -49,7 +50,7 @@ public class CartFragment extends Fragment {
     private CartAdapter adapter;
     private UserStorage us;
     private Button checkoutBtn;
-    private TextView totalPrice;
+    private TextView totalPrice, textLabel;
     private String totalPriceStr;
     private CartModel cm;
     private OrderStorage os;
@@ -64,13 +65,15 @@ public class CartFragment extends Fragment {
         recyclerView = myCartFragmentView.findViewById(R.id.cartRecyclerView);
         checkoutBtn = myCartFragmentView.findViewById(R.id.checkoutButton);
         totalPrice = myCartFragmentView.findViewById(R.id.totalPrice);
+        textLabel = myCartFragmentView.findViewById(R.id.textLabel);
+
 
         checkoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent intent = new Intent(getActivity(), checkoutActivity.class);
-                //startActivity(intent);
-                //getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new checkoutFragment()).commit();
+                Intent intent = new Intent(getActivity(), checkoutActivity.class);
+                startActivity(intent);
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new checkoutFragment()).commit();
             }
         });
 
@@ -92,8 +95,16 @@ public class CartFragment extends Fragment {
         us = new UserStorage(getActivity());
         int quoteID = us.getQuoteID();
         cm.readQuoteItemByQuote(quoteID, response -> {
+
             cartList = response;
-            PutDataIntoRecyclerView(cartList);
+            if(cartList.size() == 0){
+                checkoutBtn.setVisibility(View.GONE);
+                totalPrice.setVisibility(View.GONE);
+                textLabel.setText("Your cart is empty -.-");
+            }
+            else{
+                PutDataIntoRecyclerView(cartList);
+            }
         });
     }
 
