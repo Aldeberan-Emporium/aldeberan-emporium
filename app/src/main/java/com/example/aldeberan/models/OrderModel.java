@@ -155,6 +155,7 @@ public class OrderModel extends DatabaseModel{
                     int orderPaymentID = Integer.parseInt(object.getString("order_payment_id"));
                     String payType = StringEscapeUtils.unescapeHtml4(object.getString("payment_type"));
                     String payID = StringEscapeUtils.unescapeHtml4(object.getString("payment_id"));
+                    int totalItems = object.getInt("total_items");
 
                     Order order = new Order();
                     order.setOrderID(orderID);
@@ -180,6 +181,7 @@ public class OrderModel extends DatabaseModel{
                     order.setOrderPaymentID(orderPaymentID);
                     order.setPayType(payType);
                     order.setPayID(payID);
+                    order.setTotalItems(totalItems);
 
                     orderList.add(order);
 

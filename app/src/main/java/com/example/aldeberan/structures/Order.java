@@ -9,6 +9,7 @@ public class Order {
     private String orderDate;
     private double total;
     private String orderStatus;
+    private int totalItems;
 
     //Order Item
     private int orderItemID;
@@ -228,4 +229,7 @@ public class Order {
     public void setPayID(String payID) {
         this.payID = payID;
     }
+
+    public int getTotalItems() {return totalItems; }
+    public void setTotalItems(int totalItems) { this.totalItems = totalItems; }
 }
