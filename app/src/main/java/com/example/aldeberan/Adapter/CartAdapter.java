@@ -22,8 +22,6 @@ import com.bumptech.glide.Glide;
 import com.example.aldeberan.structures.Product;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
 

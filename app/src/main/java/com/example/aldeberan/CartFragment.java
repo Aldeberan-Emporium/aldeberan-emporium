@@ -1,40 +1,29 @@
 package com.example.aldeberan;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.aldeberan.Activity.checkoutActivity;
-import com.example.aldeberan.Adapter.AllProductAdapter;
 import com.example.aldeberan.Adapter.CartAdapter;
 import com.example.aldeberan.UserFragment.checkoutFragment;
-import com.example.aldeberan.UserFragment.homeProductFragment;
 import com.example.aldeberan.models.CartModel;
 import com.example.aldeberan.models.ProductModel;
 import com.example.aldeberan.storage.OrderStorage;
 import com.example.aldeberan.storage.UserStorage;
 import com.example.aldeberan.structures.Cart;
 import com.example.aldeberan.structures.Product;
-import com.facebook.shimmer.ShimmerFrameLayout;
 
 import org.json.JSONException;
 
