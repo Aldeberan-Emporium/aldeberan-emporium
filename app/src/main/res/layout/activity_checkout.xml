@@ -41,7 +41,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/buttonEdit"
+        android:id="@+id/buttonEditItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
@@ -146,13 +146,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_marginEnd="5dp"
+        android:layout_marginEnd="15dp"
         android:layout_marginBottom="20dp"
         android:text="Confirm Order"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/textView6" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

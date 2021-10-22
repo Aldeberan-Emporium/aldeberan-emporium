@@ -61,7 +61,6 @@ public class CartFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), checkoutActivity.class);
                 startActivity(intent);
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new checkoutFragment()).commit();
             }
         });
 

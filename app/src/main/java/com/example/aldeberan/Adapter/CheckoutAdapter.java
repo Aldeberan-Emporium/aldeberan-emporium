@@ -12,6 +12,8 @@ import com.example.aldeberan.R;
 import com.example.aldeberan.databinding.CheckoutDetailCRowBinding;
 import com.example.aldeberan.structures.Cart;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.List;
 
 public class CheckoutAdapter extends RecyclerView.Adapter<CheckoutAdapter.CheckoutViewHolder> {
@@ -42,10 +44,17 @@ public class CheckoutAdapter extends RecyclerView.Adapter<CheckoutAdapter.Checko
 
     @Override
     public void onBindViewHolder(@NonNull CheckoutViewHolder holder, int position) {
+        String tempName = mData.get(position).getProdName();
+        String partialName = StringUtils.substring(tempName, 0, 10);
+
+        Double tempPrice = mData.get(position).getProdPrice();
+        int tempQuantity = mData.get(position).getProdQuantity();
+        Double itemTotal = tempPrice*tempQuantity;
+
         holder.checkoutDetailCRowBinding.executePendingBindings();
-        holder.checkoutDetailCRowBinding.checkoutName.setText(mData.get(position).getProdName());
-        holder.checkoutDetailCRowBinding.checkoutTotalPrice.setText(String.valueOf(mData.get(position).getProdPrice()));
-        holder.checkoutDetailCRowBinding.checkoutItemNum.setText(String.valueOf(mData.get(position).getProdQuantity()));
+        holder.checkoutDetailCRowBinding.checkoutName.setText(partialName + "...");
+        holder.checkoutDetailCRowBinding.checkoutTotalPrice.setText("RM" + String.valueOf(itemTotal));
+        holder.checkoutDetailCRowBinding.checkoutItemNum.setText(String.valueOf(tempQuantity) + "x");
     }
 
     @Override

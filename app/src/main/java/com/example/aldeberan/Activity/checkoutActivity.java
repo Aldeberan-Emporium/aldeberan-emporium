@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.aldeberan.Adapter.CheckoutAdapter;
+import com.example.aldeberan.CartFragment;
 import com.example.aldeberan.R;
 import com.example.aldeberan.models.CartModel;
 import com.example.aldeberan.storage.OrderStorage;
@@ -34,7 +35,7 @@ public class checkoutActivity extends AppCompatActivity {
     private CheckoutAdapter checkoutAdapter;
 
     private OrderStorage os;
-    TextView addressBtn;
+    TextView addressBtn, buttonEditItem;
     TextView selectedAddressLbl;
 
     @Override
@@ -48,6 +49,8 @@ public class checkoutActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.checkoutRecyclerView);
         Button confirmButton = findViewById(R.id.confirmOrder);
         selectedAddressLbl = findViewById(R.id.selectedAddressLbl);
+        buttonEditItem = findViewById(R.id.buttonEditItem);
+        addressBtn = findViewById(R.id.addressBtn);
 
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +60,16 @@ public class checkoutActivity extends AppCompatActivity {
             }
         });
 
-        addressBtn = findViewById(R.id.addressBtn);
+        buttonEditItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent cartIntent = new Intent(checkoutActivity.this, CartFragment.class);
+                startActivity(cartIntent);
+                //getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView2, new CartFragment()).addToBackStack(null).commit();
+            }
+        });
+
+
 
         addressBtn.setOnClickListener(view -> {
             finish();
@@ -99,6 +111,12 @@ public class checkoutActivity extends AppCompatActivity {
     }
 
     public void updateSelectedAddress(){
-        selectedAddressLbl.setText(os.getRecipient()+ " 60"+os.getContact()+"\n"+os.getLine1()+", "+os.getLine2()+"\n"+os.getCode()+", "+os.getCity()+", "+os.getState());
+        String data = "Receiver               : " + os.getRecipient()+ "\n" +
+                "Contact Number: 60"+ os.getContact() + "\n" + "\n" +
+                "Address               :" + "\n" +
+                os.getLine1()+", "+os.getLine2()+"\n"+
+                os.getCode()+", "+os.getCity()+", "+os.getState();
+
+        selectedAddressLbl.setText(data);
     }
 }
