@@ -42,6 +42,7 @@ public class checkoutActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
+        getSupportActionBar().setTitle("Items Checkout");
 
         os = new OrderStorage(this);
         TextView price = findViewById(R.id.price);
