@@ -56,7 +56,6 @@ public class CartFragment extends Fragment {
         totalPrice = myCartFragmentView.findViewById(R.id.totalPrice);
         textLabel = myCartFragmentView.findViewById(R.id.textLabel);
 
-
         checkoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

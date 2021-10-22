@@ -31,19 +31,23 @@ public class checkoutActivity extends AppCompatActivity {
     private List<Cart> cartList;
     private UserStorage userStorage;
     private RecyclerView recyclerView;
-    private SwipeRefreshLayout pullToRefresh;
     private CheckoutAdapter checkoutAdapter;
 
     private OrderStorage os;
-    ImageButton addressBtn;
+    TextView addressBtn;
     TextView selectedAddressLbl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
-        
+
+        os = new OrderStorage(this);
+        TextView price = findViewById(R.id.price);
+        price.setText(String.valueOf(os.getTotal()));
+        recyclerView = findViewById(R.id.checkoutRecyclerView);
         Button confirmButton = findViewById(R.id.confirmOrder);
+        selectedAddressLbl = findViewById(R.id.selectedAddressLbl);
 
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,20 +58,12 @@ public class checkoutActivity extends AppCompatActivity {
         });
 
         addressBtn = findViewById(R.id.addressBtn);
+
         addressBtn.setOnClickListener(view -> {
             finish();
             Intent addIntent = new Intent(checkoutActivity.this, AddressSelection.class);
             startActivity(addIntent);
         });
-
-        os = new OrderStorage(this);
-
-        TextView price = findViewById(R.id.price);
-        price.setText(String.valueOf(os.getTotal()));
-
-        recyclerView = findViewById(R.id.checkoutRecyclerView);
-
-        selectedAddressLbl = findViewById(R.id.selectedAddressLbl);
 
         if (os.getRecipient() == ""){
             selectedAddressLbl.setText("Please select an address.");
@@ -76,18 +72,6 @@ public class checkoutActivity extends AppCompatActivity {
             updateSelectedAddress();
         }
 
-        /*
-        pullToRefresh = findViewById(R.id.checkoutPullToRefresh);
-
-        pullToRefresh.setOnRefreshListener(() -> {
-            System.out.println("apalumao zz");
-            ConstructRecyclerView();
-            checkoutAdapter.notifyDataSetChanged();
-            pullToRefresh.setRefreshing(false);
-        });
-        
-         */
-
         ConstructRecyclerView();
     }
 
@@ -95,13 +79,11 @@ public class checkoutActivity extends AppCompatActivity {
         CartModel cm = new CartModel();
         userStorage = new UserStorage(this);
         int quoteID = userStorage.getQuoteID();
-        System.out.println("apalumao quoteID: " + quoteID);
 
         try {
             cm.readQuoteItemByQuote(quoteID, response -> {
                 cartList = response;
                 PutDataIntoRecyclerView(cartList);
-                System.out.println("xx" + cartList);
             });
         }
         catch (Exception e){
@@ -113,7 +95,7 @@ public class checkoutActivity extends AppCompatActivity {
         checkoutAdapter = new CheckoutAdapter(this, cartList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(checkoutAdapter);
-        Log.i("PLOPE", String.valueOf(cartList));
+        //Log.i("PLOPE", String.valueOf(cartList));
     }
 
     public void updateSelectedAddress(){

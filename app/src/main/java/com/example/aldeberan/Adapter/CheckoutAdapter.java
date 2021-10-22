@@ -17,7 +17,6 @@ import java.util.List;
 public class CheckoutAdapter extends RecyclerView.Adapter<CheckoutAdapter.CheckoutViewHolder> {
     private Context mContext;
     public List<Cart> mData;
-    //UserStorage userStorage;
 
     public CheckoutAdapter(Context mContext, List<Cart> mData) {
         this.mContext = mContext;
@@ -45,9 +44,6 @@ public class CheckoutAdapter extends RecyclerView.Adapter<CheckoutAdapter.Checko
     public void onBindViewHolder(@NonNull CheckoutViewHolder holder, int position) {
         holder.checkoutDetailCRowBinding.executePendingBindings();
         holder.checkoutDetailCRowBinding.checkoutName.setText(mData.get(position).getProdName());
-
-        //System.out.println("Order: " + mData.get(position).getProdName());
-        //System.out.println();
         holder.checkoutDetailCRowBinding.checkoutTotalPrice.setText(String.valueOf(mData.get(position).getProdPrice()));
         holder.checkoutDetailCRowBinding.checkoutItemNum.setText(String.valueOf(mData.get(position).getProdQuantity()));
     }
