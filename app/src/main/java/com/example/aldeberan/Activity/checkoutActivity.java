@@ -60,15 +60,13 @@ public class checkoutActivity extends AppCompatActivity {
                 startActivity(payIntent);
             }
         });
-
-        //BUGGG HELPPPPPPPP MEEE
-        //Activity to fragment.
+        
         buttonEditItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //Intent cartIntent = new Intent(checkoutActivity.this, CartFragment.class);
                 //startActivity(cartIntent);
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView2, new CartFragment()).commit();
+                onBackPressed();
             }
         });
 
