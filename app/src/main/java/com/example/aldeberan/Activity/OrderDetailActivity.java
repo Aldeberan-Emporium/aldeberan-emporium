@@ -48,7 +48,7 @@ public class OrderDetailActivity extends AppCompatActivity implements Serializab
         String paymentMethod = (String) getIntent().getSerializableExtra ("paymentMethod");
         String productTotal = (String) getIntent().getSerializableExtra("productTotal");
         String orderTotal = (String) getIntent().getSerializableExtra("orderTotal");
-        orderTotal = productTotal + 5;
+        //double orderTotal = Integer.parseInt(productTotal) + 5;
 
         System.out.println("lanjiao product total: " + productTotal);
         System.out.println("lanjiao order total: " + orderTotal);
@@ -75,7 +75,7 @@ public class OrderDetailActivity extends AppCompatActivity implements Serializab
 
         paymentMethodText.setText(paymentMethod);
         productTotalText.setText(productTotal);
-        detailTotalPriceText.setText(orderTotal);
+        detailTotalPriceText.setText(String.valueOf(orderTotal));
     }
 
 
@@ -86,12 +86,12 @@ public class OrderDetailActivity extends AppCompatActivity implements Serializab
 
         om.readOrderItem(userID, response -> {
             orderList = response;
-            PutDataIntoRecyclerView(response, orderStatus);
+            PutDataIntoRecyclerView(response);
         });
     }
 
-    public void PutDataIntoRecyclerView(List<Order> orderList, String orderStatus) {
-        orderDetailAdapter = new OrderDetailAdapter(OrderDetailActivity.this, orderList, orderStatus);
+    public void PutDataIntoRecyclerView(List<Order> orderList) {
+        orderDetailAdapter = new OrderDetailAdapter(OrderDetailActivity.this, orderList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(orderDetailAdapter);
     }

@@ -23,10 +23,9 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
     private OrderModel om;
     private String orderStatus;
 
-    public OrderDetailAdapter(Context context, List<Order>orderDetailList, String orderStatus) {
+    public OrderDetailAdapter(Context context, List<Order>orderDetailList) {
         this.context = context;
         this.orderDetailList = orderDetailList;
-        this.orderStatus = orderStatus;
     }
 
     public class OrderDetailViewHolder extends RecyclerView.ViewHolder{
