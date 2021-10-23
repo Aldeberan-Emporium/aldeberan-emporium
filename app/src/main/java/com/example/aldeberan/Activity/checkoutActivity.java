@@ -13,15 +13,20 @@ import android.widget.TextView;
 import com.example.aldeberan.Adapter.CheckoutAdapter;
 import com.example.aldeberan.R;
 import com.example.aldeberan.models.CartModel;
+import com.example.aldeberan.models.ProductModel;
 import com.example.aldeberan.storage.OrderStorage;
 import com.example.aldeberan.storage.UserStorage;
 import com.example.aldeberan.structures.Cart;
+import com.example.aldeberan.structures.Product;
+
+import org.json.JSONException;
 
 import java.util.List;
 
 public class checkoutActivity extends AppCompatActivity {
 
     private List<Cart> cartList;
+    private List<Product> productList;
     private UserStorage userStorage;
     private RecyclerView recyclerView;
     private CheckoutAdapter checkoutAdapter;
@@ -95,10 +100,13 @@ public class checkoutActivity extends AppCompatActivity {
         }
     }
 
-    private void PutDataIntoRecyclerView(List<Cart> cartList){
-        checkoutAdapter = new CheckoutAdapter(this, cartList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(checkoutAdapter);
+    private void PutDataIntoRecyclerView(List<Cart> cartList) throws JSONException {
+        ProductModel pm = new ProductModel();
+        pm.readProductAll(productList -> {
+            checkoutAdapter = new CheckoutAdapter(this, cartList, productList);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            recyclerView.setAdapter(checkoutAdapter);
+        });
     }
 
     public void updateSelectedAddress(){
