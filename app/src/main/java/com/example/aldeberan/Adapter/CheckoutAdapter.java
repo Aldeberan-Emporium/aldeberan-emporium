@@ -53,7 +53,7 @@ public class CheckoutAdapter extends RecyclerView.Adapter<CheckoutAdapter.Checko
 
         holder.checkoutDetailCRowBinding.executePendingBindings();
         holder.checkoutDetailCRowBinding.checkoutName.setText(partialName + "...");
-        holder.checkoutDetailCRowBinding.checkoutTotalPrice.setText("RM" + String.valueOf(itemTotal));
+        holder.checkoutDetailCRowBinding.checkoutTotalPrice.setText("RM " + String.valueOf(itemTotal));
         holder.checkoutDetailCRowBinding.checkoutItemNum.setText(String.valueOf(tempQuantity) + "x");
     }
 

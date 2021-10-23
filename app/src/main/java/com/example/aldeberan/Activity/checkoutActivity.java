@@ -4,27 +4,19 @@ package com.example.aldeberan.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.aldeberan.Adapter.CheckoutAdapter;
-import com.example.aldeberan.CartFragment;
 import com.example.aldeberan.R;
 import com.example.aldeberan.models.CartModel;
 import com.example.aldeberan.storage.OrderStorage;
 import com.example.aldeberan.storage.UserStorage;
 import com.example.aldeberan.structures.Cart;
 
-import org.json.JSONException;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class checkoutActivity extends AppCompatActivity {
@@ -46,12 +38,13 @@ public class checkoutActivity extends AppCompatActivity {
 
         os = new OrderStorage(this);
         TextView price = findViewById(R.id.price);
-        price.setText(String.valueOf(os.getTotal()));
         recyclerView = findViewById(R.id.checkoutRecyclerView);
         Button confirmButton = findViewById(R.id.confirmOrder);
         selectedAddressLbl = findViewById(R.id.selectedAddressLbl);
         buttonEditItem = findViewById(R.id.buttonEditItem);
         addressBtn = findViewById(R.id.addressBtn);
+
+        price.setText("RM " + String.valueOf(os.getTotal()));
 
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +53,7 @@ public class checkoutActivity extends AppCompatActivity {
                 startActivity(payIntent);
             }
         });
-        
+
         buttonEditItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,7 +99,6 @@ public class checkoutActivity extends AppCompatActivity {
         checkoutAdapter = new CheckoutAdapter(this, cartList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(checkoutAdapter);
-        //Log.i("PLOPE", String.valueOf(cartList));
     }
 
     public void updateSelectedAddress(){
