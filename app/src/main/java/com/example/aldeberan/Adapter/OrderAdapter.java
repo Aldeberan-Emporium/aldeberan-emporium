@@ -90,21 +90,31 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
             public void onClick(View v) {
                 Intent orderDetailActivity = new Intent(mContext, OrderDetailActivity.class);
 
-                String address = orderList.get(position).getAddLine1() +  orderList.get(position).getAddLine2()
-                        + orderList.get(position).getAddCode() +  orderList.get(position).getAddCity()
-                        +  orderList.get(position).getAddState() + orderList.get(position).getAddCountry();
+                String address = "";
+                if (orderList.get(position).getAddLine2().isEmpty()){
+                    address = orderList.get(position).getAddLine1() + ", \n"
+                            + orderList.get(position).getAddCode() + ", " + orderList.get(position).getAddCity() + ", "
+                            +  orderList.get(position).getAddState() + ", " + orderList.get(position).getAddCountry() + ".";
+                }
+                else{
+                    address = orderList.get(position).getAddLine1() + ", " + orderList.get(position).getAddLine2() + ", \n"
+                            + orderList.get(position).getAddCode() + ", " + orderList.get(position).getAddCity() + ", "
+                            +  orderList.get(position).getAddState() + ", " + orderList.get(position).getAddCountry() + ".";
+                }
 
                 String paymentMethod = orderList.get(position).getPayType();
 
                 String productTotal = String.valueOf(orderList.get(position).getTotal());
                 String orderTotal = String.valueOf(orderList.get(position).getTotal() + 5);
                 String orderStatus = orderList.get(position).getOrderStatus();
+                int orderID = orderList.get(position).getOrderID();
 
                 orderDetailActivity.putExtra("address", address);
                 orderDetailActivity.putExtra("paymentMethod", paymentMethod);
                 orderDetailActivity.putExtra("productTotal", productTotal);
                 orderDetailActivity.putExtra("orderTotal", orderTotal);
                 orderDetailActivity.putExtra("orderStatus", orderStatus);
+                orderDetailActivity.putExtra("orderID", orderID);
 
                 mContext.startActivity(orderDetailActivity);
             }

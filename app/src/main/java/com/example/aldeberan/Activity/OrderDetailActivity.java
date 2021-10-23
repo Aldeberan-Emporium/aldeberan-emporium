@@ -24,7 +24,8 @@ public class OrderDetailActivity extends AppCompatActivity implements Serializab
     private List<Order> orderList;
     private OrderDetailAdapter orderDetailAdapter;
     private RecyclerView recyclerView;
-    private ImageView tickImage;
+    private ImageView orderShippingImg;
+    private ImageView orderDeliveredImg;
     private String orderStatus;
     private TextView orderStatusText;
     private TextView addressText;
@@ -32,12 +33,15 @@ public class OrderDetailActivity extends AppCompatActivity implements Serializab
     private TextView productTotalText;
     private TextView detailTotalPriceText;
 
+    private int orderID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_history_detail);
         recyclerView = findViewById(R.id.orderDetailRecyclerView);
-        tickImage = findViewById(R.id.tickImg);
+        orderShippingImg = findViewById(R.id.orderShippingImg);
+        orderDeliveredImg = findViewById(R.id.orderDeliveredImg);
         orderStatusText = findViewById(R.id.orderStatusText);
         addressText = findViewById(R.id.addressDetail);
         paymentMethodText = findViewById(R.id.paymentMethod);
@@ -49,6 +53,7 @@ public class OrderDetailActivity extends AppCompatActivity implements Serializab
         String productTotal = (String) getIntent().getSerializableExtra("productTotal");
         String orderTotal = (String) getIntent().getSerializableExtra("orderTotal");
         //double orderTotal = Integer.parseInt(productTotal) + 5;
+        orderID = (int) getIntent().getSerializableExtra("orderID");
 
         System.out.println("lanjiao product total: " + productTotal);
         System.out.println("lanjiao order total: " + orderTotal);
@@ -59,14 +64,15 @@ public class OrderDetailActivity extends AppCompatActivity implements Serializab
 
         System.out.println("lanjiao" + orderStatus);
 
-        if (orderStatus == "shipping"){
+        if (orderStatus.contains("shipping")){
             orderStatusText.setText("Your order is on the way!");
-            tickImage.setVisibility(View.INVISIBLE);
+            orderShippingImg.setVisibility(View.VISIBLE);
+            orderDeliveredImg.setVisibility(View.GONE);
         }
-
-        else if (orderStatus == "completed"){
+        else{
             orderStatusText.setText("Your order is completed!");
-            tickImage.setVisibility(View.VISIBLE);
+            orderShippingImg.setVisibility(View.GONE);
+            orderDeliveredImg.setVisibility(View.VISIBLE);
         }
 
         addressText.setText(address);
@@ -82,9 +88,8 @@ public class OrderDetailActivity extends AppCompatActivity implements Serializab
     private void ConstructRecyclerView(){
         om = new OrderModel();
         us = new UserStorage(this);
-        String userID = us.getID();
 
-        om.readOrderItem(userID, response -> {
+        om.readOrderItem(orderID, response -> {
             orderList = response;
             PutDataIntoRecyclerView(response);
         });
