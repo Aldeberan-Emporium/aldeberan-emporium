@@ -28,6 +28,9 @@
             android:name=".Activity.OrderActivity"
             android:exported="true" />
         <activity
+            android:name=".Activity.OrderDetailActivity"
+            android:exported="true" />
+        <activity
             android:name=".Activity.AddressSelectionToBook"
             android:exported="true"
             android:parentActivityName=".Activity.AddressSelection" />

@@ -33,7 +33,6 @@ import java.util.stream.Collectors;
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHolder>{
     private Context mContext;
     private List<Order> orderList;
-    private OrderModel om;
 
     public OrderAdapter(Context mContext, List<Order>orderList) {
         this.mContext = mContext;
@@ -67,11 +66,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
 
         Glide.with(mContext).load(orderList.get(position).getProdImg()).override(450, 450).into(holder.orderHistoryCRowBinding.orderImage);
         holder.orderHistoryCRowBinding.orderHistoryStatus.setText(orderList.get(position).getOrderStatus());
-        holder.orderHistoryCRowBinding.orderProductName.setText("Name: " + orderList.get(position).getProdName());
+        holder.orderHistoryCRowBinding.orderName.setText("Name: " + orderList.get(position).getProdName());
         String productQuantity = String.valueOf(orderList.get(position).getProdQuantity());
         holder.orderHistoryCRowBinding.orderQuantity.setText(productQuantity + "x");
         String onePrice = String.valueOf(orderList.get(position).getProdPrice());
-        holder.orderHistoryCRowBinding.onePrice.setText("RM" + onePrice);
+        holder.orderHistoryCRowBinding.orderPrice.setText("RM" + onePrice);
         String orderTotal = String.valueOf(orderList.get(position).getTotal());
         holder.orderHistoryCRowBinding.addedPrice.setText(("Order total: RM"+ orderTotal));
         int itemNum = orderList.get(position).getTotalItems();
@@ -90,6 +89,23 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
             @Override
             public void onClick(View v) {
                 Intent orderDetailActivity = new Intent(mContext, OrderDetailActivity.class);
+
+                String address = orderList.get(position).getAddLine1() +  orderList.get(position).getAddLine2()
+                        + orderList.get(position).getAddCode() +  orderList.get(position).getAddCity()
+                        +  orderList.get(position).getAddState() + orderList.get(position).getAddCountry();
+
+                String paymentMethod = orderList.get(position).getPayType();
+
+                String productTotal = String.valueOf(orderList.get(position).getTotal());
+                String orderTotal = String.valueOf(orderList.get(position).getTotal() + 5);
+                String orderStatus = orderList.get(position).getOrderStatus();
+
+                orderDetailActivity.putExtra("address", address);
+                orderDetailActivity.putExtra("paymentMethod", paymentMethod);
+                orderDetailActivity.putExtra("productTotal", productTotal);
+                orderDetailActivity.putExtra("orderTotal", orderTotal);
+                orderDetailActivity.putExtra("orderStatus", orderStatus);
+
                 mContext.startActivity(orderDetailActivity);
             }
         });
@@ -99,6 +115,4 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     public int getItemCount() {
         return orderList.size();
     }
-
-
 }

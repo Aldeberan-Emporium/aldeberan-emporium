@@ -2,73 +2,98 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
+
     <data>
         <variable
-            name="order"
+            name="orderDetail"
             type="com.example.aldeberan.structures.Order"/>
+
     </data>
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:paddingLeft="5dp"
-        android:paddingTop="5dp"
-        android:paddingRight="5dp"
-        android:paddingBottom="10dp">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/divider5"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/orderDetailButton"
+            app:layout_constraintVertical_bias="0.013"
+            tools:layout_editor_absoluteX="0dp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/orderButton"
+            android:id="@+id/orderDetailButton"
             android:layout_width="match_parent"
-            android:layout_height="97dp"
+            android:layout_height="100dp"
             android:background="@color/blue_update"
-            android:clickable="false"
+            android:clickable="true"
             android:paddingLeft="5dp"
+            android:paddingTop="5dp"
             android:paddingRight="5dp"
-            android:paddingBottom="5dp">
+            android:paddingBottom="5dp"
+            tools:ignore="MissingConstraints">
 
             <ImageView
-                android:id="@+id/orderImage"
-                android:layout_width="59dp"
-                android:layout_height="76dp"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="10dp"
+                android:id="@+id/orderDetailImage"
+                android:layout_width="61dp"
+                android:layout_height="68dp"
+                android:layout_marginStart="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
-                android:id="@+id/orderProductName"
+                android:id="@+id/orderDetailName"
                 android:layout_width="293dp"
                 android:layout_height="20dp"
+                android:layout_marginStart="8dp"
                 android:text="product name"
-                tools:layout_editor_absoluteX="93dp"
-                tools:layout_editor_absoluteY="16dp" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.161"
+                app:layout_constraintStart_toEndOf="@+id/orderDetailImage"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.16" />
 
             <TextView
-                android:id="@+id/orderQuantity"
+                android:id="@+id/orderDetailQuantity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="4dp"
                 android:text="x1"
-                tools:layout_editor_absoluteX="346dp"
-                tools:layout_editor_absoluteY="36dp" />
+                app:layout_constraintBottom_toTopOf="@+id/orderDetailPrice"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.93" />
 
             <TextView
-                android:id="@+id/addedPrice"
+                android:id="@+id/totalItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="RM4.99"
-                tools:layout_editor_absoluteX="317dp"
-                tools:layout_editor_absoluteY="55dp" />
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
-                android:id="@+id/itemDesc"
+                android:id="@+id/orderDetailPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Description"
-                tools:layout_editor_absoluteX="97dp"
-                tools:layout_editor_absoluteY="38dp" />
+                android:text="RM4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.958"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="66dp" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>
