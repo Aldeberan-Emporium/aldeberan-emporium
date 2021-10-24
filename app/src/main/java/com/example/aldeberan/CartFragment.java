@@ -65,7 +65,7 @@ public class CartFragment extends Fragment {
         });
 
         ConstructRecyclerView();
-        calculateTotalPrice();
+
         SwipeRefreshLayout pullToRefresh = myCartFragmentView.findViewById(R.id.cartPullToRefresh);
 
         pullToRefresh.setOnRefreshListener(() -> {
@@ -91,6 +91,7 @@ public class CartFragment extends Fragment {
             }
             else{
                 PutDataIntoRecyclerView(cartList);
+                calculateTotalPrice();
             }
         });
     }
