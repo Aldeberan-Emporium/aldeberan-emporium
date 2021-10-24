@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentActivity;
 import android.Manifest;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -23,6 +24,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.aldeberan.Activity.Homepage;
+import com.example.aldeberan.Activity.OrderActivity;
 import com.example.aldeberan.MapFragment.DirectionHelpers.IGoogleAPI;
 import com.example.aldeberan.R;
 import com.example.aldeberan.models.OrderModel;
@@ -358,6 +361,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         ms.removeStatus();
                         Thread.interrupted();
                         om.updateOrderStatus(orderID, "delivered");
+                        finish();
+                        Intent orderHist = new Intent(MapsActivity.this, OrderActivity.class);
+                        startActivity(orderHist);
                     }
                 }
             }, 3000);
@@ -469,5 +475,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         else if (begin.latitude < end.latitude && begin.longitude >= end.longitude)
             return (float) ((90 - Math.toDegrees(Math.atan(lng / lat))) + 270);
         return -1;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        //Intent homeIntent = new Intent(MapsActivity.this, Homepage.class);
+        //startActivity(homeIntent);
     }
 }

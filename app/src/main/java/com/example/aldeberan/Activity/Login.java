@@ -43,7 +43,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
     private FirebaseAuth mAuth;
     // [END declare_auth]
 
-    private GoogleSignInClient mGoogleSignInClient;
+    public GoogleSignInClient mGoogleSignInClient;
     UserStorage us;
 
     @Override

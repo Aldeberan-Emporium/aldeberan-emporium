@@ -24,8 +24,11 @@ import com.example.aldeberan.R;
 import com.example.aldeberan.UserFragment.UserSettings.UserAddressFragment;
 import com.example.aldeberan.UserFragment.UserSettings.UserInfoFragment;
 import com.example.aldeberan.storage.UserStorage;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class UserSettingFragment extends Fragment implements View.OnClickListener{
 
@@ -41,6 +44,10 @@ public class UserSettingFragment extends Fragment implements View.OnClickListene
     Button logoutBtn;
     Button adminBtn;
 
+    Login login;
+
+    //private GoogleSignInClient gsignin;
+
     String temp_name = "aldeberan.emporium@gmail.com";
 
     @Nullable
@@ -49,6 +56,15 @@ public class UserSettingFragment extends Fragment implements View.OnClickListene
         userSettingsView = inflater.inflate(R.layout.fragment_user_setting, container, false);
 
         //(signOutInterface) getActivity();
+
+        /*
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.def_log_id))
+                .requestEmail()
+                .build();
+
+        GoogleSignIn.getClient(getActivity(), gso);
+         */
 
         addressBtn = userSettingsView.findViewById(R.id.editAddBtn);
         addressBtn.setOnClickListener(this);
@@ -102,8 +118,10 @@ public class UserSettingFragment extends Fragment implements View.OnClickListene
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView2, new AdminPanelLoadProductFragment()).addToBackStack(null).commit();
                 break;
             case R.id.logoutBtn:
+                //mGoogleSignInClient.signOut();
                 us.logoutUser(getActivity());
-                FirebaseAuth.getInstance().signOut();
+                login.signOut();
+                //FirebaseAuth.getInstance().signOut();
                 switchSession();
                 break;
             case R.id.orderBtn:
