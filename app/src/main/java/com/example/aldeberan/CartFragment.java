@@ -43,6 +43,7 @@ public class CartFragment extends Fragment {
     private String totalPriceStr;
     private CartModel cm;
     private OrderStorage os;
+    SwipeRefreshLayout pullToRefresh;
 
     @Nullable
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -66,14 +67,17 @@ public class CartFragment extends Fragment {
 
         ConstructRecyclerView();
 
-        SwipeRefreshLayout pullToRefresh = myCartFragmentView.findViewById(R.id.cartPullToRefresh);
-
+        pullToRefresh = myCartFragmentView.findViewById(R.id.cartPullToRefresh);
         pullToRefresh.setOnRefreshListener(() -> {
-            ConstructRecyclerView();
-            adapter.notifyDataSetChanged();
-            calculateTotalPrice();
+            if(adapter != null){
+                ConstructRecyclerView();
+                adapter.notifyDataSetChanged();
+                calculateTotalPrice();
+            }
+
             pullToRefresh.setRefreshing(false);
         });
+
         return myCartFragmentView;
     }
 
