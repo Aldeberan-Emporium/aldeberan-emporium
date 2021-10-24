@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentActivity;
 import android.Manifest;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.aldeberan.Activity.Homepage;
 import com.example.aldeberan.MapFragment.DirectionHelpers.IGoogleAPI;
 import com.example.aldeberan.R;
 import com.example.aldeberan.models.OrderModel;
@@ -132,6 +134,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Log.i("LAT", String.valueOf(lat));
             Log.i("LNG", String.valueOf(lng));
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(MapsActivity.this, Homepage.class);
+        startActivity(intent);
     }
 
     @Override
