@@ -18,13 +18,25 @@ public class CartModel extends DatabaseModel{
     public CartModel(){};
 
     //Add quote
-    public void addQuote(String userID, double total, int quoteStatus){
+    public void addQuote(String userID, double total, int quoteStatus, OnQuoteIDResponseCallback callback){
         RequestParams params = new RequestParams();
         params.put("action", "addQuote");
         params.put("user_id", StringEscapeUtils.escapeHtml4(userID));
         params.put("total", String.valueOf(total));
         params.put("quote_status", quoteStatus);
-        this.postData(params);
+        this.getData(params, (success, response) -> {
+            String data = response;
+            int quoteID = 0;
+            try {
+                JSONArray array = new JSONArray(data);
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject object = array.getJSONObject(i);
+                    quoteID = Integer.parseInt(object.getString("quote_id"));
+                }
+            } catch (Exception e) {
+            }
+            callback.onResponse(quoteID);
+        });
     }
 
     //Update quote

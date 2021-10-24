@@ -200,8 +200,7 @@ public class StripePaymentCheckOut extends AppCompatActivity {
                     om.addOrderAddress(response, os.getRecipient(), os.getContact(), os.getLine1(), os.getLine2(), os.getCode(), os.getCity(), os.getState(), os.getCountry());
                     om.addOrderPayment(response, "Card", paymentIntent.getId());
                     cm.updateQuoteStatus(us.getQuoteID());
-                    cm.addQuote(us.getID(), 0., 0);
-                    cm.getQuote(us.getID(), res -> us.setQuoteID(res));
+                    cm.addQuote(us.getID(), 0., 0, res -> us.setQuoteID(res));
                     Log.i("qid", String.valueOf(us.getQuoteID()));
                 });
 
