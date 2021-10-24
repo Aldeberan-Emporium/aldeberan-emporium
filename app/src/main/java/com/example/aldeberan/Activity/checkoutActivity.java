@@ -57,6 +57,7 @@ public class checkoutActivity extends AppCompatActivity {
 
                 try {
                     readResponse();
+                    finish();
                     Intent payIntent = new Intent(checkoutActivity.this, StripePaymentCheckOut.class);
                     startActivity(payIntent);
                 } catch (JSONException e) {
@@ -138,7 +139,7 @@ public class checkoutActivity extends AppCompatActivity {
                     for(int i = 0; i != pData.size(); i++){
                         for(int j = 0; j != cartList.size(); j++){
                             if(cartList.get(j).getProdSKU().equals(pData.get(i).getProdSKU())){
-                                System.out.println("Mei: " + cartList.get(i).getProdSKU());
+                                //System.out.println("Mei: " + cartList.get(i).getProdSKU());
                                 pm.updateProduct(
                                         pData.get(j).getProdID(),
                                         pData.get(j).getProdName(),
@@ -147,7 +148,7 @@ public class checkoutActivity extends AppCompatActivity {
                                         pData.get(j).getProdStock() - cartList.get(j).getProdQuantity(),
                                         pData.get(j).getProdPrice(),
                                         pData.get(j).getProdImg());
-                                break;
+                                //break;
                             }
                         }
                     }
