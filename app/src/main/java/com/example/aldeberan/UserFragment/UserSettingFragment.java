@@ -44,9 +44,9 @@ public class UserSettingFragment extends Fragment implements View.OnClickListene
     Button logoutBtn;
     Button adminBtn;
 
-    Login login;
+    //Login login;
 
-    //private GoogleSignInClient gsignin;
+    public GoogleSignInClient gsignin;
 
     String temp_name = "aldeberan.emporium@gmail.com";
 
@@ -57,14 +57,8 @@ public class UserSettingFragment extends Fragment implements View.OnClickListene
 
         //(signOutInterface) getActivity();
 
-        /*
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.def_log_id))
-                .requestEmail()
-                .build();
-
-        GoogleSignIn.getClient(getActivity(), gso);
-         */
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.def_log_id)).requestEmail().build();
+        gsignin = GoogleSignIn.getClient(getActivity(), gso);
 
         addressBtn = userSettingsView.findViewById(R.id.editAddBtn);
         addressBtn.setOnClickListener(this);
@@ -113,6 +107,7 @@ public class UserSettingFragment extends Fragment implements View.OnClickListene
                         .commit();
 
                 ((Homepage) getActivity()).setBotNavView(0);
+                switchSession();
                 break;
             case R.id.adminBtn:
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView2, new AdminPanelLoadProductFragment()).addToBackStack(null).commit();
@@ -120,8 +115,8 @@ public class UserSettingFragment extends Fragment implements View.OnClickListene
             case R.id.logoutBtn:
                 //mGoogleSignInClient.signOut();
                 us.logoutUser(getActivity());
-                login.signOut();
-                //FirebaseAuth.getInstance().signOut();
+                gsignin.signOut();
+                FirebaseAuth.getInstance().signOut();
                 switchSession();
                 break;
             case R.id.orderBtn:
