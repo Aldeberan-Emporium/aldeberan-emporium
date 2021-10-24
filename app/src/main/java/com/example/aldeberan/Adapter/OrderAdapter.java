@@ -26,6 +26,7 @@ import com.example.aldeberan.structures.Cart;
 import com.example.aldeberan.structures.Order;
 import com.example.aldeberan.structures.Product;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -67,9 +68,10 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         holder.orderHistoryCRowBinding.orderName.setText("Name: " + orderList.get(position).getProdName());
         String productQuantity = String.valueOf(orderList.get(position).getProdQuantity());
         holder.orderHistoryCRowBinding.orderQuantity.setText(productQuantity + "x");
-        String onePrice = String.valueOf(orderList.get(position).getProdPrice());
+        DecimalFormat df = new DecimalFormat("#.00");
+        String onePrice = df.format(orderList.get(position).getProdPrice());
         holder.orderHistoryCRowBinding.orderPrice.setText("RM" + onePrice);
-        String orderTotal = String.valueOf(orderList.get(position).getTotal());
+        String orderTotal = df.format(orderList.get(position).getTotal());
         holder.orderHistoryCRowBinding.addedPrice.setText(("Order total: RM"+ orderTotal));
         int itemNum = orderList.get(position).getTotalItems();
 
@@ -106,7 +108,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
                 Double orderTotal = (orderList.get(position).getTotal() + 5);
                 String orderStatus = orderList.get(position).getOrderStatus();
                 int orderID = orderList.get(position).getOrderID();
-
 
                 orderDetailActivity.putExtra("address", address);
                 orderDetailActivity.putExtra("paymentMethod", paymentMethod);
