@@ -144,7 +144,7 @@ public class checkoutActivity extends AppCompatActivity {
                                         pData.get(j).getProdID(),
                                         pData.get(j).getProdName(),
                                         pData.get(j).getProdSKU(),
-                                        1,
+                                        pData.get(j).getProdAvail()?0:1,
                                         pData.get(j).getProdStock() - cartList.get(j).getProdQuantity(),
                                         pData.get(j).getProdPrice(),
                                         pData.get(j).getProdImg());

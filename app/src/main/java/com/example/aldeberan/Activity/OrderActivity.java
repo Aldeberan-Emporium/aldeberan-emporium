@@ -65,6 +65,12 @@ public class OrderActivity extends AppCompatActivity implements Serializable {
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setAdapter(orderAdapter);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }
 
 
