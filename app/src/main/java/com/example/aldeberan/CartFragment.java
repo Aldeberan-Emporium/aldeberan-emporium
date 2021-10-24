@@ -65,14 +65,15 @@ public class CartFragment extends Fragment {
             }
         });
 
+        calculateTotalPrice();
         ConstructRecyclerView();
 
         pullToRefresh = myCartFragmentView.findViewById(R.id.cartPullToRefresh);
         pullToRefresh.setOnRefreshListener(() -> {
             if(adapter != null){
+                calculateTotalPrice();
                 ConstructRecyclerView();
                 adapter.notifyDataSetChanged();
-                calculateTotalPrice();
             }
 
             pullToRefresh.setRefreshing(false);
@@ -112,9 +113,11 @@ public class CartFragment extends Fragment {
     public void calculateTotalPrice(){
         cm.updateQuoteRecal(us.getQuoteID());
         cm.readQuoteByUser(us.getID(), response -> {
-            totalPriceStr = String.valueOf(response.get(0).getTotal());
-            totalPrice.setText("RM " + totalPriceStr);
-            os.saveTotal(response.get(0).getTotal());
+            if(response != null){
+                totalPriceStr = String.valueOf(response.get(0).getTotal());
+                totalPrice.setText("RM " + totalPriceStr);
+                os.saveTotal(response.get(0).getTotal());
+            }
         });
     }
 }
