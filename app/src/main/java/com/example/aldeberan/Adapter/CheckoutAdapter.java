@@ -20,12 +20,10 @@ import java.util.List;
 public class CheckoutAdapter extends RecyclerView.Adapter<CheckoutAdapter.CheckoutViewHolder> {
     private Context mContext;
     public List<Cart> mData;
-    public List<Product> pData;
 
-    public CheckoutAdapter(Context mContext, List<Cart> mData, List<Product> pData) {
+    public CheckoutAdapter(Context mContext, List<Cart> mData) {
         this.mContext = mContext;
         this.mData = mData;
-        this.pData = pData;
     }
 
     public class CheckoutViewHolder extends RecyclerView.ViewHolder {
@@ -59,28 +57,10 @@ public class CheckoutAdapter extends RecyclerView.Adapter<CheckoutAdapter.Checko
         holder.checkoutDetailCRowBinding.checkoutName.setText(partialName + "...");
         holder.checkoutDetailCRowBinding.checkoutTotalPrice.setText("RM " + String.valueOf(itemTotal));
         holder.checkoutDetailCRowBinding.checkoutItemNum.setText(String.valueOf(tempQuantity) + "x");
-
-        int getLatestStock = updateStock(itemSKU, tempQuantity);
-        System.out.println("Newest: " + getLatestStock);
     }
 
     @Override
     public int getItemCount() {
         return mData.size();
-    }
-
-    public int updateStock(String temp_name, int quantity){
-        int temp_quantity = 0;
-
-        for(int i = 0; i < pData.size(); i++){
-            if(temp_name.equals(pData.get(i).getProdSKU())){
-                //currentStock = pData.get(i).getProdStock();
-                //holder.cartDetailCRowBinding.cartNumButton.setRange(0, currentStock);
-                temp_quantity = pData.get(i).getProdStock() - quantity;
-                return temp_quantity;
-            }
-        }
-
-        return temp_quantity;
     }
 }
