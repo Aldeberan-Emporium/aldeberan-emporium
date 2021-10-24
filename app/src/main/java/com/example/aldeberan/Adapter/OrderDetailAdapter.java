@@ -15,6 +15,8 @@ import com.example.aldeberan.databinding.OrderHistoryCRowBinding;
 import com.example.aldeberan.models.OrderModel;
 import com.example.aldeberan.structures.Order;
 
+import java.sql.SQLOutput;
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.OrderDetailViewHolder> {
@@ -52,11 +54,15 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
         holder.orderDetailCRowBinding.executePendingBindings();
 
         Glide.with(context).load(orderDetailList.get(position).getProdImg()).override(450, 450).into(holder.orderDetailCRowBinding.orderDetailImage);
-
+        holder.orderDetailCRowBinding.orderDetailName.setText(orderDetailList.get(position).getProdName());
+        DecimalFormat df = new DecimalFormat("#.00");
+        String orderDetailPrice = df.format(orderDetailList.get(position).getProdPrice());
+        holder.orderDetailCRowBinding.orderDetailQuantity.setText("x" + String.valueOf(orderDetailList.get(position).getProdQuantity()));
+        holder.orderDetailCRowBinding.orderDetailPrice.setText("RM" + orderDetailPrice);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return orderDetailList.size();
     }
 }

@@ -60,8 +60,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     @Override
     public void onBindViewHolder(@NonNull OrderViewHolder holder, int position) {
 
-        //orderRef, orderDate, paymentMethod, total
-
         holder.orderHistoryCRowBinding.executePendingBindings();
 
         Glide.with(mContext).load(orderList.get(position).getProdImg()).override(450, 450).into(holder.orderHistoryCRowBinding.orderImage);
@@ -104,10 +102,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
 
                 String paymentMethod = orderList.get(position).getPayType();
 
-                String productTotal = String.valueOf(orderList.get(position).getTotal());
-                String orderTotal = String.valueOf(orderList.get(position).getTotal() + 5);
+                Double productTotal = (orderList.get(position).getTotal());
+                Double orderTotal = (orderList.get(position).getTotal() + 5);
                 String orderStatus = orderList.get(position).getOrderStatus();
                 int orderID = orderList.get(position).getOrderID();
+
 
                 orderDetailActivity.putExtra("address", address);
                 orderDetailActivity.putExtra("paymentMethod", paymentMethod);

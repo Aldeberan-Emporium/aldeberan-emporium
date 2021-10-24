@@ -16,6 +16,7 @@ import com.example.aldeberan.storage.UserStorage;
 import com.example.aldeberan.structures.Order;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class OrderDetailActivity extends AppCompatActivity implements Serializable {
@@ -32,7 +33,6 @@ public class OrderDetailActivity extends AppCompatActivity implements Serializab
     private TextView paymentMethodText;
     private TextView productTotalText;
     private TextView detailTotalPriceText;
-
     private int orderID;
 
     @Override
@@ -50,19 +50,13 @@ public class OrderDetailActivity extends AppCompatActivity implements Serializab
 
         String address = (String) getIntent().getSerializableExtra ("address");
         String paymentMethod = (String) getIntent().getSerializableExtra ("paymentMethod");
-        String productTotal = (String) getIntent().getSerializableExtra("productTotal");
-        String orderTotal = (String) getIntent().getSerializableExtra("orderTotal");
-        //double orderTotal = Integer.parseInt(productTotal) + 5;
+        Double productTotal = (Double) getIntent().getSerializableExtra("productTotal");
+        Double orderTotal = (Double) getIntent().getSerializableExtra("orderTotal");
         orderID = (int) getIntent().getSerializableExtra("orderID");
-
-        System.out.println("lanjiao product total: " + productTotal);
-        System.out.println("lanjiao order total: " + orderTotal);
 
         om = new OrderModel();
 
         String orderStatus = (String) getIntent().getSerializableExtra("orderStatus");
-
-        System.out.println("lanjiao" + orderStatus);
 
         if (orderStatus.contains("shipping")){
             orderStatusText.setText("Your order is on the way!");
@@ -79,9 +73,13 @@ public class OrderDetailActivity extends AppCompatActivity implements Serializab
 
         ConstructRecyclerView();
 
+        DecimalFormat df = new DecimalFormat("#.00");
+        String pTotal = df.format(productTotal);
+        String oTotal = df.format(orderTotal);
+
         paymentMethodText.setText(paymentMethod);
-        productTotalText.setText(productTotal);
-        detailTotalPriceText.setText(String.valueOf(orderTotal));
+        productTotalText.setText("RM" + pTotal);
+        detailTotalPriceText.setText(String.valueOf("RM" + oTotal));
     }
 
 
@@ -100,5 +98,4 @@ public class OrderDetailActivity extends AppCompatActivity implements Serializab
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(orderDetailAdapter);
     }
-
 }

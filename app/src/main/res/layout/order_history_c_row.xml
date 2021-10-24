@@ -6,7 +6,7 @@
 
     <data>
         <variable
-            name="orderDetail"
+            name="order"
             type="com.example.aldeberan.structures.Order"/>
 
     </data>

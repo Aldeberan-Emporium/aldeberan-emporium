@@ -147,7 +147,8 @@
                         android:id="@+id/textView9"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Order Total" />
+                        android:text="Order Total"
+                        android:textStyle="bold"/>
 
                 </LinearLayout>
 
@@ -160,26 +161,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/textView4"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="RM" />
-
-                        <TextView
-                            android:id="@+id/textView8"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="RM" />
-
-                        <TextView
-                            android:id="@+id/textView10"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="RM" />
-                    </LinearLayout>
+                        android:orientation="vertical"/>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -194,9 +176,11 @@
 
                         <TextView
                             android:id="@+id/textView11"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="5.00" />
+                            android:text="RM5.00"
+                            android:textAlignment="textEnd"
+                            android:translationX="0dp" />
 
                         <TextView
                             android:id="@+id/detailTotalPrice"
@@ -229,7 +213,8 @@
                     android:id="@+id/PayTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Payment Method" />
+                    android:text="Payment Method"
+                    android:translationX="15dp" />
 
                 <TextView
                     android:id="@+id/paymentMethod"
