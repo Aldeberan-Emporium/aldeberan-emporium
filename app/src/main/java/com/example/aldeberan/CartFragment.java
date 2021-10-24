@@ -66,14 +66,14 @@ public class CartFragment extends Fragment {
             }
         });
 
-        //calculateTotalPrice();
         ConstructRecyclerView();
+        calculateTotalPrice();
 
         pullToRefresh = myCartFragmentView.findViewById(R.id.cartPullToRefresh);
         pullToRefresh.setOnRefreshListener(() -> {
             if(adapter != null){
-                calculateTotalPrice();
                 ConstructRecyclerView();
+                calculateTotalPrice();
                 adapter.notifyDataSetChanged();
             }
 
