@@ -21,8 +21,8 @@ import android.widget.Toast;
 
 import com.example.aldeberan.AdminFragment.AdminPanelAddProductFragment;
 import com.example.aldeberan.AdminFragment.AdminPanelLoadProductFragment;
+import com.example.aldeberan.CartFragment;
 import com.example.aldeberan.R;
-import com.example.aldeberan.UserFragment.cartFragment;
 import com.example.aldeberan.UserFragment.homeProductFragment;
 import com.example.aldeberan.UserFragment.tempFragment;
 import com.example.aldeberan.UserFragment.UserSettingFragment;
@@ -93,7 +93,7 @@ public class home_product extends AppCompatActivity implements NavigationView.On
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.cart_button:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new cartFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CartFragment()).commit();
                 setActionBarTitle("Cart");
                 return true;
 

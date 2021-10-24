@@ -60,12 +60,13 @@ public class CartFragment extends Fragment {
         checkoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                getActivity().finish();
                 Intent intent = new Intent(getActivity(), checkoutActivity.class);
                 startActivity(intent);
             }
         });
 
-        calculateTotalPrice();
+        //calculateTotalPrice();
         ConstructRecyclerView();
 
         pullToRefresh = myCartFragmentView.findViewById(R.id.cartPullToRefresh);

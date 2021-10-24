@@ -202,6 +202,7 @@ public class StripePaymentCheckOut extends AppCompatActivity {
                     cm.updateQuoteStatus(us.getQuoteID());
                     cm.addQuote(us.getID(), 0., 0);
                     cm.getQuote(us.getID(), res -> us.setQuoteID(res));
+                    Log.i("qid", String.valueOf(us.getQuoteID()));
                 });
 
                 Log.i("STRIPE_ID",paymentIntent.getId());

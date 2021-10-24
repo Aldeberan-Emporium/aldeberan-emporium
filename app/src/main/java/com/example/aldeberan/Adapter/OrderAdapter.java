@@ -11,25 +11,13 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.aldeberan.Activity.OrderActivity;
 import com.example.aldeberan.Activity.OrderDetailActivity;
-import com.example.aldeberan.Activity.home_product;
-import com.example.aldeberan.MapFragment.MapsActivity;
 import com.example.aldeberan.R;
-import com.example.aldeberan.UserFragment.cartFragment;
-import com.example.aldeberan.databinding.CartDetailCRowBinding;
 import com.example.aldeberan.databinding.OrderHistoryCRowBinding;
-import com.example.aldeberan.models.CartModel;
-import com.example.aldeberan.models.OrderModel;
-import com.example.aldeberan.storage.UserStorage;
-import com.example.aldeberan.structures.Cart;
 import com.example.aldeberan.structures.Order;
-import com.example.aldeberan.structures.Product;
 
 import java.text.DecimalFormat;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHolder>{
     private Context mContext;

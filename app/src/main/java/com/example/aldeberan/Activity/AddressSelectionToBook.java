@@ -5,8 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.aldeberan.R;
-import com.example.aldeberan.UserFragment.UserSettings.UserAddressFragment;
-import com.example.aldeberan.UserFragment.cartFragment;
 
 public class AddressSelectionToBook extends AppCompatActivity {
 
