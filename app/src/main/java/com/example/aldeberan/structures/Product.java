@@ -10,6 +10,7 @@ public class Product {
     private int prodAvail;
     private int prodStock;
     private double prodPrice;
+    private int wishID;
 
     public Product(int prodID, String prodName, String prodSKU, int prodAvail, int prodStock, double prodPrice, String prodImg){
         this.prodID = prodID;
@@ -75,4 +76,10 @@ public class Product {
         this.prodPrice = prodPrice;
     }
 
+    public int getWishID() {
+        return wishID;
+    }
+    public void setWishID(int wishID) {
+        this.wishID = wishID;
+    }
 }

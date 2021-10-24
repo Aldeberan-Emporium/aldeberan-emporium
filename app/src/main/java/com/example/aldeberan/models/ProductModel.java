@@ -22,8 +22,6 @@ import java.util.List;
 
 public class ProductModel extends DatabaseModel {
 
-    public String data;
-    public List<Product> productList = new ArrayList<>();
 
     //Admin create new product
     public void addProduct(String prodName, String prodSKU, int prodAvail, int prodStock, double prodPrice, String prodImg){
@@ -76,15 +74,13 @@ public class ProductModel extends DatabaseModel {
     }
 
     //Admin read all products
-    public void readProductAll(OnResponseCallback callback) throws JSONException {
+    public void readProductAll(OnResponseCallback callback) {
         RequestParams params = new RequestParams();
         params.put("action", "readProductAll");
         this.getData(params, (success, response) -> {
-            data = response;
-            //Log.i("DATAIN", data);
-
+            List<Product> productList = new ArrayList<>();
             try {
-                JSONArray array = new JSONArray(data);
+                JSONArray array = new JSONArray(response);
                 for (int i = 0; i < array.length(); i++) {
                     JSONObject object = array.getJSONObject(i);
                     int prodID = Integer.parseInt(object.getString("product_id"));
@@ -131,5 +127,42 @@ public class ProductModel extends DatabaseModel {
             }
         }
         return ext;
+    }
+
+    //Read product with wishlist
+    public void readProductAndWishlist(OnResponseCallback callback) {
+        RequestParams params = new RequestParams();
+        params.put("action", "readProductAndWishlist");
+        this.getData(params, (success, response) -> {
+            List<Product> productList = new ArrayList<>();
+            try {
+                JSONArray array = new JSONArray(response);
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject object = array.getJSONObject(i);
+                    int prodID = Integer.parseInt(object.getString("product_id"));
+                    String prodName = StringEscapeUtils.unescapeHtml4(object.getString("product_name"));
+                    String prodSKU = StringEscapeUtils.unescapeHtml4(object.getString("product_SKU"));
+                    String prodImg = StringEscapeUtils.unescapeHtml4(object.getString("product_img"));
+                    int prodAvail = Integer.parseInt(object.getString("product_availability"));
+                    int prodStock = Integer.parseInt(object.getString("product_stock"));
+                    double prodPrice = Double.parseDouble(object.getString("product_price"));
+                    int wishID = Integer.parseInt(object.getString("wishlist_id"));
+
+                    Product product = new Product();
+                    product.setProdID(prodID);
+                    product.setProdName(prodName);
+                    product.setProdSKU(prodSKU);
+                    product.setProdImg(prodImg);
+                    product.setProdAvail(prodAvail);
+                    product.setProdStock(prodStock);
+                    product.setProdPrice(prodPrice);
+                    product.setWishID(wishID);
+
+                    productList.add(product);
+
+                }
+            }catch (Exception e){}
+            callback.onResponse(productList);
+        });
     }
 }
