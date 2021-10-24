@@ -3,6 +3,7 @@ package com.example.aldeberan.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,10 +28,10 @@ import java.util.List;
 
 public class OrderActivity extends AppCompatActivity implements Serializable {
     private OrderModel om;
-    private List<Order> orderList;
+    private UserStorage us;
     private OrderAdapter orderAdapter;
     private RecyclerView recyclerView;
-    private UserStorage us;
+    private SwipeRefreshLayout pullToRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,14 +40,22 @@ public class OrderActivity extends AppCompatActivity implements Serializable {
         recyclerView = findViewById(R.id.orderRecyclerView);
 
         ConstructRecyclerView();
+
+        pullToRefresh = findViewById(R.id.pullToRefresh);
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                ConstructRecyclerView();
+                pullToRefresh.setRefreshing(false);
+            }
+        });
     }
 
-    private void ConstructRecyclerView(){
+    public void ConstructRecyclerView(){
         om = new OrderModel();
         us = new UserStorage(this);
         String userID = us.getID();
         om.readOrderByUser(userID, response -> {
-            orderList = response;
             PutDataIntoRecyclerView(response);
         });
     }
@@ -56,5 +65,7 @@ public class OrderActivity extends AppCompatActivity implements Serializable {
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setAdapter(orderAdapter);
     }
-
 }
+
+
+
