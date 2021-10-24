@@ -26,7 +26,7 @@ import java.util.List;
 public class checkoutActivity extends AppCompatActivity {
 
     private List<Cart> cartList;
-    private List<Product> productList;
+    private List<Product> pData;
     private UserStorage userStorage;
     private RecyclerView recyclerView;
     private CheckoutAdapter checkoutAdapter;
@@ -54,8 +54,14 @@ public class checkoutActivity extends AppCompatActivity {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent payIntent = new Intent(checkoutActivity.this, StripePaymentCheckOut.class);
-                startActivity(payIntent);
+
+                try {
+                    readResponse();
+                    Intent payIntent = new Intent(checkoutActivity.this, StripePaymentCheckOut.class);
+                    startActivity(payIntent);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -102,8 +108,8 @@ public class checkoutActivity extends AppCompatActivity {
 
     private void PutDataIntoRecyclerView(List<Cart> cartList) throws JSONException {
         ProductModel pm = new ProductModel();
-        pm.readProductAll(productList -> {
-            checkoutAdapter = new CheckoutAdapter(this, cartList, productList);
+        pm.readProductAll(pData -> {
+            checkoutAdapter = new CheckoutAdapter(this, cartList);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setAdapter(checkoutAdapter);
         });
@@ -117,5 +123,36 @@ public class checkoutActivity extends AppCompatActivity {
                 os.getCode()+", "+os.getCity()+", "+os.getState();
 
         selectedAddressLbl.setText(data);
+    }
+
+    public void readResponse() throws JSONException{
+        CartModel cm = new CartModel();
+        ProductModel pm = new ProductModel();
+        userStorage = new UserStorage(this);
+        int quoteID = userStorage.getQuoteID();
+
+        cm.readQuoteItemByQuote(quoteID, response -> {
+            cartList = response;
+            if(cartList != null){
+                pm.readProductAll(pData -> {
+                    for(int i = 0; i != pData.size(); i++){
+                        for(int j = 0; j != cartList.size(); j++){
+                            if(cartList.get(j).getProdSKU().equals(pData.get(i).getProdSKU())){
+                                System.out.println("Mei: " + cartList.get(i).getProdSKU());
+                                pm.updateProduct(
+                                        pData.get(j).getProdID(),
+                                        pData.get(j).getProdName(),
+                                        pData.get(j).getProdSKU(),
+                                        1,
+                                        pData.get(j).getProdStock() - cartList.get(j).getProdQuantity(),
+                                        pData.get(j).getProdPrice(),
+                                        pData.get(j).getProdImg());
+                                break;
+                            }
+                        }
+                    }
+                });
+            }
+        });
     }
 }
