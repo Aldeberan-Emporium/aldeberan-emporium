@@ -6,7 +6,7 @@
 
     <data>
         <variable
-            name="order"
+            name="orderDetail"
             type="com.example.aldeberan.structures.Order"/>
 
     </data>
@@ -48,7 +48,7 @@
                 tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
-                android:id="@+id/orderProductName"
+                android:id="@+id/orderName"
                 android:layout_width="293dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="5dp"
@@ -108,7 +108,7 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
-                android:id="@+id/onePrice"
+                android:id="@+id/orderPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"

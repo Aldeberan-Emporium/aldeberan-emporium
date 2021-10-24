@@ -204,10 +204,10 @@ public class OrderModel extends DatabaseModel{
     }
 
     //Read order item by User ID
-    public void readOrderItem(String userID, OnResponseCallback callback){
+    public void readOrderItem(int orderID, OnResponseCallback callback){
         RequestParams params = new RequestParams();
         params.put("action", "readOrderItem");
-        params.put("user_id", StringEscapeUtils.escapeHtml4(userID));
+        params.put("order_id", orderID);
         this.getData(params, (success, response) -> {
             List<Order> orderList = new ArrayList<>();
             String data = response;
