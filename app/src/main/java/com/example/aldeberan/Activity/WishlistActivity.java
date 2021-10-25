@@ -27,12 +27,13 @@ public class WishlistActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private WishlistAdapter wishlistAdapter;
     private WishlistModel wm = new WishlistModel();
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wishlist);
 
+        recyclerView = findViewById(R.id.wishlistView);
         ConstructRecyclerView();
     }
 
