@@ -88,7 +88,7 @@ public class SearchProduct extends AppCompatActivity {
                 productList = response;
                 PutDataIntoSearchProductBox(searchProductList);
             });
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -57,7 +57,7 @@ public class AdminPanel_LoadProduct extends AppCompatActivity{
                     //PutDataIntoRecyclerView(response);
                 }
             });
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

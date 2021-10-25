@@ -99,7 +99,7 @@ public class AdminPanelLoadProductFragment extends Fragment {
                     PutDataIntoRecyclerView(response);
                 }
             });
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

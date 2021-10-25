@@ -79,7 +79,7 @@ public class HomepageFragment extends Fragment{
                 PutDataIntoBestSellerBox(response);
                 PutDataIntoNewArrivalBox(response);
             });
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

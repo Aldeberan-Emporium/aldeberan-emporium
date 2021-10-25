@@ -89,7 +89,7 @@ public class AllProductFragment extends Fragment {
                 productList = response;
                 PutDataIntoAllProdBox(response);
             });
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

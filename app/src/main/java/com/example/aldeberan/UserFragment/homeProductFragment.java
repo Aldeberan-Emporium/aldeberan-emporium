@@ -87,7 +87,7 @@ public class homeProductFragment extends Fragment{
                 productList = response;
                 PutDataIntoRecyclerView(response);
             });
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
