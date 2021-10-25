@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import com.example.aldeberan.Activity.Homepage;
 import com.example.aldeberan.Activity.Login;
 import com.example.aldeberan.Activity.OrderActivity;
+import com.example.aldeberan.Activity.WishlistActivity;
 import com.example.aldeberan.Activity.home_product;
 import com.example.aldeberan.AdminFragment.AdminPanelLoadProductFragment;
 import com.example.aldeberan.HomepageFragment;
@@ -93,8 +94,9 @@ public class UserSettingFragment extends Fragment implements View.OnClickListene
                 //((home_product) getActivity()).setActionBarTitle("User Info");
                 break;
             case R.id.wishlistBtn:
-                //Intent intent = new Intent(getActivity(), MapsActivity.class);
-                //getActivity().startActivity(intent);
+                //Toast.makeText(getActivity(), "lmao", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), WishlistActivity.class);
+                startActivity(intent);
                 break;
             case R.id.loginBtn:
                 Intent loginIntent = new Intent(getActivity(), Login.class); //-->this line

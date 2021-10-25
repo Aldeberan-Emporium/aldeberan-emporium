@@ -70,6 +70,7 @@ public class WishlistModel extends DatabaseModel{
 
                     wishlistList.add(wishlist);
 
+                    Log.i("wish", response);
                 }
             }catch (Exception e){}
             callback.onResponse(wishlistList);

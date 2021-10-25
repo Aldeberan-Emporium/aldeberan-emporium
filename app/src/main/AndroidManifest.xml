@@ -70,6 +70,9 @@
             android:name=".Activity.Login"
             android:exported="true" />
         <activity
+            android:name=".Activity.WishlistActivity"
+            android:exported="true" />
+        <activity
             android:name=".AdminFragment.AdminFunction.AdminPanel_AddProduct"
             android:exported="true"
             android:parentActivityName=".AdminFragment.AdminFunction.AdminPanel_LoadProduct" />
