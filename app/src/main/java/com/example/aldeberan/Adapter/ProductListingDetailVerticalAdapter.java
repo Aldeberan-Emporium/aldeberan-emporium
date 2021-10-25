@@ -2,6 +2,7 @@ package com.example.aldeberan.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import com.example.aldeberan.R;
 import com.example.aldeberan.databinding.ProductCardBinding;
 import com.example.aldeberan.models.CartModel;
 import com.example.aldeberan.models.ProductModel;
+import com.example.aldeberan.models.WishlistModel;
 import com.example.aldeberan.storage.UserStorage;
 import com.example.aldeberan.structures.Product;
 
@@ -25,6 +27,7 @@ public class ProductListingDetailVerticalAdapter extends RecyclerView.Adapter<Pr
     public FragmentCommunication mCommunicator;
     ProductModel pm = new ProductModel();
     CartModel cm = new CartModel();
+    WishlistModel wm = new WishlistModel();
     UserStorage userStorage;
 
 
@@ -51,6 +54,17 @@ public class ProductListingDetailVerticalAdapter extends RecyclerView.Adapter<Pr
                         String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdID()),
                         String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdImg()),
                         String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdPrice()));
+            });
+
+            productCardBinding.buttonAddWishlist.setOnClickListener(view -> {
+                productCardBinding.buttonAddWishlist.setVisibility(View.GONE);
+                productCardBinding.buttonDelWishlist.setVisibility(View.VISIBLE);
+            });
+
+            //remove from wishlist
+            productCardBinding.buttonDelWishlist.setOnClickListener(view -> {
+                productCardBinding.buttonDelWishlist.setVisibility(View.GONE);
+                productCardBinding.buttonAddWishlist.setVisibility(View.VISIBLE);
             });
         }
     }
@@ -103,6 +117,16 @@ public class ProductListingDetailVerticalAdapter extends RecyclerView.Adapter<Pr
             });
 
             //addQuoteItem(String.valueOf(cData.get(getAbsoluteAdapterPosition()).getQuoteID());
+        holder.productCardBinding.buttonAddWishlist.setOnClickListener(view -> {
+            userStorage = new UserStorage(mContext);
+            String userID = userStorage.getID();
+            cm.checkIfUserExist(userID);
+
+            int prodID = mData.get(position).getProdID();
+            wm.addToWishlist(userID, prodID);
+            System.out.println("Added to wishlist.");
+
+        });
     };
 
 

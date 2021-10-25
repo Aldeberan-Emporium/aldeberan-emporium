@@ -14,6 +14,7 @@ import com.example.aldeberan.R;
 import com.example.aldeberan.databinding.ProductCardBinding;
 import com.example.aldeberan.models.CartModel;
 import com.example.aldeberan.models.ProductModel;
+import com.example.aldeberan.models.WishlistModel;
 import com.example.aldeberan.storage.UserStorage;
 import com.example.aldeberan.structures.Product;
 
@@ -27,6 +28,7 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductAdapter.Pr
     public FragmentCommunication mCommunicator;
     ProductModel pm = new ProductModel();
     CartModel cm = new CartModel();
+    WishlistModel wm = new WishlistModel();
     UserStorage userStorage;
 
 
@@ -117,6 +119,16 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductAdapter.Pr
             });
 
             //addQuoteItem(String.valueOf(cData.get(getAbsoluteAdapterPosition()).getQuoteID());
+        holder.productCardBinding.buttonAddWishlist.setOnClickListener(view -> {
+            userStorage = new UserStorage(mContext);
+            String userID = userStorage.getID();
+            cm.checkIfUserExist(userID);
+
+            int prodID = mData.get(position).getProdID();
+            wm.addToWishlist(userID, prodID);
+            System.out.println("Added to wishlist.");
+
+        });
     };
 
 

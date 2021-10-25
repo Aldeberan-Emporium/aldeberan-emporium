@@ -18,6 +18,7 @@ import com.example.aldeberan.R;
 import com.example.aldeberan.databinding.ProductCardBinding;
 import com.example.aldeberan.models.CartModel;
 import com.example.aldeberan.models.ProductModel;
+import com.example.aldeberan.models.WishlistModel;
 import com.example.aldeberan.storage.UserStorage;
 import com.example.aldeberan.structures.Cart;
 import com.example.aldeberan.structures.Product;
@@ -31,6 +32,7 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
     public FragmentCommunication mCommunicator;
     ProductModel pm = new ProductModel();
     CartModel cm = new CartModel();
+    WishlistModel wm = new WishlistModel();
     UserStorage userStorage;
 
     public ProductListingDetailAdapter(Context mContext, List<Product> mData, FragmentCommunication mCommunicator) {
@@ -52,17 +54,18 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
             productCardBinding.buttonAddCart.setOnClickListener(view -> {
                 //String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdID()));
             });
-                //add to wishlist
-                productCardBinding.buttonAddWishlist.setOnClickListener(view -> {
-                    productCardBinding.buttonAddWishlist.setVisibility(View.GONE);
-                    productCardBinding.buttonDelWishlist.setVisibility(View.VISIBLE);
-                });
 
-                //remove from wishlist
-                productCardBinding.buttonDelWishlist.setOnClickListener(view -> {
-                    productCardBinding.buttonDelWishlist.setVisibility(View.GONE);
-                    productCardBinding.buttonAddWishlist.setVisibility(View.VISIBLE);
-                });
+            //add to wishlist
+            productCardBinding.buttonAddWishlist.setOnClickListener(view -> {
+                productCardBinding.buttonAddWishlist.setVisibility(View.GONE);
+                productCardBinding.buttonDelWishlist.setVisibility(View.VISIBLE);
+            });
+
+            //remove from wishlist
+            productCardBinding.buttonDelWishlist.setOnClickListener(view -> {
+                productCardBinding.buttonDelWishlist.setVisibility(View.GONE);
+                productCardBinding.buttonAddWishlist.setVisibility(View.VISIBLE);
+            });
         }
     }
 
@@ -182,6 +185,17 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
             //cm.addQuoteItem(quoteID, prodName, 1, prodPrice, prodImg);
             cm.addQuoteItem(quoteID, prodName, prodSKU, 1, prodPrice, prodImg);
             cm.updateQuoteRecal(quoteID);
+        });
+
+        holder.productCardBinding.buttonAddWishlist.setOnClickListener(view -> {
+            userStorage = new UserStorage(mContext);
+            String userID = userStorage.getID();
+            cm.checkIfUserExist(userID);
+
+            int prodID = mData.get(position).getProdID();
+            wm.addToWishlist(userID, prodID);
+            System.out.println("Added to wishlist.");
+
         });
     }
 
