@@ -26,7 +26,6 @@ import java.util.List;
 public class checkoutActivity extends AppCompatActivity {
 
     private List<Cart> cartList;
-    private List<Product> pData;
     private UserStorage userStorage;
     private RecyclerView recyclerView;
     private CheckoutAdapter checkoutAdapter;
@@ -69,8 +68,6 @@ public class checkoutActivity extends AppCompatActivity {
         buttonEditItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent cartIntent = new Intent(checkoutActivity.this, CartFragment.class);
-                //startActivity(cartIntent);
                 onBackPressed();
             }
         });
@@ -108,12 +105,9 @@ public class checkoutActivity extends AppCompatActivity {
     }
 
     private void PutDataIntoRecyclerView(List<Cart> cartList) throws JSONException {
-        ProductModel pm = new ProductModel();
-        pm.readProductAll(pData -> {
-            checkoutAdapter = new CheckoutAdapter(this, cartList);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            recyclerView.setAdapter(checkoutAdapter);
-        });
+        checkoutAdapter = new CheckoutAdapter(this, cartList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(checkoutAdapter);
     }
 
     public void updateSelectedAddress(){

@@ -33,7 +33,6 @@ import java.util.List;
 public class CartFragment extends Fragment {
 
     private View myCartFragmentView;
-    private List<Product> productList;
     private RecyclerView recyclerView;
     private List<Cart> cartList;
     private CartAdapter adapter;
@@ -49,7 +48,6 @@ public class CartFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         myCartFragmentView = inflater.inflate(R.layout.cart, container, false);
-        productList = new ArrayList<>();
         cm = new CartModel();
         os = new OrderStorage(getActivity());
         recyclerView = myCartFragmentView.findViewById(R.id.cartRecyclerView);
@@ -76,7 +74,6 @@ public class CartFragment extends Fragment {
                 calculateTotalPrice();
                 adapter.notifyDataSetChanged();
             }
-
             pullToRefresh.setRefreshing(false);
         });
 
