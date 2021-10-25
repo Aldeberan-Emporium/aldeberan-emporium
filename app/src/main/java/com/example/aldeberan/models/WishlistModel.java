@@ -8,6 +8,7 @@ import com.example.aldeberan.structures.Wishlist;
 
 import org.apache.commons.text.StringEscapeUtils;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ public class WishlistModel extends DatabaseModel{
 
     //Callback function for readWishlistByUser response
     public interface OnResponseCallback {
-        public void onResponse(List<Wishlist> response);
+        public void onResponse(List<Wishlist> response) throws JSONException;
     }
 
     //Read wishlist by user ID
