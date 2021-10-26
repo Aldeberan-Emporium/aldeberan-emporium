@@ -81,18 +81,12 @@ public class ProductListingDetailVerticalAdapter extends RecyclerView.Adapter<Pr
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
 
+        userStorage = new UserStorage(mContext);
+        String userID = userStorage.getID();
         holder.productCardBinding.executePendingBindings();
         String prodNameLbl = mData.get(position).getProdName();
         holder.productCardBinding.cusProdNameLbl.setText(prodNameLbl);
-        //holder.productRowBinding.cusProdSKULbl.setText("SKU: " + mData.get(position).getProdSKU());
-        //holder.productRowBinding.cusProdIDLbl.setText("Product ID: " + mData.get(position).getProdID());
-
-        //String prodAvail = mData.get(position).getProdAvail() ? "Active" : "Inactive";
-
-        //holder.productRowBinding.cusProdAvailLbl.setText("Availability: " + prodAvail);
-        //holder.productRowBinding.cusProdStockLbl.setText("Stock: " + mData.get(position).getProdStock());
         holder.productCardBinding.cusProdPriceLbl.setText("RM " + mData.get(position).getProdPrice());
-
         Glide.with(mContext).load(mData.get(position).getProdImg()).override(450, 450).into(holder.productCardBinding.cusProdImgView);
 
         holder.productCardBinding.buttonAddCart.setOnClickListener(view -> {
@@ -101,10 +95,7 @@ public class ProductListingDetailVerticalAdapter extends RecyclerView.Adapter<Pr
                     String.valueOf(mData.get(position).getProdImg()),
                     String.valueOf(mData.get(position).getProdPrice()));
 
-            userStorage = new UserStorage(mContext);
-            String userID = userStorage.getID();
             cm.checkIfUserExist(userID);
-
             int quoteID = userStorage.getQuoteID();
             String prodName = String.valueOf(mData.get(position).getProdName());
             String prodSKU = String.valueOf(mData.get(position).getProdSKU());
@@ -116,32 +107,29 @@ public class ProductListingDetailVerticalAdapter extends RecyclerView.Adapter<Pr
 
             });
 
-            //addQuoteItem(String.valueOf(cData.get(getAbsoluteAdapterPosition()).getQuoteID());
-        holder.productCardBinding.buttonAddWishlist.setOnClickListener(view -> {
-            userStorage = new UserStorage(mContext);
-            String userID = userStorage.getID();
-            cm.checkIfUserExist(userID);
+        if(userID != null){
+            holder.productCardBinding.buttonAddWishlist.setOnClickListener(view -> {
 
-            int prodID = mData.get(position).getProdID();
-            wm.addToWishlist(userID, prodID);
-            System.out.println("Added to wishlist.");
+                cm.checkIfUserExist(userID);
+                int prodID = mData.get(position).getProdID();
+                wm.addToWishlist(userID, prodID);
+                System.out.println("Added to wishlist.");
 
-            holder.productCardBinding.buttonAddWishlist.setVisibility(View.GONE);
-            holder.productCardBinding.buttonDelWishlist.setVisibility(View.VISIBLE);
-        });
+                holder.productCardBinding.buttonAddWishlist.setVisibility(View.GONE);
+                holder.productCardBinding.buttonDelWishlist.setVisibility(View.VISIBLE);
+            });
 
-        holder.productCardBinding.buttonDelWishlist.setOnClickListener(view -> {
-            userStorage = new UserStorage(mContext);
-            String userID = userStorage.getID();
-            cm.checkIfUserExist(userID);
+            holder.productCardBinding.buttonDelWishlist.setOnClickListener(view -> {
 
-            int wishListID = mData.get(position).getWishID();
-            wm.removeFromWishlist(wishListID);
-            System.out.println("Removed From wishlist.");
+                cm.checkIfUserExist(userID);
+                int wishListID = mData.get(position).getWishID();
+                wm.removeFromWishlist(wishListID);
+                System.out.println("Removed wishlist from homepage.");
 
-            holder.productCardBinding.buttonDelWishlist.setVisibility(View.GONE);
-            holder.productCardBinding.buttonAddWishlist.setVisibility(View.VISIBLE);
-        });
+                holder.productCardBinding.buttonDelWishlist.setVisibility(View.GONE);
+                holder.productCardBinding.buttonAddWishlist.setVisibility(View.VISIBLE);
+            });
+        }
     };
 
 
