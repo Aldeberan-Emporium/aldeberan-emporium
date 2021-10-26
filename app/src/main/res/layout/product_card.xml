@@ -16,17 +16,15 @@
         android:elevation="5dp"
         android:orientation="vertical"
         android:paddingLeft="0dp"
-        android:paddingTop="2dp"
-        android:paddingRight="2dp"
         android:paddingBottom="2dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cardView2"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:background="@drawable/ic_product_card"
-            android:backgroundTint="@color/logo_pale_white"
+            android:backgroundTint="@color/white"
             android:elevation="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -40,10 +38,6 @@
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="10dp"
                 android:layout_marginBottom="5dp"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -55,13 +49,6 @@
                     android:id="@+id/cusProdImgView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:fadingEdge="horizontal|vertical"
-                    android:fadingEdgeLength="20dp"
-                    android:requiresFadingEdge="horizontal|vertical"
                     app:srcCompat="@mipmap/ic_launcher_foreground" />
 
                 <Button
