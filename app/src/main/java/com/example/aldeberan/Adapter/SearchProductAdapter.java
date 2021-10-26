@@ -18,6 +18,8 @@ import com.example.aldeberan.models.WishlistModel;
 import com.example.aldeberan.storage.UserStorage;
 import com.example.aldeberan.structures.Product;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,8 +88,9 @@ public class SearchProductAdapter extends RecyclerView.Adapter<SearchProductAdap
         userStorage = new UserStorage(mContext);
         String userID = userStorage.getID();
         holder.productCardBinding.executePendingBindings();
-        String prodNameLbl = mData.get(position).getProdName();
-        holder.productCardBinding.cusProdNameLbl.setText(prodNameLbl.substring(0, prodNameLbl.indexOf(' ', prodNameLbl.indexOf(' ')+1)));
+        String tempName = mData.get(position).getProdName();
+        String partialName = StringUtils.substring(tempName, 0, 10) + "...";
+        holder.productCardBinding.cusProdNameLbl.setText(partialName);
         holder.productCardBinding.cusProdPriceLbl.setText("RM " + mData.get(position).getProdPrice());
         Glide.with(mContext).load(mData.get(position).getProdImg()).override(450, 450).into(holder.productCardBinding.cusProdImgView);
 

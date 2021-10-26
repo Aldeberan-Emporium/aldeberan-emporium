@@ -23,6 +23,8 @@ import com.example.aldeberan.storage.UserStorage;
 import com.example.aldeberan.structures.Cart;
 import com.example.aldeberan.structures.Product;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.List;
 
 public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductListingDetailAdapter.ProductViewHolder>{
@@ -84,8 +86,9 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
         userStorage = new UserStorage(mContext);
         String userID = userStorage.getID();
         holder.productCardBinding.executePendingBindings();
-        String prodNameLbl = mData.get(position).getProdName();
-        holder.productCardBinding.cusProdNameLbl.setText(prodNameLbl);
+        String tempName = mData.get(position).getProdName();
+        String partialName = StringUtils.substring(tempName, 0, 10) + "...";
+        holder.productCardBinding.cusProdNameLbl.setText(partialName);
         final Product p = mData.get(position);
         holder.productCardBinding.setProduct(p);
         holder.productCardBinding.executePendingBindings();
