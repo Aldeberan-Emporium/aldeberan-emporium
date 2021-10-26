@@ -128,6 +128,21 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductAdapter.Pr
             wm.addToWishlist(userID, prodID);
             System.out.println("Added to wishlist.");
 
+            holder.productCardBinding.buttonAddWishlist.setVisibility(View.GONE);
+            holder.productCardBinding.buttonDelWishlist.setVisibility(View.VISIBLE);
+        });
+
+        holder.productCardBinding.buttonDelWishlist.setOnClickListener(view -> {
+            userStorage = new UserStorage(mContext);
+            String userID = userStorage.getID();
+            cm.checkIfUserExist(userID);
+
+            int wishListID = mData.get(position).getWishID();
+            wm.removeFromWishlist(wishListID);
+            System.out.println("Removed From wishlist.");
+
+            holder.productCardBinding.buttonDelWishlist.setVisibility(View.GONE);
+            holder.productCardBinding.buttonAddWishlist.setVisibility(View.VISIBLE);
         });
     };
 

@@ -14,6 +14,7 @@ import com.example.aldeberan.R;
 import com.example.aldeberan.databinding.ProductCardBinding;
 import com.example.aldeberan.models.CartModel;
 import com.example.aldeberan.models.ProductModel;
+import com.example.aldeberan.models.WishlistModel;
 import com.example.aldeberan.storage.UserStorage;
 import com.example.aldeberan.structures.Product;
 
@@ -28,6 +29,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<SearchProductAdap
     ProductModel pm = new ProductModel();
     CartModel cm = new CartModel();
     UserStorage userStorage;
+    WishlistModel wm = new WishlistModel();
 
 
     public SearchProductAdapter(Context mContext, List<Product> mData, FragmentCommunication mCommunicator) {
@@ -117,6 +119,32 @@ public class SearchProductAdapter extends RecyclerView.Adapter<SearchProductAdap
             });
 
             //addQuoteItem(String.valueOf(cData.get(getAbsoluteAdapterPosition()).getQuoteID());
+
+        holder.productCardBinding.buttonAddWishlist.setOnClickListener(view -> {
+            userStorage = new UserStorage(mContext);
+            String userID = userStorage.getID();
+            cm.checkIfUserExist(userID);
+
+            int prodID = mData.get(position).getProdID();
+            wm.addToWishlist(userID, prodID);
+            System.out.println("Added to wishlist.");
+
+            holder.productCardBinding.buttonAddWishlist.setVisibility(View.GONE);
+            holder.productCardBinding.buttonDelWishlist.setVisibility(View.VISIBLE);
+        });
+
+        holder.productCardBinding.buttonDelWishlist.setOnClickListener(view -> {
+            userStorage = new UserStorage(mContext);
+            String userID = userStorage.getID();
+            cm.checkIfUserExist(userID);
+
+            int wishListID = mData.get(position).getWishID();
+            wm.removeFromWishlist(wishListID);
+            System.out.println("Removed From wishlist.");
+
+            holder.productCardBinding.buttonDelWishlist.setVisibility(View.GONE);
+            holder.productCardBinding.buttonAddWishlist.setVisibility(View.VISIBLE);
+        });
     };
 
 
