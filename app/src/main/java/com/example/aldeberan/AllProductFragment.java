@@ -23,6 +23,7 @@ import com.example.aldeberan.Adapter.ProductListingDetailAdapter;
 import com.example.aldeberan.Adapter.ProductListingDetailVerticalAdapter;
 import com.example.aldeberan.UserFragment.homeProductFragment;
 import com.example.aldeberan.models.ProductModel;
+import com.example.aldeberan.storage.UserStorage;
 import com.example.aldeberan.structures.Product;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
@@ -39,12 +40,15 @@ public class AllProductFragment extends Fragment {
     RecyclerView allProdBox;
     EditText searchBar;
     View allProdView;
+    UserStorage us;
 
     ShimmerFrameLayout shimmerAllProdBox;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         allProdView = inflater.inflate(R.layout.fragment_all_product, container, false);
+
+        us = new UserStorage(getActivity());
 
         allProdBox = allProdView.findViewById(R.id.allProdBox);
         productList = new ArrayList<>();
@@ -85,10 +89,18 @@ public class AllProductFragment extends Fragment {
     private void ConstructRecyclerView(){
         ProductModel pm = new ProductModel();
         try {
-            pm.readProductAll((response) -> {
-                productList = response;
-                PutDataIntoAllProdBox(response);
-            });
+            if(us.getID() != null){
+                pm.readProductAndWishlist((response) -> {
+                    productList = response;
+                    PutDataIntoAllProdBox(response);
+                });
+            }
+            else{
+                pm.readProductAll((response) -> {
+                    productList = response;
+                    PutDataIntoAllProdBox(response);
+                });
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

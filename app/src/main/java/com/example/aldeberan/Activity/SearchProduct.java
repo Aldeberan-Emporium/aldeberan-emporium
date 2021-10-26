@@ -21,6 +21,7 @@ import com.example.aldeberan.Adapter.SearchProductAdapter;
 import com.example.aldeberan.R;
 import com.example.aldeberan.UserFragment.homeProductFragment;
 import com.example.aldeberan.models.ProductModel;
+import com.example.aldeberan.storage.UserStorage;
 import com.example.aldeberan.structures.Product;
 
 import org.json.JSONException;
@@ -36,6 +37,7 @@ public class SearchProduct extends AppCompatActivity {
     ImageButton onBackBtn;
     RecyclerView searchProdBox;
     SearchProductAdapter adapter;
+    UserStorage us;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,8 @@ public class SearchProduct extends AppCompatActivity {
         setContentView(R.layout.activity_search_product);
 
         getSupportActionBar().hide();
+
+        us = new UserStorage(this);
 
         searchProdBox = findViewById(R.id.searchProdBox);
         productList = new ArrayList<>();
@@ -84,10 +88,18 @@ public class SearchProduct extends AppCompatActivity {
     private void ConstructRecyclerView(){
         ProductModel pm = new ProductModel();
         try {
-            pm.readProductAll((response) -> {
-                productList = response;
-                PutDataIntoSearchProductBox(searchProductList);
-            });
+            if(us.getID() != null){
+                pm.readProductAndWishlist((response) -> {
+                    productList = response;
+                    PutDataIntoSearchProductBox(searchProductList);
+                });
+            }
+            else{
+                pm.readProductAll((response) -> {
+                    productList = response;
+                    PutDataIntoSearchProductBox(searchProductList);
+                });
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
