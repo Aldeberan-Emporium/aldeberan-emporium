@@ -34,6 +34,7 @@ public class WishlistActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wishlist);
+        getSupportActionBar().hide();
 
         recyclerView = findViewById(R.id.wishlistView);
         wishPullToRefresh = findViewById(R.id.wishPullToRefresh);

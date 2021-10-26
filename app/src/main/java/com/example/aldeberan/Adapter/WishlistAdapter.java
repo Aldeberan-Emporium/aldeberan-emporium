@@ -35,8 +35,8 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.Wishli
     WishlistModel wm = new WishlistModel();
     UserStorage userStorage;
 
-    public WishlistAdapter(Context mContext, List<Wishlist> wData) {
-        this.wContext = mContext;
+    public WishlistAdapter(Context wContext, List<Wishlist> wData) {
+        this.wContext = wContext;
         this.wData = wData;
     }
 
@@ -63,10 +63,10 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.Wishli
         userStorage = new UserStorage(wContext);
         String userID = userStorage.getID();
         String tempName = wData.get(position).getProdName();
-        String partialName = StringUtils.substring(tempName, 0, 10);
+        String partialName = StringUtils.substring(tempName, 0, 10) + "...";
 
         holder.wishlistRowBinding.executePendingBindings();
-        holder.wishlistRowBinding.wishProdName.setText(partialName + "...");
+        holder.wishlistRowBinding.wishProdName.setText(partialName);
         holder.wishlistRowBinding.wishProdPrice.setText("RM " + String.valueOf(wData.get(position).getProdPrice()));
         Glide.with(wContext).load(wData.get(position).getProdImg()).override(450, 450).into(holder.wishlistRowBinding.wishProdImgView);
 
