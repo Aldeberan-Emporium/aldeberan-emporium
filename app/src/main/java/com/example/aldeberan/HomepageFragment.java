@@ -23,6 +23,7 @@ import com.example.aldeberan.Adapter.ProductListingDetailAdapter;
 import com.example.aldeberan.Adapter.ProductListingDetailVerticalAdapter;
 import com.example.aldeberan.UserFragment.homeProductFragment;
 import com.example.aldeberan.models.ProductModel;
+import com.example.aldeberan.storage.UserStorage;
 import com.example.aldeberan.structures.Product;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
@@ -40,6 +41,7 @@ public class HomepageFragment extends Fragment{
     RecyclerView newArrivalBox;
     Button searchOpenBtn;
     View homepageView;
+    UserStorage us;
 
     ShimmerFrameLayout shimmerBestSellerBox;
     ShimmerFrameLayout shimmerNewArrivalBox;
@@ -49,6 +51,8 @@ public class HomepageFragment extends Fragment{
         homepageView = inflater.inflate(R.layout.fragment_homepage, container, false);
 
         //getActivity().getSupportActionBar().hide();
+
+        us = new UserStorage(getActivity());
 
         bestSellerBox = homepageView.findViewById(R.id.bestSellerBox);
         newArrivalBox = homepageView.findViewById(R.id.newArrivalBox);
@@ -74,11 +78,20 @@ public class HomepageFragment extends Fragment{
     private void ConstructRecyclerView(){
         ProductModel pm = new ProductModel();
         try {
-            pm.readProductAll((response) -> {
-                productList = response;
-                PutDataIntoBestSellerBox(response);
-                PutDataIntoNewArrivalBox(response);
-            });
+            if(us.getID() != null){
+                pm.readProductAndWishlist((response) -> {
+                    productList = response;
+                    PutDataIntoBestSellerBox(response);
+                    PutDataIntoNewArrivalBox(response);
+                });
+            }
+            else{
+                pm.readProductAll((response) -> {
+                    productList = response;
+                    PutDataIntoBestSellerBox(response);
+                    PutDataIntoNewArrivalBox(response);
+                });
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
