@@ -1,6 +1,7 @@
 package com.example.aldeberan.MapFragment;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -98,6 +99,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        getActionBar().setTitle("Order is Delivering...");
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -361,9 +364,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         ms.removeStatus();
                         Thread.interrupted();
                         om.updateOrderStatus(orderID, "delivered");
+                        getActionBar().setTitle("Order Delivered");
                         //Intent orderHist = new Intent(MapsActivity.this, OrderActivity.class);
                         //startActivity(orderHist);
-                        finish();
+                        //finish();
                     }
                 }
             }, 3000);

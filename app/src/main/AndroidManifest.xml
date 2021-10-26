@@ -48,7 +48,8 @@
         <activity
             android:name=".MapFragment.MapsActivity"
             android:exported="true"
-            android:label="@string/title_activity_maps" />
+            android:label="@string/title_activity_maps"
+            android:parentActivityName=".Activity.Homepage"/>
         <activity
             android:name=".Activity.Homepage"
             android:exported="true" />
