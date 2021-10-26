@@ -3,6 +3,7 @@ package com.example.aldeberan.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
 
@@ -26,6 +27,7 @@ public class WishlistActivity extends AppCompatActivity {
     private UserStorage userStorage;
     private RecyclerView recyclerView;
     private WishlistAdapter wishlistAdapter;
+    SwipeRefreshLayout wishPullToRefresh;
     private WishlistModel wm = new WishlistModel();
     
     @Override
@@ -34,7 +36,16 @@ public class WishlistActivity extends AppCompatActivity {
         setContentView(R.layout.activity_wishlist);
 
         recyclerView = findViewById(R.id.wishlistView);
+        wishPullToRefresh = findViewById(R.id.wishPullToRefresh);
         ConstructRecyclerView();
+
+        wishPullToRefresh.setOnRefreshListener(() -> {
+            if(wishlistAdapter != null){
+                ConstructRecyclerView();
+                wishlistAdapter.notifyDataSetChanged();
+            }
+            wishPullToRefresh.setRefreshing(false);
+        });
     }
 
     private void ConstructRecyclerView(){

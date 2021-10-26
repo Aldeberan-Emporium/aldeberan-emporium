@@ -28,7 +28,7 @@ public class WishlistModel extends DatabaseModel{
     //Remove from wishlist
     public void removeFromWishlist(int wishID){
         RequestParams params = new RequestParams();
-        params.put("action", "removeFromWishlist");
+        params.put("action", "deleteFromWishlist");
         params.put("wishlist_id", wishID);
         this.postData(params);
     }
