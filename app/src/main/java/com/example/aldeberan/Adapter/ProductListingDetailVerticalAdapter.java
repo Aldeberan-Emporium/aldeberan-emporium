@@ -107,6 +107,11 @@ public class ProductListingDetailVerticalAdapter extends RecyclerView.Adapter<Pr
 
             });
 
+        if (mData.get(position).getWishID() != -1){
+            holder.productCardBinding.buttonAddWishlist.setVisibility(View.GONE);
+            holder.productCardBinding.buttonDelWishlist.setVisibility(View.VISIBLE);
+        }
+
         if(userID != null){
             holder.productCardBinding.buttonAddWishlist.setOnClickListener(view -> {
 

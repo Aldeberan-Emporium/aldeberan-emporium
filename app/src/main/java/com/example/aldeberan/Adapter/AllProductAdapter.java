@@ -98,7 +98,6 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductAdapter.Pr
                     String.valueOf(mData.get(position).getProdImg()),
                     String.valueOf(mData.get(position).getProdPrice()));
 
-            cm.checkIfUserExist(userID);
             int quoteID = userStorage.getQuoteID();
             String prodName = String.valueOf(mData.get(position).getProdName());
             String prodSKU = String.valueOf(mData.get(position).getProdSKU());
@@ -110,10 +109,14 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductAdapter.Pr
 
             });
 
+        if (mData.get(position).getWishID() != -1){
+            holder.productCardBinding.buttonAddWishlist.setVisibility(View.GONE);
+            holder.productCardBinding.buttonDelWishlist.setVisibility(View.VISIBLE);
+        }
+
         if(userID != null){
             holder.productCardBinding.buttonAddWishlist.setOnClickListener(view -> {
 
-                cm.checkIfUserExist(userID);
                 int prodID = mData.get(position).getProdID();
                 wm.addToWishlist(userID, prodID);
                 System.out.println("Added to wishlist.");
@@ -124,7 +127,6 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductAdapter.Pr
 
             holder.productCardBinding.buttonDelWishlist.setOnClickListener(view -> {
 
-                cm.checkIfUserExist(userID);
                 int wishListID = mData.get(position).getWishID();
                 wm.removeFromWishlist(wishListID);
                 System.out.println("Removed wishlist from homepage.");
