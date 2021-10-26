@@ -49,16 +49,16 @@
 
             <TextView
                 android:id="@+id/orderName"
-                android:layout_width="293dp"
-                android:layout_height="20dp"
+                android:layout_width="228dp"
+                android:layout_height="41dp"
                 android:layout_marginStart="5dp"
                 android:text="product name"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.483"
+                app:layout_constraintHorizontal_bias="0.108"
                 app:layout_constraintStart_toEndOf="@+id/orderImage"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.16" />
+                app:layout_constraintVertical_bias="0.316" />
 
             <TextView
                 android:id="@+id/orderQuantity"
@@ -90,22 +90,30 @@
                 android:id="@+id/addedPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingBottom="3dp"
                 android:text="Order total: "
+                android:translationX="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.857"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.971" />
+                app:layout_constraintVertical_bias="1.0" />
 
             <TextView
                 android:id="@+id/totalItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginTop="13dp"
+                android:layout_marginBottom="3dp"
+                android:text="0 item"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintEnd_toStartOf="@+id/addedPrice"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/orderImage"
+                app:layout_constraintVertical_bias="1.0" />
 
             <TextView
                 android:id="@+id/orderPrice"
