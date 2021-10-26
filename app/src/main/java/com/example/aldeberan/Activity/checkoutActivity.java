@@ -55,11 +55,11 @@ public class checkoutActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 try {
-                    readResponse();
+                    //readResponse();
                     finish();
                     Intent payIntent = new Intent(checkoutActivity.this, StripePaymentCheckOut.class);
                     startActivity(payIntent);
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
