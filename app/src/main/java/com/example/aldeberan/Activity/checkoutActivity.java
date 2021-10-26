@@ -119,7 +119,7 @@ public class checkoutActivity extends AppCompatActivity {
 
         selectedAddressLbl.setText(data);
     }
-
+/*
     public void readResponse() throws JSONException{
         CartModel cm = new CartModel();
         ProductModel pm = new ProductModel();
@@ -150,4 +150,5 @@ public class checkoutActivity extends AppCompatActivity {
             }
         });
     }
+ */
 }

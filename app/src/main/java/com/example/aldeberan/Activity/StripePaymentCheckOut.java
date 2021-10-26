@@ -17,8 +17,10 @@ import com.example.aldeberan.R;
 import com.example.aldeberan.models.CartModel;
 import com.example.aldeberan.models.MapModel;
 import com.example.aldeberan.models.OrderModel;
+import com.example.aldeberan.models.ProductModel;
 import com.example.aldeberan.storage.OrderStorage;
 import com.example.aldeberan.storage.UserStorage;
+import com.example.aldeberan.structures.Cart;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -29,6 +31,9 @@ import com.stripe.android.model.ConfirmPaymentIntentParams;
 import com.stripe.android.model.PaymentIntent;
 import com.stripe.android.model.PaymentMethodCreateParams;
 import com.stripe.android.view.CardInputWidget;
+
+import org.json.JSONException;
+
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Type;
