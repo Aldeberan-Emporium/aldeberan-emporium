@@ -2,17 +2,24 @@ package com.example.aldeberan.models;
 
 import android.util.Log;
 
+import androidx.annotation.Nullable;
+
+import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.RequestParams;
+import com.codepath.asynchttpclient.callback.TextHttpResponseHandler;
 import com.example.aldeberan.structures.Order;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.text.StringEscapeUtils;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import okhttp3.Headers;
 
 public class OrderModel extends DatabaseModel{
     //Callback function for orderID response
@@ -273,5 +280,25 @@ public class OrderModel extends DatabaseModel{
         params.put("payment_type", StringEscapeUtils.escapeHtml4(payType));
         params.put("payment_id", StringEscapeUtils.escapeHtml4(payID));
         this.postData(params);
+    }
+
+    //Send email to user after order is initiated
+    public void sendOrderMail(String name, String email, int orderID){
+        RequestParams params = new RequestParams();
+        params.put("name", StringEscapeUtils.escapeHtml4(name));
+        params.put("email", email);
+        params.put("order_id", orderID);
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get("https://aldeberan-emporium-mailer.herokuapp.com", params, new TextHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, String response) {
+                Log.i("MAIL", "Email sent to "+email);
+            }
+
+            @Override
+            public void onFailure(int statusCode, @Nullable Headers headers, String errorResponse, @Nullable Throwable throwable) {
+            }
+        });
     }
 }
