@@ -23,6 +23,8 @@ import com.example.aldeberan.structures.Cart;
 import com.example.aldeberan.structures.Product;
 import com.example.aldeberan.structures.Wishlist;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.List;
 
 public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.WishlistViewHolder> {
@@ -57,61 +59,65 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.Wishli
 
     @Override
     public void onBindViewHolder(@NonNull WishlistViewHolder holder, @SuppressLint("RecyclerView") int position) {
+
+        userStorage = new UserStorage(wContext);
+        String userID = userStorage.getID();
+        String tempName = wData.get(position).getProdName();
+        String partialName = StringUtils.substring(tempName, 0, 10);
+
         holder.wishlistRowBinding.executePendingBindings();
-        holder.wishlistRowBinding.wishProdName.setText(wData.get(position).getProdName());
+        holder.wishlistRowBinding.wishProdName.setText(partialName + "...");
         holder.wishlistRowBinding.wishProdPrice.setText("RM " + String.valueOf(wData.get(position).getProdPrice()));
         Glide.with(wContext).load(wData.get(position).getProdImg()).override(450, 450).into(holder.wishlistRowBinding.wishProdImgView);
 
-        holder.wishlistRowBinding.addWCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        if(userID != null) {
+            holder.wishlistRowBinding.addWCart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-                userStorage = new UserStorage(wContext);
-                String userID = userStorage.getID();
-                cm.checkIfUserExist(userID);
+                    int quoteID = userStorage.getQuoteID();
+                    String prodName = String.valueOf(wData.get(position).getProdName());
+                    String prodSKU = String.valueOf(wData.get(position).getProdSKU());
+                    Double prodPrice = Double.parseDouble(String.valueOf(wData.get(position).getProdPrice()));
+                    String prodImg = String.valueOf(wData.get(position).getProdImg());
 
-                int quoteID = userStorage.getQuoteID();
-                String prodName = String.valueOf(wData.get(position).getProdName());
-                String prodSKU = String.valueOf(wData.get(position).getProdSKU());
-                Double prodPrice = Double.parseDouble(String.valueOf(wData.get(position).getProdPrice()));
-                String prodImg = String.valueOf(wData.get(position).getProdImg());
+                    cm.addQuoteItem(quoteID, prodName, prodSKU, 1, prodPrice, prodImg);
+                    cm.updateQuoteRecal(quoteID);
+                }
+            });
 
-                cm.addQuoteItem(quoteID, prodName, prodSKU, 1, prodPrice, prodImg);
-                cm.updateQuoteRecal(quoteID);
-            }
-        });
+            holder.wishlistRowBinding.deleteWish.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-        holder.wishlistRowBinding.deleteWish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(wContext);
+                    builder.setMessage("Do you want to remove this item from the wishlist?");
+                    builder.setCancelable(true);
+                    int wishlistID = Integer.parseInt(String.valueOf(wData.get(position).getWishID()));
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(wContext);
-                builder.setMessage("Do you want to remove this product from the wishlist?");
-                builder.setCancelable(true);
-                int wishlistID = Integer.parseInt(String.valueOf(wData.get(position).getWishID()));
+                    builder.setPositiveButton(
+                            "Yes",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    wm.removeFromWishlist(wishlistID);
+                                    notifyItemRemoved(position);
+                                    dialog.cancel();
+                                }
+                            });
 
-                builder.setPositiveButton(
-                        "Yes",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                wm.removeFromWishlist(wishlistID);
-                                notifyItemRemoved(position);
-                                dialog.cancel();
-                            }
-                        });
+                    builder.setNegativeButton(
+                            "No",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
 
-                builder.setNegativeButton(
-                        "No",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-
-                AlertDialog alert = builder.create();
-                alert.show();
-            }
-        });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                }
+            });
+        }
     }
 
     @Override
