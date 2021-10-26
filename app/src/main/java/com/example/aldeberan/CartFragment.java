@@ -17,7 +17,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.aldeberan.Activity.checkoutActivity;
 import com.example.aldeberan.Adapter.CartAdapter;
-import com.example.aldeberan.UserFragment.checkoutFragment;
 import com.example.aldeberan.models.CartModel;
 import com.example.aldeberan.models.ProductModel;
 import com.example.aldeberan.storage.OrderStorage;

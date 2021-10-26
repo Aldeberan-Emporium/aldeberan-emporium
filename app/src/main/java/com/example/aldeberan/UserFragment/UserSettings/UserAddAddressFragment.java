@@ -18,9 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Switch;
-import android.widget.Toast;
 
-import com.example.aldeberan.Activity.home_product;
 import com.example.aldeberan.R;
 import com.example.aldeberan.models.AddressModel;
 import com.example.aldeberan.models.MapModel;
