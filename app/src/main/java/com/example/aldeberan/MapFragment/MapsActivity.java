@@ -361,9 +361,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         ms.removeStatus();
                         Thread.interrupted();
                         om.updateOrderStatus(orderID, "delivered");
+                        //Intent orderHist = new Intent(MapsActivity.this, OrderActivity.class);
+                        //startActivity(orderHist);
                         finish();
-                        Intent orderHist = new Intent(MapsActivity.this, OrderActivity.class);
-                        startActivity(orderHist);
                     }
                 }
             }, 3000);
