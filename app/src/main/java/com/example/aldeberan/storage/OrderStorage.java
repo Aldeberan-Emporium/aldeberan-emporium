@@ -21,7 +21,6 @@ public class OrderStorage {
 
     public void saveTotal(double total){
         myEdit.putLong("total", Double.doubleToRawLongBits(total));
-
         myEdit.apply();
     }
 

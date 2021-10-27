@@ -4,6 +4,8 @@ package com.example.aldeberan.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -37,6 +39,8 @@ public class checkoutActivity extends AppCompatActivity {
     TextView selectedAddressLbl;
     TextView price;
 
+    String preProcess;
+    double finalPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,13 +58,26 @@ public class checkoutActivity extends AppCompatActivity {
 
         if(os.getState().toLowerCase().contains("selangor")){
             price.setText("RM " + String.valueOf(os.getTotal()));
-            os.saveTotal(os.getTotal());
+            //os.saveTotal(os.getTotal());
         }else{
-            price.setText("RM " + String.valueOf(os.getTotal() + 5) + " (Included Delivery Fees)");
-            os.saveTotal(os.getTotal() + 5);
+            price.setText("RM " + String.valueOf(os.getTotal() + 5)  + " (Included Delivery Fee)");
+            //os.saveTotal(os.getTotal());
         }
 
-        //price.setText("RM " + String.valueOf(os.getTotal()));
+        String targetPrice = String.valueOf(price.getText());
+        if(targetPrice.contains("(Included Delivery Fee)")){
+            preProcess = targetPrice.replace(" (Included Delivery Fee)", "");
+            preProcess = preProcess.replace("RM ", "");
+        }else{
+            preProcess = targetPrice.replace("RM ", "");
+        }
+        System.out.println(preProcess);
+        finalPrice = Double.parseDouble(preProcess);
+
+        //os.saveTotal(finalPrice);
+
+        //price.setText("RM " + os.getTotal());
+        //os.saveTotal(os.getTotal());
 
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,25 +154,9 @@ public class checkoutActivity extends AppCompatActivity {
         super.onBackPressed();
 
         finish();
-
         Intent homeIntent = new Intent(this, Homepage.class);
         startActivity(homeIntent);
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        if(os.getState().toLowerCase().contains("selangor")){
-            //price.setText("RM " + String.valueOf(os.getTotal()));
-            os.saveTotal(os.getTotal());
-        }else{
-            //price.setText("RM " + String.valueOf(os.getTotal() + 5) + " (Included Delivery Fees)");
-            Toast.makeText(this, "FUCK", Toast.LENGTH_SHORT).show();
-            os.saveTotal(os.getTotal() - 5);
-        }
-    }
-
     /*
     public void readResponse() throws JSONException{
         CartModel cm = new CartModel();
