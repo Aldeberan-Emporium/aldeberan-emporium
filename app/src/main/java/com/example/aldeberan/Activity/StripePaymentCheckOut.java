@@ -244,4 +244,13 @@ public class StripePaymentCheckOut extends AppCompatActivity {
             startActivity(mapIntent);
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        finish();
+        Intent homeIntent = new Intent(this, Homepage.class);
+        startActivity(homeIntent);
+    }
 }

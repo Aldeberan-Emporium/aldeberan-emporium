@@ -100,7 +100,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        getActionBar().setTitle("Order is Delivering...");
+        //getActionBar().setTitle("Order is Delivering...");
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -364,7 +364,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         ms.removeStatus();
                         Thread.interrupted();
                         om.updateOrderStatus(orderID, "delivered");
-                        getActionBar().setTitle("Order Delivered");
+                        //getActionBar().setTitle("Order Delivered");
                         //Intent orderHist = new Intent(MapsActivity.this, OrderActivity.class);
                         //startActivity(orderHist);
                         //finish();

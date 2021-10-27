@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.aldeberan.Adapter.CheckoutAdapter;
 import com.example.aldeberan.R;
@@ -22,6 +23,7 @@ import com.example.aldeberan.structures.Product;
 import org.json.JSONException;
 
 import java.util.List;
+import java.util.Locale;
 
 public class checkoutActivity extends AppCompatActivity {
 
@@ -33,6 +35,8 @@ public class checkoutActivity extends AppCompatActivity {
     private OrderStorage os;
     TextView addressBtn, buttonEditItem;
     TextView selectedAddressLbl;
+    TextView price;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,14 +45,22 @@ public class checkoutActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Items Checkout");
 
         os = new OrderStorage(this);
-        TextView price = findViewById(R.id.price);
+        price = findViewById(R.id.price);
         recyclerView = findViewById(R.id.checkoutRecyclerView);
         Button confirmButton = findViewById(R.id.confirmOrder);
         selectedAddressLbl = findViewById(R.id.selectedAddressLbl);
         buttonEditItem = findViewById(R.id.buttonEditItem);
         addressBtn = findViewById(R.id.addressBtn);
 
-        price.setText("RM " + String.valueOf(os.getTotal()));
+        if(os.getState().toLowerCase().contains("selangor")){
+            price.setText("RM " + String.valueOf(os.getTotal()));
+            os.saveTotal(os.getTotal());
+        }else{
+            price.setText("RM " + String.valueOf(os.getTotal() + 5) + " (Included Delivery Fees)");
+            os.saveTotal(os.getTotal() + 5);
+        }
+
+        //price.setText("RM " + String.valueOf(os.getTotal()));
 
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,7 +131,32 @@ public class checkoutActivity extends AppCompatActivity {
 
         selectedAddressLbl.setText(data);
     }
-/*
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        finish();
+
+        Intent homeIntent = new Intent(this, Homepage.class);
+        startActivity(homeIntent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if(os.getState().toLowerCase().contains("selangor")){
+            //price.setText("RM " + String.valueOf(os.getTotal()));
+            os.saveTotal(os.getTotal());
+        }else{
+            //price.setText("RM " + String.valueOf(os.getTotal() + 5) + " (Included Delivery Fees)");
+            Toast.makeText(this, "FUCK", Toast.LENGTH_SHORT).show();
+            os.saveTotal(os.getTotal() - 5);
+        }
+    }
+
+    /*
     public void readResponse() throws JSONException{
         CartModel cm = new CartModel();
         ProductModel pm = new ProductModel();

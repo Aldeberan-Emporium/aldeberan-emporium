@@ -70,8 +70,8 @@ public class OrderActivity extends AppCompatActivity implements Serializable {
     public void onBackPressed() {
         super.onBackPressed();
         finish();
-        Intent mainint = new Intent(this, Homepage.class);
-        startActivity(mainint);
+        //Intent mainint = new Intent(this, Homepage.class);
+        //startActivity(mainint);
     }
 }
 
