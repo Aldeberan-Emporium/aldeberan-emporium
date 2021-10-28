@@ -58,10 +58,8 @@ public class checkoutActivity extends AppCompatActivity {
 
         if(os.getState().toLowerCase().contains("selangor")){
             price.setText("RM " + String.valueOf(os.getTotal()));
-            //os.saveTotal(os.getTotal());
         }else{
             price.setText("RM " + String.valueOf(os.getTotal() + 5)  + " (Included Delivery Fee)");
-            //os.saveTotal(os.getTotal());
         }
 
         String targetPrice = String.valueOf(price.getText());
@@ -71,13 +69,9 @@ public class checkoutActivity extends AppCompatActivity {
         }else{
             preProcess = targetPrice.replace("RM ", "");
         }
-        System.out.println(preProcess);
+
+        //System.out.println(preProcess);
         finalPrice = Double.parseDouble(preProcess);
-
-        //os.saveTotal(finalPrice);
-
-        //price.setText("RM " + os.getTotal());
-        //os.saveTotal(os.getTotal());
 
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,36 +151,4 @@ public class checkoutActivity extends AppCompatActivity {
         Intent homeIntent = new Intent(this, Homepage.class);
         startActivity(homeIntent);
     }
-    /*
-    public void readResponse() throws JSONException{
-        CartModel cm = new CartModel();
-        ProductModel pm = new ProductModel();
-        userStorage = new UserStorage(this);
-        int quoteID = userStorage.getQuoteID();
-
-        cm.readQuoteItemByQuote(quoteID, response -> {
-            cartList = response;
-            if(cartList != null){
-                pm.readProductAll(pData -> {
-                    for(int i = 0; i != pData.size(); i++){
-                        for(int j = 0; j != cartList.size(); j++){
-                            if(cartList.get(j).getProdSKU().equals(pData.get(i).getProdSKU())){
-                                //System.out.println("Mei: " + cartList.get(i).getProdSKU());
-                                pm.updateProduct(
-                                        pData.get(j).getProdID(),
-                                        pData.get(j).getProdName(),
-                                        pData.get(j).getProdSKU(),
-                                        pData.get(j).getProdAvail()?0:1,
-                                        pData.get(j).getProdStock() - cartList.get(j).getProdQuantity(),
-                                        pData.get(j).getProdPrice(),
-                                        pData.get(j).getProdImg());
-                                //break;
-                            }
-                        }
-                    }
-                });
-            }
-        });
-    }
- */
 }
