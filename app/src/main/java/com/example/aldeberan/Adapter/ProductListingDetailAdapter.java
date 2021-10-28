@@ -93,7 +93,8 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
         final Product p = mData.get(position);
         holder.productCardBinding.setProduct(p);
         holder.productCardBinding.executePendingBindings();
-        holder.productCardBinding.cusProdPriceLbl.setText("RM " + mData.get(position).getProdPrice());
+        holder.productCardBinding.cusProdPriceLbl.setText("RM " + String.format("%.2f", mData.get(position).getProdPrice()));
+        holder.productCardBinding.cusExtraLbl.setText(String.valueOf(mData.get(position).getProdSold()));
         Glide.with(mContext).load(mData.get(position).getProdImg()).override(450, 450).into(holder.productCardBinding.cusProdImgView);
 
         holder.productCardBinding.buttonAddCart.setOnClickListener(view -> {

@@ -10,6 +10,8 @@ public class Product {
     private int prodAvail;
     private int prodStock;
     private double prodPrice;
+    private int prodSold;
+    private boolean isTopSeller;
     private int wishID;
 
     public Product(int prodID, String prodName, String prodSKU, int prodAvail, int prodStock, double prodPrice, String prodImg){
@@ -75,6 +77,12 @@ public class Product {
     public void setProdPrice(double prodPrice) {
         this.prodPrice = prodPrice;
     }
+
+    public int getProdSold() { return prodSold; }
+    public void setProdSold(int prodSold) { this.prodSold = prodSold; }
+
+    public boolean getIsTopSeller() { return isTopSeller; }
+    public void setIsTopSeller(boolean topSeller) { isTopSeller = topSeller; }
 
     public int getWishID() {
         return wishID;

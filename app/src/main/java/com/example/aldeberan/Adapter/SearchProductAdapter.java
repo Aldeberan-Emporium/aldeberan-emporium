@@ -92,8 +92,15 @@ public class SearchProductAdapter extends RecyclerView.Adapter<SearchProductAdap
         String tempName = mData.get(position).getProdName();
         String partialName = StringUtils.substring(tempName, 0, 10) + "...";
         holder.productCardBinding.cusProdNameLbl.setText(partialName);
-        holder.productCardBinding.cusProdPriceLbl.setText("RM " + mData.get(position).getProdPrice());
+        holder.productCardBinding.cusProdPriceLbl.setText("RM " + String.format("%.2f", mData.get(position).getProdPrice()));
+        holder.productCardBinding.cusExtraLbl.setText(String.valueOf(mData.get(position).getProdSold()));
         Glide.with(mContext).load(mData.get(position).getProdImg()).override(450, 450).into(holder.productCardBinding.cusProdImgView);
+
+        if (mData.get(position).getIsTopSeller()) {
+            holder.productCardBinding.topSellerLabel.setVisibility(View.VISIBLE);
+        } else {
+            holder.productCardBinding.topSellerLabel.setVisibility(View.GONE);
+        }
 
         holder.productCardBinding.buttonAddCart.setOnClickListener(view -> {
             mCommunicator.respond(String.valueOf(mData.get(position).getProdName()),

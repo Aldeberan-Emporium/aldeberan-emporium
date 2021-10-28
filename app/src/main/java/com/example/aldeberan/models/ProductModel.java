@@ -90,7 +90,9 @@ public class ProductModel extends DatabaseModel {
                     int prodAvail = Integer.parseInt(object.getString("product_availability"));
                     int prodStock = Integer.parseInt(object.getString("product_stock"));
                     double prodPrice = Double.parseDouble(object.getString("product_price"));
+                    int prodSold = Integer.parseInt(object.getString("product_sold"));
 
+                    //Only top 4 items will display top seller
                     Product product = new Product();
                     product.setProdID(prodID);
                     product.setProdName(prodName);
@@ -99,6 +101,10 @@ public class ProductModel extends DatabaseModel {
                     product.setProdAvail(prodAvail);
                     product.setProdStock(prodStock);
                     product.setProdPrice(prodPrice);
+                    product.setProdSold(prodSold);
+                    if (i < 4) { product.setIsTopSeller(true); }
+                    else {product.setIsTopSeller(false);}
+                    productList.add(product);
 
                     productList.add(product);
 
@@ -146,6 +152,48 @@ public class ProductModel extends DatabaseModel {
                     int prodAvail = Integer.parseInt(object.getString("product_availability"));
                     int prodStock = Integer.parseInt(object.getString("product_stock"));
                     double prodPrice = Double.parseDouble(object.getString("product_price"));
+                    int prodSold = Integer.parseInt(object.getString("product_sold"));
+                    int wishID = Integer.parseInt(object.getString("wishlist_id"));
+
+                    //Only top 4 items will display top seller
+                    Product product = new Product();
+                    product.setProdID(prodID);
+                    product.setProdName(prodName);
+                    product.setProdSKU(prodSKU);
+                    product.setProdImg(prodImg);
+                    product.setProdAvail(prodAvail);
+                    product.setProdStock(prodStock);
+                    product.setProdPrice(prodPrice);
+                    product.setProdSold(prodSold);
+                    product.setWishID(wishID);
+                    if (i < 4) { product.setIsTopSeller(true); }
+                    else {product.setIsTopSeller(false);}
+                    productList.add(product);
+
+                }
+            }catch (Exception e){}
+            callback.onResponse(productList);
+        });
+    }
+
+    //Read product with wishlist (Best Sellers)
+    public void readBestSellers(String userID, OnResponseCallback callback) {
+        RequestParams params = new RequestParams();
+        params.put("action", "readBestSellers");
+        this.getData(params, (success, response) -> {
+            List<Product> productList = new ArrayList<>();
+            try {
+                JSONArray array = new JSONArray(response);
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject object = array.getJSONObject(i);
+                    int prodID = Integer.parseInt(object.getString("product_id"));
+                    String prodName = StringEscapeUtils.unescapeHtml4(object.getString("product_name"));
+                    String prodSKU = StringEscapeUtils.unescapeHtml4(object.getString("product_SKU"));
+                    String prodImg = StringEscapeUtils.unescapeHtml4(object.getString("product_img"));
+                    int prodAvail = Integer.parseInt(object.getString("product_availability"));
+                    int prodStock = Integer.parseInt(object.getString("product_stock"));
+                    double prodPrice = Double.parseDouble(object.getString("product_price"));
+                    int prodSold = Integer.parseInt(object.getString("product_sold"));
                     int wishID = Integer.parseInt(object.getString("wishlist_id"));
 
                     Product product = new Product();
@@ -156,6 +204,46 @@ public class ProductModel extends DatabaseModel {
                     product.setProdAvail(prodAvail);
                     product.setProdStock(prodStock);
                     product.setProdPrice(prodPrice);
+                    product.setProdSold(prodSold);
+                    product.setWishID(wishID);
+
+                    productList.add(product);
+
+                }
+            }catch (Exception e){}
+            callback.onResponse(productList);
+        });
+    }
+
+    //Read product with wishlist (New Arrival)
+    public void readNewArrival(String userID, OnResponseCallback callback) {
+        RequestParams params = new RequestParams();
+        params.put("action", "readBestSellers");
+        this.getData(params, (success, response) -> {
+            List<Product> productList = new ArrayList<>();
+            try {
+                JSONArray array = new JSONArray(response);
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject object = array.getJSONObject(i);
+                    int prodID = Integer.parseInt(object.getString("product_id"));
+                    String prodName = StringEscapeUtils.unescapeHtml4(object.getString("product_name"));
+                    String prodSKU = StringEscapeUtils.unescapeHtml4(object.getString("product_SKU"));
+                    String prodImg = StringEscapeUtils.unescapeHtml4(object.getString("product_img"));
+                    int prodAvail = Integer.parseInt(object.getString("product_availability"));
+                    int prodStock = Integer.parseInt(object.getString("product_stock"));
+                    double prodPrice = Double.parseDouble(object.getString("product_price"));
+                    int prodSold = Integer.parseInt(object.getString("product_sold"));
+                    int wishID = Integer.parseInt(object.getString("wishlist_id"));
+
+                    Product product = new Product();
+                    product.setProdID(prodID);
+                    product.setProdName(prodName);
+                    product.setProdSKU(prodSKU);
+                    product.setProdImg(prodImg);
+                    product.setProdAvail(prodAvail);
+                    product.setProdStock(prodStock);
+                    product.setProdPrice(prodPrice);
+                    product.setProdSold(prodSold);
                     product.setWishID(wishID);
 
                     productList.add(product);

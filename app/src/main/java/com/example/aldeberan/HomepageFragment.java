@@ -43,6 +43,7 @@ public class HomepageFragment extends Fragment{
     Button searchOpenBtn;
     View homepageView;
     UserStorage us;
+    Button viewMoreBtn;
 
     ShimmerFrameLayout shimmerBestSellerBox;
     ShimmerFrameLayout shimmerNewArrivalBox;
@@ -72,6 +73,12 @@ public class HomepageFragment extends Fragment{
             startActivity(searchIntent);
         });
 
+        viewMoreBtn = homepageView.findViewById(R.id.viewMoreBtn);
+        viewMoreBtn.setOnClickListener(view -> {
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView2, new AllProductFragment()).addToBackStack(null).commit();
+            ((Homepage) getActivity()).setBotNavView(1);
+        });
+
         ConstructRecyclerView();
 
         return homepageView;
@@ -79,24 +86,14 @@ public class HomepageFragment extends Fragment{
 
     private void ConstructRecyclerView(){
         ProductModel pm = new ProductModel();
-        try {
-            if(us.getID() != null){
-                pm.readProductAndWishlist((response) -> {
-                    productList = response;
-                    PutDataIntoBestSellerBox(response);
-                    PutDataIntoNewArrivalBox(response);
-                });
-            }
-            else{
-                pm.readProductAll((response) -> {
-                    productList = response;
-                    PutDataIntoBestSellerBox(response);
-                    PutDataIntoNewArrivalBox(response);
-                });
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+        pm.readBestSellers(us.getID(), (response) -> {
+            PutDataIntoBestSellerBox(response);
+        });
+
+        pm.readNewArrival(us.getID(), (response) -> {
+            PutDataIntoNewArrivalBox(response);
+        });
     }
 
     ProductListingDetailAdapter.FragmentCommunication bestSellerComm = (prodName, prodID, prodSKU ,prodImg, prodPrice, prodStock) -> {
@@ -117,8 +114,8 @@ public class HomepageFragment extends Fragment{
 
     private void PutDataIntoBestSellerBox(List<Product> productList){
         adapterBS = new ProductListingDetailAdapter(getContext(), productList, bestSellerComm);
-        LinearLayoutManager horizontalLayoutManagaer = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        bestSellerBox.setLayoutManager(horizontalLayoutManagaer);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+        bestSellerBox.setLayoutManager(gridLayoutManager);
         bestSellerBox.setAdapter(adapterBS);
         Log.i("PLOPE", String.valueOf(productList));
         shimmerBestSellerBox.stopShimmerAnimation();
@@ -150,14 +147,5 @@ public class HomepageFragment extends Fragment{
         //calculateScreenWidth();
         shimmerNewArrivalBox.stopShimmerAnimation();
         shimmerNewArrivalBox.setVisibility(View.GONE);
-    }
-
-    private int calculateScreenWidth () {
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int width = displayMetrics.widthPixels;
-        Log.i("SCREENWIDTH", String.valueOf(width));
-        int cardWidth = 540;
-        return width/cardWidth;
     }
 }
