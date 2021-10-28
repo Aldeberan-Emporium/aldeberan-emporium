@@ -22,89 +22,96 @@
         android:theme="@style/Theme.Aldeberan"
         tools:replace="android:theme">
         <activity
-            android:screenOrientation="portrait"
-            android:configChanges="orientation|keyboardHidden"
+            android:name=".Activity.AddressAddTempActivity"
+            android:exported="true"
+            android:parentActivityName=".Activity.AddressSelection"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".Activity.SearchProduct"
-            android:exported="true" />
-        <activity
-            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            />
+        <activity
             android:name=".Activity.OrderActivity"
-            android:exported="true" />
-        <activity
-            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".Activity.OrderDetailActivity"
-            android:exported="true" />
-        <activity
-            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".Activity.AddressSelectionToBook"
-            android:exported="true"
-            android:parentActivityName=".Activity.AddressSelection" />
-        <activity
-            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden"
+            android:exported="true"
+            android:parentActivityName=".Activity.AddressSelection"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".Activity.AddressSelection"
-            android:exported="true"
-            android:parentActivityName=".Activity.checkoutActivity" />
-        <activity
-            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden"
+            android:exported="true"
+            android:parentActivityName=".Activity.checkoutActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".Activity.checkoutActivity"
-            android:exported="true" />
+            android:configChanges="orientation|keyboardHidden"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".Activity.Homepage"/>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/MAPS_API_KEY" />
 
         <activity
-            android:screenOrientation="portrait"
-            android:configChanges="orientation|keyboardHidden"
             android:name=".MapFragment.MapsActivity"
-            android:exported="true"
-            android:label="@string/title_activity_maps" />
-        <activity
-            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden"
+            android:exported="true"
+            android:label="@string/title_activity_maps"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".Activity.Homepage"
-            android:exported="true" />
-        <activity
-            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".Activity.StripePaymentCheckOut"
-            android:exported="true" />
-        <activity
-            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".AdminFragment.AdminFunction.AdminPanel_UpdateProduct"
-            android:exported="true"
-            android:parentActivityName=".AdminFragment.AdminFunction.AdminPanel_LoadProduct" />
-        <activity
-            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden"
+            android:exported="true"
+            android:parentActivityName=".AdminFragment.AdminFunction.AdminPanel_LoadProduct"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".AdminFragment.AdminFunction.AdminPanel_LoadProduct"
-            android:exported="true" />
-        <activity
-            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden"
-            android:name=".Activity.Login"
-            android:exported="true" />
-        <activity
-            android:screenOrientation="portrait"
-            android:configChanges="orientation|keyboardHidden"
-            android:name=".Activity.WishlistActivity"
-            android:exported="true" />
-        <activity
-            android:screenOrientation="portrait"
-            android:configChanges="orientation|keyboardHidden"
-            android:name=".AdminFragment.AdminFunction.AdminPanel_AddProduct"
             android:exported="true"
-            android:parentActivityName=".AdminFragment.AdminFunction.AdminPanel_LoadProduct" />
+            android:screenOrientation="portrait" />
         <activity
-            android:screenOrientation="portrait"
+            android:name=".Activity.Login"
             android:configChanges="orientation|keyboardHidden"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.WishlistActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AdminFragment.AdminFunction.AdminPanel_AddProduct"
+            android:configChanges="orientation|keyboardHidden"
+            android:exported="true"
+            android:parentActivityName=".AdminFragment.AdminFunction.AdminPanel_LoadProduct"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".Activity.MainActivity"
-            android:exported="true">
+            android:configChanges="orientation|keyboardHidden"
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

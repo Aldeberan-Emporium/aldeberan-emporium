@@ -86,12 +86,15 @@ public class AddressSelectionAdapter extends RecyclerView.Adapter<AddressSelecti
         holder.addressRowBinding.addLine1n2Lbl.setText(mData.get(position).getAddLine1()+", "+mData.get(position).getAddLine2());
         holder.addressRowBinding.add3CLbl.setText(mData.get(position).getAddCode()+", "+mData.get(position).getAddCity()+", "+mData.get(position).getAddState()+", "+mData.get(position).getAddCountry());
 
-        boolean prodAvailDisplay = mData.get(position).getIsDefault() == 1 ? true : false;
+        boolean prodAvailDisplay = mData.get(position).getIsDefault() == 0 ? true : false;
         if (prodAvailDisplay){
-            holder.addressRowBinding.isDefaultLbl.setVisibility(View.VISIBLE);
+            holder.addressRowBinding.isDefaultLbl.setVisibility(View.INVISIBLE);
         }
         else{
-            holder.addressRowBinding.isDefaultLbl.setVisibility(View.INVISIBLE);
+            if (mData.get(position).getIsDefault() == -1){
+                holder.addressRowBinding.isDefaultLbl.setText("TEMPORARY");
+            }
+            holder.addressRowBinding.isDefaultLbl.setVisibility(View.VISIBLE);
         }
 
 

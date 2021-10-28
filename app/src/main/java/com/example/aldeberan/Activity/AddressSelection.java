@@ -1,5 +1,6 @@
 package com.example.aldeberan.Activity;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,6 +11,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.aldeberan.Adapter.AddressSelectionAdapter;
 import com.example.aldeberan.R;
@@ -27,6 +30,7 @@ public class AddressSelection extends AppCompatActivity {
     public List<Address> addressList;
     public RecyclerView recyclerView;
     public AddressSelectionAdapter adapter;
+    Button addTempAddressBtn;
 
     UserStorage us;
     OrderStorage os;
@@ -45,14 +49,40 @@ public class AddressSelection extends AppCompatActivity {
         os = new OrderStorage(this);
         am = new AddressModel();
 
+        addTempAddressBtn = findViewById(R.id.addTempAddressBtn);
+        addTempAddressBtn.setOnClickListener(view -> {
+            if (os.getIsSaveTemp()){
+                showDialog();
+            }
+            else{
+                finish();
+                Intent addTempIntent = new Intent(AddressSelection.this, AddressAddTempActivity.class);
+                startActivity(addTempIntent);
+            }
+        });
+
         ConstructRecyclerView();
     }
 
     private void ConstructRecyclerView(){
         try {
-            am.readAddressByUser("XHXDzxi0ZMM4I8dEwLYoTNIGkb93", (response) -> {
+            am.readAddressByUser(us.getID(), (response) -> {
                 addressList = response;
-                PutDataIntoRecyclerView(response);
+                if (os.getIsSaveTemp()){
+                    Address address = new Address();
+                    address.setAddID(-1);
+                    address.setAddRecipient(os.getRecipient());
+                    address.setAddContact(os.getContact());
+                    address.setAddLine1(os.getLine1());
+                    address.setAddLine2(os.getLine2());
+                    address.setAddCode(os.getCode());
+                    address.setAddCity(os.getCity());
+                    address.setAddState(os.getState());
+                    address.setAddCountry(os.getCountry());
+                    address.setIsDefault(-1); //-1 for temporary address
+                    addressList.add(0, address);
+                }
+                PutDataIntoRecyclerView(addressList);
             });
         } catch (Exception e) {
             e.printStackTrace();
@@ -101,5 +131,31 @@ public class AddressSelection extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         Log.i("PLOPE", String.valueOf(addressList));
+    }
+
+    private void showDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Warning");
+        builder.setMessage("The existing temporary address will be replaced! Do you want to continue?");
+
+        builder.setPositiveButton("Cancel", (dialog, which) -> {
+            dialog.dismiss();
+        }).setNegativeButton("Confirm", (dialog, which) -> {
+            finish();
+            Intent addTempIntent = new Intent(AddressSelection.this, AddressAddTempActivity.class);
+            startActivity(addTempIntent);
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        Intent checkoutIntent = new Intent(AddressSelection.this, checkoutActivity.class);
+        startActivity(checkoutIntent);
     }
 }
