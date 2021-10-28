@@ -24,6 +24,7 @@ import com.example.aldeberan.storage.OrderStorage;
 import com.example.aldeberan.storage.UserStorage;
 import com.example.aldeberan.structures.Cart;
 import com.example.aldeberan.structures.Product;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import org.json.JSONException;
 
@@ -44,13 +45,14 @@ public class checkoutActivity extends AppCompatActivity {
 
     String preProcess;
     double finalPrice;
-    Homepage homepage;
+
+    ShimmerFrameLayout shimmerCheckoutBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
-        getSupportActionBar().setTitle("Items Checkout");
+        getSupportActionBar().setTitle("Checkout");
 
         os = new OrderStorage(this);
         price = findViewById(R.id.price);
@@ -59,6 +61,9 @@ public class checkoutActivity extends AppCompatActivity {
         selectedAddressLbl = findViewById(R.id.selectedAddressLbl);
         buttonEditItem = findViewById(R.id.buttonEditItem);
         addressBtn = findViewById(R.id.addressBtn);
+
+        shimmerCheckoutBox = findViewById(R.id.shimmerCheckoutBox);
+        shimmerCheckoutBox.startShimmerAnimation();
 
         if(os.getState().toLowerCase().contains("selangor")){
             price.setText("RM " + String.valueOf(os.getTotal()));
@@ -135,6 +140,8 @@ public class checkoutActivity extends AppCompatActivity {
         checkoutAdapter = new CheckoutAdapter(this, cartList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(checkoutAdapter);
+        shimmerCheckoutBox.stopShimmerAnimation();
+        shimmerCheckoutBox.setVisibility(View.GONE);
     }
 
     public void updateSelectedAddress(){
