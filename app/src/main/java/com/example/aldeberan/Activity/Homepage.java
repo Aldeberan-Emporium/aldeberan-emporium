@@ -94,6 +94,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         } else {
             super.onBackPressed();
         }
+        setBotNavView(0);
 
         Toast.makeText(this, "Back Clicked", Toast.LENGTH_SHORT).show();
     }

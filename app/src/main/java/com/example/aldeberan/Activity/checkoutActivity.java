@@ -14,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.aldeberan.Adapter.CheckoutAdapter;
+import com.example.aldeberan.CartFragment;
+import com.example.aldeberan.HomepageFragment;
 import com.example.aldeberan.R;
 import com.example.aldeberan.models.CartModel;
 import com.example.aldeberan.models.ProductModel;
@@ -41,6 +43,7 @@ public class checkoutActivity extends AppCompatActivity {
 
     String preProcess;
     double finalPrice;
+    Homepage homepage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,9 +149,6 @@ public class checkoutActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
         finish();
-        Intent homeIntent = new Intent(this, Homepage.class);
-        startActivity(homeIntent);
     }
 }

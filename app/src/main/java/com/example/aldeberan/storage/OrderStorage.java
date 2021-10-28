@@ -41,6 +41,11 @@ public class OrderStorage {
         myEdit.apply();
     }
 
+    public void saveTemp(boolean isSaveTemp){
+        myEdit.putBoolean("isSaveTemp", isSaveTemp);
+        myEdit.apply();
+    }
+
     public double getTotal(){return Double.longBitsToDouble(sharedPreferences.getLong("total", 0));}
     public int getOrderID(){return sharedPreferences.getInt("orderID", 0);}
 
@@ -53,4 +58,5 @@ public class OrderStorage {
     public String getState(){return sharedPreferences.getString("state", "");}
     public String getCountry(){return sharedPreferences.getString("country", "");}
 
+    public boolean getIsSaveTemp(){return sharedPreferences.getBoolean("isSaveTemp", false);}
 }
