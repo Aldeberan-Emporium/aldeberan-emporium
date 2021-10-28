@@ -8,8 +8,7 @@
             name="wishlist"
             type="com.example.aldeberan.structures.Wishlist"/>
     </data>
-
-
+    
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -82,7 +81,6 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-
                         <Button
                             android:id="@+id/addWCart"
                             android:layout_width="wrap_content"
@@ -93,7 +91,6 @@
 
                     </LinearLayout>
                 </LinearLayout>
-
             </TableRow>
             <View style="@style/Divider.Horizontal"/>
         </TableLayout>
