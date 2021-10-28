@@ -70,9 +70,9 @@ public class StripePaymentCheckOut extends AppCompatActivity {
         setContentView(R.layout.activity_checkout_stripe);
 
         progress = findViewById(R.id.progress);
-        progress.setVisibility(View.GONE);
+        progress.setVisibility(View.INVISIBLE);
 
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
 
         ConstraintLayout constraintLayout = findViewById(R.id.stripe_constrain);
         AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
