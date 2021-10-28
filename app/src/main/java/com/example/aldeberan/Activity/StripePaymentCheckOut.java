@@ -1,6 +1,7 @@
 package com.example.aldeberan.Activity;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.aldeberan.MapFragment.MapsActivity;
 import com.example.aldeberan.R;
@@ -64,6 +66,14 @@ public class StripePaymentCheckOut extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout_stripe);
+
+        getSupportActionBar().hide();
+
+        ConstraintLayout constraintLayout = findViewById(R.id.stripe_constrain);
+        AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
+        animationDrawable.setEnterFadeDuration(0);
+        animationDrawable.setExitFadeDuration(2000);
+        animationDrawable.start();
 
         os = new OrderStorage(this);
         us = new UserStorage(this);
