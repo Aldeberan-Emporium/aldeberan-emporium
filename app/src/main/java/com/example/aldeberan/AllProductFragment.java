@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.example.aldeberan.Activity.Homepage;
 import com.example.aldeberan.Adapter.AllProductAdapter;
 import com.example.aldeberan.Adapter.ProductListingDetailAdapter;
 import com.example.aldeberan.Adapter.ProductListingDetailVerticalAdapter;
@@ -117,6 +118,9 @@ public class AllProductFragment extends Fragment {
         //bundle.putString("prodAvail", prodAvail);
         bundle.putString("prodPrice", prodPrice);
         homepage.setArguments(bundle);
+
+        ((Homepage) getActivity()).setCartBtnBadge();
+        ((Homepage) getActivity()).displayItemAddedSnackbar();
     };
 
     private void PutDataIntoAllProdBox(List<Product> productList){

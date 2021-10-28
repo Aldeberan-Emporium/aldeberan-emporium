@@ -27,16 +27,17 @@
             android:id="@+id/onBackBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@drawable/ic_arrow_left_solid"
-            android:backgroundTint="@color/logo_pale_white"
-            shimmer:srcCompat="@drawable/ic_arrow_left_solid" />
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="?attr/actionModeCloseDrawable"
+            android:backgroundTint="@color/logo_pale_gray"
+            app:srcCompat="?attr/actionModeCloseDrawable" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/searchInputLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="5dp"
@@ -53,7 +54,8 @@
                 android:layout_height="wrap_content"
                 android:background="@color/logo_pale_white"
                 android:drawableStart="?android:attr/actionModeWebSearchDrawable"
-                android:hint="Search..." />
+                android:hint="Search..."
+                android:padding="10dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

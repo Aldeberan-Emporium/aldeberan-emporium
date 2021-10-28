@@ -18,6 +18,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.aldeberan.Activity.Homepage;
 import com.example.aldeberan.Activity.SearchProduct;
 import com.example.aldeberan.Adapter.ProductListingDetailAdapter;
 import com.example.aldeberan.Adapter.ProductListingDetailVerticalAdapter;
@@ -66,6 +67,7 @@ public class HomepageFragment extends Fragment{
 
         searchOpenBtn = homepageView.findViewById(R.id.searchOpenBtn);
         searchOpenBtn.setOnClickListener(view -> {
+            getActivity().finish();
             Intent searchIntent = new Intent(getActivity(), SearchProduct.class);
             startActivity(searchIntent);
         });
@@ -108,6 +110,9 @@ public class HomepageFragment extends Fragment{
         //bundle.putString("prodAvail", prodAvail);
         bundle.putString("prodPrice", prodPrice);
         homepage.setArguments(bundle);
+
+        ((Homepage) getActivity()).setCartBtnBadge();
+        ((Homepage) getActivity()).displayItemAddedSnackbar();
     };
 
     private void PutDataIntoBestSellerBox(List<Product> productList){
@@ -131,6 +136,9 @@ public class HomepageFragment extends Fragment{
         //bundle.putString("prodAvail", prodAvail);
         bundle.putString("prodPrice", prodPrice);
         homepage.setArguments(bundle);
+
+        ((Homepage) getActivity()).setCartBtnBadge();
+        ((Homepage) getActivity()).displayItemAddedSnackbar();
     };
 
     private void PutDataIntoNewArrivalBox(List<Product> productList){

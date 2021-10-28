@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -23,6 +24,7 @@ import com.example.aldeberan.UserFragment.homeProductFragment;
 import com.example.aldeberan.models.ProductModel;
 import com.example.aldeberan.storage.UserStorage;
 import com.example.aldeberan.structures.Product;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 
@@ -54,7 +56,7 @@ public class SearchProduct extends AppCompatActivity {
 
         onBackBtn = findViewById(R.id.onBackBtn);
         onBackBtn.setOnClickListener(view -> {
-            finish();
+            onBackPressed();
         });
 
         searchBar = findViewById(R.id.searchInput);
@@ -116,6 +118,8 @@ public class SearchProduct extends AppCompatActivity {
         //bundle.putString("prodAvail", prodAvail);
         bundle.putString("prodPrice", prodPrice);
         homepage.setArguments(bundle);
+
+        displayItemAddedSnackbar();
     };
 
     private void PutDataIntoSearchProductBox(List<Product> productList){
@@ -147,5 +151,19 @@ public class SearchProduct extends AppCompatActivity {
         }
 
         adapter.filteredProductList(filteredProductList);
+    }
+
+    //Display product added to cart
+    public void displayItemAddedSnackbar(){
+        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Product added to cart!", Snackbar.LENGTH_SHORT);
+        snackbar.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        Intent homepage = new Intent(SearchProduct.this, Homepage.class);
+        startActivity(homepage);
     }
 }

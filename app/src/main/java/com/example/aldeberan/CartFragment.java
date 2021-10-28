@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.aldeberan.Activity.Homepage;
 import com.example.aldeberan.Activity.checkoutActivity;
 import com.example.aldeberan.Adapter.CartAdapter;
 import com.example.aldeberan.models.CartModel;
@@ -64,6 +65,7 @@ public class CartFragment extends Fragment {
 
         ConstructRecyclerView();
         calculateTotalPrice();
+        ((Homepage) getActivity()).setCartBtnBadge();
 
         pullToRefresh = myCartFragmentView.findViewById(R.id.cartPullToRefresh);
         pullToRefresh.setOnRefreshListener(() -> {
@@ -73,6 +75,7 @@ public class CartFragment extends Fragment {
                 adapter.notifyDataSetChanged();
             }
             pullToRefresh.setRefreshing(false);
+            ((Homepage) getActivity()).setCartBtnBadge();
         });
 
         return myCartFragmentView;
@@ -83,7 +86,6 @@ public class CartFragment extends Fragment {
         us = new UserStorage(getActivity());
         int quoteID = us.getQuoteID();
         cm.readQuoteItemByQuote(quoteID, response -> {
-
             cartList = response;
             if(cartList.size() == 0){
                 checkoutBtn.setVisibility(View.GONE);
@@ -109,7 +111,7 @@ public class CartFragment extends Fragment {
     public void calculateTotalPrice(){
         cm.updateQuoteRecal(us.getQuoteID());
         cm.readQuoteByUser(us.getID(), response -> {
-            if(response != null){
+            if(!response.isEmpty()){
                 totalPriceStr = String.valueOf(response.get(0).getTotal());
                 totalPrice.setText("RM " + totalPriceStr);
                 os.saveTotal(response.get(0).getTotal());

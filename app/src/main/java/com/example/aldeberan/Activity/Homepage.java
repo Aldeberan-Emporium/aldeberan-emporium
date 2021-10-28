@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -29,10 +30,13 @@ import com.example.aldeberan.HomepageFragment;
 import com.example.aldeberan.R;
 import com.example.aldeberan.UserFragment.UserSettingFragment;
 import com.example.aldeberan.UserFragment.homeProductFragment;
+import com.example.aldeberan.models.CartModel;
 import com.example.aldeberan.models.ProductModel;
+import com.example.aldeberan.storage.UserStorage;
 import com.example.aldeberan.structures.Product;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 
@@ -53,6 +57,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
 
         bottomNavigationView.setOnNavigationItemSelectedListener(this::onNavigationItemSelected);
         bottomNavigationView.setSelectedItemId(R.id.botNavHome);
+
+        setCartBtnBadge();
 
         getSupportActionBar().hide();
     }
@@ -85,6 +91,26 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
 
     public void setActionBarTitle(String title) {
         getSupportActionBar().setTitle(title);
+    }
+
+    //Set and display the total number of items of the cart
+    public void setCartBtnBadge(){
+        CartModel cm = new CartModel();
+        UserStorage us = new UserStorage(this);
+        cm.readQuoteItemByQuote(us.getQuoteID(), response -> {
+            if (response.size() == 0) {
+                bottomNavigationView.removeBadge(R.id.botNavCart);
+            } else {
+                bottomNavigationView.getOrCreateBadge(R.id.botNavCart).setNumber(response.size());
+                bottomNavigationView.getBadge(R.id.botNavCart).setBackgroundColor(Integer.parseInt(String.valueOf(R.color.purple_500)));
+            }
+        });
+    }
+
+    //Display product added to cart
+    public void displayItemAddedSnackbar(){
+        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Product added to cart!", Snackbar.LENGTH_SHORT);
+        snackbar.show();
     }
 
     @Override

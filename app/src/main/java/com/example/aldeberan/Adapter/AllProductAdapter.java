@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.aldeberan.Activity.Homepage;
 import com.example.aldeberan.R;
 import com.example.aldeberan.databinding.ProductCardBinding;
 import com.example.aldeberan.models.CartModel;
@@ -109,8 +110,7 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductAdapter.Pr
 
             cm.addQuoteItem(quoteID, prodName, prodSKU, 1, prodPrice, prodImg);
             cm.updateQuoteRecal(quoteID);
-
-            });
+        });
 
         if (mData.get(position).getWishID() != -1){
             holder.productCardBinding.buttonAddWishlist.setVisibility(View.GONE);
