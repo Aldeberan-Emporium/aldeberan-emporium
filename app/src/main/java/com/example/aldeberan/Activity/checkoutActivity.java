@@ -82,9 +82,9 @@ public class checkoutActivity extends AppCompatActivity {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 try {
                     //readResponse();
+                    os.saveTotal(finalPrice);
                     finish();
                     Intent payIntent = new Intent(checkoutActivity.this, StripePaymentCheckOut.class);
                     startActivity(payIntent);
