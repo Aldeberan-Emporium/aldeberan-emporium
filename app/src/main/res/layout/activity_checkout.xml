@@ -38,11 +38,12 @@
 
             <TextView
                 android:id="@+id/buttonEditItem"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:clickable="true"
                 android:focusable="true"
+                android:gravity="end"
                 android:text="Edit Items"
                 android:textColor="@color/com_facebook_messenger_blue" />
         </LinearLayout>
@@ -79,13 +80,14 @@
 
                 <TextView
                     android:id="@+id/addressBtn"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="5dp"
                     android:layout_marginBottom="5dp"
                     android:clickable="true"
                     android:focusable="true"
+                    android:gravity="end"
                     android:text="Edit address"
                     android:textColor="@color/com_facebook_messenger_blue" />
             </LinearLayout>
