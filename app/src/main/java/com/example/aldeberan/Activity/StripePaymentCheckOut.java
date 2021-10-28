@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -61,11 +62,15 @@ public class StripePaymentCheckOut extends AppCompatActivity {
     private OrderModel om;
     private UserStorage us;
     private CartModel cm;
+    ProgressBar progress;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout_stripe);
+
+        progress = findViewById(R.id.progress);
+        progress.setVisibility(View.GONE);
 
         getSupportActionBar().hide();
 
@@ -107,17 +112,16 @@ public class StripePaymentCheckOut extends AppCompatActivity {
         String json = new Gson().toJson(payMap);
 
         RequestBody body = RequestBody.create(json, mediaType);
-        Request request = new Request.Builder()
-                .url(BACKEND_URL + "create-payment-intent") //from server side, never change this
-                .post(body)
-                .build();
-        httpClient.newCall(request)
-                .enqueue(new PayCallback(this));
+        Request request = new Request.Builder().url(BACKEND_URL + "create-payment-intent").post(body).build(); //request endpoint
+        httpClient.newCall(request).enqueue(new PayCallback(this));
         // Hook up the pay button to the card widget and stripe instance
         Button payButton = findViewById(R.id.payButton);
         payButton.setOnClickListener((View view) -> {
+            progress.setVisibility(View.VISIBLE);
+
             CardInputWidget cardInputWidget = findViewById(R.id.cardInputWidget);
             PaymentMethodCreateParams params = cardInputWidget.getPaymentMethodCreateParams();
+
             if (params != null) {
                 ConfirmPaymentIntentParams confirmParams = ConfirmPaymentIntentParams.createWithPaymentMethodCreateParams(params, paymentIntentClientSecret);
                 stripe.confirmPayment(this, confirmParams);
@@ -141,10 +145,7 @@ public class StripePaymentCheckOut extends AppCompatActivity {
     private void onPaymentSuccess(@NonNull final Response response) throws IOException {
         Gson gson = new Gson();
         Type type = new TypeToken<Map<String, String>>(){}.getType();
-        Map<String, String> responseMap = gson.fromJson(
-                Objects.requireNonNull(response.body()).string(),
-                type
-        );
+        Map<String, String> responseMap = gson.fromJson(Objects.requireNonNull(response.body()).string(), type);
         paymentIntentClientSecret = responseMap.get("clientSecret");
     }
     private static final class PayCallback implements Callback {
@@ -159,9 +160,7 @@ public class StripePaymentCheckOut extends AppCompatActivity {
                 return;
             }
             activity.runOnUiThread(() ->
-                    Toast.makeText(
-                            activity, "Error: " + e.toString(), Toast.LENGTH_LONG
-                    ).show()
+                    Toast.makeText(activity, "Error: " + e.toString(), Toast.LENGTH_LONG).show()
             );
         }
         @Override
@@ -172,10 +171,7 @@ public class StripePaymentCheckOut extends AppCompatActivity {
                 return;
             }
             if (!response.isSuccessful()) {
-                activity.runOnUiThread(() ->
-                        Toast.makeText(
-                                activity, "Error: " + response.toString(), Toast.LENGTH_LONG
-                        ).show()
+                activity.runOnUiThread(() -> Toast.makeText(activity, "Error: " + response.toString(), Toast.LENGTH_LONG).show()
                 );
             } else {
                 activity.onPaymentSuccess(response);
@@ -190,6 +186,8 @@ public class StripePaymentCheckOut extends AppCompatActivity {
         }
         @Override
         public void onSuccess(@NonNull PaymentIntentResult result) {
+            progress.setVisibility(View.GONE);
+
             final StripePaymentCheckOut activity = activityRef.get();
             if (activity == null) {
                 return;
@@ -199,10 +197,7 @@ public class StripePaymentCheckOut extends AppCompatActivity {
             if (status == PaymentIntent.Status.Succeeded) {
                 // Payment completed successfully
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                activity.displayAlert(
-                        "Payment completed",
-                        gson.toJson(paymentIntent)
-                );
+                activity.displayAlert("Payment completed", "Payment verified. Thank you");
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
                 String currentTime = sdf.format(new Date());
                 om.addOrder(us.getID(), currentTime, os.getTotal(), "shipping", (response) -> {
