@@ -67,7 +67,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
         holder.cartDetailCRowBinding.executePendingBindings();
         holder.cartDetailCRowBinding.cartProdNameLbl.setText(mData.get(position).getProdName());
-        holder.cartDetailCRowBinding.cartProdPriceLbl.setText("RM " + currentQuantityPrice);
+        holder.cartDetailCRowBinding.cartProdPriceLbl.setText("RM " + String.format("%.2f", currentQuantityPrice));
         Glide.with(mContext).load(mData.get(position).getProdImg()).override(450, 450).into(holder.cartDetailCRowBinding.cartProdImgView);
 
         for(int i = 0; i < productList.size(); i++){
