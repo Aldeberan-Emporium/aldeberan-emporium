@@ -14,9 +14,7 @@ import com.example.aldeberan.R;
 import com.example.aldeberan.models.WishlistModel;
 import com.example.aldeberan.storage.UserStorage;
 import com.example.aldeberan.structures.Wishlist;
-
 import org.json.JSONException;
-
 import java.util.List;
 
 public class WishlistActivity extends AppCompatActivity {
