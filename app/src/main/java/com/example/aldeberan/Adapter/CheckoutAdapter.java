@@ -46,15 +46,18 @@ public class CheckoutAdapter extends RecyclerView.Adapter<CheckoutAdapter.Checko
     @Override
     public void onBindViewHolder(@NonNull CheckoutViewHolder holder, int position) {
         String tempName = mData.get(position).getProdName();
-        String partialName = StringUtils.substring(tempName, 0, 10);
-
-        String itemSKU = mData.get(position).getProdSKU();
+        String partialName = StringUtils.substring(tempName, 0, 25) + "...";
         Double tempPrice = mData.get(position).getProdPrice();
         int tempQuantity = mData.get(position).getProdQuantity();
         Double itemTotal = tempPrice*tempQuantity;
 
         holder.checkoutDetailCRowBinding.executePendingBindings();
-        holder.checkoutDetailCRowBinding.checkoutName.setText(partialName + "...");
+        if(tempName.length() > 25 ){
+            holder.checkoutDetailCRowBinding.checkoutName.setText(partialName);
+        }
+        else{
+            holder.checkoutDetailCRowBinding.checkoutName.setText(tempName);
+        }
         holder.checkoutDetailCRowBinding.checkoutTotalPrice.setText("RM " + String.valueOf(itemTotal));
         holder.checkoutDetailCRowBinding.checkoutItemNum.setText(String.valueOf(tempQuantity) + "x");
     }

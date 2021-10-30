@@ -22,16 +22,13 @@
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/activity_checkout.xml" value="0.33" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/activity_homepage.xml" value="0.2" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/activity_search_product.xml" value="0.33" />
-        <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/activity_user_address_book.xml" value="0.20416666666666666" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/activity_wishlist.xml" value="0.22" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/address_selection_row.xml" value="0.33" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/admin_panel_product_row.xml" value="0.5" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/fragment_admin_add_product.xml" value="0.20416666666666666" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/fragment_all_product.xml" value="0.33" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/fragment_homepage.xml" value="0.2" />
-        <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/fragment_user_add_address.xml" value="0.2" />
-        <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/fragment_user_address_book.xml" value="0.16340141725719048" />
-        <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/fragment_user_update_address.xml" value="0.5" />
+        <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/fragment_user_add_address.xml" value="0.1" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/product_card.xml" value="0.5" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/product_card_shimmer.xml" value="0.33" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/menu/address_selection.xml" value="0.5" />
@@ -92,6 +89,7 @@
         <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/activity_homepage.xml" value="0.1" />
         <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/activity_main.xml" value="0.13020833333333334" />
         <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/activity_product_listing_detail_page.xml" value="0.24320652173913043" />
+        <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/activity_wishlist.xml" value="0.15129781420765026" />
         <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/admin_panel_product_row.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/app_bar_product_listing_detail_page.xml" value="0.2" />
         <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/cart.xml" value="0.152" />
@@ -111,6 +109,7 @@
         <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/nav_header.xml" value="0.16983695652173914" />
         <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/nav_header_product_listing_detail_page.xml" value="0.24320652173913043" />
         <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/order_detail_c_row.xml" value="0.12360688956433637" />
+        <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/order_history_c_row.xml" value="0.15129781420765026" />
         <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/product_card.xml" value="0.264" />
         <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/product_detail_c_row.xml" value="0.264" />
         <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/wishlist_row.xml" value="0.2" />
