@@ -62,8 +62,8 @@ public class checkoutActivity extends AppCompatActivity {
         buttonEditItem = findViewById(R.id.buttonEditItem);
         addressBtn = findViewById(R.id.addressBtn);
 
-        //shimmerCheckoutBox = findViewById(R.id.shimmerCheckoutBox);
-        //shimmerCheckoutBox.startShimmerAnimation();
+        shimmerCheckoutBox = findViewById(R.id.shimmerCheckoutBox);
+        shimmerCheckoutBox.startShimmerAnimation();
 
         if(os.getState().toLowerCase().contains("selangor")){
             price.setText("RM " + String.valueOf(os.getTotal()));
@@ -140,8 +140,8 @@ public class checkoutActivity extends AppCompatActivity {
         checkoutAdapter = new CheckoutAdapter(this, cartList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(checkoutAdapter);
-        //shimmerCheckoutBox.stopShimmerAnimation();
-        //shimmerCheckoutBox.setVisibility(View.GONE);
+        shimmerCheckoutBox.stopShimmerAnimation();
+        shimmerCheckoutBox.setVisibility(View.GONE);
     }
 
     public void updateSelectedAddress(){
