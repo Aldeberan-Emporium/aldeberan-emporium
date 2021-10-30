@@ -25,9 +25,9 @@
 
             <ImageView
                 android:id="@+id/cartProdImgView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:srcCompat="@tools:sample/avatars" />
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                tools:srcCompat="@drawable/shape_shimmer" />
         </androidx.cardview.widget.CardView>
 
         <LinearLayout
@@ -42,7 +42,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
+                android:background="@color/logo_pale_white"
                 android:text="Product Name"
+                android:textColor="@color/logo_pale_white"
                 android:textStyle="bold" />
 
             <TextView
@@ -51,7 +53,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
-                android:text="Product Price" />
+                android:background="@color/logo_pale_white"
+                android:text="Product Price"
+                android:textColor="@color/logo_pale_white" />
 
             <Space
                 android:layout_width="match_parent"
@@ -64,8 +68,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:paddingBottom="5dp"
-                app:backGroundColor="#18181818"
-                app:textColor="#000000" />
+                app:backGroundColor="@color/logo_pale_white"
+                app:textColor="@color/logo_pale_white" />
 
         </LinearLayout>
 

@@ -24,6 +24,7 @@ import com.example.aldeberan.storage.OrderStorage;
 import com.example.aldeberan.storage.UserStorage;
 import com.example.aldeberan.structures.Cart;
 import com.example.aldeberan.structures.Product;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import org.json.JSONException;
 
@@ -44,6 +45,8 @@ public class CartFragment extends Fragment {
     private OrderStorage os;
     SwipeRefreshLayout pullToRefresh;
 
+    ShimmerFrameLayout shimmerCartLayout;
+
     @Nullable
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
@@ -54,6 +57,9 @@ public class CartFragment extends Fragment {
         checkoutBtn = myCartFragmentView.findViewById(R.id.checkoutButton);
         totalPrice = myCartFragmentView.findViewById(R.id.totalPrice);
         textLabel = myCartFragmentView.findViewById(R.id.textLabel);
+
+        shimmerCartLayout = myCartFragmentView.findViewById(R.id.shimmerCartBox);
+        shimmerCartLayout.startShimmerAnimation();
 
         checkoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +101,8 @@ public class CartFragment extends Fragment {
             else{
                 PutDataIntoRecyclerView(cartList);
                 calculateTotalPrice();
+                shimmerCartLayout.stopShimmerAnimation();
+                shimmerCartLayout.setVisibility(View.GONE);
             }
         });
     }

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="wishlist"
+            type="com.example.aldeberan.structures.Wishlist"/>
+    </data>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="?android:dividerHorizontal"
+        android:showDividers="middle"
+        android:orientation="horizontal">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <ImageButton
+                    android:id="@+id/deleteWish"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginTop="5dp"
+                    android:background="#ffffff"
+                    app:srcCompat="@drawable/shape_shimmer" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="8dp"
+                    android:layout_margin="5dp"
+                    android:elevation="10dp">
+
+                    <ImageView
+                        android:id="@+id/wishProdImgView"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:radius="10dp"
+                        tools:srcCompat="@drawable/shape_shimmer" />
+                </androidx.cardview.widget.CardView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginTop="5dp">
+
+                    <TextView
+                        android:id="@+id/wishProdName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/logo_pale_white"
+                        android:paddingLeft="5dp"
+                        android:text="Product Name"
+                        android:textColor="@color/logo_pale_white"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/wishProdPrice"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/logo_pale_white"
+                        android:paddingLeft="5dp"
+                        android:text="Product Price"
+                        android:textColor="@color/logo_pale_white" />
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/addWCart"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="5dp"
+                            android:backgroundTint="@color/logo_pale_white"
+                            android:text="Add to cart"
+                            android:textColor="@color/logo_pale_white" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </TableRow>
+            <View style="@style/Divider.Horizontal"/>
+        </TableLayout>
+    </LinearLayout>
+</layout>

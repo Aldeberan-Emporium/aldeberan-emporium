@@ -14,6 +14,7 @@ import com.example.aldeberan.R;
 import com.example.aldeberan.models.OrderModel;
 import com.example.aldeberan.storage.UserStorage;
 import com.example.aldeberan.structures.Order;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
@@ -35,6 +36,8 @@ public class OrderDetailActivity extends AppCompatActivity implements Serializab
     private TextView detailTotalPriceText;
     private int orderID;
 
+    ShimmerFrameLayout shimmerOrderDetailLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +50,9 @@ public class OrderDetailActivity extends AppCompatActivity implements Serializab
         paymentMethodText = findViewById(R.id.paymentMethod);
         productTotalText = findViewById(R.id.productTotal);
         detailTotalPriceText = findViewById(R.id.detailTotalPrice);
+
+        shimmerOrderDetailLayout = findViewById(R.id.shimmerOrderDetailBox);
+        shimmerOrderDetailLayout.startShimmerAnimation();
 
         String address = (String) getIntent().getSerializableExtra ("address");
         String paymentMethod = (String) getIntent().getSerializableExtra ("paymentMethod");
@@ -97,5 +103,7 @@ public class OrderDetailActivity extends AppCompatActivity implements Serializab
         orderDetailAdapter = new OrderDetailAdapter(OrderDetailActivity.this, orderList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(orderDetailAdapter);
+        shimmerOrderDetailLayout.stopShimmerAnimation();
+        shimmerOrderDetailLayout.setVisibility(View.GONE);
     }
 }

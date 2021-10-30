@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.example.aldeberan.Adapter.CartAdapter;
 import com.example.aldeberan.Adapter.OrderAdapter;
@@ -20,6 +21,7 @@ import com.example.aldeberan.models.ProductModel;
 import com.example.aldeberan.storage.UserStorage;
 import com.example.aldeberan.structures.Cart;
 import com.example.aldeberan.structures.Order;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import org.json.JSONException;
 
@@ -35,6 +37,8 @@ public class OrderActivity extends AppCompatActivity implements Serializable {
     private RecyclerView recyclerView;
     private SwipeRefreshLayout pullToRefresh;
 
+    ShimmerFrameLayout shimmerOrderHistoryLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +47,9 @@ public class OrderActivity extends AppCompatActivity implements Serializable {
 
         setContentView(R.layout.activity_order_history);
         recyclerView = findViewById(R.id.orderRecyclerView);
+
+        shimmerOrderHistoryLayout = findViewById(R.id.shimmerOrderHistoryBox);
+        shimmerOrderHistoryLayout.startShimmerAnimation();
 
         ConstructRecyclerView();
 
@@ -66,9 +73,11 @@ public class OrderActivity extends AppCompatActivity implements Serializable {
     }
 
     public void PutDataIntoRecyclerView(List<Order> orderList) {
-            orderAdapter = new OrderAdapter(OrderActivity.this, orderList);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            recyclerView.setAdapter(orderAdapter);
+        orderAdapter = new OrderAdapter(OrderActivity.this, orderList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(orderAdapter);
+        shimmerOrderHistoryLayout.stopShimmerAnimation();
+        shimmerOrderHistoryLayout.setVisibility(View.GONE);
     }
 
     @Override

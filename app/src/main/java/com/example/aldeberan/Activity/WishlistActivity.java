@@ -15,6 +15,8 @@ import com.example.aldeberan.R;
 import com.example.aldeberan.models.WishlistModel;
 import com.example.aldeberan.storage.UserStorage;
 import com.example.aldeberan.structures.Wishlist;
+import com.facebook.shimmer.ShimmerFrameLayout;
+
 import org.json.JSONException;
 import java.util.List;
 
@@ -27,6 +29,8 @@ public class WishlistActivity extends AppCompatActivity {
     private WishlistAdapter wishlistAdapter;
     private SwipeRefreshLayout wishPullToRefresh;
     private WishlistModel wm = new WishlistModel();
+
+    ShimmerFrameLayout shimmerWishlistLayout;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +41,10 @@ public class WishlistActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.wishlistView);
         wishlist_text = findViewById(R.id.wishlist_text);
         wishPullToRefresh = findViewById(R.id.wishPullToRefresh);
+
+        shimmerWishlistLayout = findViewById(R.id.shimmerWishlistBox);
+        shimmerWishlistLayout.startShimmerAnimation();
+
         ConstructRecyclerView();
 
         wishPullToRefresh.setOnRefreshListener(() -> {
@@ -73,5 +81,7 @@ public class WishlistActivity extends AppCompatActivity {
         wishlistAdapter = new WishlistAdapter(this, wishList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(wishlistAdapter);
+        shimmerWishlistLayout.stopShimmerAnimation();
+        shimmerWishlistLayout.setVisibility(View.GONE);
     }
 }
