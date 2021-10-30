@@ -109,7 +109,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
 
     //Display product added to cart
     public void displayItemAddedSnackbar(){
-        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Product added to cart!", Snackbar.LENGTH_SHORT);
+        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Product added to cart!", Snackbar.LENGTH_SHORT).setDuration(800);
         snackbar.show();
     }
 
