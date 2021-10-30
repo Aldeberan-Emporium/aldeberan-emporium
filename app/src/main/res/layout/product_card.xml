@@ -91,6 +91,7 @@
                     android:id="@+id/linearLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="5dp"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -99,17 +100,17 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.cardview.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:cardCornerRadius="8dp"
-                        android:layout_margin="5dp"
-                        android:elevation="10dp">
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:elevation="10dp"
+                        app:cardCornerRadius="8dp">
 
-                    <ImageView
-                        android:id="@+id/cusProdImgView"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:srcCompat="@mipmap/ic_launcher_foreground" />
+                        <ImageView
+                            android:id="@+id/cusProdImgView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:srcCompat="@mipmap/ic_launcher_foreground" />
                     </androidx.cardview.widget.CardView>
 
                     <Button
