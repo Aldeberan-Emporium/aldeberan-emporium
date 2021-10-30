@@ -63,7 +63,7 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.Wishli
         userStorage = new UserStorage(wContext);
         String userID = userStorage.getID();
         String tempName = wData.get(position).getProdName();
-        String partialName = StringUtils.substring(tempName, 0, 10) + "...";
+        String partialName = StringUtils.substring(tempName, 0, 12) + "...";
 
         holder.wishlistRowBinding.executePendingBindings();
         holder.wishlistRowBinding.wishProdName.setText(partialName);
