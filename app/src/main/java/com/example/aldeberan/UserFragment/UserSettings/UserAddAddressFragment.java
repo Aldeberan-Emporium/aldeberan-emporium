@@ -127,11 +127,13 @@ public class UserAddAddressFragment extends Fragment implements View.OnClickList
                 getActivity().getSupportFragmentManager().popBackStack();
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.addressFragmentView, new UserAddressFragment()).addToBackStack(null).commit();
                 ((AddressSelectionToBook) getActivity()).setTitleBar("Address Book");
+                ((AddressSelectionToBook) getActivity()).setMenuItem(true);
             }
             else{
                 getActivity().getSupportFragmentManager().popBackStack();
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.userAddressBookFragmentView, new UserAddressFragment()).addToBackStack(null).commit();
                 ((UserAddressBookActivity) getActivity()).setTitleBar("Address Book");
+                ((UserAddressBookActivity) getActivity()).setMenuItem(true);
             }
         });
 
@@ -192,11 +194,13 @@ public class UserAddAddressFragment extends Fragment implements View.OnClickList
                                 getActivity().getSupportFragmentManager().popBackStack();
                                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.addressFragmentView, new UserAddressFragment()).addToBackStack(null).commit();
                                 ((AddressSelectionToBook) getActivity()).setTitleBar("Address Book");
+                                ((AddressSelectionToBook) getActivity()).setMenuItem(true);
                             }
                             else{
                                 getActivity().getSupportFragmentManager().popBackStack();
                                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.userAddressBookFragmentView, new UserAddressFragment()).addToBackStack(null).commit();
                                 ((UserAddressBookActivity) getActivity()).setTitleBar("Address Book");
+                                ((UserAddressBookActivity) getActivity()).setMenuItem(true);
                             }
                         }
 

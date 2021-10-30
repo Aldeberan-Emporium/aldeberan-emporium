@@ -31,7 +31,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserAddressFragment extends Fragment implements View.OnClickListener{
+public class UserAddressFragment extends Fragment{
 
     public List<Address> addressList;
     public RecyclerView recyclerView;
@@ -59,9 +59,6 @@ public class UserAddressFragment extends Fragment implements View.OnClickListene
         onLoadThrobber = userAddressView.findViewById(R.id.onLoadThrobberAddBook);
         mHandler = new Handler();
 
-        FloatingActionButton newAddBtn = userAddressView.findViewById(R.id.newAddressBtn);
-        newAddBtn.setOnClickListener(this);
-
         ConstructRecyclerView();
         SwipeRefreshLayout pullToRefresh = userAddressView.findViewById(R.id.pullToRefreshAddress);
 
@@ -71,27 +68,6 @@ public class UserAddressFragment extends Fragment implements View.OnClickListene
         });
 
         return userAddressView;
-    }
-
-    @Override
-    public void onClick(View view) {
-        UserAddAddressFragment newAddressFragment = new UserAddAddressFragment();
-        if (getActivity().getClass().getSimpleName().contains("AddressSelectionToBook")){
-            //Redirect to update product fragment
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.addressFragmentView, newAddressFragment)
-                    .addToBackStack(null)
-                    .commit();
-            ((AddressSelectionToBook) getActivity()).setTitleBar("Add New Address");
-        }
-        else{
-            //Redirect to update product fragment
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.userAddressBookFragmentView, newAddressFragment)
-                    .addToBackStack(null)
-                    .commit();
-            ((UserAddressBookActivity) getActivity()).setTitleBar("Add New Address");
-        }
     }
 
     private void onLoadThrobber() {
