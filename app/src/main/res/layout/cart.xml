@@ -11,28 +11,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/checkoutButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="check out"
-            android:layout_marginRight="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cartPullToRefresh" />
-
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/cartPullToRefresh"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginBottom="80dp"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/bottomActionBox"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
+                android:id="@+id/linearLayoutHalo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
@@ -76,27 +66,51 @@
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-        <TextView
-            android:id="@+id/textLabel"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/bottomActionBox"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Total Price"
-            android:textSize="16sp"
-            android:layout_marginLeft="10dp"
-            app:layout_constraintBottom_toTopOf="@+id/totalPrice"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cartPullToRefresh" />
-
-        <TextView
-            android:id="@+id/totalPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="RM"
-            android:textColor="#ED0707"
-            android:textStyle="bold"
-            android:layout_marginLeft="10dp"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textLabel" />
+            app:layout_constraintTop_toBottomOf="@+id/cartPullToRefresh">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="Total Price"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/totalPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="RM"
+                    android:textColor="#ED0707"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/checkoutButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginRight="15dp"
+                android:layout_weight="0"
+                android:text="check out" />
+
+        </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
