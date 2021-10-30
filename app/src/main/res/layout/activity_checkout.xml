@@ -17,14 +17,14 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0">
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/orderStatus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:elevation="3dp">
+                android:elevation="3dp"
+                android:background="@color/purple_500">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -35,16 +35,16 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent"
+                    >
 
                     <TextView
                         android:id="@+id/textView_order"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="5dp"
                         android:text="Order Summary"
-                        android:textColor="#000000"
+                        android:textColor="#FFFFFF"
                         android:textSize="16dp"
                         android:textStyle="bold" />
 
@@ -57,8 +57,7 @@
                         android:id="@+id/buttonEditItem"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginRight="5dp"
                         android:clickable="true"
                         android:focusable="true"
                         android:text="Edit Items"
@@ -99,22 +98,19 @@
                 android:layout_marginEnd="5dp">
             </androidx.recyclerview.widget.RecyclerView>
 
-            <View
-                android:id="@+id/view"
-                style="@style/Divider.Horizontal"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"/>
-
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/pricingCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp">
+                android:layout_marginTop="5dp"
+
+                android:elevation="3dp"
+                android:background="@color/purple_500">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:layout_marginBottom="5dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -124,11 +120,10 @@
                         android:id="@+id/textView3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="5dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
                         android:text="Delivery Address"
-                        android:textColor="#000000"
+                        android:textColor="#FFFFFF"
                         android:textSize="16dp"
                         android:textStyle="bold" />
 
@@ -141,9 +136,8 @@
                         android:id="@+id/addressBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
                         android:clickable="true"
                         android:focusable="true"
                         android:text="Edit address"
@@ -156,15 +150,15 @@
                 android:id="@+id/selectedAddressLbl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
                 android:text="Delivery Address"/>
 
             <View
                 android:id="@+id/view1"
                 style="@style/Divider.Horizontal"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"/>
@@ -178,7 +172,7 @@
                     android:id="@+id/textView6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="5dp"
                     android:layout_marginBottom="10dp"
                     android:text="Total Payment"
                     android:textColor="#000000"
@@ -190,7 +184,7 @@
                     android:id="@+id/price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="5dp"
                     android:layout_marginBottom="20dp"
                     android:layout_weight="1"
                     android:paddingStart="5dp"
@@ -205,7 +199,7 @@
                     android:id="@+id/confirmOrder"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginEnd="5dp"
                     android:layout_marginBottom="20dp"
                     android:layout_weight="1"
                     android:text="Confirm Order"
