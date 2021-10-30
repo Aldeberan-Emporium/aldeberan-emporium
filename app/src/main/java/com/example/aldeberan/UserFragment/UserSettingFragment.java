@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import com.example.aldeberan.Activity.Homepage;
 import com.example.aldeberan.Activity.Login;
 import com.example.aldeberan.Activity.OrderActivity;
+import com.example.aldeberan.Activity.UserAddressBookActivity;
 import com.example.aldeberan.Activity.WishlistActivity;
 import com.example.aldeberan.AdminFragment.AdminPanelLoadProductFragment;
 import com.example.aldeberan.HomepageFragment;
@@ -85,8 +86,8 @@ public class UserSettingFragment extends Fragment implements View.OnClickListene
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.editAddBtn:
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView2, new UserAddressFragment()).addToBackStack(null).commit();
-                //((home_product) getActivity()).setActionBarTitle("Address Book");
+                Intent addBookIntent = new Intent(getActivity(), UserAddressBookActivity.class);
+                startActivity(addBookIntent);
                 break;
             case R.id.infoBtn:
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView2, new UserInfoFragment()).addToBackStack(null).commit();

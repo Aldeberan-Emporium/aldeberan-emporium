@@ -19,6 +19,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Switch;
 
+import com.example.aldeberan.Activity.AddressSelectionToBook;
+import com.example.aldeberan.Activity.UserAddressBookActivity;
 import com.example.aldeberan.R;
 import com.example.aldeberan.models.AddressModel;
 import com.example.aldeberan.models.MapModel;
@@ -28,6 +30,7 @@ import com.google.android.material.snackbar.Snackbar;
 public class UserAddAddressFragment extends Fragment implements View.OnClickListener{
 
     Button submitBtn;
+    Button cancelBtn;
     ProgressBar onSubmitThrobber;
     View onSubmitView;
     public AlphaAnimation alphaAnimation;
@@ -109,6 +112,21 @@ public class UserAddAddressFragment extends Fragment implements View.OnClickList
             }
         });
 
+        cancelBtn = userNewAddView.findViewById(R.id.cancelBtn);
+        cancelBtn.setOnClickListener(view -> {
+            //Redirect back to load products fragment
+            if (getActivity().getClass().getSimpleName().contains("AddressSelectionToBook")){
+                getActivity().getSupportFragmentManager().popBackStack();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.addressFragmentView, new UserAddressFragment()).addToBackStack(null).commit();
+                ((AddressSelectionToBook) getActivity()).setTitleBar("Address Book");
+            }
+            else{
+                getActivity().getSupportFragmentManager().popBackStack();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.userAddressBookFragmentView, new UserAddressFragment()).addToBackStack(null).commit();
+                ((UserAddressBookActivity) getActivity()).setTitleBar("Address Book");
+            }
+        });
+
         return userNewAddView;
     }
 
@@ -154,7 +172,18 @@ public class UserAddAddressFragment extends Fragment implements View.OnClickList
                     AddressModel am = new AddressModel();
                     am.addAddress(userID, recipient, contact, line1, line2, code, city, state, country, isDefault);
                     onSubmitAnim();
-                    getActivity().onBackPressed();
+
+                    //Redirect back to load products fragment
+                    if (getActivity().getClass().getSimpleName().contains("AddressSelectionToBook")){
+                        getActivity().getSupportFragmentManager().popBackStack();
+                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.addressFragmentView, new UserAddressFragment()).addToBackStack(null).commit();
+                        ((AddressSelectionToBook) getActivity()).setTitleBar("Address Book");
+                    }
+                    else{
+                        getActivity().getSupportFragmentManager().popBackStack();
+                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.userAddressBookFragmentView, new UserAddressFragment()).addToBackStack(null).commit();
+                        ((UserAddressBookActivity) getActivity()).setTitleBar("Address Book");
+                    }
                 }
             });
         }

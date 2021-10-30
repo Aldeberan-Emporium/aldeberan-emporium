@@ -217,25 +217,39 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addCountryLayout" />
 
-    <Button
-        android:id="@+id/submitBtnUpdateAdd"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-        android:text="@string/admin_product_update_btn"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/resetBtnUpdateAdd"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/resetBtnUpdateAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-        android:text="@string/admin_product_reset_btn"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/onSubmitViewUpdateAdd"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/submitBtnUpdateAdd" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/isDefaultUpdateAdd"
+        app:layout_constraintVertical_bias="0.72">
+
+        <Button
+            android:id="@+id/submitBtnUpdateAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="@string/admin_product_update_btn" />
+
+        <Button
+            android:id="@+id/resetBtnUpdateAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="@string/admin_product_reset_btn" />
+
+        <Button
+            android:id="@+id/cancelBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:backgroundTint="@color/red_delete"
+            android:text="@string/admin_product_cancel_btn" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

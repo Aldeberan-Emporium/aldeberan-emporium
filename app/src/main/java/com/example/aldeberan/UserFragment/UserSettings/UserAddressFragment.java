@@ -17,7 +17,9 @@ import android.view.animation.Animation;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.aldeberan.Activity.AddressSelectionToBook;
 import com.example.aldeberan.Activity.Homepage;
+import com.example.aldeberan.Activity.UserAddressBookActivity;
 import com.example.aldeberan.Adapter.AddressAdapter;
 import com.example.aldeberan.AdminFragment.AdminPanelUpdateProductFragment;
 import com.example.aldeberan.R;
@@ -80,13 +82,15 @@ public class UserAddressFragment extends Fragment implements View.OnClickListene
                     .replace(R.id.addressFragmentView, newAddressFragment)
                     .addToBackStack(null)
                     .commit();
+            ((AddressSelectionToBook) getActivity()).setTitleBar("Add New Address");
         }
         else{
             //Redirect to update product fragment
             getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, newAddressFragment)
+                    .replace(R.id.userAddressBookFragmentView, newAddressFragment)
                     .addToBackStack(null)
                     .commit();
+            ((UserAddressBookActivity) getActivity()).setTitleBar("Add New Address");
         }
     }
 
@@ -147,19 +151,21 @@ public class UserAddressFragment extends Fragment implements View.OnClickListene
         bundle.putInt("isDefault", Integer.parseInt(isDefault));
         updateAddressFragment.setArguments(bundle);
 
-        if (getActivity().getClass().getSimpleName() == "AddressSelectionToBook"){
+        if (getActivity().getClass().getSimpleName().contains("AddressSelectionToBook")){
             //Redirect to update product fragment
             getActivity().getSupportFragmentManager().beginTransaction()
                     .replace(R.id.addressFragmentView, updateAddressFragment)
                     .addToBackStack(null)
                     .commit();
+            ((AddressSelectionToBook) getActivity()).setTitleBar("Update Address");
         }
         else{
             //Redirect to update product fragment
             getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, updateAddressFragment)
+                    .replace(R.id.userAddressBookFragmentView, updateAddressFragment)
                     .addToBackStack(null)
                     .commit();
+            ((UserAddressBookActivity) getActivity()).setTitleBar("Update Address");
         }
     };
 

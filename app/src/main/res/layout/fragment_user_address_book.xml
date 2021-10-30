@@ -47,6 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:foregroundGravity="center_vertical|center|center_horizontal"
+        android:indeterminateTint="@color/purple_500"
         android:translationZ="10dp"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -61,8 +62,9 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:clickable="true"
-        android:src="@drawable/ic_add"
+        android:src="@android:drawable/ic_input_add"
         android:translationZ="10dp"
+        app:backgroundTint="@color/purple_500"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

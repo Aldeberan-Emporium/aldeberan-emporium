@@ -21,6 +21,7 @@
 
     <string name="def_log_id">642954040818-6irbp09abs1ndjh611uif3sf1qrhdne7.apps.googleusercontent.com</string>
     <string name="admin_product_submit_btn">Submit</string>
+    <string name="admin_product_cancel_btn">Cancel</string>
     <string name="admin_product_imagebtn">Pick Image from Gallery</string>
     <string name="admin_product_update_btn">Update</string>
     <string name="admin_product_reset_btn">Reset</string>
