@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -60,6 +61,7 @@ public class WishlistActivity extends AppCompatActivity {
                    wishlist_text.setText("No item found in wishlist.");
                    wishlist_text.setVisibility(View.VISIBLE);
                }
+               Log.i("wish", String.valueOf(response));
            });
         }
         catch (Exception e){

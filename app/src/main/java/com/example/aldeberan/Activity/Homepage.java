@@ -69,21 +69,21 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         switch (item.getItemId()) {
             case R.id.botNavHome:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView2, new HomepageFragment()).addToBackStack(null).commit();
-                Toast.makeText(this, "Home Clicked", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Home Clicked", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.botNavProducts:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView2, new AllProductFragment()).addToBackStack(null).commit();
-                Toast.makeText(this, "Products Clicked", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Products Clicked", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.botNavCart:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView2, new CartFragment()).addToBackStack(null).commit();
-                Toast.makeText(this, "Cart Clicked", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Cart Clicked", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.botNavUser:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView2, new UserSettingFragment()).addToBackStack(null).commit();
                 //Intent intent = new Intent(Homepage.this, Login.class);
                 //startActivity(intent);
-                Toast.makeText(this, "User CLicked", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "User CLicked", Toast.LENGTH_SHORT).show();
                 return true;
         }
         return false;
@@ -129,19 +129,19 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
     public void setBotNavView(int selected) {
         switch (selected) {
             case 0:
-                Toast.makeText(this, "Home Clicked", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Home Clicked", Toast.LENGTH_SHORT).show();
                 bottomNavigationView.setSelectedItemId(R.id.botNavHome);
                 break;
             case 1:
-                Toast.makeText(this, "Products Clicked", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Products Clicked", Toast.LENGTH_SHORT).show();
                 bottomNavigationView.setSelectedItemId(R.id.botNavProducts);
                 break;
             case 2:
-                Toast.makeText(this, "Cart Clicked", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Cart Clicked", Toast.LENGTH_SHORT).show();
                 bottomNavigationView.setSelectedItemId(R.id.botNavCart);
                 break;
             case 3:
-                Toast.makeText(this, "User CLicked", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "User CLicked", Toast.LENGTH_SHORT).show();
                 bottomNavigationView.setSelectedItemId(R.id.botNavUser);
                 break;
         }
