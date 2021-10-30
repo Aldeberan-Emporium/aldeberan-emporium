@@ -39,6 +39,8 @@ public class OrderActivity extends AppCompatActivity implements Serializable {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        getSupportActionBar().setTitle("Order History");
+
         setContentView(R.layout.activity_order_history);
         recyclerView = findViewById(R.id.orderRecyclerView);
 
