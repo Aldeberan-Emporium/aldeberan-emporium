@@ -1,5 +1,7 @@
 package com.example.aldeberan.Activity;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -121,6 +123,11 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             super.onBackPressed();
         }
         setBotNavView(0);
+
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
 
         Toast.makeText(this, "Back Clicked", Toast.LENGTH_SHORT).show();
     }
