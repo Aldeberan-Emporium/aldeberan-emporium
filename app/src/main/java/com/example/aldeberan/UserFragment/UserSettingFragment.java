@@ -151,7 +151,7 @@ public class UserSettingFragment extends Fragment implements View.OnClickListene
             orderBtn.setVisibility(View.VISIBLE);
             adminBtn.setVisibility(View.GONE);
             if(temp_name.equals(us.getEmail())) {
-                Toast.makeText(getActivity(), "betul", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "betul", Toast.LENGTH_SHORT).show();
                 adminBtn.setVisibility(View.VISIBLE);
             }
         }

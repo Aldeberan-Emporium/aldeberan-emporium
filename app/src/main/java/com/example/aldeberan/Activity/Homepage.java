@@ -122,7 +122,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         }
         setBotNavView(0);
 
-        Toast.makeText(this, "Back Clicked", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Back Clicked", Toast.LENGTH_SHORT).show();
     }
 
 

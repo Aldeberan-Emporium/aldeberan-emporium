@@ -82,6 +82,15 @@ public class checkoutActivity extends AppCompatActivity {
         //System.out.println(preProcess);
         finalPrice = Double.parseDouble(preProcess);
 
+        if (os.getRecipient() == ""){
+            selectedAddressLbl.setText("Please select an address.");
+            confirmButton.setEnabled(false);
+        }
+        else{
+            updateSelectedAddress();
+            confirmButton.setEnabled(true);
+        }
+
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,13 +118,6 @@ public class checkoutActivity extends AppCompatActivity {
             Intent addIntent = new Intent(checkoutActivity.this, AddressSelection.class);
             startActivity(addIntent);
         });
-
-        if (os.getRecipient() == ""){
-            selectedAddressLbl.setText("Please select an address.");
-        }
-        else{
-            updateSelectedAddress();
-        }
 
         ConstructRecyclerView();
     }
