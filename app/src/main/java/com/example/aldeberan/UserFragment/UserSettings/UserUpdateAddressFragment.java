@@ -3,6 +3,7 @@ package com.example.aldeberan.UserFragment.UserSettings;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -79,7 +80,9 @@ public class UserUpdateAddressFragment extends Fragment implements View.OnClickL
 
         //On Submit
         onSubmitThrobber = userNewAddView.findViewById(R.id.onSubmitThrobberUpdateAdd);
+        onSubmitThrobber.setVisibility(View.GONE);
         onSubmitView = userNewAddView.findViewById(R.id.onSubmitViewUpdateAdd);
+        onSubmitView.setVisibility(View.GONE);
 
         //Declare all inputs
         addRecipient = userNewAddView.findViewById(R.id.addRecipientUpdateAdd);
@@ -175,10 +178,11 @@ public class UserUpdateAddressFragment extends Fragment implements View.OnClickL
                         showSnackbar(msg);
                         onSubmitAnim();
                     } else {
+                        onSubmitAnim();
                         submitBtn.setVisibility(View.GONE);
                         resetBtn.setVisibility(View.GONE);
-                        onSubmitThrobber.setVisibility(View.VISIBLE);
-                        onSubmitView.setVisibility(View.VISIBLE);
+                        //onSubmitThrobber.setVisibility(View.VISIBLE);
+                        //onSubmitView.setVisibility(View.VISIBLE);
                         addRecipient.setEnabled(false);
                         addContact.setEnabled(false);
                         addLine1.setEnabled(false);
@@ -194,19 +198,26 @@ public class UserUpdateAddressFragment extends Fragment implements View.OnClickL
 
                         AddressModel am = new AddressModel();
                         am.updateAddress(prevAddID, userID, recipient, contact, line1, line2, code, city, state, country, isDefault);
-                        onSubmitAnim();
 
-                        //Redirect back to load products fragment
-                        if (getActivity().getClass().getSimpleName().contains("AddressSelectionToBook")){
-                            getActivity().getSupportFragmentManager().popBackStack();
-                            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.addressFragmentView, new UserAddressFragment()).addToBackStack(null).commit();
-                            ((AddressSelectionToBook) getActivity()).setTitleBar("Address Book");
-                        }
-                        else{
-                            getActivity().getSupportFragmentManager().popBackStack();
-                            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.userAddressBookFragmentView, new UserAddressFragment()).addToBackStack(null).commit();
-                            ((UserAddressBookActivity) getActivity()).setTitleBar("Address Book");
-                        }
+                        Handler mHandler = new Handler();
+                        mHandler.postDelayed(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                //Code for test another activity pages.
+                                if (getActivity().getClass().getSimpleName().contains("AddressSelectionToBook")){
+                                    getActivity().getSupportFragmentManager().popBackStack();
+                                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.addressFragmentView, new UserAddressFragment()).addToBackStack(null).commit();
+                                    ((AddressSelectionToBook) getActivity()).setTitleBar("Address Book");
+                                }
+                                else{
+                                    getActivity().getSupportFragmentManager().popBackStack();
+                                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.userAddressBookFragmentView, new UserAddressFragment()).addToBackStack(null).commit();
+                                    ((UserAddressBookActivity) getActivity()).setTitleBar("Address Book");
+                                }
+                            }
+
+                        }, 3000L);
                     }
                 });
             } else {

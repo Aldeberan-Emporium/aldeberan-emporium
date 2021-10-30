@@ -1,11 +1,15 @@
 package com.example.aldeberan.UserFragment.UserSettings;
 
+import static android.view.View.GONE;
+
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +24,8 @@ import android.widget.ProgressBar;
 import android.widget.Switch;
 
 import com.example.aldeberan.Activity.AddressSelectionToBook;
+import com.example.aldeberan.Activity.Homepage;
+import com.example.aldeberan.Activity.MainActivity;
 import com.example.aldeberan.Activity.UserAddressBookActivity;
 import com.example.aldeberan.R;
 import com.example.aldeberan.models.AddressModel;
@@ -59,7 +65,9 @@ public class UserAddAddressFragment extends Fragment implements View.OnClickList
 
         //On Submit
         onSubmitThrobber = userNewAddView.findViewById(R.id.onSubmitThrobber2);
+        onSubmitThrobber.setVisibility(View.GONE);
         onSubmitView = userNewAddView.findViewById(R.id.onSubmitView2);
+        onSubmitView.setVisibility(View.GONE);
 
         //Declare all inputs
         addRecipient = userNewAddView.findViewById(R.id.addRecipient);
@@ -153,9 +161,10 @@ public class UserAddAddressFragment extends Fragment implements View.OnClickList
                     onSubmitAnim();
                 }
                 else{
-                    submitBtn.setVisibility(View.GONE);
-                    onSubmitThrobber.setVisibility(View.VISIBLE);
-                    onSubmitView.setVisibility(View.VISIBLE);
+                    onSubmitAnim();
+                    submitBtn.setVisibility(GONE);
+                    //onSubmitThrobber.setVisibility(View.VISIBLE);
+                    //onSubmitView.setVisibility(View.VISIBLE);
                     addRecipient.setEnabled(false);
                     addContact.setEnabled(false);
                     addLine1.setEnabled(false);
@@ -171,19 +180,30 @@ public class UserAddAddressFragment extends Fragment implements View.OnClickList
 
                     AddressModel am = new AddressModel();
                     am.addAddress(userID, recipient, contact, line1, line2, code, city, state, country, isDefault);
-                    onSubmitAnim();
+                    //onSubmitAnim();
 
+                    Handler mHandler = new Handler();
+                    mHandler.postDelayed(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            //Code for test another activity pages.
+                            if (getActivity().getClass().getSimpleName().contains("AddressSelectionToBook")){
+                                getActivity().getSupportFragmentManager().popBackStack();
+                                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.addressFragmentView, new UserAddressFragment()).addToBackStack(null).commit();
+                                ((AddressSelectionToBook) getActivity()).setTitleBar("Address Book");
+                            }
+                            else{
+                                getActivity().getSupportFragmentManager().popBackStack();
+                                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.userAddressBookFragmentView, new UserAddressFragment()).addToBackStack(null).commit();
+                                ((UserAddressBookActivity) getActivity()).setTitleBar("Address Book");
+                            }
+                        }
+
+                    }, 3000L);
                     //Redirect back to load products fragment
-                    if (getActivity().getClass().getSimpleName().contains("AddressSelectionToBook")){
-                        getActivity().getSupportFragmentManager().popBackStack();
-                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.addressFragmentView, new UserAddressFragment()).addToBackStack(null).commit();
-                        ((AddressSelectionToBook) getActivity()).setTitleBar("Address Book");
-                    }
-                    else{
-                        getActivity().getSupportFragmentManager().popBackStack();
-                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.userAddressBookFragmentView, new UserAddressFragment()).addToBackStack(null).commit();
-                        ((UserAddressBookActivity) getActivity()).setTitleBar("Address Book");
-                    }
+
+
                 }
             });
         }
@@ -224,8 +244,8 @@ public class UserAddAddressFragment extends Fragment implements View.OnClickList
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                onSubmitThrobber.setVisibility(View.GONE);
-                onSubmitView.setVisibility(View.GONE);
+                onSubmitThrobber.setVisibility(GONE);
+                onSubmitView.setVisibility(GONE);
             }
 
             @Override
@@ -249,8 +269,8 @@ public class UserAddAddressFragment extends Fragment implements View.OnClickList
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                onSubmitThrobber.setVisibility(View.GONE);
-                onSubmitView.setVisibility(View.GONE);
+                onSubmitThrobber.setVisibility(GONE);
+                onSubmitView.setVisibility(GONE);
             }
 
             @Override
