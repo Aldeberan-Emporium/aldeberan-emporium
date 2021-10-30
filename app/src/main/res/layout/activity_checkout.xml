@@ -68,22 +68,27 @@
 
             <com.facebook.shimmer.ShimmerFrameLayout
                 android:id="@+id/shimmerCheckoutBox"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:orientation="vertical"
                 shimmer:duration="5000">
 
-                <androidx.appcompat.widget.LinearLayoutCompat
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
                     <include layout="@layout/checkout_detail_c_row_shimmer" />
+
                     <include layout="@layout/checkout_detail_c_row_shimmer" />
+
                     <include layout="@layout/checkout_detail_c_row_shimmer" />
+
                     <include layout="@layout/checkout_detail_c_row_shimmer" />
+
                     <include layout="@layout/checkout_detail_c_row_shimmer" />
-                </androidx.appcompat.widget.LinearLayoutCompat>
+                </LinearLayout>
             </com.facebook.shimmer.ShimmerFrameLayout>
 
             <androidx.recyclerview.widget.RecyclerView
