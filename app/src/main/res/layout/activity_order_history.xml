@@ -31,7 +31,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    tools:visibility="gone">
 
                     <include layout="@layout/order_history_c_row_shimmer" />
 
@@ -47,7 +48,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/orderRecyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
