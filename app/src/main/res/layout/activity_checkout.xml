@@ -62,7 +62,7 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:text="Edit Items"
-                        android:textColor="@color/com_facebook_messenger_blue" />
+                        android:textColor="@color/background_gray" />
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -146,7 +146,7 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:text="Edit address"
-                        android:textColor="@color/com_facebook_messenger_blue" />
+                        android:textColor="@color/background_gray" />
 
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
