@@ -100,8 +100,8 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.Wishli
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     wm.removeFromWishlist(wishlistID);
-                                    //notifyItemRemoved(position);
-                                    notifyDataSetChanged();
+                                    notifyItemRemoved(position);
+                                    //notifyDataSetChanged();
                                     dialog.cancel();
                                 }
                             });
