@@ -20,7 +20,8 @@
             android:id="@+id/orderStatus"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:background="@color/blue_update">
+            android:background="@color/purple_200"
+            android:elevation="3dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -39,8 +40,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Your order is lost!"
-                    android:translationX="45dp"
-                    android:translationY="-10dp" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
                 <ImageView
                     android:id="@+id/orderShippingImg"
@@ -217,8 +217,7 @@
                     android:id="@+id/PayTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Payment Method"
-                    android:translationX="15dp" />
+                    android:text="Payment Method" />
 
                 <TextView
                     android:id="@+id/paymentMethod"
