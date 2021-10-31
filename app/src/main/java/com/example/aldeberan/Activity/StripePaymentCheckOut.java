@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,6 +16,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.bumptech.glide.Glide;
 import com.example.aldeberan.MapFragment.MapsActivity;
 import com.example.aldeberan.R;
 import com.example.aldeberan.models.CartModel;
@@ -63,6 +65,7 @@ public class StripePaymentCheckOut extends AppCompatActivity {
     private UserStorage us;
     private CartModel cm;
     ProgressBar progress;
+    ImageView replace;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,6 +74,8 @@ public class StripePaymentCheckOut extends AppCompatActivity {
 
         progress = findViewById(R.id.progress);
         progress.setVisibility(View.INVISIBLE);
+
+        replace = findViewById(R.id.imageView9);
 
         //getSupportActionBar().hide();
 
@@ -95,6 +100,7 @@ public class StripePaymentCheckOut extends AppCompatActivity {
         );
         startCheckout();
     }
+
     private void startCheckout() {
         // Create a PaymentIntent by calling the server's endpoint.
         MediaType mediaType = MediaType.get("application/json; charset=utf-8");
@@ -128,26 +134,27 @@ public class StripePaymentCheckOut extends AppCompatActivity {
             }
         });
     }
-    private void displayAlert(@NonNull String title,
-                              @Nullable String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this)
-                .setTitle(title)
-                .setMessage(message);
+
+    private void displayAlert(@NonNull String title, @Nullable String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this).setTitle(title).setMessage(message);
         builder.setPositiveButton("Ok", null);
         builder.create().show();
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // Handle the result of stripe.confirmPayment
         stripe.onPaymentResult(requestCode, data, new PaymentResultCallback(this));
     }
+
     private void onPaymentSuccess(@NonNull final Response response) throws IOException {
         Gson gson = new Gson();
         Type type = new TypeToken<Map<String, String>>(){}.getType();
         Map<String, String> responseMap = gson.fromJson(Objects.requireNonNull(response.body()).string(), type);
         paymentIntentClientSecret = responseMap.get("clientSecret");
     }
+
     private static final class PayCallback implements Callback {
         @NonNull private final WeakReference<StripePaymentCheckOut> activityRef;
         PayCallback(@NonNull StripePaymentCheckOut activity) {
@@ -178,12 +185,12 @@ public class StripePaymentCheckOut extends AppCompatActivity {
             }
         }
     }
-    private final class PaymentResultCallback
-            implements ApiResultCallback<PaymentIntentResult> {
+    private final class PaymentResultCallback implements ApiResultCallback<PaymentIntentResult> {
         @NonNull private final WeakReference<StripePaymentCheckOut> activityRef;
         PaymentResultCallback(@NonNull StripePaymentCheckOut activity) {
             activityRef = new WeakReference<>(activity);
         }
+
         @Override
         public void onSuccess(@NonNull PaymentIntentResult result) {
             progress.setVisibility(View.GONE);
@@ -215,14 +222,14 @@ public class StripePaymentCheckOut extends AppCompatActivity {
                 toMap();
             } else if (status == PaymentIntent.Status.RequiresPaymentMethod) {
                 // Payment failed – allow retrying using a different payment method
-                activity.displayAlert(
-                        "Payment failed",
-                        Objects.requireNonNull(paymentIntent.getLastPaymentError()).getMessage()
-                );
+                activity.displayAlert("Payment failed", Objects.requireNonNull(paymentIntent.getLastPaymentError()).getMessage());
             }
         }
+
         @Override
         public void onError(@NonNull Exception e) {
+            progress.setVisibility(View.GONE);
+            Glide.with(StripePaymentCheckOut.this).load(R.raw.this_is_fine).override(800, 800).into(replace);
             final StripePaymentCheckOut activity = activityRef.get();
             if (activity == null) {
                 return;
