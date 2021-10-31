@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.bumptech.glide.Glide;
 import com.example.aldeberan.Activity.Homepage;
 import com.example.aldeberan.Activity.checkoutActivity;
 import com.example.aldeberan.Adapter.CartAdapter;
@@ -45,6 +47,7 @@ public class CartFragment extends Fragment {
     private OrderStorage os;
     SwipeRefreshLayout pullToRefresh;
     ShimmerFrameLayout shimmerCartLayout;
+    private ImageView fine;
 
     @Nullable
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -56,6 +59,7 @@ public class CartFragment extends Fragment {
         checkoutBtn = myCartFragmentView.findViewById(R.id.checkoutButton);
         totalPrice = myCartFragmentView.findViewById(R.id.totalPrice);
         textLabel = myCartFragmentView.findViewById(R.id.textLabel);
+        fine = myCartFragmentView.findViewById(R.id.this_is_fine);
 
         shimmerCartLayout = myCartFragmentView.findViewById(R.id.shimmerCartBox);
         shimmerCartLayout.startShimmerAnimation();
@@ -94,7 +98,11 @@ public class CartFragment extends Fragment {
             if(cartList.size() == 0){
                 checkoutBtn.setVisibility(View.GONE);
                 totalPrice.setVisibility(View.GONE);
-                textLabel.setText("Your cart is empty -.-");
+                fine.setVisibility(View.VISIBLE);
+                shimmerCartLayout.stopShimmerAnimation();
+                shimmerCartLayout.setVisibility(View.GONE);
+                Glide.with(this).load(R.raw.this_is_fine).into(fine);
+                textLabel.setText("No item(s) in cart at the moment");
             }
             else{
                 PutDataIntoRecyclerView(cartList);
