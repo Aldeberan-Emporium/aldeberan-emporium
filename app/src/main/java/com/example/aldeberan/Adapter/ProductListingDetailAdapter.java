@@ -100,7 +100,7 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
         holder.productCardBinding.cusExtraLbl.setText(String.valueOf(mData.get(position).getProdSold()));
         Glide.with(mContext).load(mData.get(position).getProdImg()).override(450, 450).into(holder.productCardBinding.cusProdImgView);
 
-        Glide.with(mContext).load(R.raw.top_seller_fire).override(100,100).into(holder.productCardBinding.fireImg);
+        Glide.with(mContext).load(R.raw.top_seller_fire).override(150,150).into(holder.productCardBinding.fireImg);
 
         holder.productCardBinding.buttonAddCart.setOnClickListener(view -> {
             mCommunicator.respond(String.valueOf(mData.get(position).getProdName()),
