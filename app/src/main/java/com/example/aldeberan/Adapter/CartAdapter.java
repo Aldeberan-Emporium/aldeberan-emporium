@@ -78,14 +78,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             }
         }
 
-        /*
-        List<Product> result = productList.stream()
-                .filter(a -> Objects.equals(a.getProdName(), prodName))
-                .collect(Collectors.toList());
-        int currentStock = result.get(0).getProdStock();
-        //holder.cartDetailCRowBinding.cartNumButton.setRange(0, currentStock);
-         */
-
         holder.cartDetailCRowBinding.cartNumButton.setNumber(String.valueOf(currentQuantity));
         holder.cartDetailCRowBinding.cartNumButton.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
             @Override
@@ -109,17 +101,18 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                 String prodImg = String.valueOf(mData.get(position).getProdImg());
 
                 if(itemQuantity == 0){
-                    builder.setPositiveButton(
+                    builder.setNegativeButton(
                             "Yes",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     cm.deleteQuoteItem(quoteItemID);
+                                    mData.remove(position);
                                     notifyItemRemoved(position);
                                     dialog.cancel();
                                 }
                             });
 
-                    builder.setNegativeButton(
+                    builder.setPositiveButton(
                             "No",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {

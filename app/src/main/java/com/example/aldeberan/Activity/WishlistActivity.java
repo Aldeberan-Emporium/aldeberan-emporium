@@ -63,6 +63,8 @@ public class WishlistActivity extends AppCompatActivity {
                if(wishlist.isEmpty()){
                    wishlist_text.setText("No item found in wishlist.");
                    wishlist_text.setVisibility(View.VISIBLE);
+                   shimmerWishlistLayout.stopShimmerAnimation();
+                   shimmerWishlistLayout.setVisibility(View.GONE);
                }
                else{
                    PutDataIntoRecyclerView(wishlist);

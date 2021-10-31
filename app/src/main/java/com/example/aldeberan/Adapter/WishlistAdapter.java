@@ -9,6 +9,7 @@ import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -103,12 +104,15 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.Wishli
                                 public void onClick(DialogInterface dialog, int id) {
 
                                     wm.removeFromWishlist(wishlistID);
+                                    wData.remove(position);
                                     notifyItemRemoved(position);
+                                    /*
                                     Intent intent = ((WishlistActivity) wContext).getIntent();
                                     ((WishlistActivity) wContext).finish();
                                     ((WishlistActivity) wContext).overridePendingTransition(0, 0);
                                     wContext.startActivity(intent);
                                     ((WishlistActivity) wContext).overridePendingTransition(0, 0);
+                                    */
                                     dialog.cancel();
                                 }
                             });
