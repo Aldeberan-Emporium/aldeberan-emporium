@@ -20,34 +20,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:translationZ="10dp"
-            app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+            app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@id/linearLayout2"
-            app:layout_constraintTop_toTopOf="@+id/linearLayout2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0">
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/fireImg"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:cardCornerRadius="5dp"
-                app:cardElevation="0dp"
-                app:cardMaxElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/imageView5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:tint="@color/purple_700"
-                    app:srcCompat="@drawable/ic_fire_solid" />
-
-            </androidx.cardview.widget.CardView>
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_fire_solid"
+                android:scaleType="fitXY"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -56,6 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
             android:elevation="5dp"
             android:orientation="vertical"

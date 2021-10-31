@@ -93,7 +93,7 @@ public class ProductListingDetailVerticalAdapter extends RecyclerView.Adapter<Pr
         holder.productCardBinding.cusProdPriceLbl.setText("RM " + String.format("%.2f", mData.get(position).getProdPrice()));
         holder.productCardBinding.cusExtraLbl.setText(String.valueOf(mData.get(position).getProdSold()));
         Glide.with(mContext).load(mData.get(position).getProdImg()).override(450, 450).into(holder.productCardBinding.cusProdImgView);
-
+        
         holder.productCardBinding.topSellerLabel.setVisibility(View.GONE);
 
         holder.productCardBinding.buttonAddCart.setOnClickListener(view -> {

@@ -2,6 +2,7 @@ package com.example.aldeberan.Adapter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.drawable.AnimationDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,10 +10,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.example.aldeberan.Activity.Homepage;
 import com.example.aldeberan.R;
@@ -96,6 +99,8 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
         holder.productCardBinding.cusProdPriceLbl.setText("RM " + String.format("%.2f", mData.get(position).getProdPrice()));
         holder.productCardBinding.cusExtraLbl.setText(String.valueOf(mData.get(position).getProdSold()));
         Glide.with(mContext).load(mData.get(position).getProdImg()).override(450, 450).into(holder.productCardBinding.cusProdImgView);
+
+        Glide.with(mContext).load(R.raw.top_seller_fire).override(150,150).into(holder.productCardBinding.fireImg);
 
         holder.productCardBinding.buttonAddCart.setOnClickListener(view -> {
             mCommunicator.respond(String.valueOf(mData.get(position).getProdName()),
