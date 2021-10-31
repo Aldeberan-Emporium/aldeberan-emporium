@@ -22,8 +22,13 @@
         android:theme="@style/Theme.Aldeberan"
         tools:replace="android:theme">
         <activity
+            android:name=".Activity.UserInfoActivity"
+            android:parentActivityName=".Activity.Homepage"
+            android:exported="true" />
+        <activity
             android:name=".Activity.UserAddressBookActivity"
-            android:exported="true"/>
+            android:parentActivityName=".Activity.Homepage"
+            android:exported="true" />
         <activity
             android:name=".Activity.AddressAddTempActivity"
             android:exported="true"
@@ -76,6 +81,7 @@
         <activity
             android:name=".Activity.Homepage"
             android:configChanges="orientation|keyboardHidden"
+            android:launchMode="singleTop"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity

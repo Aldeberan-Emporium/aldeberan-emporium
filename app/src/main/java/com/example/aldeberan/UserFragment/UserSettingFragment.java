@@ -17,6 +17,7 @@ import com.example.aldeberan.Activity.Homepage;
 import com.example.aldeberan.Activity.Login;
 import com.example.aldeberan.Activity.OrderActivity;
 import com.example.aldeberan.Activity.UserAddressBookActivity;
+import com.example.aldeberan.Activity.UserInfoActivity;
 import com.example.aldeberan.Activity.WishlistActivity;
 import com.example.aldeberan.AdminFragment.AdminPanelLoadProductFragment;
 import com.example.aldeberan.HomepageFragment;
@@ -90,11 +91,10 @@ public class UserSettingFragment extends Fragment implements View.OnClickListene
                 startActivity(addBookIntent);
                 break;
             case R.id.infoBtn:
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView2, new UserInfoFragment()).addToBackStack(null).commit();
-                //((home_product) getActivity()).setActionBarTitle("User Info");
+                Intent userInfoIntent = new Intent(getActivity(), UserInfoActivity.class);
+                startActivity(userInfoIntent);
                 break;
             case R.id.wishlistBtn:
-                //Toast.makeText(getActivity(), "lmao", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getActivity(), WishlistActivity.class);
                 startActivity(intent);
                 break;
@@ -124,7 +124,7 @@ public class UserSettingFragment extends Fragment implements View.OnClickListene
             case R.id.orderBtn:
                 Intent hist = new Intent(getActivity(), OrderActivity.class);
                 startActivity(hist);
-
+                break;
         }
     }
 

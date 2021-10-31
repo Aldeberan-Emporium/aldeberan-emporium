@@ -45,9 +45,9 @@ public class UserInfoFragment extends Fragment {
         TextView userEmail = userInfoView.findViewById(R.id.userEmail);
         TextView userID = userInfoView.findViewById(R.id.userID);
         Button backBtn = userInfoView.findViewById(R.id.backInfoBtn);
-        backBtn.setOnClickListener(view -> getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, new UserSettingFragment())
-                .commit());
+        backBtn.setOnClickListener(view -> {
+            getActivity().finish();
+        });
 
         UserStorage us = new UserStorage(getActivity());
 

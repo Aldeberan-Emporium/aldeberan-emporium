@@ -24,8 +24,10 @@
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/activity_admin_panel_update_product.xml" value="0.22" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/activity_checkout.xml" value="0.4666666666666667" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/activity_homepage.xml" value="0.2" />
+        <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/activity_order_history.xml" value="0.17074275362318841" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/activity_search_product.xml" value="0.33" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/activity_user_address_book.xml" value="0.20416666666666666" />
+        <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/activity_user_info.xml" value="0.1" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/activity_wishlist.xml" value="0.22" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/address_selection_row.xml" value="0.33" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/admin_panel_product_row.xml" value="0.5" />
@@ -36,6 +38,7 @@
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/fragment_homepage.xml" value="0.2" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/fragment_user_add_address.xml" value="0.33" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/fragment_user_address_book.xml" value="0.16340141725719048" />
+        <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/fragment_user_info.xml" value="0.33" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/fragment_user_update_address.xml" value="0.33" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/product_card.xml" value="1.25" />
         <entry key="..\:/GitHub/project-aldeberan/app/src/main/res/layout/product_card_shimmer.xml" value="0.33" />
