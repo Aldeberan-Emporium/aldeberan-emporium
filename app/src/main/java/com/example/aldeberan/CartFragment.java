@@ -108,10 +108,11 @@ public class CartFragment extends Fragment {
         });
     }
 
-    CartAdapter.FragmentCommunication updateCart = () ->{
+    CartAdapter.FragmentCommunication updateCart = ()->{
 
         ((Homepage) getActivity()).setCartBtnBadge();
         ((Homepage) getActivity()).displayItemAddedSnackbar();
+        calculateTotalPrice();
     };
 
     private void PutDataIntoRecyclerView(List<Cart> cartList) throws JSONException {
