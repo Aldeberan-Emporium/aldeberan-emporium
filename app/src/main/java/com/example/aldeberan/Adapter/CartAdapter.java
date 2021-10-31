@@ -110,6 +110,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                                     cm.deleteQuoteItem(quoteItemID);
                                     mData.remove(position);
                                     notifyItemRemoved(position);
+                                    mCommunicator.respond();
                                     dialog.cancel();
                                 }
                             });
@@ -129,8 +130,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                 holder.cartDetailCRowBinding.cartNumButton.setNumber(String.valueOf(itemQuantity));
                 cm.updateQuoteItem(quoteItemID, quoteID, prodName, prodSKU, itemQuantity, prodPrice, prodImg);
                 mCommunicator.respond();
-                //cm.updateQuoteRecal(quoteID);
-
             }
         });
     }

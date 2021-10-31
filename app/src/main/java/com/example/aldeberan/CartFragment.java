@@ -73,6 +73,7 @@ public class CartFragment extends Fragment {
         });
 
         ConstructRecyclerView();
+        calculateTotalPrice();
         ((Homepage) getActivity()).setCartBtnBadge();
 
         pullToRefresh = myCartFragmentView.findViewById(R.id.cartPullToRefresh);
@@ -95,7 +96,7 @@ public class CartFragment extends Fragment {
         int quoteID = us.getQuoteID();
         cm.readQuoteItemByQuote(quoteID, response -> {
             cartList = response;
-            if(cartList.size() == 0){
+            if(cartList.isEmpty()){
                 checkoutBtn.setVisibility(View.GONE);
                 totalPrice.setVisibility(View.GONE);
                 fine.setVisibility(View.VISIBLE);
@@ -117,6 +118,7 @@ public class CartFragment extends Fragment {
         ((Homepage) getActivity()).setCartBtnBadge();
         ((Homepage) getActivity()).displayItemRemovedSnackbar();
         calculateTotalPrice();
+        checkSize();
     };
 
     private void PutDataIntoRecyclerView(List<Cart> cartList) throws JSONException {
@@ -135,6 +137,21 @@ public class CartFragment extends Fragment {
                 totalPriceStr = String.valueOf(response.get(0).getTotal());
                 totalPrice.setText("RM " + totalPriceStr);
                 os.saveTotal(response.get(0).getTotal());
+            }
+        });
+    }
+
+    public void checkSize(){
+        CartModel cm = new CartModel();
+        us = new UserStorage(getActivity());
+        int quoteID = us.getQuoteID();
+        cm.readQuoteItemByQuote(quoteID, response -> {
+            if(response.isEmpty()){
+                checkoutBtn.setVisibility(View.GONE);
+                totalPrice.setVisibility(View.GONE);
+                fine.setVisibility(View.VISIBLE);
+                Glide.with(this).load(R.raw.empty_cart).override(800, 800).into(fine);
+                textLabel.setText("No item(s) in cart at the moment");
             }
         });
     }
