@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.aldeberan.Activity.AddressSelectionToBook;
+import com.example.aldeberan.Activity.AdminPanelActivity;
 import com.example.aldeberan.Adapter.ProductAdapter;
 import com.example.aldeberan.R;
 import com.example.aldeberan.models.ProductModel;
@@ -87,20 +89,15 @@ public class AdminPanelLoadProductFragment extends Fragment {
     private void ConstructRecyclerView(){
         ProductModel pm = new ProductModel();
         onLoadThrobber();
-        try {
-            pm.readProductAll((response) -> {
-                productList = response;
-                if (productList.isEmpty()){
-                    noProdLbl.setVisibility(View.VISIBLE);
-                }
-                else{
-                    noProdLbl.setVisibility(View.GONE);
-                    PutDataIntoRecyclerView(response);
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        pm.readProductAll((response) -> {
+            productList = response;
+            if (productList.isEmpty()) {
+                noProdLbl.setVisibility(View.VISIBLE);
+            } else {
+                noProdLbl.setVisibility(View.GONE);
+                PutDataIntoRecyclerView(response);
+            }
+        });
     }
 
     ProductAdapter.FragmentCommunication communication= (prodName, prodID, prodSKU, prodImg, prodStock, prodAvail, prodPrice) -> {
@@ -117,9 +114,10 @@ public class AdminPanelLoadProductFragment extends Fragment {
 
         //Redirect to update product fragment
         getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainerView2, updateProductFragment)
+                .replace(R.id.adminFragmentView, updateProductFragment)
                 .addToBackStack(null)
                 .commit();
+        ((AdminPanelActivity) getActivity()).setTitleBar("Update Product");
     };
 
     private void PutDataIntoRecyclerView(List<Product> productList){

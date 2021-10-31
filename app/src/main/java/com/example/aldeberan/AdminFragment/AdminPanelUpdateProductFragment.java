@@ -41,6 +41,7 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 
+import com.example.aldeberan.Activity.AdminPanelActivity;
 import com.example.aldeberan.R;
 import com.example.aldeberan.models.ProductModel;
 import com.google.firebase.storage.FirebaseStorage;
@@ -83,7 +84,7 @@ public class AdminPanelUpdateProductFragment extends Fragment implements View.On
         prodNameLbl = myFragmentView.findViewById(R.id.prodName);
         prodSKULbl = myFragmentView.findViewById(R.id.prodSKU);
         prodStockLbl = myFragmentView.findViewById(R.id.prodStock);
-        prodPriceLbl = myFragmentView.findViewById(R.id.addRecipient);
+        prodPriceLbl = myFragmentView.findViewById(R.id.prodPrice);
         prodAvailSwitch = myFragmentView.findViewById(R.id.prodAvail);
         prodImgView = myFragmentView.findViewById(R.id.prodImg);
 
@@ -163,7 +164,7 @@ public class AdminPanelUpdateProductFragment extends Fragment implements View.On
         });
 
         //Limit product price to 7,2 decimal places (max 99999.99)
-        EditText prodPrice = myFragmentView.findViewById(R.id.addRecipient);
+        EditText prodPrice = myFragmentView.findViewById(R.id.prodPrice);
         prodPrice.setFilters(new InputFilter[] {filter});
 
         prodPrice.setOnFocusChangeListener((v, hasFocus) -> {
@@ -280,7 +281,7 @@ public class AdminPanelUpdateProductFragment extends Fragment implements View.On
                         //Redirect back to load products fragment
                         AdminPanelLoadProductFragment productFragment= new AdminPanelLoadProductFragment();
                         getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragmentContainerView2, productFragment)
+                                .replace(R.id.adminFragmentView, productFragment)
                                 .addToBackStack(null)
                                 .commit();
                     }

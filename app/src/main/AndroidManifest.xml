@@ -22,13 +22,16 @@
         android:theme="@style/Theme.Aldeberan"
         tools:replace="android:theme">
         <activity
-            android:name=".Activity.UserInfoActivity"
-            android:parentActivityName=".Activity.Homepage"
+            android:name=".Activity.AdminPanelActivity"
             android:exported="true" />
         <activity
+            android:name=".Activity.UserInfoActivity"
+            android:exported="true"
+            android:parentActivityName=".Activity.Homepage" />
+        <activity
             android:name=".Activity.UserAddressBookActivity"
-            android:parentActivityName=".Activity.Homepage"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".Activity.Homepage" />
         <activity
             android:name=".Activity.AddressAddTempActivity"
             android:exported="true"
@@ -81,8 +84,8 @@
         <activity
             android:name=".Activity.Homepage"
             android:configChanges="orientation|keyboardHidden"
-            android:launchMode="singleTop"
             android:exported="true"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.StripePaymentCheckOut"

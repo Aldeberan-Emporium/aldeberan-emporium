@@ -105,12 +105,9 @@ public class ProductModel extends DatabaseModel {
                     if (i < 4) { product.setIsTopSeller(true); }
                     else {product.setIsTopSeller(false);}
                     productList.add(product);
-
-                    productList.add(product);
-
                 }
             }catch (Exception e){}
-            Log.i("PL", String.valueOf(productList));
+            Log.i("ALLPROD", String.valueOf(productList));
             callback.onResponse(productList);
         });
     }

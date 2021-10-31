@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.aldeberan.Activity.AdminPanelActivity;
 import com.example.aldeberan.Activity.Homepage;
 import com.example.aldeberan.Activity.Login;
 import com.example.aldeberan.Activity.OrderActivity;
@@ -99,7 +100,7 @@ public class UserSettingFragment extends Fragment implements View.OnClickListene
                 startActivity(intent);
                 break;
             case R.id.loginBtn:
-                Intent loginIntent = new Intent(getActivity(), Login.class); //-->this line
+                Intent loginIntent = new Intent(getActivity(), Login.class);
                 startActivity(loginIntent);
 
                 HomepageFragment homepageFragment= new HomepageFragment();
@@ -112,7 +113,8 @@ public class UserSettingFragment extends Fragment implements View.OnClickListene
                 switchSession();
                 break;
             case R.id.adminBtn:
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView2, new AdminPanelLoadProductFragment()).addToBackStack(null).commit();
+                Intent adminIntent = new Intent(getActivity(), AdminPanelActivity.class);
+                startActivity(adminIntent);
                 break;
             case R.id.logoutBtn:
                 //mGoogleSignInClient.signOut();

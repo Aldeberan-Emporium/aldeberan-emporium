@@ -3,33 +3,33 @@ package com.example.aldeberan.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.example.aldeberan.AdminFragment.AdminPanelAddProductFragment;
+import com.example.aldeberan.AdminFragment.AdminPanelLoadProductFragment;
 import com.example.aldeberan.R;
 import com.example.aldeberan.UserFragment.UserSettings.UserAddAddressFragment;
 import com.example.aldeberan.UserFragment.UserSettings.UserAddressFragment;
-import com.example.aldeberan.UserFragment.UserSettings.UserUpdateAddressFragment;
 
-public class AddressSelectionToBook extends AppCompatActivity {
+public class AdminPanelActivity extends AppCompatActivity {
 
-    MenuItem menuItem;
+    public MenuItem menuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_address_selection_to_book);
+        setContentView(R.layout.activity_admin_panel);
 
-        getSupportActionBar().setTitle("Address Book");
+        getSupportActionBar().setTitle("Admin Panel");
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.user_address, menu);
+        menuInflater.inflate(R.menu.admin_add, menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -38,14 +38,13 @@ public class AddressSelectionToBook extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         menuItem = item;
         switch (item.getItemId()) {
-            case R.id.addAddressBtn:
-                UserAddAddressFragment newAddressFragment = new UserAddAddressFragment();
-                //Redirect to update product fragment
+            case R.id.addProdBtn:
+                AdminPanelAddProductFragment adminPanelAddProductFragment = new AdminPanelAddProductFragment();
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.addressFragmentView, newAddressFragment)
+                        .replace(R.id.adminFragmentView, adminPanelAddProductFragment)
                         .addToBackStack(null)
                         .commit();
-                setTitleBar("Add New Address");
+                setTitleBar("Add New Product");
                 menuItem.setVisible(false);
                 return true;
 
@@ -69,20 +68,15 @@ public class AddressSelectionToBook extends AppCompatActivity {
         if (count == 0) {
             super.onBackPressed();
             finish();
-            Intent addressIntent = new Intent(AddressSelectionToBook.this, AddressSelection.class);
-            startActivity(addressIntent);
         }
         else {
-            final Fragment fragmentInFrame = getSupportFragmentManager().findFragmentById(R.id.addressFragmentView);
-            if (fragmentInFrame instanceof UserAddressFragment){
+            final Fragment fragmentInFrame = getSupportFragmentManager().findFragmentById(R.id.adminFragmentView);
+            if (fragmentInFrame instanceof AdminPanelLoadProductFragment){
                 super.onBackPressed();
                 finish();
-                Intent addressIntent = new Intent(AddressSelectionToBook.this, AddressSelection.class);
-                startActivity(addressIntent);
             }
             else{
-                setTitleBar("Address Book");
-                menuItem.setVisible(true);
+                setTitleBar("Admin Panel");
                 getSupportFragmentManager().popBackStack();
             }
         }

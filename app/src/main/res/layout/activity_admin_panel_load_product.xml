@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:translationZ="10dp"
-    tools:context=".AdminFragment.AdminFunction.AdminPanel_LoadProduct">
+    tools:context=".Activity.AdminPanelActivity">
 
     <ProgressBar
         android:id="@+id/onLoadThrobber"
