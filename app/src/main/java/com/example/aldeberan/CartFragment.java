@@ -101,7 +101,7 @@ public class CartFragment extends Fragment {
                 fine.setVisibility(View.VISIBLE);
                 shimmerCartLayout.stopShimmerAnimation();
                 shimmerCartLayout.setVisibility(View.GONE);
-                Glide.with(this).load(R.raw.this_is_fine).into(fine);
+                Glide.with(this).load(R.raw.empty_cart).override(800, 800).into(fine);
                 textLabel.setText("No item(s) in cart at the moment");
             }
             else{

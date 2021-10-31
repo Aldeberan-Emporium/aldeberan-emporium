@@ -66,6 +66,7 @@
         <entry key="..\:/Users/Kelvi/Documents/Final Sem/Mobile/project-aldeberan/app/src/main/res/layout/activity_login.xml" value="0.3759057971014493" />
         <entry key="..\:/Users/Kelvi/Documents/Final Sem/Mobile/project-aldeberan/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/Kelvi/Documents/Final Sem/Mobile/project-aldeberan/app/src/main/res/layout/activity_product_listing_detail_page.xml" value="0.3808876811594203" />
+        <entry key="..\:/Users/Kelvi/Documents/Final Sem/Mobile/project-aldeberan/app/src/main/res/layout/activity_search_product.xml" value="0.3736413043478261" />
         <entry key="..\:/Users/Kelvi/Documents/Final Sem/Mobile/project-aldeberan/app/src/main/res/layout/activity_stripe_payment.xml" value="0.38697916666666665" />
         <entry key="..\:/Users/Kelvi/Documents/Final Sem/Mobile/project-aldeberan/app/src/main/res/layout/activity_stripe_test.xml" value="0.38697916666666665" />
         <entry key="..\:/Users/Kelvi/Documents/Final Sem/Mobile/project-aldeberan/app/src/main/res/layout/app_bar_product_listing_detail_page.xml" value="0.3808876811594203" />
@@ -92,10 +93,7 @@
         <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/activity_home_product.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/activity_homepage.xml" value="0.1" />
         <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/activity_main.xml" value="0.13020833333333334" />
-        <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/activity_order_history.xml" value="0.2" />
-        <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/activity_order_history_detail.xml" value="0.11407103825136612" />
         <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/activity_product_listing_detail_page.xml" value="0.24320652173913043" />
-        <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/activity_wishlist.xml" value="0.1" />
         <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/admin_panel_product_row.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/app_bar_product_listing_detail_page.xml" value="0.2" />
         <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/cart.xml" value="0.152" />
@@ -115,7 +113,6 @@
         <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/nav_header.xml" value="0.16983695652173914" />
         <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/nav_header_product_listing_detail_page.xml" value="0.24320652173913043" />
         <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/order_detail_c_row.xml" value="0.12360688956433637" />
-        <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/order_history_c_row.xml" value="0.11407103825136612" />
         <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/product_card.xml" value="0.264" />
         <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/product_detail_c_row.xml" value="0.264" />
         <entry key="..\:/Users/User/Documents/GitHub/project-aldeberan/app/src/main/res/layout/wishlist_row.xml" value="0.2" />

@@ -16,7 +16,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.aldeberan.Adapter.ProductListingDetailVerticalAdapter;
 import com.example.aldeberan.Adapter.SearchProductAdapter;
 import com.example.aldeberan.R;
@@ -40,6 +43,7 @@ public class SearchProduct extends AppCompatActivity {
     RecyclerView searchProdBox;
     SearchProductAdapter adapter;
     UserStorage us;
+    ImageView meme;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,7 @@ public class SearchProduct extends AppCompatActivity {
         us = new UserStorage(this);
 
         searchProdBox = findViewById(R.id.searchProdBox);
+        meme = findViewById(R.id.imageView5);
         productList = new ArrayList<>();
         searchProductList = new ArrayList<>();
 
@@ -145,8 +150,13 @@ public class SearchProduct extends AppCompatActivity {
 
         if (!TextUtils.isEmpty(input)){
             for (Product item : productList) {
-                if (item.getProdName().toLowerCase().contains(input.toLowerCase())){
+                if (item.getProdName().contains(input.toUpperCase())){
+                    meme.setVisibility(View.GONE);
                     filteredProductList.add(item);
+                }else{
+                    meme.setVisibility(View.VISIBLE);
+                    //Toast.makeText(this, "Quack", Toast.LENGTH_SHORT).show();
+                    Glide.with(this).load(R.raw.quack).into(meme);
                 }
             }
         }
