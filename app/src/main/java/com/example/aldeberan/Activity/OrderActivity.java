@@ -1,33 +1,22 @@
 package com.example.aldeberan.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.content.Intent;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
-import com.example.aldeberan.Adapter.CartAdapter;
 import com.example.aldeberan.Adapter.OrderAdapter;
 import com.example.aldeberan.R;
-import com.example.aldeberan.models.CartModel;
 import com.example.aldeberan.models.OrderModel;
-import com.example.aldeberan.models.ProductModel;
 import com.example.aldeberan.storage.UserStorage;
-import com.example.aldeberan.structures.Cart;
 import com.example.aldeberan.structures.Order;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
-import org.json.JSONException;
-
 import java.io.Serializable;
-import java.sql.SQLOutput;
-import java.util.ArrayList;
 import java.util.List;
 
 public class OrderActivity extends AppCompatActivity implements Serializable {
@@ -37,29 +26,28 @@ public class OrderActivity extends AppCompatActivity implements Serializable {
     private RecyclerView recyclerView;
     private SwipeRefreshLayout pullToRefresh;
 
+    TextView emptyText;
     ShimmerFrameLayout shimmerOrderHistoryLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         getSupportActionBar().setTitle("Order History");
-
         setContentView(R.layout.activity_order_history);
-        recyclerView = findViewById(R.id.orderRecyclerView);
 
+        recyclerView = findViewById(R.id.orderRecyclerView);
+        emptyText = findViewById(R.id.orderEmptyText);
+        pullToRefresh = findViewById(R.id.pullToRefresh);
         shimmerOrderHistoryLayout = findViewById(R.id.shimmerOrderHistoryBox);
         shimmerOrderHistoryLayout.startShimmerAnimation();
 
         ConstructRecyclerView();
-
-        pullToRefresh = findViewById(R.id.pullToRefresh);
-        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
+        pullToRefresh.setOnRefreshListener(() -> {
+            if(orderAdapter != null){
                 ConstructRecyclerView();
-                pullToRefresh.setRefreshing(false);
+                emptyText.setVisibility(View.GONE);
             }
+            pullToRefresh.setRefreshing(false);
         });
     }
 
@@ -68,7 +56,15 @@ public class OrderActivity extends AppCompatActivity implements Serializable {
         us = new UserStorage(this);
         String userID = us.getID();
         om.readOrderByUser(userID, response -> {
-            PutDataIntoRecyclerView(response);
+            if(response.isEmpty()){
+                emptyText.setText("No order found in history.");
+               emptyText.setVisibility(View.VISIBLE);
+                shimmerOrderHistoryLayout.stopShimmerAnimation();
+                shimmerOrderHistoryLayout.setVisibility(View.GONE);
+            }
+            else{
+                PutDataIntoRecyclerView(response);
+            }
         });
     }
 
@@ -84,8 +80,6 @@ public class OrderActivity extends AppCompatActivity implements Serializable {
     public void onBackPressed() {
         super.onBackPressed();
         finish();
-        //Intent mainint = new Intent(this, Homepage.class);
-        //startActivity(mainint);
     }
 }
 
