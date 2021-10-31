@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -44,6 +45,9 @@ public class SearchProduct extends AppCompatActivity {
     SearchProductAdapter adapter;
     UserStorage us;
     ImageView meme;
+    TextView memeText;
+    ImageView emptyMeme;
+    TextView emptyMemeText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +59,10 @@ public class SearchProduct extends AppCompatActivity {
         us = new UserStorage(this);
 
         searchProdBox = findViewById(R.id.searchProdBox);
-        meme = findViewById(R.id.imageView5);
+        meme = findViewById(R.id.meme);
+        memeText = findViewById(R.id.memeText);
+        emptyMeme = findViewById(R.id.pleaseTypeMeme);
+        emptyMemeText = findViewById(R.id.pleaseTypeMemeText);
         productList = new ArrayList<>();
         searchProductList = new ArrayList<>();
 
@@ -63,6 +70,11 @@ public class SearchProduct extends AppCompatActivity {
         onBackBtn.setOnClickListener(view -> {
             onBackPressed();
         });
+
+        emptyMeme.setVisibility(View.VISIBLE);
+        emptyMemeText.setVisibility(View.VISIBLE);
+        searchProdBox.setVisibility(View.GONE);
+        Glide.with(this).load(R.raw.please_type_something).override(400,400).into(emptyMeme);
 
         searchBar = findViewById(R.id.searchInput);
 
@@ -149,16 +161,33 @@ public class SearchProduct extends AppCompatActivity {
         ArrayList<Product> filteredProductList = new ArrayList<>();
 
         if (!TextUtils.isEmpty(input)){
+            meme.setVisibility(View.GONE);
+            memeText.setVisibility(View.GONE);
+            emptyMeme.setVisibility(View.GONE);
+            emptyMemeText.setVisibility(View.GONE);
+            searchProdBox.setVisibility(View.VISIBLE);
             for (Product item : productList) {
                 if (item.getProdName().contains(input.toUpperCase())){
-                    meme.setVisibility(View.GONE);
                     filteredProductList.add(item);
-                }else{
-                    meme.setVisibility(View.VISIBLE);
-                    //Toast.makeText(this, "Quack", Toast.LENGTH_SHORT).show();
-                    Glide.with(this).load(R.raw.quack).into(meme);
                 }
             }
+        }
+
+        if (filteredProductList.isEmpty() && !TextUtils.isEmpty(input)){
+            meme.setVisibility(View.VISIBLE);
+            memeText.setVisibility(View.VISIBLE);
+            emptyMeme.setVisibility(View.GONE);
+            emptyMemeText.setVisibility(View.GONE);
+            searchProdBox.setVisibility(View.GONE);
+            Glide.with(this).load(R.raw.quack).override(350,350).into(meme);
+        }
+        if (TextUtils.isEmpty(input)){
+            meme.setVisibility(View.GONE);
+            memeText.setVisibility(View.GONE);
+            emptyMeme.setVisibility(View.VISIBLE);
+            emptyMemeText.setVisibility(View.VISIBLE);
+            searchProdBox.setVisibility(View.GONE);
+            Glide.with(this).load(R.raw.please_type_something).override(400,400).into(emptyMeme);
         }
 
         adapter.filteredProductList(filteredProductList);

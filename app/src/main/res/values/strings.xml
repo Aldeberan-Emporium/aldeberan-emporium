@@ -26,6 +26,8 @@
     <string name="admin_product_update_btn">Update</string>
     <string name="admin_product_reset_btn">Reset</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="invalid_search">You\'d searched something invalid! Here\'s a duck for you :)</string>
+    <string name="empty_search">Please type in the product name that you want to search.</string>
 
     <string name="update_product">UPDATE</string>
     <string name="delete_product">DELETE</string>

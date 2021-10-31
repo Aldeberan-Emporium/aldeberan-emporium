@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -17,7 +18,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.aldeberan.Activity.Homepage;
 import com.example.aldeberan.Adapter.AllProductAdapter;
 import com.example.aldeberan.Adapter.ProductListingDetailAdapter;
@@ -42,6 +46,8 @@ public class AllProductFragment extends Fragment {
     EditText searchBar;
     View allProdView;
     UserStorage us;
+    ImageView meme;
+    TextView memeText;
 
     ShimmerFrameLayout shimmerAllProdBox;
 
@@ -53,6 +59,9 @@ public class AllProductFragment extends Fragment {
 
         allProdBox = allProdView.findViewById(R.id.allProdBox);
         productList = new ArrayList<>();
+
+        meme = allProdView.findViewById(R.id.meme);
+        memeText = allProdView.findViewById(R.id.memeText);
 
         shimmerAllProdBox = allProdView.findViewById(R.id.shimmerAllProdBox);
         shimmerAllProdBox.startShimmerAnimation();
@@ -157,6 +166,18 @@ public class AllProductFragment extends Fragment {
             if (item.getProdName().toLowerCase().contains(input.toLowerCase())){
                 filteredProductList.add(item);
             }
+        }
+
+        if (filteredProductList.isEmpty() && !TextUtils.isEmpty(input)){
+            meme.setVisibility(View.VISIBLE);
+            memeText.setVisibility(View.VISIBLE);
+            allProdBox.setVisibility(View.GONE);
+            Glide.with(this).load(R.raw.quack).override(350,350).into(meme);
+        }
+        else{
+            meme.setVisibility(View.GONE);
+            memeText.setVisibility(View.GONE);
+            allProdBox.setVisibility(View.VISIBLE);
         }
 
         adapter.filteredProductList(filteredProductList);
