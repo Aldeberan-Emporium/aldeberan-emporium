@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.aldeberan.Activity.WishlistActivity;
 import com.example.aldeberan.R;
 import com.example.aldeberan.databinding.CartDetailCRowBinding;
 import com.example.aldeberan.databinding.WishlistRowBinding;
@@ -22,6 +25,7 @@ import com.example.aldeberan.storage.UserStorage;
 import com.example.aldeberan.structures.Cart;
 import com.example.aldeberan.structures.Product;
 import com.example.aldeberan.structures.Wishlist;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -89,24 +93,27 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.Wishli
             holder.wishlistRowBinding.deleteWish.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     AlertDialog.Builder builder = new AlertDialog.Builder(wContext);
                     builder.setMessage("Do you want to remove this item from the wishlist?");
                     builder.setCancelable(true);
                     int wishlistID = Integer.parseInt(String.valueOf(wData.get(position).getWishID()));
-
-                    builder.setPositiveButton(
+                    builder.setNegativeButton(
                             "Yes",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
+
                                     wm.removeFromWishlist(wishlistID);
                                     notifyItemRemoved(position);
-                                    //notifyDataSetChanged();
+                                    Intent intent = ((WishlistActivity) wContext).getIntent();
+                                    ((WishlistActivity) wContext).finish();
+                                    ((WishlistActivity) wContext).overridePendingTransition(0, 0);
+                                    wContext.startActivity(intent);
+                                    ((WishlistActivity) wContext).overridePendingTransition(0, 0);
                                     dialog.cancel();
                                 }
                             });
 
-                    builder.setNegativeButton(
+                    builder.setPositiveButton(
                             "No",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {

@@ -29,8 +29,7 @@ public class WishlistActivity extends AppCompatActivity {
     private WishlistAdapter wishlistAdapter;
     private SwipeRefreshLayout wishPullToRefresh;
     private WishlistModel wm = new WishlistModel();
-
-    ShimmerFrameLayout shimmerWishlistLayout;
+    private ShimmerFrameLayout shimmerWishlistLayout;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,16 +40,13 @@ public class WishlistActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.wishlistView);
         wishlist_text = findViewById(R.id.wishlist_text);
         wishPullToRefresh = findViewById(R.id.wishPullToRefresh);
-
         shimmerWishlistLayout = findViewById(R.id.shimmerWishlistBox);
         shimmerWishlistLayout.startShimmerAnimation();
 
         ConstructRecyclerView();
-
         wishPullToRefresh.setOnRefreshListener(() -> {
             if(wishlistAdapter != null){
                 ConstructRecyclerView();
-                wishlistAdapter.notifyDataSetChanged();
                 wishlist_text.setVisibility(View.GONE);
             }
             wishPullToRefresh.setRefreshing(false);
@@ -64,10 +60,12 @@ public class WishlistActivity extends AppCompatActivity {
         try {
            wm.readWishlistByUser(userID, response -> {
                wishlist = response;
-               PutDataIntoRecyclerView(wishlist);
                if(wishlist.isEmpty()){
                    wishlist_text.setText("No item found in wishlist.");
                    wishlist_text.setVisibility(View.VISIBLE);
+               }
+               else{
+                   PutDataIntoRecyclerView(wishlist);
                }
                Log.i("wish", String.valueOf(response));
            });
@@ -81,6 +79,7 @@ public class WishlistActivity extends AppCompatActivity {
         wishlistAdapter = new WishlistAdapter(this, wishList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(wishlistAdapter);
+        wishlistAdapter.notifyDataSetChanged();
         shimmerWishlistLayout.stopShimmerAnimation();
         shimmerWishlistLayout.setVisibility(View.GONE);
     }
