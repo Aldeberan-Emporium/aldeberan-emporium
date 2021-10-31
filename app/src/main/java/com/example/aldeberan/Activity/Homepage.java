@@ -47,7 +47,10 @@ import java.util.List;
 
 public class Homepage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    BottomNavigationView bottomNavigationView;
+    static BottomNavigationView bottomNavigationView;
+
+    static CartModel cm;
+    static UserStorage us;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -55,6 +58,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
 
+        cm = new CartModel();
+        us = new UserStorage(this);
         bottomNavigationView = findViewById(R.id.botNavView);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(this::onNavigationItemSelected);
@@ -96,9 +101,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
     }
 
     //Set and display the total number of items of the cart
-    public void setCartBtnBadge(){
-        CartModel cm = new CartModel();
-        UserStorage us = new UserStorage(this);
+    public static void setCartBtnBadge(){
         cm.readQuoteItemByQuote(us.getQuoteID(), response -> {
             if (response.size() == 0) {
                 bottomNavigationView.removeBadge(R.id.botNavCart);

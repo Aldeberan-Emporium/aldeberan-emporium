@@ -68,7 +68,6 @@ public class HomepageFragment extends Fragment{
 
         searchOpenBtn = homepageView.findViewById(R.id.searchOpenBtn);
         searchOpenBtn.setOnClickListener(view -> {
-            getActivity().finish();
             Intent searchIntent = new Intent(getActivity(), SearchProduct.class);
             startActivity(searchIntent);
         });
