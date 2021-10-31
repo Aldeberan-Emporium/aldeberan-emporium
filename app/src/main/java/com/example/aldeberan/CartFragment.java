@@ -44,7 +44,6 @@ public class CartFragment extends Fragment {
     private CartModel cm;
     private OrderStorage os;
     SwipeRefreshLayout pullToRefresh;
-
     ShimmerFrameLayout shimmerCartLayout;
 
     @Nullable
@@ -70,13 +69,15 @@ public class CartFragment extends Fragment {
         });
 
         ConstructRecyclerView();
-        calculateTotalPrice();
+        //adapter.notifyDataSetChanged();
+        //calculateTotalPrice();
         ((Homepage) getActivity()).setCartBtnBadge();
 
         pullToRefresh = myCartFragmentView.findViewById(R.id.cartPullToRefresh);
         pullToRefresh.setOnRefreshListener(() -> {
             if(adapter != null){
                 ConstructRecyclerView();
+
                 calculateTotalPrice();
                 adapter.notifyDataSetChanged();
             }
@@ -107,10 +108,16 @@ public class CartFragment extends Fragment {
         });
     }
 
+    CartAdapter.FragmentCommunication updateCart = () ->{
+
+        ((Homepage) getActivity()).setCartBtnBadge();
+        ((Homepage) getActivity()).displayItemAddedSnackbar();
+    };
+
     private void PutDataIntoRecyclerView(List<Cart> cartList) throws JSONException {
         ProductModel pm = new ProductModel();
         pm.readProductAll(response -> {
-            adapter = new CartAdapter(getContext(), cartList, response);
+            adapter = new CartAdapter(getContext(), cartList, response, updateCart);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             recyclerView.setAdapter(adapter);
         });

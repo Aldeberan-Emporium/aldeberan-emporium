@@ -27,14 +27,16 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
     private Context mContext;
     public List<Cart> mData;
+    public FragmentCommunication mCommunicator;
     CartModel cm = new CartModel();
     public List<Product> productList;
     UserStorage userStorage;
 
-    public CartAdapter(Context mContext, List<Cart> mData, List<Product> response) {
+    public CartAdapter(Context mContext, List<Cart> mData, List<Product> response, FragmentCommunication communication) {
         this.mContext = mContext;
         this.mData = mData;
         productList = response;
+        this.mCommunicator = communication;
     }
 
     public class CartViewHolder extends RecyclerView.ViewHolder{
@@ -108,6 +110,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                                     cm.deleteQuoteItem(quoteItemID);
                                     mData.remove(position);
                                     notifyItemRemoved(position);
+                                    mCommunicator.respond();
                                     dialog.cancel();
                                 }
                             });
@@ -134,5 +137,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     @Override
     public int getItemCount() {
         return mData.size();
+    }
+
+    public interface FragmentCommunication {
+        void respond();
     }
 }
