@@ -69,15 +69,12 @@ public class CartFragment extends Fragment {
         });
 
         ConstructRecyclerView();
-        //adapter.notifyDataSetChanged();
-        //calculateTotalPrice();
         ((Homepage) getActivity()).setCartBtnBadge();
 
         pullToRefresh = myCartFragmentView.findViewById(R.id.cartPullToRefresh);
         pullToRefresh.setOnRefreshListener(() -> {
             if(adapter != null){
                 ConstructRecyclerView();
-
                 calculateTotalPrice();
                 adapter.notifyDataSetChanged();
             }
@@ -109,7 +106,6 @@ public class CartFragment extends Fragment {
     }
 
     CartAdapter.FragmentCommunication updateCart = ()->{
-
         ((Homepage) getActivity()).setCartBtnBadge();
         ((Homepage) getActivity()).displayItemAddedSnackbar();
         calculateTotalPrice();

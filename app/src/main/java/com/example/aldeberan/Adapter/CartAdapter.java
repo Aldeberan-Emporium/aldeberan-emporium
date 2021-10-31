@@ -110,7 +110,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                                     cm.deleteQuoteItem(quoteItemID);
                                     mData.remove(position);
                                     notifyItemRemoved(position);
-                                    mCommunicator.respond();
                                     dialog.cancel();
                                 }
                             });
@@ -124,12 +123,14 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                                 }
                             });
 
-                    AlertDialog alert11 = builder.create();
-                    alert11.show();
+                    AlertDialog alert = builder.create();
+                    alert.show();
                 }
                 holder.cartDetailCRowBinding.cartNumButton.setNumber(String.valueOf(itemQuantity));
                 cm.updateQuoteItem(quoteItemID, quoteID, prodName, prodSKU, itemQuantity, prodPrice, prodImg);
-                cm.updateQuoteRecal(quoteID);
+                mCommunicator.respond();
+                //cm.updateQuoteRecal(quoteID);
+
             }
         });
     }
