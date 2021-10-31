@@ -12,133 +12,123 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/prodNameLbl"
+        <androidx.cardview.widget.CardView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:text="prodName"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/prodIDLbl"
-            app:layout_constraintEnd_toStartOf="@+id/updateBtn"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintStart_toEndOf="@+id/prodImgView"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_wrapBehaviorInParent="horizontal_only" />
-
-        <TextView
-            android:id="@+id/prodStockLbl"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:text="prodStock"
-            app:layout_constraintBottom_toTopOf="@+id/prodPriceLbl"
-            app:layout_constraintEnd_toStartOf="@+id/deleteBtn"
-            app:layout_constraintHorizontal_bias="0.009"
-            app:layout_constraintStart_toEndOf="@+id/prodImgView"
-            app:layout_constraintTop_toBottomOf="@+id/prodAvailLbl" />
-
-        <TextView
-            android:id="@+id/prodAvailLbl"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:text="prodAvail"
-            app:layout_constraintBottom_toTopOf="@+id/prodStockLbl"
-            app:layout_constraintEnd_toStartOf="@+id/deleteBtn"
-            app:layout_constraintHorizontal_bias="0.009"
-            app:layout_constraintStart_toEndOf="@+id/prodImgView"
-            app:layout_constraintTop_toBottomOf="@+id/prodSKULbl" />
-
-        <TextView
-            android:id="@+id/prodPriceLbl"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginBottom="5dp"
-            android:text="prodPrice"
+            android:layout_margin="5dp"
+            app:cardBackgroundColor="@color/background_gray"
+            app:cardCornerRadius="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/prodStockLbl"
-            app:layout_constraintHorizontal_bias="0.009"
-            app:layout_constraintStart_toEndOf="@+id/prodImgView"
-            app:layout_constraintTop_toBottomOf="@+id/prodStockLbl" />
-
-        <TextView
-            android:id="@+id/prodIDLbl"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:text="prodID"
-            app:layout_constraintBottom_toTopOf="@+id/prodSKULbl"
-            app:layout_constraintEnd_toStartOf="@+id/updateBtn"
-            app:layout_constraintHorizontal_bias="0.008"
-            app:layout_constraintStart_toEndOf="@+id/prodImgView"
-            app:layout_constraintTop_toBottomOf="@+id/prodNameLbl" />
-
-        <TextView
-            android:id="@+id/prodSKULbl"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:text="prodSKU"
-            app:layout_constraintBottom_toTopOf="@+id/prodAvailLbl"
-            app:layout_constraintEnd_toEndOf="@+id/prodIDLbl"
-            app:layout_constraintHorizontal_bias="0.009"
-            app:layout_constraintStart_toEndOf="@+id/prodImgView"
-            app:layout_constraintTop_toBottomOf="@+id/prodIDLbl" />
-
-        <ImageView
-            android:id="@+id/prodImgView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="250dp"
-            android:layout_marginBottom="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toStartOf="@+id/updateBtn"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/updateBtn"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:insetLeft="0dp"
-            android:insetTop="0dp"
-            android:insetRight="0dp"
-            android:insetBottom="0dp"
-            app:icon="@drawable/ic_edit_solid"
-            app:iconGravity="textStart"
-            app:iconPadding="0dp"
-            app:layout_constraintBottom_toTopOf="@id/deleteBtn"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/deleteBtn"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:insetLeft="0dp"
-            android:insetTop="0dp"
-            android:insetRight="0dp"
-            android:insetBottom="0dp"
-            app:icon="@drawable/ic_trash_solid"
-            app:iconGravity="textStart"
-            app:iconPadding="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/updateBtn"
-            app:layout_constraintVertical_bias="0.0" />
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="0"
+                    app:cardCornerRadius="10dp">
+
+                    <ImageView
+                        android:id="@+id/prodImgView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        tools:srcCompat="@mipmap/ic_launcher_foreground" />
+                </androidx.cardview.widget.CardView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/prodNameLbl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="prodName"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_wrapBehaviorInParent="horizontal_only" />
+
+                    <TextView
+                        android:id="@+id/prodSKULbl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="prodSKU" />
+
+                    <TextView
+                        android:id="@+id/prodPriceLbl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="prodPrice" />
+
+                    <TextView
+                        android:id="@+id/prodAvailLbl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="prodAvail" />
+
+                    <TextView
+                        android:id="@+id/prodStockLbl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="prodStock" />
+
+                    <TextView
+                        android:id="@+id/prodIDLbl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="prodID" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/updateBtn"
+                            style="?attr/materialButtonOutlinedStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:insetLeft="0dp"
+                            android:insetTop="0dp"
+                            android:insetRight="0dp"
+                            android:insetBottom="0dp"
+                            app:icon="@drawable/ic_edit_solid"
+                            app:iconGravity="textStart"
+                            app:iconPadding="0dp" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/deleteBtn"
+                            style="?attr/materialButtonOutlinedStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:insetLeft="0dp"
+                            android:insetTop="0dp"
+                            android:insetRight="0dp"
+                            android:insetBottom="0dp"
+                            app:icon="@drawable/ic_trash_solid"
+                            app:iconGravity="textStart"
+                            app:iconPadding="0dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

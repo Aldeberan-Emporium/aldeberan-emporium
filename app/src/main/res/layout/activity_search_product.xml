@@ -55,7 +55,8 @@
                 android:background="@color/logo_pale_white"
                 android:drawableStart="?android:attr/actionModeWebSearchDrawable"
                 android:hint="Search..."
-                android:padding="10dp" />
+                android:padding="10dp"
+                android:singleLine="true" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

@@ -43,7 +43,8 @@
                 android:layout_height="wrap_content"
                 android:background="@color/logo_pale_white"
                 android:drawableStart="?android:attr/actionModeWebSearchDrawable"
-                android:hint="Search..." />
+                android:hint="Search..."
+                android:singleLine="true" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
