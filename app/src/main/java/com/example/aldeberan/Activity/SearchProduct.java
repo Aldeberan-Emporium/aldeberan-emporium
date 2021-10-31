@@ -166,7 +166,7 @@ public class SearchProduct extends AppCompatActivity {
 
     //Display product added to cart
     public void displayItemAddedSnackbar(){
-        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Product added to cart!", Snackbar.LENGTH_SHORT).setDuration(800);
+        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Product added to cart!", Snackbar.LENGTH_SHORT);
         snackbar.show();
     }
 

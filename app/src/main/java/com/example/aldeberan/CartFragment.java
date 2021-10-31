@@ -115,7 +115,7 @@ public class CartFragment extends Fragment {
 
     CartAdapter.FragmentCommunication updateCart = ()->{
         ((Homepage) getActivity()).setCartBtnBadge();
-        ((Homepage) getActivity()).displayItemAddedSnackbar();
+        ((Homepage) getActivity()).displayItemRemovedSnackbar();
         calculateTotalPrice();
     };
 
