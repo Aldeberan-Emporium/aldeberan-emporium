@@ -38,6 +38,7 @@ import com.stripe.android.view.CardInputWidget;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Type;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -96,7 +97,7 @@ public class StripePaymentCheckOut extends AppCompatActivity {
         stripe = new Stripe(
                 getApplication(),
                 //publishableKey, never touch
-                Objects.requireNonNull("pk_test_51JgYIxKPfEZYnk5WHXPITPG5oh9A0TurNQJ8SfQcHqwe34BkjlofjNGIzSTyzoPFmZLcc5YfQNLxDLFy2ptee7So00ka5eDOaS")
+                "pk_test_51JgYIxKPfEZYnk5WHXPITPG5oh9A0TurNQJ8SfQcHqwe34BkjlofjNGIzSTyzoPFmZLcc5YfQNLxDLFy2ptee7So00ka5eDOaS"
         );
         startCheckout();
     }
@@ -106,6 +107,7 @@ public class StripePaymentCheckOut extends AppCompatActivity {
         MediaType mediaType = MediaType.get("application/json; charset=utf-8");
 
         double amount = Double.valueOf(amountTextView.getText().toString()) * 100;
+        amount = (Double.parseDouble(String.format("%.2f", amount))); 
 
         Map<String, Object> payMap = new HashMap<>();
         Map<String, Object> itemMap = new HashMap<>();
