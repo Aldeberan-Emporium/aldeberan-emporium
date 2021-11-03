@@ -107,7 +107,7 @@ public class StripePaymentCheckOut extends AppCompatActivity {
         MediaType mediaType = MediaType.get("application/json; charset=utf-8");
 
         double amount = Double.valueOf(amountTextView.getText().toString()) * 100;
-        amount = (Double.parseDouble(String.format("%.2f", amount))); 
+        amount = (Double.parseDouble(String.format("%.2f", amount)));
 
         Map<String, Object> payMap = new HashMap<>();
         Map<String, Object> itemMap = new HashMap<>();
