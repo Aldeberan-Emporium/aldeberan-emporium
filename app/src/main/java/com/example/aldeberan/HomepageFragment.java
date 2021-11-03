@@ -1,34 +1,28 @@
 package com.example.aldeberan;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.aldeberan.Activity.Homepage;
 import com.example.aldeberan.Activity.SearchProduct;
+import com.example.aldeberan.Activity.Login;
 import com.example.aldeberan.Adapter.ProductListingDetailAdapter;
 import com.example.aldeberan.Adapter.ProductListingDetailVerticalAdapter;
-import com.example.aldeberan.UserFragment.homeProductFragment;
 import com.example.aldeberan.models.ProductModel;
 import com.example.aldeberan.storage.UserStorage;
 import com.example.aldeberan.structures.Product;
 import com.facebook.shimmer.ShimmerFrameLayout;
-
-import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,7 +90,6 @@ public class HomepageFragment extends Fragment{
     }
 
     ProductListingDetailAdapter.FragmentCommunication bestSellerComm = (prodName, prodID, prodSKU ,prodImg, prodPrice, prodStock) -> {
-        homeProductFragment homepage = new homeProductFragment();
         Bundle bundle = new Bundle();
         bundle.putString("prodName", prodName);
         bundle.putString("prodID", prodID);
@@ -105,14 +98,19 @@ public class HomepageFragment extends Fragment{
         //bundle.putString("prodStock", prodStock);
         //bundle.putString("prodAvail", prodAvail);
         bundle.putString("prodPrice", prodPrice);
-        homepage.setArguments(bundle);
 
         ((Homepage) getActivity()).setCartBtnBadge();
         ((Homepage) getActivity()).displayItemAddedSnackbar();
     };
 
+    ProductListingDetailAdapter.GuestFragmentCommunication guestUserComm = () -> {
+        Intent loginIntent = new Intent(getActivity(), Login.class);
+        startActivity(loginIntent);
+        Toast.makeText(getActivity(), "Yeet", Toast.LENGTH_SHORT);
+    };
+
     private void PutDataIntoBestSellerBox(List<Product> productList){
-        adapterBS = new ProductListingDetailAdapter(getContext(), productList, bestSellerComm);
+        adapterBS = new ProductListingDetailAdapter(getContext(), productList, bestSellerComm, guestUserComm);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         bestSellerBox.setLayoutManager(gridLayoutManager);
         bestSellerBox.setAdapter(adapterBS);
@@ -121,8 +119,7 @@ public class HomepageFragment extends Fragment{
         shimmerBestSellerBox.setVisibility(View.GONE);
     }
 
-    ProductListingDetailVerticalAdapter.FragmentCommunication newArrivalComm = (prodName, prodID, prodImg, prodPrice) -> {
-        homeProductFragment homepage = new homeProductFragment();
+    ProductListingDetailVerticalAdapter.FragmentCommunication newArrivalComm = (prodName, prodID, prodSKU ,prodImg, prodPrice, prodStock) -> {
         Bundle bundle = new Bundle();
         bundle.putString("prodName", prodName);
         bundle.putString("prodID", prodID);
@@ -131,14 +128,18 @@ public class HomepageFragment extends Fragment{
         //bundle.putString("prodStock", prodStock);
         //bundle.putString("prodAvail", prodAvail);
         bundle.putString("prodPrice", prodPrice);
-        homepage.setArguments(bundle);
 
         ((Homepage) getActivity()).setCartBtnBadge();
         ((Homepage) getActivity()).displayItemAddedSnackbar();
     };
 
+    ProductListingDetailVerticalAdapter.GuestFragmentCommunicationVert guestUserComm1 = () -> {
+        Intent loginIntent = new Intent(getActivity(), Login.class);
+        startActivity(loginIntent);
+    };
+
     private void PutDataIntoNewArrivalBox(List<Product> productList){
-        adapterNA = new ProductListingDetailVerticalAdapter(getContext(), productList, newArrivalComm);
+        adapterNA = new ProductListingDetailVerticalAdapter(getContext(), productList, newArrivalComm, guestUserComm1);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         newArrivalBox.setLayoutManager(gridLayoutManager);
         newArrivalBox.setAdapter(adapterNA);

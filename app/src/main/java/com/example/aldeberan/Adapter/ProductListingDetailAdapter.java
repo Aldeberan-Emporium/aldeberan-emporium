@@ -36,26 +36,30 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
     private Context mContext;
     public List<Product> mData;
     public FragmentCommunication mCommunicator;
+    public GuestFragmentCommunication guestCommunicator;
     ProductModel pm = new ProductModel();
     CartModel cm = new CartModel();
     WishlistModel wm = new WishlistModel();
     UserStorage userStorage;
 
-    public ProductListingDetailAdapter(Context mContext, List<Product> mData, FragmentCommunication mCommunicator) {
+    public ProductListingDetailAdapter(Context mContext, List<Product> mData, FragmentCommunication mCommunicator, GuestFragmentCommunication guestCommunicator) {
         this.mContext = mContext;
         this.mData = mData;
         this.mCommunicator = mCommunicator;
+        this.guestCommunicator = guestCommunicator;
     }
 
     public class ProductViewHolder extends RecyclerView.ViewHolder{
 
         ProductCardBinding productCardBinding;
         FragmentCommunication mCommunication;
+        GuestFragmentCommunication guestCommunicator;
 
-        public ProductViewHolder(ProductCardBinding productCardBinding, ProductListingDetailAdapter.FragmentCommunication mCommunication) {
+        public ProductViewHolder(ProductCardBinding productCardBinding, ProductListingDetailAdapter.FragmentCommunication mCommunication, ProductListingDetailAdapter.GuestFragmentCommunication guestCommunicator) {
             super(productCardBinding.getRoot());
             this.productCardBinding = productCardBinding;
             this.mCommunication = mCommunication;
+            this.guestCommunicator = guestCommunicator;
 
             productCardBinding.buttonAddCart.setOnClickListener(view -> {
                 //String.valueOf(mData.get(getAbsoluteAdapterPosition()).getProdID()));
@@ -80,7 +84,7 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
     public ProductListingDetailAdapter.ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         ProductCardBinding productCardBinding = DataBindingUtil.inflate(layoutInflater, R.layout.product_card, parent, false);
-        ProductListingDetailAdapter.ProductViewHolder holder = new ProductListingDetailAdapter.ProductViewHolder(productCardBinding, mCommunicator);
+        ProductListingDetailAdapter.ProductViewHolder holder = new ProductListingDetailAdapter.ProductViewHolder(productCardBinding, mCommunicator, guestCommunicator);
         return holder;
     }
 
@@ -102,56 +106,64 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
 
         Glide.with(mContext).load(R.raw.top_seller_fire).override(150,150).into(holder.productCardBinding.fireImg);
 
-        holder.productCardBinding.buttonAddCart.setOnClickListener(view -> {
-            mCommunicator.respond(String.valueOf(mData.get(position).getProdName()),
-                    String.valueOf(mData.get(position).getProdID()),
-                    String.valueOf(mData.get(position).getProdSKU()),
-                    String.valueOf(mData.get(position).getProdImg()),
-                    String.valueOf(mData.get(position).getProdPrice()),
-                    String.valueOf(mData.get(position).getProdStock()));
-
-            cm.checkIfUserExist(userID);
-            int quoteID = userStorage.getQuoteID();
-            String prodName = String.valueOf(mData.get(position).getProdName());
-            String prodSKU = String.valueOf(mData.get(position).getProdSKU());
-            Double prodPrice = Double.parseDouble(String.valueOf(mData.get(position).getProdPrice()));
-            String prodImg = String.valueOf(mData.get(position).getProdImg());
-            String stockQuantity = String.valueOf(mData.get(position).getProdStock());
-
-            System.out.println("stockQuantity: " + stockQuantity);
-            //cm.addQuoteItem(quoteID, prodName, 1, prodPrice, prodImg);
-            cm.addQuoteItem(quoteID, prodName, prodSKU, 1, prodPrice, prodImg);
-            cm.updateQuoteRecal(quoteID);
-        });
-
         if (mData.get(position).getWishID() != -1){
             holder.productCardBinding.buttonAddWishlist.setVisibility(View.GONE);
             holder.productCardBinding.buttonDelWishlist.setVisibility(View.VISIBLE);
         }
 
-        if(userID != null){
-            holder.productCardBinding.buttonAddWishlist.setOnClickListener(view -> {
+        holder.productCardBinding.buttonAddCart.setOnClickListener(view -> {
+            if (!userID.contains("nan")){
+                mCommunicator.respond(String.valueOf(mData.get(position).getProdName()),
+                        String.valueOf(mData.get(position).getProdID()),
+                        String.valueOf(mData.get(position).getProdSKU()),
+                        String.valueOf(mData.get(position).getProdImg()),
+                        String.valueOf(mData.get(position).getProdPrice()),
+                        String.valueOf(mData.get(position).getProdStock()));
 
-                cm.checkIfUserExist(userID);
+                int quoteID = userStorage.getQuoteID();
+                String prodName = String.valueOf(mData.get(position).getProdName());
+                String prodSKU = String.valueOf(mData.get(position).getProdSKU());
+                Double prodPrice = Double.parseDouble(String.valueOf(mData.get(position).getProdPrice()));
+                String prodImg = String.valueOf(mData.get(position).getProdImg());
+                String stockQuantity = String.valueOf(mData.get(position).getProdStock());
+
+                System.out.println("stockQuantity: " + stockQuantity);
+                //cm.addQuoteItem(quoteID, prodName, 1, prodPrice, prodImg);
+                cm.addQuoteItem(quoteID, prodName, prodSKU, 1, prodPrice, prodImg);
+                cm.updateQuoteRecal(quoteID);
+            }
+            else{
+                guestCommunicator.guestUser();
+            }
+        });
+
+        holder.productCardBinding.buttonAddWishlist.setOnClickListener(view -> {
+            if (!userID.contains("nan")){
                 int prodID = mData.get(position).getProdID();
                 wm.addToWishlist(userID, prodID);
                 System.out.println("Added to wishlist.");
 
                 holder.productCardBinding.buttonAddWishlist.setVisibility(View.GONE);
                 holder.productCardBinding.buttonDelWishlist.setVisibility(View.VISIBLE);
-            });
+            }
+            else{
+                guestCommunicator.guestUser();
+            }
+        });
 
-            holder.productCardBinding.buttonDelWishlist.setOnClickListener(view -> {
-
-                cm.checkIfUserExist(userID);
+        holder.productCardBinding.buttonDelWishlist.setOnClickListener(view -> {
+            if (!userID.contains("nan")) {
                 int wishListID = mData.get(position).getWishID();
                 wm.removeFromWishlist(wishListID);
                 System.out.println("Removed wishlist from homepage.");
 
                 holder.productCardBinding.buttonDelWishlist.setVisibility(View.GONE);
                 holder.productCardBinding.buttonAddWishlist.setVisibility(View.VISIBLE);
-            });
-        }
+            }
+            else{
+                guestCommunicator.guestUser();
+            }
+        });
     }
 
     @Override
@@ -163,4 +175,7 @@ public class ProductListingDetailAdapter extends RecyclerView.Adapter<ProductLis
         void respond(String prodName, String prodID, String prodSKU, String prodImg, String prodPrice, String prodStock);
     }
 
+    public interface GuestFragmentCommunication {
+        void guestUser();
+    }
 }

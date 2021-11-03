@@ -118,7 +118,7 @@ public class UserSettingFragment extends Fragment implements View.OnClickListene
                 break;
             case R.id.logoutBtn:
                 //mGoogleSignInClient.signOut();
-                us.logoutUser(getActivity());
+                us.logoutUser();
                 gsignin.signOut();
                 FirebaseAuth.getInstance().signOut();
                 switchSession();
@@ -136,7 +136,7 @@ public class UserSettingFragment extends Fragment implements View.OnClickListene
         //adminBtn.setVisibility(View.VISIBLE);
     //}
 
-        if (us.getID() == ""){
+        if (us.getID() == "nan"){
             loginBtn.setVisibility(View.VISIBLE);
             logoutBtn.setVisibility(View.GONE);
             addressBtn.setVisibility(View.GONE);

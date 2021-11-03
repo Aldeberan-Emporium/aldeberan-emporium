@@ -1,11 +1,11 @@
 package com.example.aldeberan;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
@@ -23,20 +23,16 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.aldeberan.Activity.Homepage;
+import com.example.aldeberan.Activity.Login;
 import com.example.aldeberan.Adapter.AllProductAdapter;
-import com.example.aldeberan.Adapter.ProductListingDetailAdapter;
 import com.example.aldeberan.Adapter.ProductListingDetailVerticalAdapter;
-import com.example.aldeberan.UserFragment.homeProductFragment;
 import com.example.aldeberan.models.ProductModel;
 import com.example.aldeberan.storage.UserStorage;
 import com.example.aldeberan.structures.Product;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
-import org.json.JSONException;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class AllProductFragment extends Fragment {
 
@@ -117,7 +113,6 @@ public class AllProductFragment extends Fragment {
     }
 
     AllProductAdapter.FragmentCommunication comm = (prodName, prodID, prodImg, prodPrice) -> {
-        homeProductFragment homepage = new homeProductFragment();
         Bundle bundle = new Bundle();
         bundle.putString("prodName", prodName);
         bundle.putString("prodID", prodID);
@@ -126,14 +121,18 @@ public class AllProductFragment extends Fragment {
         //bundle.putString("prodStock", prodStock);
         //bundle.putString("prodAvail", prodAvail);
         bundle.putString("prodPrice", prodPrice);
-        homepage.setArguments(bundle);
 
         ((Homepage) getActivity()).setCartBtnBadge();
         ((Homepage) getActivity()).displayItemAddedSnackbar();
     };
 
+    AllProductAdapter.GuestFragmentCommunication guestUser = () -> {
+        Intent loginIntent = new Intent(getActivity(), Login.class);
+        startActivity(loginIntent);
+    };
+
     private void PutDataIntoAllProdBox(List<Product> productList){
-        adapter = new AllProductAdapter(getContext(), productList, comm);
+        adapter = new AllProductAdapter(getContext(), productList, comm, guestUser);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         allProdBox.setLayoutManager(gridLayoutManager);
         allProdBox.setAdapter(adapter);

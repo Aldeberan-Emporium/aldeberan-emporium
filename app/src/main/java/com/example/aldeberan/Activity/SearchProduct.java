@@ -13,24 +13,19 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.aldeberan.Adapter.ProductListingDetailVerticalAdapter;
 import com.example.aldeberan.Adapter.SearchProductAdapter;
 import com.example.aldeberan.R;
-import com.example.aldeberan.UserFragment.homeProductFragment;
 import com.example.aldeberan.models.ProductModel;
 import com.example.aldeberan.storage.UserStorage;
 import com.example.aldeberan.structures.Product;
 import com.google.android.material.snackbar.Snackbar;
-
-import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -125,7 +120,6 @@ public class SearchProduct extends AppCompatActivity {
     }
 
     SearchProductAdapter.FragmentCommunication comm = (prodName, prodID, prodImg, prodPrice) -> {
-        homeProductFragment homepage = new homeProductFragment();
         Bundle bundle = new Bundle();
         bundle.putString("prodName", prodName);
         bundle.putString("prodID", prodID);
@@ -134,14 +128,19 @@ public class SearchProduct extends AppCompatActivity {
         //bundle.putString("prodStock", prodStock);
         //bundle.putString("prodAvail", prodAvail);
         bundle.putString("prodPrice", prodPrice);
-        homepage.setArguments(bundle);
 
         Homepage.setCartBtnBadge();
         displayItemAddedSnackbar();
     };
 
+
+    SearchProductAdapter.GuestFragmentCommunication guestUser = () -> {
+        Intent login = new Intent(SearchProduct.this, Login.class);
+        startActivity(login);
+    };
+
     private void PutDataIntoSearchProductBox(List<Product> productList){
-        adapter = new SearchProductAdapter(this, productList, comm);
+        adapter = new SearchProductAdapter(this, productList, comm, guestUser);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         searchProdBox.setLayoutManager(gridLayoutManager);
         searchProdBox.setAdapter(adapter);

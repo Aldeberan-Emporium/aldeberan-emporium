@@ -28,12 +28,7 @@ public class UserStorage {
 
     public UserStorage() {}
 
-    public void logoutUser(Activity activity){
-        myEdit.putString("name", "Please Sign In");
-        myEdit.putString("id", "");
-        myEdit.putString("photoURL", "");
-        myEdit.putString("email", "");
-
+    public void logoutUser(){
         myEdit.clear();
         myEdit.apply();
     }
