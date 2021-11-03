@@ -57,6 +57,8 @@
     <string name="MAPS_API_KEY">AIzaSyBy75XBl8JciqNkdJbAKxdZULVxw4IMPBY</string>
     <string name="loading_sender_location">Loading live sender\'s location...</string>
     <string name="homepage_view_more">View More Products</string>
+    <string name="admin_email_1">aldeberan.emporium@gmail.com</string>
+    <string name="admin_email_2">noreply.aldeberanemporium@gmail.com</string>
 
 
 </resources>

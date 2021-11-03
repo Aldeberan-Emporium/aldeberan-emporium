@@ -54,7 +54,7 @@ public class UserStorage {
     }
 
     public String getID(){
-        return sharedPreferences.getString("id", "nan");
+        return sharedPreferences.getString("id", "guest");
     }
 
     public String getPhotoURL(){

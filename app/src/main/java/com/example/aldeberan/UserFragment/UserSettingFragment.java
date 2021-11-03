@@ -51,7 +51,8 @@ public class UserSettingFragment extends Fragment implements View.OnClickListene
 
     public GoogleSignInClient gsignin;
 
-    String temp_name = "aldeberan.emporium@gmail.com";
+    String admin1;
+    String admin2;
 
     @Nullable
     @Override
@@ -77,6 +78,9 @@ public class UserSettingFragment extends Fragment implements View.OnClickListene
         logoutBtn.setOnClickListener(this);
         adminBtn = userSettingsView.findViewById(R.id.adminBtn);
         adminBtn.setOnClickListener(this);
+
+        admin1 = getActivity().getResources().getString(R.string.admin_email_1);
+        admin2 = getActivity().getResources().getString(R.string.admin_email_2);
 
         us = new UserStorage(getActivity());
         switchSession();
@@ -136,7 +140,7 @@ public class UserSettingFragment extends Fragment implements View.OnClickListene
         //adminBtn.setVisibility(View.VISIBLE);
     //}
 
-        if (us.getID() == "nan"){
+        if (us.getID() == "guest"){
             loginBtn.setVisibility(View.VISIBLE);
             logoutBtn.setVisibility(View.GONE);
             addressBtn.setVisibility(View.GONE);
@@ -152,8 +156,7 @@ public class UserSettingFragment extends Fragment implements View.OnClickListene
             wishlistBtn.setVisibility(View.VISIBLE);
             orderBtn.setVisibility(View.VISIBLE);
             adminBtn.setVisibility(View.GONE);
-            if(temp_name.equals(us.getEmail())) {
-                //Toast.makeText(getActivity(), "betul", Toast.LENGTH_SHORT).show();
+            if(admin1.contains(us.getEmail()) || admin2.contains(us.getEmail())) {
                 adminBtn.setVisibility(View.VISIBLE);
             }
         }

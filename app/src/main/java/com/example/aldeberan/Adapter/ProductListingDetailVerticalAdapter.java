@@ -102,7 +102,7 @@ public class ProductListingDetailVerticalAdapter extends RecyclerView.Adapter<Pr
         }
 
         holder.productCardBinding.buttonAddCart.setOnClickListener(view -> {
-            if (!userID.contains("nan")){
+            if (!userID.contains("guest")){
                 mCommunicator.respond(String.valueOf(mData.get(position).getProdName()),
                         String.valueOf(mData.get(position).getProdID()),
                         String.valueOf(mData.get(position).getProdSKU()),
@@ -128,7 +128,7 @@ public class ProductListingDetailVerticalAdapter extends RecyclerView.Adapter<Pr
         });
 
         holder.productCardBinding.buttonAddWishlist.setOnClickListener(view -> {
-            if (!userID.contains("nan")){
+            if (!userID.contains("guest")){
                 int prodID = mData.get(position).getProdID();
                 wm.addToWishlist(userID, prodID);
                 System.out.println("Added to wishlist.");
@@ -142,7 +142,7 @@ public class ProductListingDetailVerticalAdapter extends RecyclerView.Adapter<Pr
         });
 
         holder.productCardBinding.buttonDelWishlist.setOnClickListener(view -> {
-            if (!userID.contains("nan")) {
+            if (!userID.contains("guest")) {
                 int wishListID = mData.get(position).getWishID();
                 wm.removeFromWishlist(wishListID);
                 System.out.println("Removed wishlist from homepage.");

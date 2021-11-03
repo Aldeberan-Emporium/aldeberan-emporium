@@ -95,7 +95,7 @@ public class AllProductFragment extends Fragment {
     private void ConstructRecyclerView(){
         ProductModel pm = new ProductModel();
         try {
-            if(us.getID() != null){
+            if(!us.getID().contains("guest")){
                 pm.readProductAndWishlist((response) -> {
                     productList = response;
                     PutDataIntoAllProdBox(response);

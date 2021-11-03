@@ -91,6 +91,7 @@ public class ProductModel extends DatabaseModel {
                     int prodStock = Integer.parseInt(object.getString("product_stock"));
                     double prodPrice = Double.parseDouble(object.getString("product_price"));
                     int prodSold = Integer.parseInt(object.getString("product_sold"));
+                    int wishID = Integer.parseInt(object.getString("wishlist_id"));
 
                     //Only top 4 items will display top seller
                     Product product = new Product();
@@ -102,6 +103,7 @@ public class ProductModel extends DatabaseModel {
                     product.setProdStock(prodStock);
                     product.setProdPrice(prodPrice);
                     product.setProdSold(prodSold);
+                    product.setWishID(wishID);
                     if (i < 4) { product.setIsTopSeller(true); }
                     else {product.setIsTopSeller(false);}
                     productList.add(product);
@@ -177,7 +179,6 @@ public class ProductModel extends DatabaseModel {
     public void readBestSellers(String userID, OnResponseCallback callback) {
         RequestParams params = new RequestParams();
         params.put("user_id", userID);
-        Log.i("USERID", userID);
         params.put("action", "readBestSellers");
         this.getData(params, (success, response) -> {
             List<Product> productList = new ArrayList<>();
@@ -218,7 +219,7 @@ public class ProductModel extends DatabaseModel {
     public void readNewArrival(String userID, OnResponseCallback callback) {
         RequestParams params = new RequestParams();
         params.put("user_id", userID);
-        params.put("action", "readBestSellers");
+        params.put("action", "readNewArrival");
         this.getData(params, (success, response) -> {
             List<Product> productList = new ArrayList<>();
             try {
