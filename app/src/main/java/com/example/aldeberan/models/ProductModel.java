@@ -176,6 +176,8 @@ public class ProductModel extends DatabaseModel {
     //Read product with wishlist (Best Sellers)
     public void readBestSellers(String userID, OnResponseCallback callback) {
         RequestParams params = new RequestParams();
+        params.put("user_id", userID);
+        Log.i("USERID", userID);
         params.put("action", "readBestSellers");
         this.getData(params, (success, response) -> {
             List<Product> productList = new ArrayList<>();
@@ -215,6 +217,7 @@ public class ProductModel extends DatabaseModel {
     //Read product with wishlist (New Arrival)
     public void readNewArrival(String userID, OnResponseCallback callback) {
         RequestParams params = new RequestParams();
+        params.put("user_id", userID);
         params.put("action", "readBestSellers");
         this.getData(params, (success, response) -> {
             List<Product> productList = new ArrayList<>();
