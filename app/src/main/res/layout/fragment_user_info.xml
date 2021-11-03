@@ -101,10 +101,10 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/userName"
+                    android:id="@+id/userEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="userName" />
+                    android:text="userEmail" />
 
                 <TextView
                     android:id="@+id/userID"
@@ -113,10 +113,10 @@
                     android:text="uid" />
 
                 <TextView
-                    android:id="@+id/userEmail"
+                    android:id="@+id/userName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="userEmail" />
+                    android:text="userName" />
 
             </LinearLayout>
 
