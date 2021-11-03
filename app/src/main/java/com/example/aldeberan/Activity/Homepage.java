@@ -164,4 +164,12 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                 break;
         }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(this::onNavigationItemSelected);
+        bottomNavigationView.setSelectedItemId(R.id.botNavHome);
+    }
 }
