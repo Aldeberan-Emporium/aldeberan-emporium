@@ -31,6 +31,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     CartModel cm = new CartModel();
     public List<Product> productList;
     UserStorage userStorage;
+    String status;
 
     public CartAdapter(Context mContext, List<Cart> mData, List<Product> response, FragmentCommunication communication) {
         this.mContext = mContext;
@@ -85,6 +86,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             @Override
             public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
 
+                Log.i("old value", String.valueOf(oldValue));
+                Log.i("new value", String.valueOf(newValue));
+
+                if(newValue > oldValue){
+                    status = "add";
+                }else{
+                    status = "remove";
+                }
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                 builder.setMessage("Do you want to remove this product?");
                 builder.setCancelable(true);
@@ -110,7 +120,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                                     cm.deleteQuoteItem(quoteItemID);
                                     mData.remove(position);
                                     notifyItemRemoved(position);
-                                    mCommunicator.respond();
+                                    mCommunicator.respond(status);
                                     dialog.cancel();
                                 }
                             });
@@ -129,7 +139,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                 }
                 holder.cartDetailCRowBinding.cartNumButton.setNumber(String.valueOf(itemQuantity));
                 cm.updateQuoteItem(quoteItemID, quoteID, prodName, prodSKU, itemQuantity, prodPrice, prodImg);
-                mCommunicator.respond();
+                mCommunicator.respond(status);
             }
         });
     }
@@ -140,6 +150,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     }
 
     public interface FragmentCommunication {
-        void respond();
+        void respond(String status);
     }
 }

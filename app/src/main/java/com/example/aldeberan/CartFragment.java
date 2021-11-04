@@ -114,9 +114,9 @@ public class CartFragment extends Fragment {
         });
     }
 
-    CartAdapter.FragmentCommunication updateCart = ()->{
+    CartAdapter.FragmentCommunication updateCart = (status)->{
         ((Homepage) getActivity()).setCartBtnBadge();
-        ((Homepage) getActivity()).displayItemRemovedSnackbar();
+        ((Homepage) getActivity()).displayItemRemovedSnackbar(status);
         calculateTotalPrice();
         checkSize();
     };

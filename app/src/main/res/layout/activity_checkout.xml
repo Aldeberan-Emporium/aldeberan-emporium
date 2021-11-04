@@ -61,7 +61,7 @@
                         android:layout_marginRight="5dp"
                         android:clickable="true"
                         android:focusable="true"
-                        android:text="Edit Items"
+                        android:text="Add more item?"
                         android:textColor="@color/background_gray" />
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>

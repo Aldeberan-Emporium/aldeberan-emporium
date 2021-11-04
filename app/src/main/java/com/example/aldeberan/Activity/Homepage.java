@@ -100,8 +100,15 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
     }
 
     //Display product added to cart
-    public void displayItemRemovedSnackbar(){
-        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Product removed from cart!", Snackbar.LENGTH_SHORT);
+    public void displayItemRemovedSnackbar(String status){
+        String text;
+
+        if(status.contains("remove")){
+            text = "Product removed from cart!";
+        }else{
+            text = "Product added to cart!";
+        }
+        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), text, Snackbar.LENGTH_SHORT);
         snackbar.setAnchorView(bottomNavigationView);
         snackbar.show();
     }
