@@ -23,7 +23,7 @@ import java.util.List;
 /*
 Leong Kah Ming  1171100884
 
-Leong is reponsible for this feature.
+Leong is responsible for this feature.
 
 */
 

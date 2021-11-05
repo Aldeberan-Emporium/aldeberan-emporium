@@ -3,7 +3,7 @@ package com.example.aldeberan.structures;
 /*
 Ong Shuoh Chwen 1171102212
 
-Ong is reponsible for this. 
+Ong is responsible for this. 
 He setup the database using heroku and linked it to android studio.
 
 For debugging every members are involved

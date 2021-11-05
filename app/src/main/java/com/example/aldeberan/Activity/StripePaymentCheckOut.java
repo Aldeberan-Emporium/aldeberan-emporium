@@ -58,7 +58,7 @@ import okhttp3.Response;
 /*
 Yong Wen Kai    1171101664
 
-Yong is reponsible for this feature.
+Yong is responsible for this feature.
 */
 
 public class StripePaymentCheckOut extends AppCompatActivity {

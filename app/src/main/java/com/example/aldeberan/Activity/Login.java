@@ -42,7 +42,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 Ong Shuoh Chwen 1171102212
 Yong Wen Kai    1171101664
 
-Ong and Yong are reponsible for this feature.
+Ong and Yong are responsible for this feature.
 They connected/linked the functions and debug the problems.
 
 */

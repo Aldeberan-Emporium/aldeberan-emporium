@@ -22,7 +22,7 @@ import java.util.List;
 /*
 Chong Wai Hou   1161104445
 
-Chong is reponsible for this feature.
+Chong is responsible for this feature.
 */
 
 

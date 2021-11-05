@@ -33,7 +33,7 @@ import okhttp3.internal.http2.Header;
 Ong Shuoh Chwen 1171102212
 Yong Wen Kai    1171101664
 
-Ong and Yong are reponsible for this. 
+Ong and Yong are responsible for this. 
 Ong setup the database using heroku and linked it to android studio.
 
 Yong using PHP to write the SQL command for the backend.

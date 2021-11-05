@@ -18,7 +18,7 @@ import com.example.aldeberan.UserFragment.UserSettings.UserAddressFragment;
 /*
 Ong Shuoh Chwen 1171102212
 
-Ong is reponsible for this admin features which included add, update, and delete items.
+Ong is responsible for this admin features which included add, update, and delete items.
 */
 
 public class AdminPanelActivity extends AppCompatActivity {

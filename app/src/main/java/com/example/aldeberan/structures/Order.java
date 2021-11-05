@@ -6,7 +6,7 @@ import org.apache.commons.text.StringEscapeUtils;
 Ong Shuoh Chwen 1171102212
 Chong Wai Hou   1161104445
 
-Ong and Chong reponsible for this. 
+Ong and Chong are responsible for this. 
 They discuss and setup the database togther using heroku and linked it to android studio.
 
 For debugging every members are involved
