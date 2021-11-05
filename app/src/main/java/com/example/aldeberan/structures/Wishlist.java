@@ -1,5 +1,15 @@
 package com.example.aldeberan.structures;
 
+/*
+Ong Shuoh Chwen 1171102212
+Leong Kah Ming  1171100884
+
+Ong and Leong are reponsible for this. 
+They discuss and setup the database togther using heroku and linked it to android studio.
+
+For debugging every members are involved
+*/
+
 public class Wishlist {
 
     private int wishID;

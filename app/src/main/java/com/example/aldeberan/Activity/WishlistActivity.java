@@ -20,6 +20,13 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 import org.json.JSONException;
 import java.util.List;
 
+/*
+Leong Kah Ming  1171100884
+
+Leong is reponsible for this feature.
+
+*/
+
 public class WishlistActivity extends AppCompatActivity {
 
     private List<Wishlist> wishlist;

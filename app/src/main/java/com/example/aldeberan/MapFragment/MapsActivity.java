@@ -61,6 +61,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/*
+Ong Shuoh Chwen 1171102212
+Yong Wen Kai    1171101664
+
+Ong and Yong are reponsible for this feature.
+They connected/linked the functions and debug the problems.
+*/
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;

@@ -22,6 +22,12 @@ import com.example.aldeberan.structures.Product;
 
 import java.util.List;
 
+/*
+Ong Shuoh Chwen 1171102212
+
+Ong is reponsible for this feature.
+*/
+
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder>{
 
     private Context mContext;

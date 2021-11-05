@@ -30,6 +30,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+/*
+Leong Kah Ming  1171100884
+Ong Shuoh Chwen 1171102212
+Yong Wen Kai    1171101664
+Chong Wai Hou   1161104445
+
+We work and discuss together for majority of the featuers in user setting.
+*/
+
 public class UserInfoFragment extends Fragment {
 
     View userInfoView;

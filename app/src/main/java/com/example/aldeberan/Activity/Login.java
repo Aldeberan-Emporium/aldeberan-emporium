@@ -37,6 +37,16 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+
+/*
+Ong Shuoh Chwen 1171102212
+Yong Wen Kai    1171101664
+
+Ong and Yong are reponsible for this feature.
+They connected/linked the functions and debug the problems.
+
+*/
+
 public class Login extends AppCompatActivity implements View.OnClickListener{
     private static final String TAG = "GoogleActivity";
     private static final int RC_SIGN_IN = 9001;

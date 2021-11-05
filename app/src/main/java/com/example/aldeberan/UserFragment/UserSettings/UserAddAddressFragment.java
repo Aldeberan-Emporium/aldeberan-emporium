@@ -33,6 +33,15 @@ import com.example.aldeberan.models.MapModel;
 import com.example.aldeberan.storage.UserStorage;
 import com.google.android.material.snackbar.Snackbar;
 
+/*
+Leong Kah Ming  1171100884
+Ong Shuoh Chwen 1171102212
+Yong Wen Kai    1171101664
+Chong Wai Hou   1161104445
+
+We work and discuss together for majority of the featuers in user setting.
+*/
+
 public class UserAddAddressFragment extends Fragment implements View.OnClickListener{
 
     Button submitBtn;

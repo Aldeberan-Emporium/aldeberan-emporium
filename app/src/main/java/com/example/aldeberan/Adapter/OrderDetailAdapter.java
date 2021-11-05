@@ -19,6 +19,13 @@ import java.sql.SQLOutput;
 import java.text.DecimalFormat;
 import java.util.List;
 
+/*
+Chong Wai Hou   1161104445
+
+Chong is reponsible for this feature.
+*/
+
+
 public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.OrderDetailViewHolder> {
     private Context context;
     private List<Order> orderDetailList;

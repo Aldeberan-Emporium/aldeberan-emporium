@@ -55,6 +55,12 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+/*
+Yong Wen Kai    1171101664
+
+Yong is reponsible for this feature.
+*/
+
 public class StripePaymentCheckOut extends AppCompatActivity {
     private static final String BACKEND_URL = "https://fierce-chamber-24927.herokuapp.com/"; //never change this url
     private OkHttpClient httpClient = new OkHttpClient();

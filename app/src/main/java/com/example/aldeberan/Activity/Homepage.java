@@ -25,6 +25,15 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
+/*
+Leong Kah Ming  1171100884
+Chong Wai Hou   1161104445
+
+Leong and Chong are reponsible for this feature.
+They connected/linked the functions and debug the problems.
+
+*/
+
 public class Homepage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     static BottomNavigationView bottomNavigationView;

@@ -19,6 +19,13 @@ import com.example.aldeberan.structures.Order;
 import java.text.DecimalFormat;
 import java.util.List;
 
+/*
+Chong Wai Hou   1161104445
+
+Chong is reponsible for this feature.
+*/
+
+
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHolder>{
     private Context mContext;
     private List<Order> orderList;

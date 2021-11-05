@@ -47,6 +47,12 @@ import com.example.aldeberan.models.ProductModel;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+/*
+Ong Shuoh Chwen 1171102212
+
+Ong is reponsible for this feature.
+*/
+
 public class AdminPanelUpdateProductFragment extends Fragment implements View.OnClickListener{
     ProductModel pm = new ProductModel();
     public Uri imgURI;

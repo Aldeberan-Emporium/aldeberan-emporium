@@ -14,6 +14,15 @@ import com.example.aldeberan.UserFragment.UserSettings.UserAddAddressFragment;
 import com.example.aldeberan.UserFragment.UserSettings.UserAddressFragment;
 import com.example.aldeberan.UserFragment.UserSettings.UserUpdateAddressFragment;
 
+/*
+Leong Kah Ming  1171100884
+Ong Shuoh Chwen 1171102212
+Yong Wen Kai    1171101664
+Chong Wai Hou   1161104445
+
+We work and discuss together for majority of the featuers in user setting.
+*/
+
 public class UserAddressBookActivity extends AppCompatActivity {
 
     MenuItem menuItem;

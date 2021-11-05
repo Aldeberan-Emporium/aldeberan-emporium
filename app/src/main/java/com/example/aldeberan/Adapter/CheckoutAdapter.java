@@ -17,6 +17,15 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
+/*
+Leong Kah Ming  1171100884
+Chong Wai Hou   1161104445
+
+Leong and Chong are reponsible for this feature.
+They connected/linked the functions and debug the problems.
+
+*/
+
 public class CheckoutAdapter extends RecyclerView.Adapter<CheckoutAdapter.CheckoutViewHolder> {
     private Context mContext;
     public List<Cart> mData;

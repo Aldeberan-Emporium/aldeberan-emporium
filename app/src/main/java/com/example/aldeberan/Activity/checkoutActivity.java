@@ -31,6 +31,15 @@ import org.json.JSONException;
 import java.util.List;
 import java.util.Locale;
 
+
+/*
+Leong Kah Ming  1171100884
+Chong Wai Hou   1161104445
+
+Leong and Chong are reponsible for this feature.
+They connected/linked the functions and debug the problems.
+*/
+
 public class checkoutActivity extends AppCompatActivity {
 
     private List<Cart> cartList;

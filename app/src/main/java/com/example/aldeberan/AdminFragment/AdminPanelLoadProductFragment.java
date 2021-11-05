@@ -30,6 +30,12 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+Ong Shuoh Chwen 1171102212
+
+Ong is reponsible for this feature.
+*/
+
 public class AdminPanelLoadProductFragment extends Fragment {
     private View myFragmentView;
     public List<Product> productList;

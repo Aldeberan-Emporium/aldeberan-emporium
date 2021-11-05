@@ -25,6 +25,15 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+Ong Shuoh Chwen 1171102212
+Yong Wen Kai    1171101664
+
+Ong and Yong are reponsible for this feature.
+They connected/linked the functions and debug the problems.
+
+*/
+
 public class SearchProductAdapter extends RecyclerView.Adapter<SearchProductAdapter.ProductViewHolder>{
 
     private Context mContext;

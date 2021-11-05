@@ -29,6 +29,18 @@ import okhttp3.Headers;
 import okhttp3.Response;
 import okhttp3.internal.http2.Header;
 
+/*
+Ong Shuoh Chwen 1171102212
+Yong Wen Kai    1171101664
+
+Ong and Yong are reponsible for this. 
+Ong setup the database using heroku and linked it to android studio.
+
+Yong using PHP to write the SQL command for the backend.
+
+For debugging every members are involved.
+*/
+
 public class DatabaseModel {
 
     public String res;

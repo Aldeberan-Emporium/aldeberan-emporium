@@ -32,6 +32,12 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
+/*
+Leong Kah Ming  1171100884
+
+Leong is reponsible for this feature.
+*/
+
 public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.WishlistViewHolder> {
 
     private Context wContext;

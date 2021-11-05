@@ -20,6 +20,12 @@ import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.List;
 
+/*
+Chong Wai Hou   1161104445
+
+Chong is reponsible for this feature.
+*/
+
 public class OrderDetailActivity extends AppCompatActivity implements Serializable {
     private OrderModel om;
     private UserStorage us;

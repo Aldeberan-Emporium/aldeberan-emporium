@@ -2,6 +2,16 @@ package com.example.aldeberan.structures;
 
 import org.apache.commons.text.StringEscapeUtils;
 
+/*
+Ong Shuoh Chwen 1171102212
+Chong Wai Hou   1161104445
+
+Ong and Chong reponsible for this. 
+They discuss and setup the database togther using heroku and linked it to android studio.
+
+For debugging every members are involved
+*/
+
 public class Order {
     //Order
     private int orderID;

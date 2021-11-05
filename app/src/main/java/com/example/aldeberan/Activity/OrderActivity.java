@@ -19,6 +19,13 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 import java.io.Serializable;
 import java.util.List;
 
+
+/*
+Chong Wai Hou   1161104445
+
+Chong is reponsible for this feature.
+*/
+
 public class OrderActivity extends AppCompatActivity implements Serializable {
     private OrderModel om;
     private UserStorage us;
